@@ -1,3 +1,9 @@
+## [0.1.1](https://github.com/ziyarago/ui/compare/v0.1.0...v0.1.1) (2026-10-21)
+
+### Bug Fixes
+
+* **mcp:** add repository metadata required for npm provenance ([392da6d](https://github.com/ziyarago/ui/commit/392da6d2c33aa13943290854ca0b6845e21f0057))
+
 ## [0.1.0](https://github.com/ziyarago/ui/compare/v0.0.0...v0.1.0) (2026-10-21)
 
 ### Features
