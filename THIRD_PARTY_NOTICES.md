@@ -7,6 +7,6 @@
 | JetBrains Mono | https://www.jetbrains.com/lp/mono/ | SIL OFL 1.1 | Loaded from Google Fonts |
 | Lucide icons | https://lucide.dev | ISC | Fetched at runtime from unpkg; set a self-hosted path with `setIconBase()` |
 | Map tiles (`UiMap`) | CARTO basemaps, © OpenStreetMap contributors | ODbL data, CARTO terms | Requested at runtime; keep the attribution the component shows |
-| ZiyaraGo logo and 3D icons | ZiyaraGo | All rights reserved | `assets/brand`, `assets/3d`; not covered by the package license |
+| ZiyaraGo logo and 3D icons | ZiyaraGo | All rights reserved | not shipped in the package; shown on ziyara.vip for demonstration only |
 
 Offline or strict-CSP deployments: self-host the Google Fonts and Lucide SVGs and point `setIconBase()` at your copy.

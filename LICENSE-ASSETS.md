@@ -2,12 +2,10 @@
 
 The source code of `@ziyarago/ui` is licensed under the MIT License (see `LICENSE`).
 
-The following files are NOT covered by the MIT License. All rights reserved by ZiyaraGo Technologies LLC:
+The ZiyaraGo logo and the ZiyaraGo 3D icon set are NOT part of the package and NOT covered by the MIT License. All rights reserved by ZiyaraGo Technologies LLC.
 
-- `assets/brand/*`: the ZiyaraGo logo and marks
-- `assets/3d/*`: the ZiyaraGo 3D icon set
-- the same images copied into `site/public/`
+- They are not included in the npm package.
+- The docs site shows them for demonstration only. The icons there are watermarked demo copies.
+- You may not copy, download, redistribute or use them, in whole or in part, in your own product, website or app, with or without modification. Using the ZiyaraGo name or logo requires written permission.
 
-You may use them unchanged to run, test and document the library. Using the ZiyaraGo name, logo or icons in your own product, or redistributing them separately, requires written permission.
-
-Third-party assets (fonts, icons, map tiles) keep their own licenses, see `THIRD_PARTY_NOTICES.md`.
+If you need icons for your own project, use your own or a licensed set. Third-party assets (fonts, icons, map tiles) keep their own licenses, see `THIRD_PARTY_NOTICES.md`.
