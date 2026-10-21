@@ -1,3 +1,9 @@
+## [0.19.0](https://github.com/ziyarago/ui/compare/v0.18.0...v0.19.0) (2026-10-21)
+
+### Features
+
+* SideNav expandable groups with children ([9572ae4](https://github.com/ziyarago/ui/commit/9572ae48a261a8fa3ec3e5d023858d91c2f4cd9b))
+
 ## [0.18.0](https://github.com/ziyarago/ui/compare/v0.17.0...v0.18.0) (2026-10-21)
 
 ### Features
