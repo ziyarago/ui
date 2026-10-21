@@ -1,3 +1,9 @@
+## [0.19.3](https://github.com/ziyarago/ui/compare/v0.19.2...v0.19.3) (2026-10-21)
+
+### Bug Fixes
+
+* LazyImage and EmptyState images with spaces or parentheses in the URL did not show; cssUrl helper ([0c6b0f6](https://github.com/ziyarago/ui/commit/0c6b0f65ca2834835f271aba4c4be9d7ebe8099b))
+
 ## [0.19.2](https://github.com/ziyarago/ui/compare/v0.19.1...v0.19.2) (2026-10-21)
 
 ### Bug Fixes
