@@ -8,7 +8,7 @@
 .zg-chip2--tonal{background:color-mix(in oklch,var(--c) 16%,transparent);color:var(--ct)}.zg-chip2--outlined{box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--c) 55%,transparent);color:var(--ct)}.zg-chip2--solid{background:var(--c);color:var(--zg-on-brand)}
 .zg-chip2 button{all:unset;cursor:pointer;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:color-mix(in oklch,currentColor 18%,transparent)}
 .zg-tile{width:var(--s);height:var(--s);flex:none;border-radius:8px;display:grid;place-items:center;background:color-mix(in oklch,var(--c) 16%,transparent);color:var(--ct)}.zg-tile--circle{border-radius:50%}
-.zg-usercell{display:inline-flex;align-items:center;gap:10px}.zg-usercell>span{display:flex;flex-direction:column;line-height:1.3}.zg-usercell b{font-size:14px}
+.zg-usercell{display:inline-flex;align-items:center;gap:10px}.zg-usercell>span:not(.zg-avatar){display:flex;flex-direction:column;line-height:1.3}.zg-usercell b{font-size:14px}
 .zg-srow{display:flex;align-items:center;gap:12px;min-height:56px}
 .zg-statline{position:relative;overflow:hidden;gap:6px}.zg-statline__bar{position:absolute;inset-inline:0;bottom:0;height:3px;background:var(--c);opacity:.9}
 .zg-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));padding:8px}.zg-strip__i{display:flex;align-items:center;gap:14px;padding:14px 20px}.zg-strip__i+.zg-strip__i{box-shadow:inset 1px 0 0 var(--zg-stroke)}
