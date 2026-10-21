@@ -1,0 +1,120 @@
+{
+  "name": "@ziyarago/ui",
+  "version": "0.1.0",
+  "description": "ZiyaraGo UI — glass design system for Umrah and Hajj products. OKLCH tokens, two palettes, dark and light, RTL, Thmanyah. One framework-neutral core with Vue 3, Nuxt and React adapters, 160+ components and 16 page templates.",
+  "keywords": [
+    "ui",
+    "design-system",
+    "components",
+    "vue",
+    "react",
+    "glassmorphism",
+    "rtl",
+    "arabic",
+    "oklch",
+    "umrah",
+    "hajj",
+    "ziyarago",
+    "nuxt"
+  ],
+  "type": "module",
+  "license": "MIT",
+  "author": "ZiyaraGo <dev@ziyarago.com>",
+  "homepage": "https://ziyara.vip",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziyarago/ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ziyarago/ui/issues"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./src/core/index.js",
+  "module": "./src/core/index.js",
+  "types": "./types/core.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/core.d.ts",
+      "default": "./src/core/index.js"
+    },
+    "./vue": {
+      "types": "./types/vue.d.ts",
+      "default": "./src/vue/index.js"
+    },
+    "./react": {
+      "types": "./types/react.d.ts",
+      "default": "./src/react/index.js"
+    },
+    "./theme": {
+      "types": "./types/theme.d.ts",
+      "default": "./src/theme.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.json": "./tokens/tokens.json",
+    "./assets/*": "./assets/*",
+    "./package.json": "./package.json",
+    "./nuxt": {
+      "types": "./types/nuxt.d.ts",
+      "default": "./src/nuxt/module.mjs"
+    },
+    "./manifest.json": "./dist/manifest.json",
+    "./llms.txt": "./dist/llms.txt",
+    "./llms-full.txt": "./dist/llms-full.txt",
+    "./meta": {
+      "default": "./src/meta/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "types",
+    "assets",
+    "tokens",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.md",
+    "src"
+  ],
+  "scripts": {
+    "types": "node scripts/types.mjs",
+    "build": "node scripts/build.mjs && node scripts/types.mjs && node scripts/manifest.mjs",
+    "check": "node scripts/check.mjs && node scripts/check-meta.mjs",
+    "prepack": "npm run build && npm run check",
+    "pack:dry": "npm pack --dry-run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "@nuxt/kit": ">=3.0.0",
+    "react": ">=18",
+    "vue": ">=3.5"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "@nuxt/kit": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@nuxt/kit": "^3.21.11",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "semantic-release": "^24.2.9",
+    "vue": "^3.5.44"
+  }
+}

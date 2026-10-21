@@ -1,0 +1,79 @@
+/* size overrides for the overlay group. Only [data-size] selectors, see the size scale at the end of tokens.css */
+
+/* Modal / ConfirmDialog: data-size lands on the scrim */
+.zg-modal-scrim[data-size="xs"]{--m-w:320px;--m-hp:14px 16px 12px;--m-bp:16px;--m-fp:10px 16px 14px;--m-t:15px;--m-f:13px;--m-g:12px}
+.zg-modal-scrim[data-size="sm"]{--m-w:420px;--m-hp:16px 18px 14px;--m-bp:18px;--m-fp:12px 18px 16px;--m-t:17px;--m-f:14px;--m-g:14px}
+.zg-modal-scrim[data-size="md"]{--m-w:520px;--m-hp:20px 20px 16px;--m-bp:20px;--m-fp:14px 20px 18px;--m-t:18px;--m-f:14px;--m-g:16px}
+.zg-modal-scrim[data-size="lg"]{--m-w:640px;--m-hp:24px 26px 18px;--m-bp:26px;--m-fp:16px 26px 22px;--m-t:20px;--m-f:15px;--m-g:18px}
+.zg-modal-scrim[data-size="xl"]{--m-w:720px;--m-hp:28px 32px 20px;--m-bp:32px;--m-fp:18px 32px 26px;--m-t:22px;--m-f:16px;--m-g:20px}
+.zg-modal-scrim[data-size]:not(.zg-drawer-scrim):not(.zg-sheet-scrim) .zg-modal:not(.zg-stepdlg){max-width:var(--m-w)}
+.zg-modal-scrim[data-size] .zg-modal__head{padding:var(--m-hp)}
+.zg-modal-scrim[data-size] .zg-modal__head h3{font-size:var(--m-t)}
+.zg-modal-scrim[data-size] .zg-modal__body{padding:var(--m-bp);gap:var(--m-g);font-size:var(--m-f)}
+.zg-modal-scrim[data-size] .zg-modal__foot{padding:var(--m-fp)}
+
+/* StepDialog */
+.zg-modal-scrim[data-size="xs"] .zg-stepdlg{max-width:640px;min-height:320px}
+.zg-modal-scrim[data-size="sm"] .zg-stepdlg{max-width:740px;min-height:380px}
+.zg-modal-scrim[data-size="md"] .zg-stepdlg{max-width:860px;min-height:420px}
+.zg-modal-scrim[data-size="lg"] .zg-stepdlg{max-width:980px;min-height:480px}
+.zg-modal-scrim[data-size="xl"] .zg-stepdlg{max-width:1100px;min-height:540px}
+
+/* Drawer */
+.zg-drawer-scrim[data-size="xs"] .zg-drawer{width:min(280px,100%)}
+.zg-drawer-scrim[data-size="sm"] .zg-drawer{width:min(340px,100%)}
+.zg-drawer-scrim[data-size="md"] .zg-drawer{width:min(420px,100%)}
+.zg-drawer-scrim[data-size="lg"] .zg-drawer{width:min(520px,100%)}
+.zg-drawer-scrim[data-size="xl"] .zg-drawer{width:min(640px,100%)}
+
+/* BottomSheet / Actionsheet */
+.zg-sheet-scrim[data-size="xs"] .zg-sheet{width:min(360px,100%);padding:8px 14px 14px;gap:8px}
+.zg-sheet-scrim[data-size="sm"] .zg-sheet{width:min(460px,100%);padding:9px 16px 16px;gap:10px}
+.zg-sheet-scrim[data-size="lg"] .zg-sheet{width:min(680px,100%);padding:12px 24px 24px;gap:14px}
+.zg-sheet-scrim[data-size="xl"] .zg-sheet{width:min(800px,100%);padding:14px 28px 28px;gap:16px}
+.zg-sheet-scrim[data-size="xs"] .zg-sheet__t{font-size:15px}
+.zg-sheet-scrim[data-size="sm"] .zg-sheet__t{font-size:16px}
+.zg-sheet-scrim[data-size="lg"] .zg-sheet__t{font-size:20px}
+.zg-sheet-scrim[data-size="xl"] .zg-sheet__t{font-size:22px}
+
+/* CommandPalette: width is an inline style, so !important is required */
+.zg-modal-scrim[data-size="xs"] .zg-modal[aria-label="Command palette"]{max-width:400px!important}
+.zg-modal-scrim[data-size="sm"] .zg-modal[aria-label="Command palette"]{max-width:480px!important}
+.zg-modal-scrim[data-size="lg"] .zg-modal[aria-label="Command palette"]{max-width:640px!important}
+.zg-modal-scrim[data-size="xl"] .zg-modal[aria-label="Command palette"]{max-width:720px!important}
+
+/* Menu / Dropdown / ContextMenu / Popover / Popconfirm: data-size on the wrapper (.zg-dd, .zg-ctx) or on the static .zg-menu */
+:is(.zg-dd,.zg-ctx,.zg-menu)[data-size="xs"]{--u-h:28px;--u-px:8px;--u-g:6px;--u-f:12px;--u-r:10px;--u-mw:160px;--u-pp:10px;--u-pg:8px;--u-pw:200px;--u-pf:12px}
+:is(.zg-dd,.zg-ctx,.zg-menu)[data-size="sm"]{--u-h:32px;--u-px:10px;--u-g:8px;--u-f:13px;--u-r:12px;--u-mw:190px;--u-pp:12px;--u-pg:10px;--u-pw:220px;--u-pf:13px}
+:is(.zg-dd,.zg-ctx,.zg-menu)[data-size="md"]{--u-h:40px;--u-px:12px;--u-g:10px;--u-f:14px;--u-r:14px;--u-mw:220px;--u-pp:14px;--u-pg:12px;--u-pw:240px;--u-pf:14px}
+:is(.zg-dd,.zg-ctx,.zg-menu)[data-size="lg"]{--u-h:48px;--u-px:16px;--u-g:12px;--u-f:15px;--u-r:16px;--u-mw:260px;--u-pp:18px;--u-pg:14px;--u-pw:280px;--u-pf:15px}
+:is(.zg-dd,.zg-ctx,.zg-menu)[data-size="xl"]{--u-h:56px;--u-px:20px;--u-g:14px;--u-f:16px;--u-r:18px;--u-mw:300px;--u-pp:22px;--u-pg:16px;--u-pw:320px;--u-pf:16px}
+:is(.zg-dd,.zg-ctx,.zg-menu)[data-size] .zg-menu__i{min-height:var(--u-h);padding:0 var(--u-px);gap:var(--u-g);font-size:var(--u-f);border-radius:var(--u-r)}
+:is(.zg-dd,.zg-ctx)[data-size] .zg-menu{min-width:var(--u-mw)}
+.zg-menu[data-size]{min-width:var(--u-mw)}
+:is(.zg-dd,.zg-ctx)[data-size] .zg-menu__i svg{width:calc(var(--u-f) + 2px);height:calc(var(--u-f) + 2px)}
+.zg-dd[data-size] .zg-pop{min-width:var(--u-pw);padding:var(--u-pp);gap:var(--u-pg);font-size:var(--u-pf)}
+.zg-dd[data-size] .zg-pop b{font-size:var(--u-pf)!important}
+.zg-dd[data-size]>.zg-btn{height:var(--zg-sz-h);font-size:var(--zg-sz-fs);padding-inline:var(--zg-sz-px)}
+
+/* Tooltip */
+.zg-tip[data-size="xs"]::after{padding:3px 7px;font-size:10px;border-radius:7px}
+.zg-tip[data-size="sm"]::after{padding:4px 9px;font-size:11px;border-radius:8px}
+.zg-tip[data-size="lg"]::after{padding:8px 13px;font-size:13px;border-radius:12px}
+.zg-tip[data-size="xl"]::after{padding:10px 16px;font-size:14px;border-radius:14px}
+
+/* HoverCard */
+.zg-hc[data-size="xs"] .zg-hc__c{width:200px;padding:10px;font-size:12px;border-radius:14px}
+.zg-hc[data-size="sm"] .zg-hc__c{width:240px;padding:12px;font-size:13px;border-radius:16px}
+.zg-hc[data-size="lg"] .zg-hc__c{width:340px;padding:18px;font-size:15px;border-radius:22px}
+.zg-hc[data-size="xl"] .zg-hc__c{width:400px;padding:22px;font-size:16px;border-radius:24px}
+
+/* CommandBar: md matches the current 32px buttons */
+.zg-cb[data-size="xs"]{--cb-h:24px;--cb-p:3px;--cb-s:16px}
+.zg-cb[data-size="sm"]{--cb-h:28px;--cb-p:3px;--cb-s:18px}
+.zg-cb[data-size="md"]{--cb-h:32px;--cb-p:4px;--cb-s:20px}
+.zg-cb[data-size="lg"]{--cb-h:40px;--cb-p:5px;--cb-s:24px}
+.zg-cb[data-size="xl"]{--cb-h:48px;--cb-p:6px;--cb-s:28px}
+.zg-cb[data-size]{padding:var(--cb-p)}
+.zg-cb[data-size] .zg-ibtn{--h:var(--cb-h)}
+.zg-cb[data-size] .zg-cb__s{height:var(--cb-s)}

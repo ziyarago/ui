@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Thmanyah — free incl. commercial, https://font.thmanyah.com. Files in assets/fonts/thmanyah. Adjust URLs to your bundler.
+   Thmanyah is visually heavier than Manrope at the same weight and has no 600 face. Weight ranges map the UI weights (300-900) so Arabic does not look bold:
+   200-300 Light, 400-600 Regular, 700 Medium, 800 Bold, 900 Black. */
+@font-face{font-family:'Thmanyah Sans';font-weight:200 300;src:url('../../assets/fonts/thmanyah/thmanyahsans-Light.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:400 600;src:url('../../assets/fonts/thmanyah/thmanyahsans-Regular.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:700;src:url('../../assets/fonts/thmanyah/thmanyahsans-Medium.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:800;src:url('../../assets/fonts/thmanyah/thmanyahsans-Bold.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:900;src:url('../../assets/fonts/thmanyah/thmanyahsans-Black.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:200 300;src:url('../../assets/fonts/thmanyah/thmanyahserifdisplay-Light.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:400 600;src:url('../../assets/fonts/thmanyah/thmanyahserifdisplay-Regular.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:700;src:url('../../assets/fonts/thmanyah/thmanyahserifdisplay-Medium.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:800;src:url('../../assets/fonts/thmanyah/thmanyahserifdisplay-Bold.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:200 300;src:url('../../assets/fonts/thmanyah/thmanyahseriftext-Light.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:400 600;src:url('../../assets/fonts/thmanyah/thmanyahseriftext-Regular.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:700;src:url('../../assets/fonts/thmanyah/thmanyahseriftext-Medium.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:800;src:url('../../assets/fonts/thmanyah/thmanyahseriftext-Bold.otf') format('opentype');font-display:swap}

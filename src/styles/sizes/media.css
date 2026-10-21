@@ -1,0 +1,28 @@
+/* size overrides for the media group. Only [data-size] selectors, see the size scale at the end of tokens.css */
+/* Gallery: thumbnails */
+.zg-gal[data-size="xs"] .zg-gal__t{gap:4px}
+.zg-gal[data-size="sm"] .zg-gal__t{gap:6px}
+.zg-gal[data-size="md"] .zg-gal__t{gap:8px}
+.zg-gal[data-size="lg"] .zg-gal__t{gap:10px}
+.zg-gal[data-size="xl"] .zg-gal__t{gap:12px}
+.zg-gal[data-size="xs"] .zg-gal__t button{width:48px;border-radius:8px}
+.zg-gal[data-size="sm"] .zg-gal__t button{width:64px;border-radius:10px}
+.zg-gal[data-size="md"] .zg-gal__t button{width:84px;border-radius:16px}
+.zg-gal[data-size="lg"] .zg-gal__t button{width:112px;border-radius:18px}
+.zg-gal[data-size="xl"] .zg-gal__t button{width:144px;border-radius:20px}
+/* Carousel: slide height and caption */
+.zg-car[data-size="xs"]{aspect-ratio:16/6}
+.zg-car[data-size="sm"]{aspect-ratio:16/7}
+.zg-car[data-size="md"]{aspect-ratio:16/8}
+.zg-car[data-size="lg"]{aspect-ratio:16/9}
+.zg-car[data-size="xl"]{aspect-ratio:16/10}
+.zg-car[data-size="xs"] .zg-car__c{padding:28px 12px 14px;font-size:11px}
+.zg-car[data-size="sm"] .zg-car__c{padding:36px 16px 16px;font-size:12px}
+.zg-car[data-size="md"] .zg-car__c{padding:44px 20px 18px;font-size:14px}
+.zg-car[data-size="lg"] .zg-car__c{padding:52px 24px 22px;font-size:16px}
+.zg-car[data-size="xl"] .zg-car__c{padding:60px 28px 26px;font-size:18px}
+/* bug fix: .zg-ibtn{position:relative} overrides the absolute arrows */
+.zg-car>.zg-car__p,.zg-car>.zg-car__n{position:absolute}
+.zg-car[data-size]{width:100%}
+.zg-car[data-size] .zg-car__s{aspect-ratio:auto;height:100%}
+.zg-gal[data-size]{flex:none;width:100%}

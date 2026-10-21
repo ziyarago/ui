@@ -1,0 +1,212 @@
+// API metadata for the domain group. Format: see src/meta/README.md
+const SZ = "'xs' | 'sm' | 'md' | 'lg' | 'xl'";
+const size = { type: SZ, values: ['xs', 'sm', 'md', 'lg', 'xl'], default: 'md', description: 'Scales padding, text and avatars.' };
+const TONES = "'default' | 'brand' | 'success' | 'warning' | 'danger' | 'info'";
+const toneValues = ['default', 'brand', 'success', 'warning', 'danger', 'info'];
+
+export default {
+  HotelCard: {
+    description: 'Hotel listing card with photo, tags, stars, distance, rating and nightly price; use in catalogs and search results.',
+    props: {
+      name: { type: 'string', required: true, description: 'Hotel name.' },
+      image: { type: 'string', description: 'Photo URL, used as the card background image.' },
+      tags: { type: 'string[]', default: '[]', description: 'Brand badges over the photo, e.g. "Haram view".' },
+      stars: { type: 'number', default: 0, description: 'Star class 0-5, rendered as repeated stars.' },
+      distance: { type: 'string', description: 'Distance caption next to the stars, e.g. "120 m to the Haram".' },
+      rating: { type: 'string | number', description: 'Guest rating shown in a green badge, e.g. 9.2.' },
+      price: { type: 'number', description: 'Price per unit, formatted with thousand separators; the currency label is fixed to SAR.' },
+      night: { type: 'string', default: 'night', description: 'Unit after "SAR /", e.g. "night".' },
+      size,
+    },
+    notes: ['Currency is hard-coded to SAR.', 'Wrap in a clickable element yourself; the card has no click handler.'],
+  },
+  TourCard: {
+    description: 'Tour or virtual-tour card with session count and a seat-occupancy bar.',
+    props: {
+      name: { type: 'string', required: true, description: 'Tour title.' },
+      city: { type: 'string', description: 'City shown in the subtitle.' },
+      sessions: { type: 'number', description: 'Number of sessions, shown as "N sessions".' },
+      booked: { type: 'number', required: true, description: 'Seats already booked.' },
+      seats: { type: 'number', required: true, description: 'Total seats; the bar shows booked / seats.' },
+      size,
+    },
+    slots: { actions: 'Footer actions, usually Buttons.' },
+    notes: ['A fixed "360°" badge is always shown.', 'With seats = 0 or missing the bar is empty (0%) and the meta reads "0/0".'],
+  },
+  PrayerTimes: {
+    description: 'Row of daily prayer times with the upcoming prayer highlighted.',
+    props: {
+      items: { type: '{ name: string; time: string }[]', default: '[]', description: 'Prayers in display order; time is shown as-is, e.g. "05:12".' },
+      next: { type: 'number', description: 'Index in items of the next prayer; sets aria-current on it.' },
+      size,
+    },
+  },
+  RamadanTracker: {
+    description: 'Thirty-day Ramadan progress strip; the last ten days and odd nights are marked.',
+    props: {
+      day: { type: 'number', required: true, description: 'Current day 1-30. Earlier days render as past, later days as upcoming.' },
+      size,
+    },
+    notes: ['Exposed as role="img" with aria-label "Day N of 30".'],
+  },
+  BookingCard: {
+    description: 'Compact booking summary: code, status, guest, hotel, dates and total.',
+    props: {
+      code: { type: 'string', required: true, description: 'Booking reference, monospaced.' },
+      status: { type: "'Confirmed' | 'Pending' | 'Cancelled' | string", values: ['Confirmed', 'Pending', 'Cancelled'], description: 'Status text. Confirmed is green, Pending amber, Cancelled red; any other value gets a neutral badge.' },
+      guest: { type: 'string', description: 'Guest name, also drives the avatar initials.' },
+      hotel: { type: 'string', description: 'Hotel name under the guest.' },
+      dates: { type: 'string', description: 'Preformatted date range, e.g. "12-19 Mar".' },
+      amount: { type: 'number', description: 'Total, formatted as "SAR 1 200".' },
+      size,
+    },
+  },
+  GuestCard: {
+    description: 'Guest profile card with avatar, country, stay length and tags.',
+    props: {
+      name: { type: 'string', required: true, description: 'Guest name.' },
+      country: { type: 'string', description: 'Country shown in the subtitle.' },
+      nights: { type: 'number', description: 'Number of nights, shown as "N nights".' },
+      vip: { type: 'boolean', default: false, description: 'Shows a VIP badge.' },
+      tags: { type: 'string[]', default: '[]', description: 'Preference tags, e.g. "Halal", "Late check-in".' },
+      size,
+    },
+  },
+  RoomGrid: {
+    description: 'Tile grid of rooms colored by housekeeping status; use for front-desk room selection.',
+    props: {
+      rooms: { type: '{ no: string; type: string; status: "occupied" | "clean" | "dirty" | "blocked" }[]', default: '[]', description: 'Rooms; no is the room number and the unique key, type is the room class label, status sets the tile color (any other value renders neutral).' },
+      statusTones: { type: "Record<string, 'brand' | 'sky' | 'success' | 'warning' | 'danger' | 'neutral'>", default: "{ occupied: 'brand', clean: 'success', dirty: 'warning', blocked: 'danger' }", description: 'Maps a room status to a tile tone. Merged over the defaults, so you can add custom statuses (e.g. { maintenance: "sky" }) or recolor known ones. Statuses without a tone render neutral.' },
+      size,
+    },
+    events: { select: 'Called with the room number (room.no) of the clicked tile.' },
+    notes: ['Each tile is a button; status is conveyed by color only, so add a legend.'],
+  },
+  RoomCalendar: {
+    description: 'Gantt-style occupancy calendar: rooms as rows, days as columns, bookings as bars.',
+    props: {
+      rooms: { type: '{ no: string; bookings?: { from: number; nights: number; guest: string }[] }[]', default: '[]', description: 'Rooms with their bookings; from is the zero-based day index of check-in, nights its length. guest is the cell tooltip.' },
+      days: { type: 'number', default: 14, description: 'Number of day columns, labelled 1..days.' },
+      size,
+    },
+    notes: ['Day headers are plain numbers 1..days; offset them yourself for a month view.'],
+  },
+  LeadCard: {
+    description: 'CRM lead card with avatar, code, phone and amount.',
+    props: {
+      name: { type: 'string', required: true, description: 'Lead name.' },
+      code: { type: 'string', description: 'Lead or deal code under the name, monospaced.' },
+      tag: { type: 'string', description: 'Optional badge text, e.g. a source or status.' },
+      tone: { type: TONES, values: toneValues, description: 'Badge tone for tag; neutral when omitted.' },
+      phone: { type: 'string', description: 'Phone number with a phone icon.' },
+      amount: { type: 'string | number', description: 'Amount shown on the right, rendered as given (format it yourself).' },
+      size,
+    },
+  },
+  DealCard: {
+    description: 'CRM deal card with stage badge, amount, win probability and owner; the card type inside PipelineBoard.',
+    props: {
+      title: { type: 'string', required: true, description: 'Deal title.' },
+      stage: { type: 'string', description: 'Stage badge text; no badge when omitted.' },
+      tone: { type: "'default' | 'brand' | 'success' | 'warning' | 'danger' | 'info'", values: toneValues, default: 'info', description: 'Badge tone for the stage.' },
+      amount: { type: 'string | number', description: 'Large amount, rendered as given.' },
+      probability: { type: 'number', default: 0, description: 'Win probability 0-100, shown as a progress bar and percent.' },
+      owner: { type: 'string', description: 'Owner name with avatar.' },
+      due: { type: 'string', description: 'Due date caption, right aligned.' },
+      size,
+    },
+  },
+  PipelineBoard: {
+    description: 'Horizontally scrolling kanban pipeline of stage columns filled with DealCards.',
+    props: {
+      stages: { type: '{ id: string | number; title: string; cards: DealCardProps[] }[]', default: '[]', description: 'Columns in order; cards take the DealCard props (title, stage, tone, amount, probability, owner, due). The column count badge is cards.length. Give cards an id so onMove can report which one moved (the index is used otherwise).' },
+      size,
+    },
+    events: { move: 'Called with { id, from, to } (card id, source stage id, target stage id) when a card is dropped on another stage. The board does not reorder itself: update stages in your state.' },
+    notes: ['Drag and drop is enabled only when a move handler is passed; without it the board renders and behaves as before.', 'Uses HTML5 drag and drop (mouse and desktop browsers); there is no keyboard alternative, so also offer a stage select on the card if you need one.', 'Cards are fixed to DealCard; for custom cards compose KanbanColumn and KanbanCard.'],
+  },
+  ContactPanel: {
+    description: 'Contact detail card with avatar, role, contact fields and Call / Message buttons.',
+    props: {
+      name: { type: 'string', required: true, description: 'Contact name.' },
+      role: { type: 'string', description: 'Role or company under the name.' },
+      phone: { type: 'string', description: 'Phone row.' },
+      telegram: { type: 'string', description: 'Telegram handle row.' },
+      email: { type: 'string', description: 'Email row.' },
+      city: { type: 'string', description: 'City row.' },
+      labels: { type: '{ call?: string; message?: string }', description: 'Override built-in English strings.' },
+      size,
+    },
+    events: { call: 'Called with no arguments when Call is clicked.', message: 'Called with no arguments when Message is clicked.' },
+  },
+  KanbanColumn: {
+    description: 'Single kanban column with a title, count badge and stacked cards.',
+    props: {
+      title: { type: 'string', required: true, description: 'Column heading.' },
+      count: { type: 'number', description: 'Count badge; defaults to the number of children.' },
+      size,
+    },
+    slots: { default: 'Cards, usually KanbanCard or DealCard. React passes them as children.' },
+  },
+  KanbanCard: {
+    description: 'Simple kanban card with title, subtitle, free content and an optional tag.',
+    props: {
+      title: { type: 'string', required: true, description: 'Card title.' },
+      sub: { type: 'string', description: 'Subtitle under the title.' },
+      tag: { type: 'string', description: 'Badge at the bottom.' },
+      tone: { type: TONES, values: toneValues, description: 'Badge tone for tag.' },
+      size,
+    },
+    slots: { default: 'Extra content between the subtitle and the tag. React passes it as children.' },
+  },
+  CallRow: {
+    description: 'One-line call log row with avatar, status, duration and a play button.',
+    props: {
+      name: { type: 'string', required: true, description: 'Caller name.' },
+      status: { type: 'string', description: 'Status text before the duration, e.g. "Answered".' },
+      duration: { type: 'number', description: 'Duration in seconds, formatted as "3 m 05 s" (units from durUnits); shows a dash when missing.' },
+      durUnits: { type: '{ m?: string; s?: string }', default: "{ m: 'm', s: 's' }", description: 'Minute and second unit labels for localized durations, e.g. { m: "min", s: "sec" }.' },
+      labels: { type: '{ play?: string }', description: 'Override built-in English strings. play is the aria-label of the play button.' },
+      size,
+    },
+    events: { play: 'Called with no arguments when the play button is clicked.' },
+  },
+  CallCard: {
+    description: 'Call recording card with status badge, a playback progress bar and duration.',
+    props: {
+      name: { type: 'string', required: true, description: 'Caller name.' },
+      phone: { type: 'string', description: 'Phone number.' },
+      status: { type: "'Answered' | 'Missed' | 'Voicemail' | 'Busy' | 'Declined' | string", values: ['Answered', 'Missed', 'Voicemail', 'Busy', 'Declined'], description: 'Badge text. Known statuses (case-insensitive): Answered green, Missed and Declined red, Voicemail and Busy amber, Ringing blue. Any other value is neutral. The badge is hidden when empty.' },
+      statusTones: { type: "Record<string, 'success' | 'danger' | 'warning' | 'info' | 'brand'>", description: 'Extra or overriding status to tone mapping, e.g. { "No answer": "warning" }.' },
+      progress: { type: 'number', default: 0, description: 'Playback progress 0-100.' },
+      duration: { type: 'number', description: 'Duration in seconds.' },
+      durUnits: { type: '{ m?: string; s?: string }', default: "{ m: 'm', s: 's' }", description: 'Minute and second unit labels for the duration.' },
+      labels: { type: '{ play?: string }', description: 'Override built-in English strings. play is the aria-label of the play button.' },
+      size,
+    },
+    events: { play: 'Called with no arguments when the play button is clicked.' },
+  },
+  IncomingCall: {
+    description: 'Glass banner for an incoming call with Decline and Answer buttons.',
+    props: {
+      name: { type: 'string', required: true, description: 'Caller name.' },
+      phone: { type: 'string', description: 'Caller number.' },
+      label: { type: 'string', default: 'Incoming call', description: 'Caption above the name.' },
+      onDecline: { type: '() => void', description: 'Decline button click.' },
+      onAnswer: { type: '() => void', description: 'Answer button click.' },
+      size,
+    },
+    events: { decline: 'Decline button clicked.', answer: 'Answer button clicked.' },
+  },
+  AuthSplit: {
+    description: 'Two-column sign-in layout with a brand panel on the left and the form on the right.',
+    props: {
+      title: { type: 'string', required: true, description: 'Form heading.' },
+      subtitle: { type: 'string', description: 'Text under the heading.' },
+      logo: { type: 'VNode', description: 'Logo node above the heading.' },
+      aside: { type: 'VNode', description: 'Content of the left brand panel (hidden on narrow screens).' },
+    },
+    slots: { default: 'Form content under the heading. React passes it as children.' },
+    notes: ['logo and aside are props in both Vue and React (pass a VNode / element).'],
+  },
+};

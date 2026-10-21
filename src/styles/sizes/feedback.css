@@ -1,0 +1,69 @@
+/* size overrides for the feedback group. Only [data-size] selectors, see the size scale at the end of tokens.css */
+
+/* Alert / Banner */
+.zg-alert[data-size="xs"]{--a-p:8px 10px;--a-g:8px;--a-i:22px;--a-v:13px;--a-f:12px;--a-t:13px;--a-r:14px}
+.zg-alert[data-size="sm"]{--a-p:10px 12px;--a-g:10px;--a-i:26px;--a-v:15px;--a-f:13px;--a-t:14px;--a-r:16px}
+.zg-alert[data-size="md"]{--a-p:14px 16px;--a-g:12px;--a-i:32px;--a-v:18px;--a-f:14px;--a-t:15px;--a-r:22px}
+.zg-alert[data-size="lg"]{--a-p:18px 20px;--a-g:14px;--a-i:38px;--a-v:22px;--a-f:15px;--a-t:16px;--a-r:24px}
+.zg-alert[data-size="xl"]{--a-p:22px 24px;--a-g:16px;--a-i:44px;--a-v:26px;--a-f:16px;--a-t:18px;--a-r:26px}
+.zg-alert[data-size]{padding:var(--a-p);gap:var(--a-g);border-radius:var(--a-r)}
+.zg-alert[data-size].zg-banner{border-radius:0}
+.zg-alert[data-size] .zg-alert__i{width:var(--a-i);height:var(--a-i)}
+.zg-alert[data-size] .zg-alert__i svg{width:var(--a-v);height:var(--a-v)}
+.zg-alert[data-size] .zg-alert__b{font-size:var(--a-f)}
+.zg-alert[data-size] .zg-alert__b b{font-size:var(--a-t)}
+
+/* Toast */
+.zg-toast[data-size="xs"]{--t-p:8px 10px;--t-g:8px;--t-i:22px;--t-v:13px;--t-f:11px;--t-t:12px;--t-w:280px;--t-r:14px}
+.zg-toast[data-size="sm"]{--t-p:10px 12px;--t-g:10px;--t-i:26px;--t-v:15px;--t-f:12px;--t-t:13px;--t-w:330px;--t-r:18px}
+.zg-toast[data-size="md"]{--t-p:14px 16px;--t-g:12px;--t-i:32px;--t-v:18px;--t-f:13px;--t-t:14px;--t-w:380px;--t-r:22px}
+.zg-toast[data-size="lg"]{--t-p:18px 20px;--t-g:14px;--t-i:38px;--t-v:22px;--t-f:14px;--t-t:16px;--t-w:440px;--t-r:24px}
+.zg-toast[data-size="xl"]{--t-p:22px 24px;--t-g:16px;--t-i:44px;--t-v:26px;--t-f:16px;--t-t:18px;--t-w:500px;--t-r:26px}
+.zg-toast[data-size]{padding:var(--t-p);gap:var(--t-g);max-width:var(--t-w);border-radius:var(--t-r)}
+.zg-toast[data-size] .zg-toast__icon{width:var(--t-i);height:var(--t-i)}
+.zg-toast[data-size] .zg-toast__icon svg{width:var(--t-v);height:var(--t-v)}
+.zg-toast[data-size] b{font-size:var(--t-t)}
+.zg-toast[data-size] span:not(.zg-toast__icon){font-size:var(--t-f)}
+
+/* Snackbar */
+.zg-snack[data-size="xs"]{--s-h:32px;--s-px:10px;--s-g:10px;--s-f:12px}
+.zg-snack[data-size="sm"]{--s-h:38px;--s-px:12px;--s-g:12px;--s-f:13px}
+.zg-snack[data-size="md"]{--s-h:44px;--s-px:16px;--s-g:14px;--s-f:14px}
+.zg-snack[data-size="lg"]{--s-h:52px;--s-px:20px;--s-g:16px;--s-f:15px}
+.zg-snack[data-size="xl"]{--s-h:60px;--s-px:24px;--s-g:18px;--s-f:16px}
+.zg-snack[data-size]{min-height:var(--s-h);padding:0 var(--s-px);gap:var(--s-g);font-size:var(--s-f)}
+
+/* Progress */
+.zg-progress[data-size="xs"]{--p-h:4px;--p-f:11px;--p-g:4px}
+.zg-progress[data-size="sm"]{--p-h:6px;--p-f:12px;--p-g:5px}
+.zg-progress[data-size="md"]{--p-h:8px;--p-f:13px;--p-g:6px}
+.zg-progress[data-size="lg"]{--p-h:12px;--p-f:14px;--p-g:8px}
+.zg-progress[data-size="xl"]{--p-h:16px;--p-f:15px;--p-g:10px}
+.zg-progress[data-size]{gap:var(--p-g)}
+.zg-progress[data-size] .zg-progress__row{font-size:var(--p-f)}
+.zg-progress[data-size] .zg-progress__track{height:var(--p-h)}
+
+/* Spinner: size is resolved to font-size in the core, only the stroke is tuned here */
+.zg-spin[data-size="lg"]{border-width:3px}
+.zg-spin[data-size="xl"]{border-width:4px}
+
+/* Skeleton */
+.zg-skelw[data-size="xs"]{--k-h:8px;--k-g:5px}
+.zg-skelw[data-size="sm"]{--k-h:11px;--k-g:6px}
+.zg-skelw[data-size="md"]{--k-h:14px;--k-g:8px}
+.zg-skelw[data-size="lg"]{--k-h:18px;--k-g:10px}
+.zg-skelw[data-size="xl"]{--k-h:22px;--k-g:12px}
+.zg-skelw[data-size]{gap:var(--k-g)}
+.zg-skelw[data-size] .zg-skel--text{height:var(--k-h)}
+
+/* EmptyState */
+.zg-es[data-size="xs"]{--e-p:16px 12px;--e-i:40px;--e-v:20px;--e-t:14px;--e-f:12px;--e-g:6px;--e-r:14px;--e-m:112px}
+.zg-es[data-size="sm"]{--e-p:24px 14px;--e-i:52px;--e-v:24px;--e-t:16px;--e-f:13px;--e-g:7px;--e-r:18px;--e-m:112px}
+.zg-es[data-size="md"]{--e-p:32px 16px;--e-i:64px;--e-v:28px;--e-t:17px;--e-f:16px;--e-g:8px;--e-r:22px;--e-m:112px}
+.zg-es[data-size="lg"]{--e-p:44px 20px;--e-i:80px;--e-v:34px;--e-t:20px;--e-f:17px;--e-g:10px;--e-r:26px;--e-m:112px}
+.zg-es[data-size="xl"]{--e-p:56px 24px;--e-i:96px;--e-v:40px;--e-t:24px;--e-f:18px;--e-g:12px;--e-r:30px;--e-m:112px}
+.zg-es[data-size]{padding:var(--e-p);gap:var(--e-g);font-size:var(--e-f)}
+.zg-es[data-size] b{font-size:var(--e-t)}
+.zg-es[data-size] .zg-es__ico{width:var(--e-i);height:var(--e-i);border-radius:var(--e-r)}
+.zg-es[data-size] .zg-es__ico svg{width:var(--e-v);height:var(--e-v)}
+.zg-es[data-size] .zg-es__img{width:calc(var(--e-i)*1.75);height:calc(var(--e-i)*1.75)}

@@ -1,0 +1,229 @@
+// API metadata for the pages group. Format: see src/meta/README.md
+// Page templates render named regions. In Vue fill them with <template #slot>, in React pass the same names as props. Empty slots render nothing.
+const crumbs = { forwarded: true, type: '{ label: string; href?: string }[]', description: 'Breadcrumb trail above the title.' };
+const header = {
+  title: { forwarded: true, type: 'string', description: 'Page heading. The built-in header renders only when title is set and the header slot is empty.' },
+  subtitle: { forwarded: true, type: 'string', description: 'Caption under the heading.' },
+  crumbs,
+};
+const HEAD = 'Custom page header; replaces the built-in title/subtitle/crumbs header.';
+const ACT = 'Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).';
+const headSlots = { header: HEAD, actions: ACT };
+const hdrNote = 'Place inside AppShell; fill only the slots you need.';
+
+export default {
+  PageDashboard: {
+    description: 'Dashboard template: greeting hero, KPI tiles, occupancy chart, sales funnel, top list and activity feed.',
+    props: header,
+    slots: {
+      ...headSlots,
+      hero: 'Large greeting/plan block; Card variant="inverse" with Ring and a Button.',
+      kpis: 'Four key figures; KpiTile, StatsCard or KpiInline.',
+      occupancy: 'Per-day occupancy chart; OccupancyChart or MiniChart.',
+      funnel: 'Inquiry-to-payment funnel; SalesFunnel.',
+      top: 'Revenue leaderboard; DataTable with Progress share bars.',
+      activity: 'Recent actions, newest first; Timeline.',
+    },
+    notes: [hdrNote, 'hero and kpis share a row, as do occupancy/funnel and top/activity; they wrap on narrow screens.'],
+  },
+  PagePatterns: {
+    description: 'Showcase template combining twelve recurring dashboard card patterns (banner, strips, stat lines, charts, lists).',
+    props: header,
+    slots: {
+      ...headSlots,
+      hero: 'Large banner; HeroBanner.',
+      strip: 'One card with four metrics; StatStrip with IconTile.',
+      statlines: 'Row of toned stat lines; StatLine (tone brand, sky, success, warning, danger).',
+      chartcard: 'Titled chart with menu and period select; ChartCard with PillSelect and OccupancyChart or MiniChart.',
+      tiles: 'Selectable tiles plus an add tile; TabTiles.',
+      listrows: 'Icon, title and value rows; StatRow.',
+      countries: 'Country amount rows; CountryRow.',
+      versus: 'Two values with a share bar; VersusBar.',
+      segbar: 'Composition bar with legend; SegBar.',
+      activity: 'Timeline of events; Timeline.',
+      actioncard: 'Card with collapse, refresh and close actions; ActionCard.',
+    },
+    notes: [hdrNote],
+  },
+  PageCrm: {
+    description: 'CRM template: summary tiles, filters, pipeline board and call queue.',
+    props: header,
+    slots: {
+      ...headSlots,
+      summary: 'Tiles above the board (leads, amount, conversion, overdue); StatsCard or KpiTile.',
+      filters: 'Status tabs, search and period switch; Tabs, SearchInput, SegmentedControl, FilterChips.',
+      board: 'Stage columns with deal cards; PipelineBoard, KanbanColumn, DealCard.',
+      calls: 'Recent call queue; CallRow, CallCard, IncomingCall.',
+    },
+    notes: [hdrNote],
+  },
+  PageBookings: {
+    description: 'Bookings list template: stats, toolbar, bulk-action bar, table and pagination.',
+    props: header,
+    slots: {
+      ...headSlots,
+      stats: 'Booking figures for the period; StatsCard.',
+      toolbar: 'Search, quick filters and export menu above the table; SearchInput, FilterChips, Dropdown.',
+      bulk: 'Selection bar shown when rows are selected; Alert with Buttons. Render it conditionally.',
+      table: 'Sortable, selectable table; DataTable.',
+      pager: 'Page numbers below the table; Pagination.',
+    },
+    notes: [hdrNote],
+  },
+  PageCatalog: {
+    description: 'Catalog template with a filter sidebar and a card grid (hotels, tours).',
+    props: header,
+    slots: {
+      ...headSlots,
+      filters: 'Left filter column (price, rating, services); Slider, Rating, RadioGroup, Checkbox.',
+      toolbar: 'Search, view switch and sort above the grid; SearchInput, ToggleGroup, Select.',
+      grid: 'Responsive grid of cards; HotelCard or TourCard.',
+      pager: 'Pagination at the bottom; Pagination.',
+    },
+    notes: [hdrNote, 'The filter column is 260 px wide; on phones put filters in a Drawer yourself.'],
+  },
+  PageDetail: {
+    description: 'Detail page template (hotel, tour): gallery, summary, tabs, history and a booking side card.',
+    props: header,
+    slots: {
+      ...headSlots,
+      gallery: 'Main photo with thumbnails; Gallery, Carousel, LazyImage.',
+      summary: 'Name, stars, rating, badges; Card with Badge and Rating.',
+      tabs: 'Description, amenities, reviews; Tabs with Descriptions or Accordion.',
+      history: 'What changed (status, notes, price); Timeline.',
+      booking: 'Right-hand booking card with dates, guests, price and CTA; Card, Select, NumberInput, Button.',
+    },
+    notes: [hdrNote, 'gallery, summary, tabs and history are the main column; booking is the side column.'],
+  },
+  PageSettings: {
+    description: 'Settings template with a section sub-navigation and stacked settings sections.',
+    props: header,
+    slots: {
+      ...headSlots,
+      subnav: 'Left section menu; SubNav or Tabs.',
+      profile: 'Profile section; SettingsSection with TextField, PhoneInput.',
+      notifications: 'Delivery channels; SettingsSection with Switch.',
+      integrations: 'Service cards (connected, off, error); IntegrationCard.',
+      danger: 'Irreversible actions; Alert, red Button, ConfirmDialog.',
+    },
+    notes: [hdrNote],
+  },
+  PageUserList: {
+    description: 'User or customer list template: stats, filters, toolbar, table and a right-hand add/edit drawer.',
+    props: header,
+    slots: {
+      ...headSlots,
+      stats: 'Figures above the table; StatStrip.',
+      filters: 'Filter selects in a card; Select.',
+      toolbar: 'Page size, search, export and Add button; Select, SearchInput, Button.',
+      table: 'Users table with checkboxes and actions; DataTable with UserCell, Chip, IconButton.',
+      drawer: 'Side panel rendered in the side column; Drawer with TextField, Select, Button.',
+    },
+    notes: [hdrNote],
+  },
+  PageProfile: {
+    description: 'User profile template: cover header, tabs and two columns of about, activity and plan cards.',
+    props: header,
+    slots: {
+      ...headSlots,
+      profile: 'Cover with avatar, name and meta; ProfileHeader.',
+      tabs: 'Section tabs; PillTabs.',
+      about: 'Left column key-value info; Card with Descriptions.',
+      activity: 'Right column activity feed; Timeline.',
+      plan: 'Right column plan card and upgrade button; Card, Badge, Progress, Button.',
+    },
+    notes: [hdrNote],
+  },
+  PageForm: {
+    description: 'Create/edit form template: main column, media, side column and header actions.',
+    props: header,
+    slots: {
+      header: HEAD,
+      actions: 'Discard, Save draft and Publish buttons in the top-right of the built-in header; Button. Rendered right-aligned on their own when title is not set.',
+      main: 'Main column cards (info, options); Card, TextField, Textarea.',
+      media: 'Below main; upload dropzone; FileUpload or Gallery.',
+      side: 'Side column cards (price, status, tags); Card, NumberInput, Select, ChipInput.',
+    },
+    notes: [hdrNote],
+  },
+  PageOrder: {
+    description: 'Order/booking details template: status chips, items table, timeline and side info cards.',
+    props: header,
+    slots: {
+      ...headSlots,
+      status: 'Payment and fulfillment chips; Chip (tone success, warning, danger).',
+      items: 'Items table with totals; DataTable.',
+      shipping: 'Event timeline; Timeline.',
+      side: 'Customer, address and payment cards; UserCell, Descriptions, Button.',
+    },
+    notes: [hdrNote],
+  },
+  PageAccount: {
+    description: 'Account settings template with pill tabs and a swappable panel.',
+    props: header,
+    slots: {
+      ...headSlots,
+      tabs: 'Section tabs (account, security, billing, notifications); PillTabs.',
+      panel: 'Content of the active tab; Card or SettingsSection with Switch and TextField.',
+    },
+    notes: [hdrNote, 'The template does not switch panels by itself: keep the active tab in your own state (PillTabs v-model) and render only that tab content in the panel slot.'],
+  },
+  PagePricing: {
+    description: 'Pricing template: billing-period toggle, plan cards and an FAQ.',
+    props: header,
+    slots: {
+      ...headSlots,
+      toggle: 'Monthly/annual switch with a savings badge; Switch, Chip.',
+      plans: 'Plan cards, one marked featured; PricingCard.',
+      faq: 'Questions accordion; Accordion.',
+    },
+    notes: [hdrNote],
+  },
+  PageFaq: {
+    description: 'Help center template: search, categories, answers accordion and a contact block.',
+    props: header,
+    slots: {
+      ...headSlots,
+      search: 'Large search field; SearchInput.',
+      cats: 'Category list on the left; vertical PillTabs.',
+      answers: 'Answers on the right; Accordion.',
+      contact: 'Contact cards below; Card, IconTile, Button.',
+    },
+    notes: [hdrNote],
+  },
+  PageAuth: {
+    description: 'Sign-in page template without the app shell, as a centered card or a split layout.',
+    props: {
+      layout: { forwarded: true, type: "'card' | 'split'", values: ['card', 'split'], default: 'card', description: "'split' uses AuthSplit with a side panel; anything else renders a centered AuthLayout card over the background." },
+      title: { forwarded: true, type: 'string', description: 'Form heading.' },
+      subtitle: { forwarded: true, type: 'string', description: 'Text under the heading.' },
+    },
+    slots: {
+      background: 'Decorative glows behind the card; card layout only.',
+      logo: 'Logo above the heading.',
+      aside: 'Brand panel on the left; split layout only, hidden below 820 px.',
+      form: 'Sign-in fields and button; LoginForm, TextField, PasswordInput, CodeInput, Button.',
+      footer: 'Links such as help, create account, back to login.',
+    },
+    notes: ['Designed for the dark theme and used without AppShell.'],
+  },
+  PageStatus: {
+    description: 'Full-page status screen (404, 401, maintenance, coming soon) with one action.',
+    props: {
+      kind: { forwarded: true, type: "'404' | '401' | 'maintenance' | 'soon'", values: ['404', '401', 'maintenance', 'soon'], default: '404', description: 'Preset screen; selects default texts, the big code or icon, and the button label. Filled into every part whose slot is empty.' },
+      title: { forwarded: true, type: 'string', description: 'Overrides the preset heading.' },
+      description: { forwarded: true, type: 'string', description: 'Overrides the preset description.' },
+      onAction: { type: '() => void', description: 'Primary button click.' },
+      actionLabel: { forwarded: true, type: 'string', description: 'Overrides the preset button text (404, 401, maintenance).' },
+      notifyLabel: { forwarded: true, type: 'string', default: 'Notify me', description: 'Button text for kind "soon".' },
+      emailLabel: { forwarded: true, type: 'string', default: 'name@email.com', description: 'Placeholder of the email field for kind "soon".' },
+    },
+    slots: {
+      code: 'Large code or icon; replaces the preset code only.',
+      message: 'Heading and description; replaces title and description.',
+      action: 'The primary button or an email form; replaces the preset action (onAction and actionLabel are then unused).',
+    },
+    events: { action: 'Preset primary button clicked (not fired when the action slot is filled).', notify: 'Called with the typed email when the Notify button of kind "soon" is clicked (not fired when the action slot is filled).' },
+    notes: ['Slots replace only their own part: fill message and the preset code and button remain; kind, title, description, onAction and actionLabel apply to the parts whose slot is empty.', 'kind="soon" shows an email field and a Notify me button; handle onNotify(email) to collect the address.'],
+  },
+};

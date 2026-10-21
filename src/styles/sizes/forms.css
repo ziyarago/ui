@@ -1,0 +1,122 @@
+/* size overrides for the forms group. Only [data-size] selectors, see the size scale at the end of tokens.css */
+[data-size]{
+  --zg-fm-h:calc(var(--zg-sz-h) + 8px);
+  --zg-fm-fs:calc(var(--zg-sz-fs) + 1px);
+  --zg-fm-px:calc(var(--zg-sz-px) + 2px);
+  --zg-fm-btn:calc(var(--zg-sz-h) - 8px);
+  --zg-fm-box:calc(var(--zg-sz-h) * .55);
+  --zg-fm-sw:calc(var(--zg-sz-h) * .65);
+  --zg-fm-iu:calc(var(--zg-sz-h) * 4);
+}
+
+/* ---- text-like inputs: label, hint, shared .zg-input chrome ---- */
+.zg-field[data-size] .zg-label{font-size:max(12px,calc(var(--zg-sz-fs) - 1px))}
+.zg-field[data-size] .zg-hint{font-size:max(11px,calc(var(--zg-sz-fs) - 2px))}
+.zg-field[data-size] .zg-input{--h:var(--zg-fm-h);gap:var(--zg-sz-gap);padding:0 6px 0 var(--zg-fm-px)}
+.zg-field[data-size] .zg-input input{font-size:var(--zg-fm-fs)}
+.zg-field[data-size] .zg-input.zg-num-in{padding:0 6px}
+.zg-field[data-size] .zg-input.zg-chipin{min-height:var(--zg-fm-h);height:auto;padding:6px calc(var(--zg-sz-px) - 4px)}
+.zg-field[data-size] .zg-chipin .zg-tag{height:calc(var(--zg-sz-h) * .7);font-size:calc(var(--zg-sz-fs) - 1px)}
+.zg-field[data-size] .zg-chipin .zg-tag button{width:calc(var(--zg-sz-h) * .5);height:calc(var(--zg-sz-h) * .5)}
+.zg-field[data-size] .zg-input .zg-ibtn{--h:var(--zg-fm-btn)}
+.zg-field[data-size] .zg-num-in .zg-ibtn{--h:var(--zg-fm-btn)}
+.zg-field[data-size] > div[style*="130px"]{grid-template-columns:calc(var(--zg-sz-h) * 3.25) minmax(0,1fr)!important}
+.zg-field[data-size] .zg-ta{padding:calc(var(--zg-sz-pad) - 2px) var(--zg-fm-px);font-size:var(--zg-fm-fs);border-radius:calc(var(--zg-fm-h) / 2)}
+
+/* compact inputs whose root is the .zg-input itself (SearchInput, InlineEdit editing) */
+.zg-input[data-size]{--h:var(--zg-sz-h)!important;gap:var(--zg-sz-gap);padding:0 6px 0 var(--zg-fm-px)}
+.zg-input[data-size] input{font-size:var(--zg-fm-fs)}
+.zg-input[data-size] .zg-ibtn{--h:var(--zg-fm-btn)}
+.zg-inline[data-size]{gap:calc(var(--zg-sz-gap) - 2px);padding:calc(var(--zg-sz-h) * .15) calc(var(--zg-sz-px) - 4px);font-size:var(--zg-fm-fs);border-radius:calc(var(--zg-sz-h) * .35)}
+
+/* icons: md keeps the library defaults */
+.zg-field[data-size]:not([data-size="md"]) .zg-input .zg-icon,
+.zg-input[data-size]:not([data-size="md"]) .zg-icon,
+.zg-field[data-size]:not([data-size="md"]) .zg-select__trigger .zg-icon,
+.zg-field[data-size]:not([data-size="md"]) .zg-fdrop > .zg-icon,
+.zg-inline[data-size]:not([data-size="md"]) .zg-icon{width:var(--zg-sz-icon)!important;height:var(--zg-sz-icon)!important}
+.zg-field[data-size]:not([data-size="md"]) .zg-input .zg-ibtn .zg-icon,
+.zg-input[data-size]:not([data-size="md"]) .zg-ibtn .zg-icon,
+.zg-field[data-size]:not([data-size="md"]) .zg-rte__t .zg-icon,
+.zg-field[data-size]:not([data-size="md"]) .zg-chipin .zg-tag .zg-icon{width:calc(var(--zg-sz-icon) - 2px)!important;height:calc(var(--zg-sz-icon) - 2px)!important}
+.zg-field[data-size]:not([data-size="md"]) .zg-fdrop > .zg-icon{width:calc(var(--zg-sz-icon) + 6px)!important;height:calc(var(--zg-sz-icon) + 6px)!important}
+
+/* ---- select-likes: trigger and popup rows ---- */
+.zg-field[data-size] .zg-select__trigger{height:var(--zg-fm-h)!important;padding-inline:var(--zg-fm-px);font-size:var(--zg-fm-fs);gap:var(--zg-sz-gap)}
+.zg-field[data-size] .zg-select__opt{height:calc(var(--zg-sz-h));padding:0 calc(var(--zg-sz-px) - 2px);font-size:var(--zg-sz-fs)}
+.zg-field[data-size] .zg-select__opt .zg-check__box{width:calc(var(--zg-sz-h) * .45)!important;height:calc(var(--zg-sz-h) * .45)!important}
+.zg-field[data-size] .zg-select__list .zg-empty{padding:calc(var(--zg-sz-pad) * 2.5) var(--zg-sz-pad);font-size:var(--zg-sz-fs)}
+.zg-field[data-size] .zg-tree__n{min-height:calc(var(--zg-sz-h) - 4px);font-size:var(--zg-sz-fs);gap:calc(var(--zg-sz-gap) - 2px)}
+.zg-field[data-size] .zg-select__list .zg-sidenav__group{font-size:max(11px,calc(var(--zg-sz-fs) - 2px))}
+.zg-dd[data-size]>.zg-btn.zg-btn--tonal.zg-btn--sm{height:var(--zg-fm-btn);font-size:calc(var(--zg-sz-fs) - 1px);padding-inline:calc(var(--zg-sz-px) - 4px);gap:calc(var(--zg-sz-gap) - 2px)}
+.zg-dd[data-size]:not([data-size="md"])>.zg-btn.zg-btn--tonal.zg-btn--sm .zg-icon{width:calc(var(--zg-sz-icon) - 4px)!important;height:calc(var(--zg-sz-icon) - 4px)!important}
+
+/* ---- checkbox / radio ---- */
+.zg-check[data-size],.zg-field[data-size] .zg-check{gap:var(--zg-sz-gap);font-size:var(--zg-sz-fs)}
+.zg-check[data-size] .zg-check__box,.zg-field[data-size] .zg-check .zg-check__box{width:var(--zg-fm-box);height:var(--zg-fm-box);border-radius:calc(var(--zg-fm-box) * .32)}
+.zg-check[data-size] .zg-check__box .zg-icon,.zg-field[data-size] .zg-check .zg-check__box .zg-icon{width:calc(var(--zg-fm-box) * .64)!important;height:calc(var(--zg-fm-box) * .64)!important}
+.zg-check[data-size] .zg-radio,.zg-field[data-size] .zg-check .zg-radio{border-radius:50%!important}
+.zg-check[data-size] .zg-radio i,.zg-field[data-size] .zg-check .zg-radio i{width:calc(var(--zg-fm-box) * .45);height:calc(var(--zg-fm-box) * .45)}
+.zg-field[data-size][role="radiogroup"]{gap:var(--zg-sz-gap)!important}
+
+/* ---- switch ---- */
+.zg-switch[data-size]{gap:var(--zg-sz-gap);font-size:var(--zg-sz-fs)}
+.zg-switch[data-size] .zg-switch__track{width:calc(var(--zg-fm-sw) * 1.6923);height:var(--zg-fm-sw)}
+.zg-switch[data-size] .zg-switch__thumb{width:calc(var(--zg-fm-sw) - 6px);height:calc(var(--zg-fm-sw) - 6px)}
+.zg-switch[data-size][aria-checked="true"] .zg-switch__thumb{transform:translateX(calc(var(--zg-fm-sw) * .6923))}
+[dir="rtl"] .zg-switch[data-size][aria-checked="true"] .zg-switch__thumb{transform:translateX(calc(var(--zg-fm-sw) * -.6923))}
+
+/* ---- option cards ---- */
+.zg-opt[data-size],.zg-field[data-size] .zg-opt{gap:calc(var(--zg-sz-gap) + 2px);padding:calc(var(--zg-sz-pad) - 2px) var(--zg-sz-pad);border-radius:calc(var(--zg-sz-h) * .45)}
+.zg-opt[data-size] > span > b,.zg-field[data-size] .zg-opt > span > b{font-size:var(--zg-fm-fs)!important}
+.zg-opt[data-size] > b,.zg-field[data-size] .zg-opt > b{font-size:calc(var(--zg-sz-fs) + 2px)!important}
+.zg-opt[data-size] .zg-hint,.zg-field[data-size] .zg-opt .zg-hint{font-size:max(11px,calc(var(--zg-sz-fs) - 2px))}
+.zg-opt[data-size] .zg-opt__img,.zg-field[data-size] .zg-opt .zg-opt__img{width:calc(var(--zg-sz-h) * 1.2);height:calc(var(--zg-sz-h) * 1.2)}
+.zg-opt[data-size] .zg-tile,.zg-field[data-size] .zg-opt .zg-tile{--s:var(--zg-sz-h)!important}
+.zg-opt[data-size] .zg-check__box,.zg-field[data-size] .zg-opt .zg-check__box{width:var(--zg-fm-box);height:var(--zg-fm-box)}
+.zg-opt[data-size]:not([data-size="md"]) .zg-tile .zg-icon,.zg-field[data-size]:not([data-size="md"]) .zg-opt .zg-tile .zg-icon{width:calc(var(--zg-sz-icon) + 2px)!important;height:calc(var(--zg-sz-icon) + 2px)!important}
+.zg-opt[data-size] .zg-check__box .zg-icon,.zg-field[data-size] .zg-opt .zg-check__box .zg-icon{width:calc(var(--zg-fm-box) * .55)!important;height:calc(var(--zg-fm-box) * .55)!important}
+.zg-opt[data-size] .zg-radio i,.zg-field[data-size] .zg-opt .zg-radio i{width:calc(var(--zg-fm-box) * .45);height:calc(var(--zg-fm-box) * .45)}
+
+/* ---- sliders ---- */
+.zg-field[data-size] .zg-range{height:calc(var(--zg-sz-h) * .2)}
+.zg-field[data-size] .zg-range::-webkit-slider-thumb{width:var(--zg-fm-box);height:var(--zg-fm-box)}
+.zg-field[data-size] .zg-range::-moz-range-thumb{width:var(--zg-fm-box);height:var(--zg-fm-box)}
+.zg-field[data-size] .zg-range2w{height:calc(var(--zg-sz-h) * .7)}
+.zg-field[data-size] .zg-range2w > i{top:calc((var(--zg-sz-h) * .7 - var(--zg-sz-h) * .2) / 2);height:calc(var(--zg-sz-h) * .2)}
+.zg-field[data-size] .zg-range2::-webkit-slider-thumb{width:var(--zg-fm-box);height:var(--zg-fm-box)}
+.zg-field[data-size] .zg-range2::-moz-range-thumb{width:var(--zg-fm-box);height:var(--zg-fm-box)}
+.zg-field[data-size] .zg-mono{font-size:var(--zg-sz-fs)}
+
+/* ---- code input ---- */
+.zg-code[data-size]{gap:calc(var(--zg-sz-gap) - 2px)}
+.zg-code[data-size] .zg-code__cell{height:calc(var(--zg-sz-h) * 1.5);border-radius:calc(var(--zg-sz-h) * .45);font-size:calc(var(--zg-sz-h) * .7)}
+
+/* ---- color picker, file and image upload ---- */
+.zg-field[data-size] .zg-chips{gap:calc(var(--zg-sz-gap) - 2px)}
+.zg-field[data-size] .zg-swatch{width:calc(var(--zg-sz-h) * .8);height:calc(var(--zg-sz-h) * .8)}
+.zg-field[data-size] .zg-fdrop{padding:calc(var(--zg-sz-pad) * 1.75) var(--zg-sz-pad);gap:calc(var(--zg-sz-gap) - 4px);font-size:var(--zg-sz-fs);border-radius:calc(var(--zg-sz-h) * .6)}
+.zg-field[data-size] .zg-imgup{width:var(--zg-fm-iu,100%)}
+.zg-field[data-size] .zg-imgup__e .zg-hint{font-size:max(10px,calc(var(--zg-sz-fs) - 2px))}
+.zg-field[data-size] .zg-imgup__o{width:calc(var(--zg-sz-h) * .85);height:calc(var(--zg-sz-h) * .85)}
+
+/* ---- rich editor ---- */
+.zg-field[data-size] .zg-rte__t .zg-ibtn{--h:var(--zg-fm-btn)}
+.zg-field[data-size] .zg-rte__c{min-height:calc(var(--zg-sz-h) * 3.5);padding:calc(var(--zg-sz-pad) - 2px) calc(var(--zg-sz-pad) + 2px);font-size:var(--zg-fm-fs)}
+
+/* ---- calendars (Calendar, RangeCalendar, calendar inside DatePicker) ---- */
+.zg-cal[data-size],.zg-field[data-size] .zg-cal{min-width:calc(var(--zg-sz-h) * 7)}
+.zg-cal[data-size] .zg-cal__d,.zg-field[data-size] .zg-cal .zg-cal__d{height:calc(var(--zg-sz-h) - 4px);font-size:var(--zg-sz-fs)}
+.zg-cal[data-size] .zg-cal__w,.zg-field[data-size] .zg-cal .zg-cal__w{font-size:max(10px,calc(var(--zg-sz-fs) - 3px))}
+.zg-cal[data-size] .zg-cal__h .zg-ibtn,.zg-field[data-size] .zg-cal .zg-cal__h .zg-ibtn{--h:var(--zg-fm-btn)}
+.zg-cal[data-size] .zg-cal__h b,.zg-field[data-size] .zg-cal .zg-cal__h b{font-size:var(--zg-fm-fs)}
+.zg-cal[data-size]:not([data-size="md"]) .zg-cal__h .zg-icon,.zg-field[data-size]:not([data-size="md"]) .zg-cal .zg-cal__h .zg-icon{width:calc(var(--zg-sz-icon) - 2px)!important;height:calc(var(--zg-sz-icon) - 2px)!important}
+
+/* ---- stepper (Stepper, StepForm) ---- */
+.zg-stepper[data-size],.zg-field[data-size] .zg-stepper{gap:calc(var(--zg-sz-gap) - 2px)}
+.zg-stepper[data-size] .zg-step,.zg-field[data-size] .zg-stepper .zg-step{gap:calc(var(--zg-sz-gap) - 2px);font-size:calc(var(--zg-sz-fs) - 1px)}
+.zg-stepper[data-size] .zg-step__n,.zg-field[data-size] .zg-stepper .zg-step__n{width:calc(var(--zg-sz-h) * .7);height:calc(var(--zg-sz-h) * .7)}
+.zg-stepper[data-size]:not([data-size="md"]) .zg-step__n .zg-icon,.zg-field[data-size]:not([data-size="md"]) .zg-stepper .zg-step__n .zg-icon{width:calc(var(--zg-sz-icon) - 4px)!important;height:calc(var(--zg-sz-icon) - 4px)!important}
+
+/* ---- LoginForm submit (plain element) ---- */
+.zg-field[data-size] .zg-btn--block{--h:var(--zg-fm-h);font-size:var(--zg-fm-fs)}

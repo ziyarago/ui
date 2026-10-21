@@ -1,0 +1,2422 @@
+{
+ "shell": [
+  {
+   "id": "brand",
+   "title": "Brand",
+   "desc": "Logo and name in the top-left corner. In a narrow sidebar only the mark stays.",
+   "accepts": [
+    "img",
+    "svg",
+    "Text"
+   ],
+   "props": [
+    {
+     "name": "brand",
+     "type": "VNode",
+     "desc": "Any node, up to 180 px wide"
+    }
+   ],
+   "use": "<img src=\"/logo.svg\" alt=\"ZiyaraGo\" />"
+  },
+  {
+   "id": "nav",
+   "title": "Navigation",
+   "desc": "App sections. The menu type is set by the nav prop: top is a pill on top (up to 8 items), side is a sidebar with groups and a collapse mode.",
+   "accepts": [
+    "TopNav",
+    "SideNav"
+   ],
+   "props": [
+    {
+     "name": "items",
+     "type": "{value,label,icon,badge?,group?}[]",
+     "desc": "Items; group is a group heading in the sidebar"
+    },
+    {
+     "name": "modelValue",
+     "type": "string",
+     "desc": "Active item"
+    },
+    {
+     "name": "nav",
+     "type": "\"top\" | \"side\"",
+     "desc": "Menu type"
+    },
+    {
+     "name": "collapsed",
+     "type": "boolean",
+     "desc": "side only: 76 px narrow mode"
+    }
+   ],
+   "use": "<UiAppShell nav=\"side\" :items=\"nav\" v-model=\"page\" collapsible />"
+  },
+  {
+   "id": "pagefooter",
+   "title": "Page footer",
+   "desc": "Copyright on the left, links on the right: help, policy, terms. One for all shell pages.",
+   "accepts": [
+    "Footer"
+   ],
+   "props": [
+    {
+     "name": "copyright",
+     "type": "string",
+     "desc": ""
+    },
+    {
+     "name": "links",
+     "type": "{label,href}[]",
+     "desc": ""
+    }
+   ],
+   "use": "<UiFooter copyright=\"© 2026 ZiyaraGo\" :links=\"links\" />"
+  },
+  {
+   "id": "actions",
+   "title": "Header actions",
+   "desc": "Top bar on the right: search, notifications, profile. In side mode it moves to the row above the content.",
+   "accepts": [
+    "IconButton",
+    "NotificationBell",
+    "Avatar",
+    "Dropdown",
+    "Switch"
+   ],
+   "props": [
+    {
+     "name": "actions",
+     "type": "VNode",
+     "desc": "Right-aligned block, 8 px gap"
+    }
+   ],
+   "use": "<UiNotificationBell :items=\"alerts\" />\n<UiAvatar name=\"Shodiya\" :size=\"36\" />"
+  }
+ ],
+ "footer": {
+  "id": "footer",
+  "title": "Sidebar bottom",
+  "desc": "side mode only: profile and shift. When the sidebar is collapsed, only the avatar stays.",
+  "accepts": [
+   "Avatar",
+   "Badge",
+   "Button"
+  ],
+  "props": [
+   {
+    "name": "footer",
+    "type": "VNode",
+    "desc": "Pinned to the bottom, above the \"collapse\" button"
+   }
+  ],
+  "use": "<UiAvatar name=\"Shodiya\" /> <UiBadge tone=\"success\" dot>Online</UiBadge>"
+ },
+ "pages": [
+  {
+   "key": "dashboard",
+   "route": "dashboard",
+   "label": "Dashboard",
+   "icon": "layout-dashboard",
+   "desc": "Sales and occupancy summary: greeting with plan, KPI, occupancy chart, funnel, top hotels and an activity feed.",
+   "component": "PageDashboard",
+   "tpl": "TplDashboard",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "hero",
+     "title": "Greeting and plan",
+     "desc": "Large block: who it is addressed to, monthly plan progress and one main action. The only \"gold\" accent on the page.",
+     "accepts": [
+      "Card variant=\"inverse\"",
+      "Ring",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "planPct",
+       "type": "number 0–100",
+       "desc": "Plan completion; drawn as a Ring"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "desc": "Username"
+      },
+      {
+       "name": "cta",
+       "type": "VNode",
+       "desc": "One button"
+      }
+     ],
+     "use": "<UiCard variant=\"inverse\">\n  <UiRing :value=\"72\" label=\"plan\" />\n</UiCard>"
+    },
+    {
+     "id": "kpis",
+     "title": "KPI",
+     "desc": "Four key figures for the period. One tile can be variant=\"brand\".",
+     "accepts": [
+      "KpiTile",
+      "StatsCard",
+      "KpiInline"
+     ],
+     "props": [
+      {
+       "name": "label",
+       "type": "string",
+       "desc": "What we measure"
+      },
+      {
+       "name": "value",
+       "type": "string",
+       "desc": "Already formatted (SAR 1 200)"
+      },
+      {
+       "name": "delta",
+       "type": "string?",
+       "desc": "+12% / -3%, color follows the sign"
+      },
+      {
+       "name": "sub",
+       "type": "string?",
+       "desc": "Comparison period"
+      }
+     ],
+     "use": "<UiKpiTile label=\"Bookings\" value=\"1 248\" delta=\"+12%\" sub=\"vs last week\" />"
+    },
+    {
+     "id": "occupancy",
+     "title": "Occupancy chart",
+     "desc": "Columns per day. Values above 90% are highlighted in the brand color.",
+     "accepts": [
+      "OccupancyChart",
+      "MiniChart",
+      "BarChart"
+     ],
+     "props": [
+      {
+       "name": "values",
+       "type": "number[] 0–100",
+       "desc": "Percentage per day"
+      },
+      {
+       "name": "labels",
+       "type": "string[]",
+       "desc": "X-axis labels"
+      }
+     ],
+     "use": "<UiOccupancyChart :values=\"[62,74,88,95]\" :labels=\"days\" />"
+    },
+    {
+     "id": "funnel",
+     "title": "Funnel",
+     "desc": "Funnel from inquiry to payment with absolute numbers.",
+     "accepts": [
+      "SalesFunnel",
+      "FunnelBars"
+     ],
+     "props": [
+      {
+       "name": "steps",
+       "type": "{label,value}[]",
+       "desc": "Wide to narrow; the last step is the brand"
+      }
+     ],
+     "use": "<UiSalesFunnel :steps=\"steps\" />"
+    },
+    {
+     "id": "top",
+     "title": "Top hotels",
+     "desc": "Revenue leaderboard with a share bar.",
+     "accepts": [
+      "DataTable",
+      "Progress",
+      "Leaderboard"
+     ],
+     "props": [
+      {
+       "name": "rows",
+       "type": "{id,name,city,sar,share}[]",
+       "desc": "No more than 5 rows"
+      },
+      {
+       "name": "columns",
+       "type": "Column[]",
+       "desc": "name, city, share (Progress), sar (num)"
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"top5\" />"
+    },
+    {
+     "id": "activity",
+     "title": "Activity feed",
+     "desc": "Recent actions: payment, status change, note. Newest on top.",
+     "accepts": [
+      "Timeline",
+      "ActivityFeed"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{title,text?,time}[]",
+       "desc": "No more than 6, the rest under \"Show all\""
+      }
+     ],
+     "use": "<UiTimeline :items=\"events\" />"
+    }
+   ]
+  },
+  {
+   "key": "crm",
+   "route": "crm",
+   "label": "CRM",
+   "icon": "kanban",
+   "desc": "Lead funnel on a board: filters, summary, kanban by stage and a call queue.",
+   "component": "PageCrm",
+   "tpl": "TplCrm",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "summary",
+     "title": "Summary",
+     "desc": "Four tiles above the board: leads, amount in progress, conversion, overdue.",
+     "accepts": [
+      "StatsCard",
+      "KpiTile"
+     ],
+     "props": [
+      {
+       "name": "label",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "icon",
+       "type": "string",
+       "desc": "Lucide icon"
+      },
+      {
+       "name": "delta",
+       "type": "string?",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStatsCard label=\"In progress\" value=\"$42k\" icon=\"wallet\" />"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Status tabs, search and period mode. State is stored in the URL.",
+     "accepts": [
+      "Tabs",
+      "SearchInput",
+      "SegmentedControl",
+      "FilterChips"
+     ],
+     "props": [
+      {
+       "name": "tab",
+       "type": "string",
+       "desc": "all | hot | won | lost"
+      },
+      {
+       "name": "query",
+       "type": "string",
+       "desc": "Search by name and code"
+      }
+     ],
+     "use": "<UiTabs v-model=\"tab\" :items=\"tabs\" />"
+    },
+    {
+     "id": "board",
+     "title": "Board",
+     "desc": "Stage columns with deal cards. Drag and drop changes the stage.",
+     "accepts": [
+      "PipelineBoard",
+      "KanbanColumn",
+      "DealCard"
+     ],
+     "props": [
+      {
+       "name": "stages",
+       "type": "{id,title,cards[]}[]",
+       "desc": "Card: title, amount, probability, owner, due"
+      },
+      {
+       "name": "onMove",
+       "type": "(cardId, stageId) => void",
+       "desc": "After drop"
+      }
+     ],
+     "use": "<UiPipelineBoard :stages=\"stages\" @move=\"onMove\" />"
+    },
+    {
+     "id": "calls",
+     "title": "Calls",
+     "desc": "Queue of recent calls: status, duration, call back.",
+     "accepts": [
+      "CallRow",
+      "CallCard",
+      "IncomingCall"
+     ],
+     "props": [
+      {
+       "name": "name",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "status",
+       "type": "\"Answered\" | \"Missed\"",
+       "desc": ""
+      },
+      {
+       "name": "duration",
+       "type": "seconds | NaN",
+       "desc": "NaN is shown as \"—\""
+      }
+     ],
+     "use": "<UiCallRow name=\"Zaynab\" status=\"Answered\" :duration=\"65\" />"
+    }
+   ]
+  },
+  {
+   "key": "bookings",
+   "route": "bookings",
+   "label": "Bookings",
+   "icon": "calendar-check",
+   "desc": "Bookings table: summary, search and filter bar, bulk actions on row selection, pagination.",
+   "component": "PageBookings",
+   "tpl": "TplBookings",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "stats",
+     "title": "Summary",
+     "desc": "Four booking figures for the period.",
+     "accepts": [
+      "StatsCard"
+     ],
+     "props": [
+      {
+       "name": "label",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "trend",
+       "type": "\"up\" | \"down\"",
+       "desc": "Delta color and arrow"
+      }
+     ],
+     "use": "<UiStatsCard label=\"Confirmed\" value=\"86\" delta=\"12%\" />"
+    },
+    {
+     "id": "toolbar",
+     "title": "Toolbar",
+     "desc": "Search, quick filters and an export menu. Always above the table.",
+     "accepts": [
+      "SearchInput",
+      "FilterChips",
+      "Dropdown"
+     ],
+     "props": [
+      {
+       "name": "query",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "status",
+       "type": "string",
+       "desc": "all | confirmed | pending | cancelled"
+      }
+     ],
+     "use": "<UiSearchInput v-model=\"q\" />\n<UiFilterChips v-model=\"status\" :items=\"statuses\" />"
+    },
+    {
+     "id": "bulk",
+     "title": "Bulk actions",
+     "desc": "Appears when at least one row is selected: counter and actions.",
+     "accepts": [
+      "Alert",
+      "Button",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "selected",
+       "type": "id[]",
+       "desc": "Hidden when nothing is selected"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Confirm, message on Telegram, cancel"
+      }
+     ],
+     "use": "<UiAlert tone=\"info\" title=\"2 selected\">…</UiAlert>"
+    },
+    {
+     "id": "table",
+     "title": "Table",
+     "desc": "Sorting in the header, checkboxes, responsive width. Numbers are monospaced, amounts right-aligned.",
+     "accepts": [
+      "DataTable",
+      "Avatar",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "columns",
+       "type": "{key,label,sortable?,num?,render?}[]",
+       "desc": ""
+      },
+      {
+       "name": "rows",
+       "type": "Row[] with id",
+       "desc": ""
+      },
+      {
+       "name": "selected",
+       "type": "id[]",
+       "desc": "v-model:selected"
+      },
+      {
+       "name": "sortKey/sortDir",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"rows\" v-model:selected=\"sel\" />"
+    },
+    {
+     "id": "pager",
+     "title": "Pagination",
+     "desc": "Page numbers below the table.",
+     "accepts": [
+      "Pagination"
+     ],
+     "props": [
+      {
+       "name": "page",
+       "type": "number",
+       "desc": "From 1"
+      },
+      {
+       "name": "pages",
+       "type": "number",
+       "desc": ""
+      }
+     ],
+     "use": "<UiPagination v-model:page=\"page\" :pages=\"6\" />"
+    }
+   ]
+  },
+  {
+   "key": "list",
+   "route": "catalog",
+   "label": "List + filters",
+   "icon": "building-2",
+   "desc": "Hotel catalog: filters on the left, a panel and card grid on the right.",
+   "component": "PageCatalog",
+   "tpl": "TplCatalog",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Price, rating, trip type and services. On phones they open in a Drawer.",
+     "accepts": [
+      "Slider",
+      "Rating",
+      "RadioGroup",
+      "Checkbox"
+     ],
+     "props": [
+      {
+       "name": "price",
+       "type": "[min,max]",
+       "desc": "SAR per night"
+      },
+      {
+       "name": "rating",
+       "type": "number 1–5",
+       "desc": ""
+      },
+      {
+       "name": "tags",
+       "type": "string[]",
+       "desc": "360°, Haram view…"
+      }
+     ],
+     "use": "<UiSlider v-model=\"price\" label=\"Price\" />\n<UiCheckbox label=\"360° tour\" />"
+    },
+    {
+     "id": "toolbar",
+     "title": "Catalog panel",
+     "desc": "Search, view switch and sorting.",
+     "accepts": [
+      "SearchInput",
+      "ToggleGroup",
+      "Select"
+     ],
+     "props": [
+      {
+       "name": "view",
+       "type": "\"grid\" | \"list\" | \"map\"",
+       "desc": ""
+      },
+      {
+       "name": "sort",
+       "type": "string",
+       "desc": "walk | price | rating"
+      }
+     ],
+     "use": "<UiToggleGroup v-model=\"view\" :options=\"views\" />"
+    },
+    {
+     "id": "grid",
+     "title": "Card grid",
+     "desc": "Responsive grid; the card shows photo, stars, walking distance, rating and price.",
+     "accepts": [
+      "HotelCard",
+      "TourCard"
+     ],
+     "props": [
+      {
+       "name": "name",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "stars",
+       "type": "1–5",
+       "desc": ""
+      },
+      {
+       "name": "distance",
+       "type": "string",
+       "desc": "«300 m to the Haram»"
+      },
+      {
+       "name": "rating",
+       "type": "string",
+       "desc": "«9.2/10»"
+      },
+      {
+       "name": "price",
+       "type": "number",
+       "desc": "SAR per night"
+      },
+      {
+       "name": "tags",
+       "type": "string[]",
+       "desc": "Top pick, 360°"
+      },
+      {
+       "name": "image",
+       "type": "url?",
+       "desc": "Cover"
+      }
+     ],
+     "use": "<UiHotelCard v-for=\"h in hotels\" v-bind=\"h\" />"
+    },
+    {
+     "id": "pager",
+     "title": "Pagination",
+     "desc": "At the bottom of the catalog.",
+     "accepts": [
+      "Pagination"
+     ],
+     "props": [
+      {
+       "name": "page",
+       "type": "number",
+       "desc": ""
+      },
+      {
+       "name": "pages",
+       "type": "number",
+       "desc": ""
+      }
+     ],
+     "use": "<UiPagination :pages=\"6\" />"
+    }
+   ]
+  },
+  {
+   "key": "detail",
+   "route": "detail",
+   "label": "Detail",
+   "icon": "file-text",
+   "desc": "Hotel page: gallery, summary and price, tabs with description and a booking side card.",
+   "component": "PageDetail",
+   "tpl": "TplDetail",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "gallery",
+     "title": "Gallery",
+     "desc": "Main 16:10 photo and a thumbnail strip. The \"360°\" badge opens the tour.",
+     "accepts": [
+      "Gallery",
+      "Carousel",
+      "LazyImage"
+     ],
+     "props": [
+      {
+       "name": "images",
+       "type": "url[]",
+       "desc": "4-12 photos"
+      },
+      {
+       "name": "alt",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiGallery :images=\"photos\" alt=\"Hotel\" />"
+    },
+    {
+     "id": "summary",
+     "title": "Summary",
+     "desc": "Name, stars, rating, badges and distance to the Haram.",
+     "accepts": [
+      "Card",
+      "Badge",
+      "Rating"
+     ],
+     "props": [
+      {
+       "name": "name",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "badges",
+       "type": "string[]",
+       "desc": "Top pick, 360°, Haram view"
+      }
+     ],
+     "use": "<UiCard title=\"Hilton Suites\">…</UiCard>"
+    },
+    {
+     "id": "tabs",
+     "title": "Tabs",
+     "desc": "Description, amenities, reviews. Content is a key-value table.",
+     "accepts": [
+      "Tabs",
+      "Descriptions",
+      "Accordion"
+     ],
+     "props": [
+      {
+       "name": "tab",
+       "type": "string",
+       "desc": "about | rooms | reviews"
+      },
+      {
+       "name": "items",
+       "type": "{label,value}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiTabs v-model=\"tab\" :items=\"tabs\" />\n<UiDescriptions :items=\"facts\" />"
+    },
+    {
+     "id": "booking",
+     "title": "Booking",
+     "desc": "Sticky card on the right: dates, guests, price and CTA. On phones, a bottom bar.",
+     "accepts": [
+      "Card",
+      "Select",
+      "NumberInput",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "dates",
+       "type": "[from,to]",
+       "desc": ""
+      },
+      {
+       "name": "guests",
+       "type": "number",
+       "desc": ""
+      },
+      {
+       "name": "price",
+       "type": "number",
+       "desc": "Total in SAR"
+      }
+     ],
+     "use": "<UiCard title=\"Book\">…<UiButton variant=\"primary\" block>Reserve</UiButton></UiCard>"
+    },
+    {
+     "id": "history",
+     "title": "History",
+     "desc": "What changed: status, notes, price.",
+     "accepts": [
+      "Timeline"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{title,text?,time}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiTimeline :items=\"history\" />"
+    }
+   ]
+  },
+  {
+   "key": "settings",
+   "route": "settings",
+   "label": "Settings",
+   "icon": "settings",
+   "desc": "Account settings: submenu, profile, notifications, integrations and danger zone.",
+   "component": "PageSettings",
+   "tpl": "TplSettings",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "subnav",
+     "title": "Submenu",
+     "desc": "Settings sections on the left; tabs on a narrow screen.",
+     "accepts": [
+      "SubNav",
+      "Tabs"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{value,label,icon,badge?}[]",
+       "desc": ""
+      },
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSubNav v-model=\"tab\" :items=\"sections\" />"
+    },
+    {
+     "id": "profile",
+     "title": "Profile",
+     "desc": "Section: description on the left, fields on the right. Saved with the button at the bottom.",
+     "accepts": [
+      "SettingsSection",
+      "TextField",
+      "PhoneInput"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "description",
+       "type": "string?",
+       "desc": ""
+      },
+      {
+       "name": "default slot",
+       "type": "VNode",
+       "desc": "Form fields"
+      }
+     ],
+     "use": "<UiSettingsSection title=\"Profile\">\n  <UiTextField label=\"Name\" />\n</UiSettingsSection>"
+    },
+    {
+     "id": "notifications",
+     "title": "Notifications",
+     "desc": "Delivery channels. Telegram is primary.",
+     "accepts": [
+      "SettingsSection",
+      "Switch"
+     ],
+     "props": [
+      {
+       "name": "telegram",
+       "type": "boolean",
+       "desc": ""
+      },
+      {
+       "name": "email",
+       "type": "boolean",
+       "desc": "Email reports"
+      },
+      {
+       "name": "sms",
+       "type": "boolean",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSwitch v-model=\"tg\" label=\"Telegram\" />"
+    },
+    {
+     "id": "integrations",
+     "title": "Integrations",
+     "desc": "Service cards: connected, not linked, error.",
+     "accepts": [
+      "IntegrationCard"
+     ],
+     "props": [
+      {
+       "name": "name",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "status",
+       "type": "\"connected\" | \"off\" | \"error\"",
+       "desc": ""
+      },
+      {
+       "name": "onToggle",
+       "type": "() => void",
+       "desc": ""
+      }
+     ],
+     "use": "<UiIntegrationCard name=\"Telegram\" status=\"off\" />"
+    },
+    {
+     "id": "danger",
+     "title": "Danger zone",
+     "desc": "Irreversible actions: red button, confirmation via ConfirmDialog.",
+     "accepts": [
+      "Alert",
+      "Button",
+      "ConfirmDialog"
+     ],
+     "props": [
+      {
+       "name": "onDelete",
+       "type": "() => void",
+       "desc": "After confirmation"
+      }
+     ],
+     "use": "<UiPopconfirm label=\"Delete account\" title=\"Sure?\" />"
+    }
+   ]
+  },
+  {
+   "key": "login",
+   "route": "login",
+   "label": "Sign in",
+   "icon": "log-in",
+   "desc": "Sign-in page without the shell: logo, form, links and a decorative background. Always dark theme.",
+   "component": "PageAuth",
+   "tpl": "TplLogin",
+   "shell": false,
+   "slots": [
+    {
+     "id": "background",
+     "title": "Background",
+     "desc": "Decorative brand and light blue glows. No photo or text.",
+     "accepts": [
+      "div",
+      "svg",
+      "canvas"
+     ],
+     "props": [
+      {
+       "name": "intensity",
+       "type": "number",
+       "desc": "Blur 100-140 px"
+      }
+     ],
+     "use": "<div class=\"auth-glow\" />"
+    },
+    {
+     "id": "logo",
+     "title": "Logo",
+     "desc": "Above the heading, 56 px.",
+     "accepts": [
+      "img",
+      "svg"
+     ],
+     "props": [
+      {
+       "name": "logo",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiAuthLayout><template #logo>…</template></UiAuthLayout>"
+    },
+    {
+     "id": "form",
+     "title": "Form",
+     "desc": "Login or phone, password, \"remember me\", forgot password, button. Errors use an Alert above the fields.",
+     "accepts": [
+      "LoginForm",
+      "PasswordInput",
+      "Alert"
+     ],
+     "props": [
+      {
+       "name": "onSubmit",
+       "type": "({email,password,remember}) => void",
+       "desc": ""
+      },
+      {
+       "name": "error",
+       "type": "string?",
+       "desc": ""
+      },
+      {
+       "name": "loading",
+       "type": "boolean",
+       "desc": "Disables the button"
+      },
+      {
+       "name": "onForgot",
+       "type": "() => void",
+       "desc": ""
+      }
+     ],
+     "use": "<UiLoginForm :loading=\"busy\" :error=\"err\" @submit=\"signIn\" />"
+    },
+    {
+     "id": "footer",
+     "title": "Bottom links",
+     "desc": "Help, policy, language.",
+     "accepts": [
+      "a",
+      "Dropdown"
+     ],
+     "props": [
+      {
+       "name": "links",
+       "type": "{label,href}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<a href=\"/help\">Help</a>"
+    }
+   ]
+  },
+  {
+   "key": "patterns",
+   "route": "patterns",
+   "label": "Card patterns",
+   "icon": "layout-grid",
+   "desc": "Twelve recurring Vuexy dashboard cards in our style. Any dashboard is built from them.",
+   "component": "PagePatterns",
+   "tpl": "TplPatterns",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "hero",
+     "title": "Hero / greeting",
+     "desc": "Large banner: heading, amount, one button, optional 3D icon on the right.",
+     "accepts": [
+      "HeroBanner"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "value",
+       "type": "string?",
+       "desc": "Large amount"
+      },
+      {
+       "name": "cta",
+       "type": "string?",
+       "desc": "One button"
+      },
+      {
+       "name": "image",
+       "type": "url?",
+       "desc": "3D icon from the set"
+      }
+     ],
+     "use": "<UiHeroBanner title=\"Congratulations, Shodiya\" value=\"$42 800\" cta=\"View sales\" />"
+    },
+    {
+     "id": "strip",
+     "title": "Metrics bar",
+     "desc": "One card, 4 metrics with vertical dividers and icons in tonal tiles.",
+     "accepts": [
+      "StatStrip",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{icon,tone,value,label}[]",
+       "desc": "3-4 metrics"
+      }
+     ],
+     "use": "<UiStatStrip :items=\"metrics\" />"
+    },
+    {
+     "id": "statlines",
+     "title": "Stat with bottom line",
+     "desc": "Icon in a tile, number, label and delta. The colored line at the bottom encodes the tone.",
+     "accepts": [
+      "StatLine"
+     ],
+     "props": [
+      {
+       "name": "tone",
+       "type": "brand|sky|success|warning|danger",
+       "desc": ""
+      },
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "delta",
+       "type": "string?",
+       "desc": "+12% / -3%"
+      }
+     ],
+     "use": "<UiStatLine tone=\"success\" icon=\"wallet\" value=\"$214k\" label=\"Revenue\" delta=\"+8%\" />"
+    },
+    {
+     "id": "chartcard",
+     "title": "Chart card",
+     "desc": "Heading, subheading, ⋮ menu on the right and a tonal period select.",
+     "accepts": [
+      "ChartCard",
+      "PillSelect",
+      "OccupancyChart",
+      "MiniChart"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": ""
+      },
+      {
+       "name": "menu",
+       "type": "string[]",
+       "desc": "View more · Delete"
+      }
+     ],
+     "use": "<UiChartCard title=\"Occupancy\" :menu=\"['View more','Delete']\" />"
+    },
+    {
+     "id": "listrows",
+     "title": "List rows",
+     "desc": "Tile → title and caption → value and delta.",
+     "accepts": [
+      "StatRow"
+     ],
+     "props": [
+      {
+       "name": "icon",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "delta",
+       "type": "string?",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStatRow icon=\"wallet\" title=\"Transactions\" value=\"$4 600\" delta=\"+8%\" />"
+    },
+    {
+     "id": "countries",
+     "title": "Country list",
+     "desc": "Country code in a circle, amount, name and percentage.",
+     "accepts": [
+      "CountryRow"
+     ],
+     "props": [
+      {
+       "name": "code",
+       "type": "string",
+       "desc": "UZ · SA · RU"
+      },
+      {
+       "name": "amount",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "pct",
+       "type": "string?",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCountryRow code=\"UZ\" amount=\"$8 700\" name=\"Uzbekistan\" pct=\"+25%\" />"
+    },
+    {
+     "id": "tiles",
+     "title": "Tile tabs",
+     "desc": "Icon + name; active has a brand border; dashed \"+\" tile.",
+     "accepts": [
+      "TabTiles"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{value,icon,label}[]",
+       "desc": ""
+      },
+      {
+       "name": "addable",
+       "type": "boolean",
+       "desc": "Dashed \"+\""
+      }
+     ],
+     "use": "<UiTabTiles v-model=\"tab\" :items=\"tabs\" addable />"
+    },
+    {
+     "id": "versus",
+     "title": "VS comparison",
+     "desc": "Two values and a two-color share bar.",
+     "accepts": [
+      "VersusBar"
+     ],
+     "props": [
+      {
+       "name": "left",
+       "type": "{label,value}",
+       "desc": "Brand"
+      },
+      {
+       "name": "right",
+       "type": "{label,value}",
+       "desc": "Light blue"
+      }
+     ],
+     "use": "<UiVersusBar :left=\"orders\" :right=\"visits\" />"
+    },
+    {
+     "id": "segbar",
+     "title": "Segmented bar",
+     "desc": "Composition of a whole in one bar with a legend.",
+     "accepts": [
+      "SegBar"
+     ],
+     "props": [
+      {
+       "name": "segments",
+       "type": "{label,value,color?}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSegBar :segments=\"fleet\" />"
+    },
+    {
+     "id": "activity",
+     "title": "Activity feed",
+     "desc": "Dots, time and attachments.",
+     "accepts": [
+      "Timeline"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{title,text?,time}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiTimeline :items=\"events\" />"
+    },
+    {
+     "id": "actioncard",
+     "title": "Card with actions",
+     "desc": "Three icons: collapse, refresh (overlay with a 2 s spinner), close.",
+     "accepts": [
+      "ActionCard"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "onRefresh",
+       "type": "() => Promise",
+       "desc": "Overlay until done"
+      }
+     ],
+     "use": "<UiActionCard title=\"Weekly report\">…</UiActionCard>"
+    }
+   ]
+  },
+  {
+   "key": "userlist",
+   "route": "user-list",
+   "label": "List + drawer",
+   "icon": "users",
+   "desc": "Table page: KPI, filters, toolbar, table with component cells and a right \"Add\" panel.",
+   "component": "PageUserList",
+   "tpl": "TplUserList",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "stats",
+     "title": "KPI",
+     "desc": "Four figures above the table in one bar.",
+     "accepts": [
+      "StatStrip"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{icon,tone,value,label}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStatStrip :items=\"kpi\" />"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Three selects in a card. They update the table immediately.",
+     "accepts": [
+      "Select"
+     ],
+     "props": [
+      {
+       "name": "role",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "plan",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "status",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSelect v-model=\"role\" label=\"Role\" :options=\"roles\" />"
+    },
+    {
+     "id": "toolbar",
+     "title": "Toolbar",
+     "desc": "\"Show N\", search, export (tonal), primary \"+ Add\".",
+     "accepts": [
+      "Select",
+      "SearchInput",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "pageSize",
+       "type": "number",
+       "desc": "10 · 25 · 50"
+      }
+     ],
+     "use": "<UiButton variant=\"primary\" icon=\"plus\">Add user</UiButton>"
+    },
+    {
+     "id": "table",
+     "title": "Table",
+     "desc": "Checkboxes, user, role, plan, status chip, actions.",
+     "accepts": [
+      "DataTable",
+      "UserCell",
+      "Chip",
+      "IconButton"
+     ],
+     "props": [
+      {
+       "name": "rows",
+       "type": "Row[]",
+       "desc": ""
+      },
+      {
+       "name": "selected",
+       "type": "id[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"users\" />"
+    },
+    {
+     "id": "drawer",
+     "title": "Drawer «Add user»",
+     "desc": "Right panel 380-400 px: one field per row, Submit and Cancel at the bottom. Esc, ×, and a click on the backdrop close it.",
+     "accepts": [
+      "Drawer",
+      "TextField",
+      "Select",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "open",
+       "type": "boolean",
+       "desc": ""
+      },
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDrawer :open=\"open\" title=\"Add user\">…</UiDrawer>"
+    }
+   ]
+  },
+  {
+   "key": "userview",
+   "route": "profile",
+   "label": "Profile",
+   "icon": "user-round",
+   "desc": "User or customer page: cover with avatar, pill tabs and two columns of cards.",
+   "component": "PageProfile",
+   "tpl": "TplProfile",
+   "shell": true,
+   "slots": [
+    {
+     "id": "profile",
+     "title": "Profile header",
+     "desc": "220 px cover, 104 px avatar with a background-colored border, name, meta with icons, button.",
+     "accepts": [
+      "ProfileHeader",
+      "Avatar",
+      "Chip"
+     ],
+     "props": [
+      {
+       "name": "name",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "cover",
+       "type": "url?",
+       "desc": ""
+      },
+      {
+       "name": "meta",
+       "type": "{icon,label}[]",
+       "desc": "Role · city · date"
+      }
+     ],
+     "use": "<UiProfileHeader name=\"Shodiya Karimova\" :meta=\"meta\" />"
+    },
+    {
+     "id": "tabs",
+     "title": "Pill tabs",
+     "desc": "Active tab fills with the brand color and a shadow. Horizontal above the content or vertical on the left.",
+     "accepts": [
+      "PillTabs"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{value,icon?,label}[]",
+       "desc": ""
+      },
+      {
+       "name": "vertical",
+       "type": "boolean",
+       "desc": ""
+      }
+     ],
+     "use": "<UiPillTabs v-model=\"tab\" :items=\"tabs\" />"
+    },
+    {
+     "id": "about",
+     "title": "About block",
+     "desc": "13 px uppercase labels and key-value pairs with icons.",
+     "accepts": [
+      "Card",
+      "Descriptions"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{label,value}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDescriptions :items=\"about\" />"
+    },
+    {
+     "id": "activity",
+     "title": "Activity",
+     "desc": "User activity feed.",
+     "accepts": [
+      "Timeline"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{title,text?,time}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiTimeline :items=\"events\" />"
+    },
+    {
+     "id": "plan",
+     "title": "Plan",
+     "desc": "Current plan card and an upgrade button.",
+     "accepts": [
+      "Card",
+      "Badge",
+      "Progress",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "plan",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "days",
+       "type": "number",
+       "desc": "Days left"
+      }
+     ],
+     "use": "<UiCard title=\"Plan\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "form",
+   "route": "form",
+   "label": "Form 8 + 4",
+   "icon": "file-pen",
+   "desc": "Create page: main column 8/12 and side column 4/12, actions at the top right.",
+   "component": "PageForm",
+   "tpl": "TplForm",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "main",
+     "title": "Main column",
+     "desc": "Cards: info, photos, options. Fields have labels on top.",
+     "accepts": [
+      "Card",
+      "TextField",
+      "Textarea",
+      "FileUpload"
+     ],
+     "props": [
+      {
+       "name": "fields",
+       "type": "Field[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Hotel information\">…</UiCard>"
+    },
+    {
+     "id": "media",
+     "title": "Photos",
+     "desc": "Dropzone with a dashed border; thumbnail preview.",
+     "accepts": [
+      "FileUpload",
+      "Gallery"
+     ],
+     "props": [
+      {
+       "name": "accept",
+       "type": "string",
+       "desc": "image/*"
+      },
+      {
+       "name": "multiple",
+       "type": "boolean",
+       "desc": ""
+      }
+     ],
+     "use": "<UiFileUpload title=\"Drop photos\" multiple />"
+    },
+    {
+     "id": "side",
+     "title": "Side column",
+     "desc": "Price and organization: price, discount, status, tags.",
+     "accepts": [
+      "Card",
+      "NumberInput",
+      "Select",
+      "ChipInput"
+     ],
+     "props": [
+      {
+       "name": "price",
+       "type": "number",
+       "desc": "SAR"
+      },
+      {
+       "name": "status",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiNumberInput label=\"Price\" v-model=\"price\" />"
+    },
+    {
+     "id": "actions",
+     "title": "Actions",
+     "desc": "Discard (red tonal), Save draft (gray), Publish (primary).",
+     "accepts": [
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "onPublish",
+       "type": "() => void",
+       "desc": ""
+      }
+     ],
+     "use": "<UiButton variant=\"primary\">Publish</UiButton>"
+    }
+   ]
+  },
+  {
+   "key": "order",
+   "route": "order",
+   "label": "Order / booking",
+   "icon": "receipt",
+   "desc": "Booking details: header with statuses, items table with totals, activity and side cards.",
+   "component": "PageOrder",
+   "tpl": "TplOrder",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "status",
+     "title": "Statuses",
+     "desc": "Payment and fulfillment chips next to the number.",
+     "accepts": [
+      "Chip"
+     ],
+     "props": [
+      {
+       "name": "tone",
+       "type": "success|warning|danger",
+       "desc": ""
+      }
+     ],
+     "use": "<UiChip tone=\"success\" pill>Paid</UiChip>"
+    },
+    {
+     "id": "items",
+     "title": "Items",
+     "desc": "Services table with totals on the right.",
+     "accepts": [
+      "DataTable"
+     ],
+     "props": [
+      {
+       "name": "rows",
+       "type": "{service,qty,price}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"items\" />"
+    },
+    {
+     "id": "shipping",
+     "title": "Activity",
+     "desc": "Vertical line with dots and attachments.",
+     "accepts": [
+      "Timeline"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "Event[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiTimeline :items=\"log\" />"
+    },
+    {
+     "id": "side",
+     "title": "Side cards",
+     "desc": "Customer, address, payment with a \"Change\" button.",
+     "accepts": [
+      "UserCell",
+      "Descriptions",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "onEdit",
+       "type": "() => void",
+       "desc": "Opens a dialog"
+      }
+     ],
+     "use": "<UiCard title=\"Customer\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "auth",
+   "route": "auth",
+   "label": "Authentication (6)",
+   "icon": "lock-keyhole",
+   "desc": "Six sign-in screens in two layouts: centered card and split with a side panel. Always dark theme.",
+   "component": "PageAuth",
+   "tpl": "TplAuth",
+   "shell": false,
+   "slots": [
+    {
+     "id": "aside",
+     "title": "Panel (split)",
+     "desc": "Left half: brand, large text, illustration. Hidden on screens narrower than 820 px.",
+     "accepts": [
+      "AuthSplit",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "aside",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiAuthSplit><template #aside>…</template></UiAuthSplit>"
+    },
+    {
+     "id": "logo",
+     "title": "Logo",
+     "desc": "Above the heading.",
+     "accepts": [
+      "img"
+     ],
+     "props": [
+      {
+       "name": "logo",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<img src=\"/logo.svg\" />"
+    },
+    {
+     "id": "form",
+     "title": "Form",
+     "desc": "Full-width fields and primary button. Errors appear below the field.",
+     "accepts": [
+      "TextField",
+      "PasswordInput",
+      "CodeInput",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "variant",
+       "type": "login|register|verify|forgot|reset|otp",
+       "desc": ""
+      },
+      {
+       "name": "error",
+       "type": "string?",
+       "desc": ""
+      }
+     ],
+     "use": "<UiLoginForm @submit=\"signIn\" />"
+    },
+    {
+     "id": "footer",
+     "title": "Bottom links",
+     "desc": "Navigation between screens: \"Create account\", \"Back to login\", \"Resend\".",
+     "accepts": [
+      "a",
+      "Button variant=\"text\""
+     ],
+     "props": [
+      {
+       "name": "links",
+       "type": "{label,to}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<a href=\"/register\">Create an account</a>"
+    }
+   ]
+  },
+  {
+   "key": "status",
+   "route": "status",
+   "label": "Utility pages (4)",
+   "icon": "octagon-alert",
+   "desc": "404, 401, maintenance, coming soon: centered text, one button. Always dark theme.",
+   "component": "PageStatus",
+   "tpl": "TplStatus",
+   "shell": false,
+   "slots": [
+    {
+     "id": "code",
+     "title": "Code / icon",
+     "desc": "Large 404 / 401 number in the brand color or an icon in a tile.",
+     "accepts": [
+      "StatusPage",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "kind",
+       "type": "404|401|maintenance|soon",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStatusPage kind=\"404\" />"
+    },
+    {
+     "id": "message",
+     "title": "Message",
+     "desc": "24 px heading and a single line of description.",
+     "accepts": [
+      "Text"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "description",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStatusPage title=\"…\" description=\"…\" />"
+    },
+    {
+     "id": "action",
+     "title": "Action",
+     "desc": "One primary button; on \"coming soon\", email and \"Notify me\".",
+     "accepts": [
+      "Button",
+      "TextField"
+     ],
+     "props": [
+      {
+       "name": "onAction",
+       "type": "() => void",
+       "desc": ""
+      }
+     ],
+     "use": "<UiButton variant=\"primary\">Back to home</UiButton>"
+    }
+   ]
+  },
+  {
+   "key": "account",
+   "route": "account",
+   "label": "Account settings",
+   "icon": "settings-2",
+   "desc": "Pill tabs on top: account, security, payment, notifications.",
+   "component": "PageAccount",
+   "tpl": "TplAccount",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "tabs",
+     "title": "Tabs",
+     "desc": "Five sections. Each has its own URL.",
+     "accepts": [
+      "PillTabs"
+     ],
+     "props": [
+      {
+       "name": "value",
+       "type": "account|security|billing|notifications",
+       "desc": ""
+      }
+     ],
+     "use": "<UiPillTabs v-model=\"tab\" :items=\"tabs\" />"
+    },
+    {
+     "id": "panel",
+     "title": "Section panel",
+     "desc": "Section cards; switching tabs replaces the content.",
+     "accepts": [
+      "Card",
+      "SettingsSection",
+      "Switch",
+      "TextField"
+     ],
+     "props": [
+      {
+       "name": "tab",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSettingsSection title=\"Profile\">…</UiSettingsSection>"
+    }
+   ]
+  },
+  {
+   "key": "faq",
+   "route": "faq",
+   "label": "FAQ",
+   "icon": "circle-help",
+   "desc": "Help page: search, categories on the left, accordion on the right and a \"still have questions\" block.",
+   "component": "PageFaq",
+   "tpl": "TplFaq",
+   "shell": true,
+   "slots": [
+    {
+     "id": "search",
+     "title": "Search",
+     "desc": "Large search field for questions.",
+     "accepts": [
+      "SearchInput"
+     ],
+     "props": [
+      {
+       "name": "query",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSearchInput v-model=\"q\" />"
+    },
+    {
+     "id": "cats",
+     "title": "Categories",
+     "desc": "Vertical pill tabs. The selected tab replaces the accordion.",
+     "accepts": [
+      "PillTabs"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{value,icon,label}[]",
+       "desc": ""
+      },
+      {
+       "name": "vertical",
+       "type": "boolean",
+       "desc": "true"
+      }
+     ],
+     "use": "<UiPillTabs vertical v-model=\"cat\" :items=\"cats\" />"
+    },
+    {
+     "id": "answers",
+     "title": "Questions",
+     "desc": "Accordion with one item expanded.",
+     "accepts": [
+      "Accordion"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{id,title,body}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiAccordion :items=\"faq\" />"
+    },
+    {
+     "id": "contact",
+     "title": "Still have questions",
+     "desc": "Two contact cards: Telegram and email.",
+     "accepts": [
+      "Card",
+      "IconTile",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "channels",
+       "type": "{icon,title,text}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Still have questions?\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "pricing",
+   "route": "pricing",
+   "label": "Pricing",
+   "icon": "badge-dollar-sign",
+   "desc": "Month/year switch, three pricing cards and an FAQ.",
+   "component": "PagePricing",
+   "tpl": "TplPricing",
+   "shell": true,
+   "slots": [
+    {
+     "id": "toggle",
+     "title": "Period",
+     "desc": "Monthly / Annually switch with a \"Save up to 10%\" badge.",
+     "accepts": [
+      "Switch",
+      "Chip"
+     ],
+     "props": [
+      {
+       "name": "annual",
+       "type": "boolean",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSwitch v-model=\"annual\" label=\"Annually\" />"
+    },
+    {
+     "id": "plans",
+     "title": "Pricing",
+     "desc": "Three cards; the popular one has a brand border and a badge.",
+     "accepts": [
+      "PricingCard"
+     ],
+     "props": [
+      {
+       "name": "name",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "price",
+       "type": "string",
+       "desc": ""
+      },
+      {
+       "name": "features",
+       "type": "string[]",
+       "desc": ""
+      },
+      {
+       "name": "featured",
+       "type": "boolean",
+       "desc": ""
+      }
+     ],
+     "use": "<UiPricingCard name=\"Plus\" price=\"$4.99\" featured />"
+    },
+    {
+     "id": "faq",
+     "title": "FAQ",
+     "desc": "Accordion with 3-6 questions.",
+     "accepts": [
+      "Accordion"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{id,title,body}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiAccordion :items=\"faq\" />"
+    }
+   ]
+  }
+ ]
+}

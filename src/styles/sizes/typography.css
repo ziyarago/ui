@@ -1,0 +1,12 @@
+/* size overrides for the typography group. Only [data-size] selectors, see the size scale at the end of tokens.css */
+.zg-text--xl{font-size:20px}
+.zg-code-b[data-size="xs"] pre{font-size:11px;padding:10px}.zg-code-b[data-size="xs"] .zg-code-b__h{font-size:11px;padding:4px 4px 4px 10px}
+.zg-code-b[data-size="sm"] pre{font-size:12px;padding:12px}.zg-code-b[data-size="sm"] .zg-code-b__h{font-size:11px;padding:6px 6px 6px 12px}
+.zg-code-b[data-size="lg"] pre{font-size:14px;padding:20px}.zg-code-b[data-size="lg"] .zg-code-b__h{font-size:13px;padding:10px 10px 10px 20px}
+.zg-code-b[data-size="xl"] pre{font-size:16px;padding:24px}.zg-code-b[data-size="xl"] .zg-code-b__h{font-size:14px;padding:12px 12px 12px 24px}
+.zg-kbd[data-size="xs"]{min-width:18px;height:18px;padding:0 4px;font-size:10px;border-radius:5px}
+.zg-kbd[data-size="sm"]{min-width:20px;height:20px;padding:0 5px;font-size:10.5px;border-radius:6px}
+.zg-kbd[data-size="lg"]{min-width:26px;height:26px;padding:0 8px;font-size:12px;border-radius:8px}
+.zg-kbd[data-size="xl"]{min-width:30px;height:30px;padding:0 10px;font-size:14px;border-radius:9px}
+.zg-link[data-size="xs"]{font-size:.8em}.zg-link[data-size="sm"]{font-size:.9em}.zg-link[data-size="lg"]{font-size:1.1em}.zg-link[data-size="xl"]{font-size:1.25em}
+.zg-link[data-size="xs"],.zg-link[data-size="sm"]{gap:3px}.zg-link[data-size="lg"],.zg-link[data-size="xl"]{gap:6px}

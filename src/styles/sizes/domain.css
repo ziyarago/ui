@@ -1,0 +1,35 @@
+/* size overrides for the domain group. Only [data-size] selectors, see the size scale at the end of tokens.css */
+.zg-dm[data-size="xs"]{--dz:.82}.zg-dm[data-size="sm"]{--dz:.91}.zg-dm[data-size="md"]{--dz:1}.zg-dm[data-size="lg"]{--dz:1.12}.zg-dm[data-size="xl"]{--dz:1.25}
+.zg-lead.zg-dm[data-size]{padding:calc(14px*var(--dz));gap:calc(10px*var(--dz));border-radius:calc(20px*var(--dz))}
+.zg-lead.zg-dm[data-size] .zg-lead__row{gap:calc(10px*var(--dz))}
+.zg-kcard.zg-dm[data-size]{padding:calc(14px*var(--dz));gap:calc(8px*var(--dz));border-radius:calc(20px*var(--dz));font-size:calc(14px*var(--dz))}
+.zg-kcol.zg-dm[data-size]{padding:calc(12px*var(--dz));gap:calc(10px*var(--dz));min-width:calc(260px*var(--dz));flex-basis:calc(260px*var(--dz));border-radius:calc(28px*var(--dz))}
+.zg-kcol.zg-dm[data-size] .zg-kcol__head{font-size:calc(14px*var(--dz))}
+.zg-hotel.zg-dm[data-size]{border-radius:calc(28px*var(--dz))}
+.zg-hotel.zg-dm[data-size] .zg-hotel__body{padding:calc(16px*var(--dz));gap:calc(10px*var(--dz))}
+.zg-hotel.zg-dm[data-size] .zg-hotel__row{gap:calc(12px*var(--dz))}
+.zg-hotel.zg-dm[data-size] .zg-hotel__tags{top:calc(10px*var(--dz));inset-inline-start:calc(10px*var(--dz));gap:calc(6px*var(--dz))}
+.zg-hotel.zg-dm[data-size] .zg-hint{font-size:calc(13px*var(--dz))}
+.zg-hotel.zg-dm[data-size] .zg-badge{font-size:calc(12px*var(--dz))}
+.zg-hotel.zg-dm[data-size="xs"] .zg-hotel__img{aspect-ratio:16/8}.zg-hotel.zg-dm[data-size="xl"] .zg-hotel__img{aspect-ratio:16/11}
+.zg-card.zg-dm[data-size]{padding:calc(20px*var(--dz));gap:calc(14px*var(--dz));border-radius:calc(32px*var(--dz))}
+.zg-card.zg-dm[data-size] .zg-card__title{font-size:calc(18px*var(--dz))}
+.zg-card.zg-dm[data-size] .zg-card__sub,.zg-card.zg-dm[data-size] .zg-hint{font-size:calc(13px*var(--dz))}
+.zg-card.zg-dm[data-size] .zg-card__head{gap:calc(12px*var(--dz))}
+.zg-card.zg-dm[data-size] .zg-lead__row{gap:calc(10px*var(--dz))}
+.zg-card.zg-dm[data-size] .zg-chips{gap:calc(8px*var(--dz))}
+.zg-pt.zg-dm[data-size]{gap:calc(6px*var(--dz))}
+.zg-pt.zg-dm[data-size] > .zg-pt__i{padding:calc(12px*var(--dz)) calc(6px*var(--dz));gap:calc(4px*var(--dz));border-radius:calc(18px*var(--dz));font-size:calc(12px*var(--dz))}
+.zg-pt.zg-dm[data-size] > .zg-pt__i b{font-size:calc(16px*var(--dz))}
+.zg-rt.zg-dm[data-size]{gap:calc(3px*var(--dz))}
+.zg-rt.zg-dm[data-size] i{height:calc(36px*var(--dz));border-radius:calc(7px*var(--dz))}
+.zg-call.zg-dm[data-size]{grid-template-columns:calc(36px*var(--dz)) minmax(0,1fr) auto;gap:calc(12px*var(--dz));padding:calc(10px*var(--dz)) calc(12px*var(--dz));border-radius:calc(18px*var(--dz))}
+.zg-call.zg-dm[data-size] .zg-hint,.zg-lead.zg-dm[data-size] .zg-hint,.zg-kcard.zg-dm[data-size] .zg-hint,.zg-inc.zg-dm[data-size] .zg-hint{font-size:calc(13px*var(--dz))}
+.zg-lead.zg-dm[data-size] .zg-badge,.zg-kcard.zg-dm[data-size] .zg-badge,.zg-card.zg-dm[data-size] .zg-badge{font-size:calc(12px*var(--dz))}
+.zg-inc.zg-dm[data-size]{gap:calc(14px*var(--dz));padding:calc(14px*var(--dz)) calc(16px*var(--dz));border-radius:calc(28px*var(--dz));max-width:calc(440px*var(--dz))}
+.zg-inc.zg-dm[data-size] .zg-inc__ok{--h:var(--zg-h-md)}.zg-inc.zg-dm[data-size="xs"] .zg-inc__ok{--h:var(--zg-h-xs)}.zg-inc.zg-dm[data-size="sm"] .zg-inc__ok{--h:var(--zg-h-sm)}.zg-inc.zg-dm[data-size="lg"] .zg-inc__ok{--h:var(--zg-h-lg)}.zg-inc.zg-dm[data-size="xl"] .zg-inc__ok{--h:var(--zg-h-xl)}
+.zg-rooms.zg-dm[data-size]{grid-template-columns:repeat(auto-fill,minmax(calc(88px*var(--dz)),1fr));gap:calc(8px*var(--dz))}
+.zg-rooms.zg-dm[data-size] .zg-room{padding:calc(12px*var(--dz));border-radius:calc(18px*var(--dz));font-size:calc(12px*var(--dz))}
+.zg-rooms.zg-dm[data-size] .zg-room b{font-size:calc(16px*var(--dz))}
+.zg-rc.zg-dm[data-size]{grid-template-columns:calc(56px*var(--dz)) repeat(var(--d),minmax(0,1fr));font-size:calc(12px*var(--dz))}
+.zg-rc.zg-dm[data-size] .zg-rc__c{height:calc(28px*var(--dz))}
