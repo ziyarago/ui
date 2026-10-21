@@ -67,7 +67,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
         run: |
           VERSION="${{ inputs.version }}"
-          [ -n "$VERSION" ] || VERSION="$(node -p "require('./package.json').version")-manual.${{ github.run_number }}"
+          [ -n "$VERSION" ] || VERSION="$(node -p "require('./package.json').version")-manual.$(date -u +%Y%m%d%H%M%S)"
           echo "version=$VERSION" >> "$GITHUB_ENV"
           test -f site/.output/public/index.html
           tar czf - -C site/.output/public . | ssh ziyara "receive $VERSION"
