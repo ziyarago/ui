@@ -287,6 +287,26 @@ const checks = {
     assert.ok(await t.activeIn(T), 'focus returns to the trigger after choosing');
   },
 
+  async TopNavSubmenu(page, t) {
+    const S = t.sel('TopNav'), T = `${S} .zg-topnav__dd > .zg-navitem`;
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    assert.equal(await page.$eval(`${S} .zg-topnav__items`, n => getComputedStyle(n).maskImage), 'none', 'no edge fade on the item row');
+    await page.click(T);
+    await t.waitFor(() => t.exists(`${S} [role=menu]`), 'click opens the sub-menu');
+    assert.equal(await page.$eval(T, n => n.getAttribute('aria-expanded')), 'true');
+    await t.waitFor(async () => (await txt()).startsWith('Upcoming'), 'focus moves to the first child');
+    await page.keyboard.press('ArrowDown'); assert.ok((await txt()).startsWith('Past'), 'separator is skipped');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=menu]`)), 'Escape closes');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger');
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} [role=menu]`), 'ArrowDown opens');
+    await t.clearSpy(); await page.keyboard.press('Enter');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=menu]`)), 'choosing closes the menu');
+    const calls = await t.spy();
+    assert.ok(calls.some(c => JSON.stringify(c.args || []).includes('upcoming')), 'change called with the child value: ' + JSON.stringify(calls));
+  },
+
   async DropdownKeyboard(page, t) {
     const S = t.sel('Dropdown'), T = `${S} [aria-haspopup=menu]`;
     const txt = () => page.evaluate(() => document.activeElement.textContent.trim());

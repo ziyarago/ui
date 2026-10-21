@@ -9,13 +9,15 @@ export default {
     description: 'Horizontal app header with a brand area, navigation items and an actions area.',
     props: {
       brand: { type: 'string | VNode', description: 'Logo or product name on the left.' },
-      items: { type: '{ value: string; label: string; icon?: string; count?: string | number }[]', default: '[]', description: 'Navigation entries. count renders a small counter after the label.' },
+      items: { type: '{ value: string; label: string; icon?: string; count?: string | number; children?: ({ value: string; label: string; icon?: string; count?: string | number; disabled?: boolean } | { heading: string } | { separator: true })[] }[]', default: '[]', description: 'Navigation entries. count renders a small counter after the label. An entry with children becomes a drop-down: click or ArrowDown opens a menu of its children (each with an optional icon and count, headings and separators allowed); selecting one calls change with the child value. The entry is marked current when one of its children is.' },
       value: current,
+      overflow: { type: "'menu' | 'none'", values: ['menu', 'none'], default: 'menu', description: "'menu': entries that do not fit move into a trailing \"More\" drop-down (measured after render and on resize; server rendering shows all entries). 'none': no collapsing, the row scrolls sideways and sub-menus are clipped, so avoid children with it." },
+      moreLabel: { type: 'string', default: 'More', description: 'Accessible name of the overflow drop-down button.' },
       size: size('header padding, item height and text'),
     },
     slots: { actions: 'Right side of the header (buttons, avatar). React also accepts an actions prop.' },
-    events: { change: 'Called with the value of the clicked item.' },
-    notes: ['Controlled: update value yourself in the change handler.', 'Items use count; SubNav uses badge for the same purpose.'],
+    events: { change: 'Called with the value of the clicked item or sub-menu item.' },
+    notes: ['Controlled: update value yourself in the change handler.', 'Items use count; SubNav uses badge for the same purpose.', 'Entries with children and the More menu share the Dropdown keyboard behaviour: ArrowDown opens, arrows and Home/End move, Escape closes and returns focus to the button.'],
   },
 
   SideNav: {

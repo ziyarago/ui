@@ -3727,24 +3727,35 @@ export const UiTooltip: UiVueComponent<UiTooltipProps, UiTooltipSlots>;
  * Horizontal app header with a brand area, navigation items and an actions area.
  * Note: Controlled: update value yourself in the change handler.
  * Note: Items use count; SubNav uses badge for the same purpose.
+ * Note: Entries with children and the More menu share the Dropdown keyboard behaviour: ArrowDown opens, arrows and Home/End move, Escape closes and returns focus to the button.
  */
 export interface UiTopNavProps {
   /** Logo or product name on the left. */
   brand?: string | VNode;
   /**
-   * Navigation entries. count renders a small counter after the label.
+   * Navigation entries. count renders a small counter after the label. An entry with children becomes a drop-down: click or ArrowDown opens a menu of its children (each with an optional icon and count, headings and separators allowed); selecting one calls change with the child value. The entry is marked current when one of its children is.
    * @default []
    */
-  items?: { value: string; label: string; icon?: string; count?: string | number }[];
+  items?: { value: string; label: string; icon?: string; count?: string | number; children?: ({ value: string; label: string; icon?: string; count?: string | number; disabled?: boolean } | { heading: string } | { separator: true })[] }[];
   /** Value of the active item (aria-current="page"). */
   value?: string;
+  /**
+   * 'menu': entries that do not fit move into a trailing "More" drop-down (measured after render and on resize; server rendering shows all entries). 'none': no collapsing, the row scrolls sideways and sub-menus are clipped, so avoid children with it.
+   * @default 'menu'
+   */
+  overflow?: 'menu' | 'none';
+  /**
+   * Accessible name of the overflow drop-down button.
+   * @default 'More'
+   */
+  moreLabel?: string;
   /**
    * Scale of header padding, item height and text.
    * @default 'md'
    */
   size?: Size;
   /**
-   * Called with the value of the clicked item.
+   * Called with the value of the clicked item or sub-menu item.
    * @event change
    */
   onChange?: (value: string) => void;
