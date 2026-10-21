@@ -6,6 +6,33 @@ const TONE = "'brand' | 'sky' | 'success' | 'warning' | 'danger' | 'neutral'";
 const size = (d, extra) => ({ type: SIZE, values: SZ, default: d || 'md', description: extra || 'Component scale.' });
 const delta = (d) => ({ type: 'string', description: d || 'Change indicator such as "+12%" or "-3.4%". A leading "-" renders as a decrease, anything else as an increase.' });
 
+const SERIES = '{ key: string; label: string; values: { x: string | number | Date; y: number | null }[]; tone?: \'brand\' | \'success\' | \'warning\' | \'danger\' | \'info\' | \'neutral\'; dashed?: boolean }[]';
+const CHART_TONE = "'brand' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'";
+const chartCommon = (kind) => ({
+  unit: { type: "'count' | 'currency' | 'percent'", values: ['count', 'currency', 'percent'], default: 'count', description: 'Number format of the value axis, tooltip and ' + (kind === 'donut' ? 'centre total' : 'legend') + '. count: grouped digits, compact on the axis (1.2k, 1.2M, localized by Intl); currency: needs currency; percent: values are percent points (12 means 12%).' },
+  currency: { type: 'string', description: 'ISO 4217 code for unit="currency", for example UZS, SAR or USD. The axis stays compact without the symbol; tooltip and legend show the full amount.' },
+  yFormat: { type: '(n: number) => string', description: 'Custom formatter for every number (axis, tooltip' + (kind === 'donut' ? ', total' : '') + '). Overrides unit and currency.' },
+  locale: { type: 'string', description: 'BCP 47 tag for numbers and dates, for example "ar" or "uz-UZ". Defaults to the kit locale (en ru uz ar tr and the rest). An RTL language also mirrors the chart.' },
+  dir: { type: "'ltr' | 'rtl'", values: ['ltr', 'rtl'], description: 'Text direction. Defaults to the direction of the page (RTL mirrors the axis, the plot and the tooltip).' },
+  label: { type: 'string', description: 'Accessible name, for example "Revenue". The generated summary (series, period, minimum, maximum, last value) follows it in the aria-label.' },
+  height: { type: 'number', description: kind === 'donut' ? 'Diameter in px. Overrides size.' : 'Chart height in px (without the legend). Overrides size. Horizontal bars grow with the number of categories when it is not set.' },
+  size: { type: SIZE, values: SZ, default: 'md', description: kind === 'donut' ? 'Preset diameter: xs 120, sm 160, md 200, lg 240, xl 300 px.' : 'Preset height: xs 140, sm 180, md 240, lg 320, xl 400 px.' },
+  loading: { type: 'boolean', default: false, description: 'Shows a skeleton in the shape of the chart.' },
+  emptyText: { type: 'string', description: 'Text of the empty state. Default is the translated "No data for this period".' },
+  emptyIcon: { type: 'string', description: 'Icon name shown above the empty text. None by default.' },
+  legend: { type: 'boolean', default: kind === 'donut' ? true : 'true when there is more than one series', description: 'Text legend of toggle buttons (aria-pressed). A button hides and shows its ' + (kind === 'donut' ? 'slice' : 'series') + '; the scale is recomputed.' },
+});
+const chartEvents = (kind) => ({
+  pointClick: { line: 'Click or Enter on a point. Called with { seriesKey, series, index, x, label, y }: the series under the pointer (or the keyboard series), the index in the shared x list, the original x value, its formatted label and y.', donut: 'Click or Enter on a slice. Called with { key, label, value, share, index }; share is 0 to 1.' }[kind === 'donut' ? 'donut' : 'line'],
+  legendToggle: 'A legend button was pressed. Called with { key, label, hidden } where hidden is the new state.',
+});
+const chartNotes = [
+  'Pure inline SVG, no dependencies. Colors come from the --zg-chart-* tokens (light, dark, gold and tamam), so there is nothing to configure per theme.',
+  'Empty data (no points, only null values, or only zeros for bars and donut) shows the empty state instead of an axis of zeros. A null y is a gap in the line, never a zero. All values equal: the axis starts at 0 and leaves headroom.',
+  'Accessibility: the plot is one focusable role="img" with a generated aria-label, a visually hidden data table, and a live region that reads the point while you move. Keys: Left and Right (mirrored in RTL) move between points, Up and Down between series, Home and End jump, Escape hides the tooltip, Enter fires pointClick.',
+  'The chart fills the width of its container (ResizeObserver, client only) and renders at 640 px on the server.',
+];
+
 export default {
   Card: {
     description: 'Glass surface container with an optional title header, used to group related content.',
@@ -210,6 +237,56 @@ export default {
     },
     slots: { default: 'Chart or any content shown below the header.' },
     events: { menu: 'Called with the clicked menu item label (the string from menu); the menu closes afterwards.' },
+  },
+
+  LineChart: {
+    description: 'Line chart for time series with several series, a localized time axis with automatic label step, "nice" value ticks, gaps for null values, tooltip and keyboard navigation.',
+    props: {
+      series: { type: SERIES, required: true, description: 'Series to draw. x is a Date, an ISO date string (day, week, month are detected from the spacing), a number or a category string; the series share one x list, a missing x or a null y is a gap. tone is brand, success, warning, danger, info or neutral; without it the series palette (--zg-chart-1 to 6) is used. dashed draws the line dashed, for example the previous week.' },
+      ...chartCommon('line'),
+      yMin: { type: 'number', description: 'Fixed lower end of the value axis (otherwise nice ticks from the data, from 0 unless the data stays far above it).' },
+      yMax: { type: 'number', description: 'Fixed upper end of the value axis.' },
+      showPoints: { type: 'boolean', description: 'Dots on every point. Default: on up to 40 points; isolated points (between gaps) always get a dot.' },
+    },
+    events: chartEvents('line'),
+    notes: chartNotes,
+  },
+
+  AreaChart: {
+    description: 'Line chart with a gradient fill under each line, made from the series color; same data, axes, tooltip and keyboard behavior as LineChart.',
+    props: {
+      series: { type: SERIES, required: true, description: 'Series to draw, see LineChart. The fill goes down to the zero line (or the bottom of the plot when the axis does not include 0); each run between gaps is filled separately.' },
+      ...chartCommon('area'),
+      yMin: { type: 'number', description: 'Fixed lower end of the value axis.' },
+      yMax: { type: 'number', description: 'Fixed upper end of the value axis.' },
+      showPoints: { type: 'boolean', description: 'Dots on every point. Default: on up to 40 points; isolated points always get a dot.' },
+    },
+    events: chartEvents('line'),
+    notes: chartNotes,
+  },
+
+  BarChart: {
+    description: 'Vertical or horizontal bar chart, grouped or stacked, for categories such as days, 24 hours or revenue per branch; same axes, formats and accessibility as LineChart.',
+    props: {
+      series: { type: SERIES, required: true, description: 'One entry per bar series. x is the category (string, number or Date); categories keep their order of first appearance, dates are sorted. Negative values draw below the zero line.' },
+      orientation: { type: "'vertical' | 'horizontal'", values: ['vertical', 'horizontal'], default: 'vertical', description: 'Horizontal puts the categories on the left (right in RTL) and grows with the number of categories.' },
+      stacked: { type: 'boolean', default: false, description: 'Stacks the series of a category (positives and negatives stack apart) instead of placing them side by side; the tooltip adds a total.' },
+      ...chartCommon('bar'),
+      yMin: { type: 'number', description: 'Fixed lower end of the value axis.' },
+      yMax: { type: 'number', description: 'Fixed upper end of the value axis.' },
+    },
+    events: chartEvents('line'),
+    notes: chartNotes,
+  },
+
+  DonutChart: {
+    description: 'Donut chart of shares (sales channels, payment methods, plans) with a text legend, the total in the centre and a legend toggle.',
+    props: {
+      data: { type: "{ key: string; label: string; value: number; tone?: " + CHART_TONE + " }[]", required: true, description: 'Slices. Only positive values draw; others keep their legend row at 0. All zero or empty shows the empty state.' },
+      ...chartCommon('donut'),
+    },
+    events: chartEvents('donut'),
+    notes: chartNotes,
   },
 
   Ring: {

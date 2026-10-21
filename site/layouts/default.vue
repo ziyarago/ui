@@ -10,7 +10,7 @@ const commands = GROUPS.flatMap(g => g.names.map(n => ({ id: n, label: n, keywor
 const MORE = [
   { label: 'Integration', value: '/docs/integration' }, { label: 'Theming', value: '/docs/theming' },
   { label: 'Colors', value: '/docs/colors' }, { label: 'Fonts', value: '/docs/fonts' }, { label: 'Backgrounds', value: '/docs/backgrounds' },
-  { label: 'AI and MCP', value: '/docs/ai' }, { label: 'Localization', value: '/docs/localization' }, { label: 'Accessibility', value: '/docs/accessibility' },
+  { label: 'AI and MCP', value: '/docs/ai' }, { label: 'Localization', value: '/docs/localization' }, { label: 'Accessibility', value: '/docs/accessibility' }, { label: 'Charts', value: '/docs/charts' },
   { label: 'Changelog', value: '/docs/changelog' }, { label: 'Roadmap', value: '/docs/roadmap' },
 ]
 const go2 = (it: string | { value: string }) => router.push(typeof it === 'string' ? it : it.value)
@@ -58,6 +58,7 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
         <NuxtLink to="/docs/ai" class="s-link">AI and MCP</NuxtLink>
         <NuxtLink to="/docs/localization" class="s-link">Localization</NuxtLink>
         <NuxtLink to="/docs/accessibility" class="s-link">Accessibility</NuxtLink>
+        <NuxtLink to="/docs/charts" class="s-link">Charts</NuxtLink>
         <NuxtLink to="/docs/changelog" class="s-link">Changelog</NuxtLink>
         <NuxtLink to="/docs/roadmap" class="s-link">Roadmap</NuxtLink>
         <NuxtLink to="/docs/components" class="s-link">All components</NuxtLink>

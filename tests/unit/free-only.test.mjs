@@ -14,8 +14,8 @@ const read = p => readFileSync(join(root, p), 'utf8');
 const pro = [...PRO_NAMES];
 
 describe('free-only package', () => {
-  test('tiers: 106 Pro names, 102 free components, 6 free page templates', () => {
-    assert.equal(pro.length, 106);
+  test('tiers: 110 Pro names, 102 free components, 6 free page templates', () => {
+    assert.equal(pro.length, 110);
     assert.equal(Object.keys(components).length, 102);
     assert.equal(Object.keys(components).filter(n => /^Page[A-Z]/.test(n) && n !== 'PageHeader').length, 6);
   });
@@ -51,7 +51,7 @@ describe('free-only package', () => {
     for (const n of pro) { assert.equal(byName[n]?.tier, 'pro', n); assert.equal(byName[n].implemented, false, n); }
     for (const c of m.components) if (c.tier === 'free') assert.equal(c.implemented, true, c.name);
     assert.equal(m.components.filter(c => c.implemented).length, 102);
-    assert.equal(m.components.filter(c => c.tier === 'pro').length, 106);
+    assert.equal(m.components.filter(c => c.tier === 'pro').length, 110);
   });
 
   test('generated types have no Pro component', { skip: !existsSync(join(root, 'types/vue.d.ts')) && 'run npm run build first' }, () => {

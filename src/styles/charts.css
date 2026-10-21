@@ -1,0 +1,68 @@
+/* LineChart, AreaChart, BarChart, DonutChart (@ziyarago/ui-pro). Colors only from tokens: the series palette (--zg-chart-1..6), the tones and the grid / axis / label colors are defined here
+   per theme and palette (gold, tamam). Tokens are declared on .zg-chart so palette references resolve where the chart is. */
+.zg-chart{
+  --zg-chart-brand:var(--zg-brand);--zg-chart-info:var(--zg-sky);--zg-chart-success:oklch(0.76 0.15 150);--zg-chart-warning:oklch(0.8 0.14 80);--zg-chart-danger:oklch(0.7 0.18 25);--zg-chart-neutral:oklch(0.72 0.012 70);
+  --zg-chart-1:var(--zg-chart-brand);--zg-chart-2:var(--zg-chart-info);--zg-chart-3:var(--zg-chart-success);--zg-chart-4:oklch(0.72 0.13 300);--zg-chart-5:oklch(0.76 0.14 45);--zg-chart-6:oklch(0.72 0.15 350);
+  --zg-chart-grid:oklch(1 0 0 / .07);--zg-chart-axis:oklch(1 0 0 / .24);--zg-chart-label:var(--zg-text-3);--zg-chart-surface:var(--zg-pop);--zg-chart-band:oklch(1 0 0 / .06);
+}
+[data-palette="tamam"] .zg-chart{--zg-chart-success:oklch(0.76 0.13 175);--zg-chart-1:var(--zg-chart-brand);--zg-chart-2:var(--zg-chart-info);--zg-chart-3:oklch(0.72 0.13 300);--zg-chart-4:oklch(0.78 0.14 75);--zg-chart-5:oklch(0.72 0.15 350);--zg-chart-6:oklch(0.7 0.14 255)}
+[data-theme="light"] .zg-chart{
+  --zg-chart-brand:oklch(0.55 0.09 66);--zg-chart-info:oklch(0.5 0.11 230);--zg-chart-success:oklch(0.48 0.13 150);--zg-chart-warning:oklch(0.52 0.12 70);--zg-chart-danger:oklch(0.5 0.18 25);--zg-chart-neutral:oklch(0.5 0.012 70);
+  --zg-chart-4:oklch(0.5 0.15 300);--zg-chart-5:oklch(0.55 0.14 45);--zg-chart-6:oklch(0.5 0.17 350);
+  --zg-chart-grid:oklch(0.3 0.02 60 / .26);--zg-chart-axis:oklch(0.3 0.02 60 / .75);--zg-chart-band:oklch(0.3 0.02 60 / .06);
+}
+[data-theme="light"][data-palette="tamam"] .zg-chart,[data-theme="light"] [data-palette="tamam"] .zg-chart,[data-palette="tamam"] [data-theme="light"] .zg-chart{--zg-chart-brand:oklch(0.5 0.17 142);--zg-chart-info:oklch(0.5 0.1 200);--zg-chart-success:oklch(0.48 0.12 175);--zg-chart-3:oklch(0.5 0.15 300);--zg-chart-4:oklch(0.55 0.13 70);--zg-chart-5:oklch(0.5 0.17 350);--zg-chart-6:oklch(0.5 0.15 255)}
+
+.zg-chart{position:relative;display:block;width:100%;min-width:0;color:var(--zg-text-2);font:12px/1.3 var(--zg-font)}
+.zg-chart__box{position:relative;max-width:100%}
+.zg-chart__plot{position:relative;display:block;max-width:100%;touch-action:pan-y;outline:0;border-radius:10px;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:crosshair}
+.zg-chart__plot:focus-visible{box-shadow:0 0 0 3px var(--zg-brand-soft),0 0 0 1px var(--zg-brand)}
+.zg-chart__svg{display:block;width:100%;height:auto;max-width:100%;overflow:visible}
+.zg-chart__grid{stroke:var(--zg-chart-grid);stroke-width:1;shape-rendering:crispEdges}
+.zg-chart__zero{stroke:var(--zg-chart-axis)}
+.zg-chart__tick{fill:var(--zg-chart-label);font-size:11px;font-family:inherit;font-variant-numeric:tabular-nums}
+.zg-chart__line{stroke:var(--c);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.zg-chart__gs{stop-color:var(--c)}
+.zg-chart__pt{fill:var(--c);stroke:var(--zg-chart-surface);stroke-width:1.5}
+.zg-chart__pt--on{stroke-width:2}
+.zg-chart__guide{stroke:var(--zg-chart-axis);stroke-width:1;stroke-dasharray:3 3;shape-rendering:crispEdges}
+.zg-chart__band{fill:var(--zg-chart-band)}
+.zg-chart__bar{fill:var(--c)}
+.zg-chart__bar--on{fill:color-mix(in oklch,var(--c) 82%,var(--zg-text-1))}
+.zg-chart__slice{fill:var(--c);stroke:none}
+.zg-chart__slice--on{fill:color-mix(in oklch,var(--c) 82%,var(--zg-text-1))}
+.zg-chart__track{stroke:var(--zg-s2)}
+.zg-chart__total{fill:var(--zg-text-1);font-weight:600;font-family:inherit;font-variant-numeric:tabular-nums}
+.zg-chart__totall{fill:var(--zg-chart-label);font-size:11px;font-family:inherit}
+.zg-chart__tip{position:absolute;z-index:3;box-sizing:border-box;pointer-events:none;background:var(--zg-pop);color:var(--zg-text-1);border-radius:12px;box-shadow:var(--zg-shadow-1),inset 0 0 0 1px var(--zg-stroke);padding:8px 12px;font-size:12px}
+.zg-chart__tipt{color:var(--zg-text-2);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zg-chart__tipr{display:flex;align-items:center;gap:8px;line-height:20px}
+.zg-chart__tipr--on .zg-chart__tipl{color:var(--zg-text-1)}
+.zg-chart__tipl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--zg-text-2)}
+.zg-chart__tipv{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.zg-chart__sw{flex:none;width:10px;height:10px;border-radius:3px;background:var(--c)}
+.zg-chart__sw--dash{width:16px;height:0;border-radius:0;background:none;border-top:2.5px dashed var(--c)}
+.zg-chart__legend{display:flex;flex-wrap:wrap;gap:4px 8px;margin:10px 0 0;padding:0;list-style:none}
+.zg-chart__lg{display:inline-flex;align-items:center;gap:8px;min-height:28px;padding:2px 8px;border:0;border-radius:8px;background:none;color:var(--zg-text-2);font:inherit;font-size:13px;cursor:pointer;text-align:start}
+.zg-chart__lg:hover{background:var(--zg-s2)}
+.zg-chart__lg:focus-visible{outline:0;box-shadow:0 0 0 3px var(--zg-brand-soft),0 0 0 1px var(--zg-brand)}
+.zg-chart__lg[aria-pressed="false"]{color:var(--zg-text-3)}
+.zg-chart__lg[aria-pressed="false"] .zg-chart__lgt{text-decoration:line-through}
+.zg-chart__lg[aria-pressed="false"] .zg-chart__sw{background:none;box-shadow:inset 0 0 0 2px var(--c)}
+.zg-chart__lg[aria-pressed="false"] .zg-chart__sw--dash{box-shadow:none}
+.zg-chart__lgv{margin-inline-start:auto;padding-inline-start:12px;font-variant-numeric:tabular-nums;color:var(--zg-text-2);white-space:nowrap}
+.zg-chart--donut{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px}
+.zg-chart--donut .zg-chart__box{flex:none;max-width:100%}
+.zg-chart--donut .zg-chart__legend{flex:1 1 200px;min-width:0;flex-direction:column;flex-wrap:nowrap;gap:2px;margin:0}
+.zg-chart--donut .zg-chart__lg{width:100%}
+.zg-chart__empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-sizing:border-box;padding:16px;text-align:center;color:var(--zg-text-3);border-radius:16px;box-shadow:inset 0 0 0 1px var(--zg-stroke)}
+.zg-chart__emptyt{margin:0;font-size:13px}
+.zg-chart--donut.zg-chart--empty,.zg-chart--donut.zg-chart--loading{display:block}
+.zg-chart__sk{display:block;max-width:100%}
+.zg-chart--donut .zg-chart__sk{margin-inline:auto}
+.zg-chart__skg{stroke:var(--zg-s2);stroke-width:1;vector-effect:non-scaling-stroke}
+.zg-chart__skp{stroke:var(--zg-s3);stroke-linecap:round;animation:zg-chart-pulse 1.4s ease-in-out infinite}
+.zg-chart__skbars{display:flex;align-items:flex-end;gap:8px}
+.zg-chart__skbars .zg-skel{flex:1;border-radius:6px 6px 2px 2px}
+@keyframes zg-chart-pulse{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.zg-chart__skp{animation:none}}

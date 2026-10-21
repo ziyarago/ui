@@ -4,7 +4,7 @@ export const PRO = {
   layout: ['LiquidGlass', 'Sortable'],
   actions: ['Fab', 'ActionRail', 'ActionCard', 'NotificationBell'],
   forms: ['ChipInput', 'InlineEdit', 'RichEditor', 'GroupedSelect', 'TreeSelect', 'PillSelect', 'OptionCard', 'OptionCards', 'RangeSlider', 'ColorPicker', 'RangeCalendar', 'ImageUpload', 'ValidatedField', 'StepForm', 'Stepper'],
-  data: ['DataGroup', 'TreeView', 'CalendarView', 'KpiInline', 'StatRow', 'StatLine', 'StatStrip', 'CountryRow', 'VersusBar', 'SegBar', 'ChartCard', 'OccupancyChart', 'SalesFunnel', 'SystemStatus', 'UserCell', 'HeroBanner', 'TabTiles', 'PricingCard', 'IntegrationCard'],
+  data: ['DataGroup', 'TreeView', 'CalendarView', 'KpiInline', 'StatRow', 'StatLine', 'StatStrip', 'CountryRow', 'VersusBar', 'SegBar', 'ChartCard', 'LineChart', 'AreaChart', 'BarChart', 'DonutChart', 'OccupancyChart', 'SalesFunnel', 'SystemStatus', 'UserCell', 'HeroBanner', 'TabTiles', 'PricingCard', 'IntegrationCard'],
   overlay: ['StepDialog', 'FullscreenDialog', 'Actionsheet', 'HoverCard', 'CommandBar', 'ImageViewer', 'Tour', 'TourPopover', 'Screensaver'],
   media: ['Gallery', 'Map', 'ProfileHeader', 'ChatAi', 'Carousel'],
   domain: ['HotelCard', 'TourCard', 'PrayerTimes', 'RamadanTracker', 'QiblaCompass', 'BookingCard', 'GuestCard', 'RoomGrid', 'RoomCalendar', 'LeadCard', 'DealCard', 'PipelineBoard', 'ContactPanel', 'KanbanColumn', 'KanbanCard', 'CallRow', 'CallCard', 'IncomingCall', 'AuthShowcase'],
