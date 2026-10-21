@@ -78,6 +78,7 @@ const code = computed(() => ({ vue, nuxt, react })[fw.value])
       <li><NuxtLink to="/docs/templates">Page templates</NuxtLink>: ready app screens built from the library.</li>
       <li><NuxtLink to="/docs/integration">Integration</NuxtLink>: Vite, Nuxt, Tailwind and React setups.</li>
       <li><NuxtLink to="/docs/theming">Theming</NuxtLink>, <NuxtLink to="/docs/colors">Colors</NuxtLink>, <NuxtLink to="/docs/fonts">Fonts</NuxtLink>: tokens, palettes and typography.</li>
+      <li><NuxtLink to="/docs/localization">Localization</NuxtLink>: 16 languages, RTL, overriding texts.</li>
       <li><NuxtLink to="/docs/accessibility">Accessibility</NuxtLink>: what is supported today and what is not.</li>
       <li><NuxtLink to="/docs/changelog">Changelog</NuxtLink> and <NuxtLink to="/docs/roadmap">Roadmap</NuxtLink>: what changed and what is next.</li>
     </ul>
