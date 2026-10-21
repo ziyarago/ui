@@ -1,3 +1,9 @@
+## [0.18.0](https://github.com/ziyarago/ui/compare/v0.17.0...v0.18.0) (2026-10-21)
+
+### Features
+
+* TopNav sub-menus with icons and overflow into a More menu, no edge fade ([ed1addd](https://github.com/ziyarago/ui/commit/ed1addd0d9a9844b4e6e23bbe86b18a5a01a74be))
+
 ## [0.17.0](https://github.com/ziyarago/ui/compare/v0.16.0...v0.17.0) (2026-10-21)
 
 ### Features
