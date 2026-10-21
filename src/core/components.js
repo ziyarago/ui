@@ -5,6 +5,8 @@ import { trap } from './dialog.js';
 import { t } from '../i18n/index.js';
 import { rove, tabIdx, listKeys, openKeys, focusIn, toTrigger, trigger } from './keys.js';
 export const cx = (...a) => a.filter(Boolean).join(' ');
+// Quoted CSS url() for a background-image: URLs with spaces, parentheses, commas or quotes (photo (1).jpg, names with spaces) break the unquoted form and the image silently disappears.
+export const cssUrl = u => 'url("' + String(u).replace(/["\\]/g, '\\$&').replace(/\n/g, '\\a ').replace(/\r/g, '\\d ') + '")';
 // Copies the listed props that are set; used to forward native attributes and listeners to the real <input>/<textarea>.
 const DOM_NAMES = { autocomplete: 'autoComplete', maxlength: 'maxLength', minlength: 'minLength', inputmode: 'inputMode', autocapitalize: 'autoCapitalize', spellcheck: 'spellCheck', autofocus: 'autoFocus' };
 // DOM property spelling (autoComplete, maxLength ...) so React does not warn; Vue accepts it too.
