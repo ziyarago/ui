@@ -24,7 +24,7 @@ const notYet: [string, string][] = [
   ['Popup focus handling', 'Select, Dropdown and Popover lists close on Escape and outside click but do not move focus into the list or trap it.'],
   ['Map, drag and drop', 'Map pans with the pointer only. Sortable lists are driven by drag; there is no keyboard way to reorder.'],
   ['Screen reader testing', 'No manual testing with NVDA, JAWS or VoiceOver has been recorded. Treat the roles above as intent, not a verified result.'],
-  ['Component strings', 'Built-in labels are English; localization of them is on the roadmap.'],
+  ['Component strings', 'Built-in labels are translated for en, ar and ru (free) and 13 more languages in the Pro pack; some components still show English only, see the Localization page.'],
 ]
 </script>
 
