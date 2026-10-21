@@ -1,3 +1,9 @@
+## [0.13.0](https://github.com/ziyarago/ui/compare/v0.12.0...v0.13.0) (2026-10-21)
+
+### Features
+
+* accessibility audit with axe (0 violations), keyboard navigation for tabs, selects and menus, readable tooltips ([95a25e1](https://github.com/ziyarago/ui/commit/95a25e1d763f2c63ee788986943aeb3abbb669ae))
+
 ## [0.12.0](https://github.com/ziyarago/ui/compare/v0.11.0...v0.12.0) (2026-10-21)
 
 ### Features
