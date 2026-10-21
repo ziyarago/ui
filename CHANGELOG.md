@@ -1,3 +1,9 @@
+## [0.15.0](https://github.com/ziyarago/ui/compare/v0.14.0...v0.15.0) (2026-10-21)
+
+### Features
+
+* Pro components, page templates and migration tools move to the private @ziyarago/ui-pro package; the public package keeps the free Core (102 components) ([8432716](https://github.com/ziyarago/ui/commit/8432716b2c92def055cb79a44cba22b1eaa59676))
+
 ## [0.14.0](https://github.com/ziyarago/ui/compare/v0.13.0...v0.14.0) (2026-10-21)
 
 ### Features
