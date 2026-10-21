@@ -1572,6 +1572,26 @@ export interface UiLoginFormProps {
    */
   showForgot?: boolean;
   /**
+   * Type of the login field: use "email" or "tel" to get the matching mobile keyboard and browser validation.
+   * @default 'text'
+   */
+  emailType?: 'text' | 'email' | 'tel';
+  /**
+   * Native name of the login field; the password field uses passwordName (default "password"). Both fields get autocomplete "username" and "current-password" so password managers fill them.
+   * @default 'email'
+   */
+  emailName?: string;
+  /**
+   * Native name of the password field.
+   * @default 'password'
+   */
+  passwordName?: string;
+  /**
+   * Marks both fields required (native validation).
+   * @default false
+   */
+  required?: boolean;
+  /**
    * Show the "Remember device" checkbox. Hide it when your backend has no such option; the submit payload then keeps remember: true.
    * @default true
    */
@@ -1582,10 +1602,10 @@ export interface UiLoginFormProps {
    */
   submitLabel?: string;
   /**
-   * Texts of the form; any missing key keeps its English default.
+   * Texts of the form; any missing key keeps its English default (the two placeholders default to none).
    * @default { email: 'Email or phone', password: 'Password', remember: 'Remember device', forgot: 'Forgot password?', submit: 'Sign in' }
    */
-  labels?: { email?: string; password?: string; remember?: string; forgot?: string; submit?: string };
+  labels?: { email?: string; password?: string; emailPlaceholder?: string; passwordPlaceholder?: string; remember?: string; forgot?: string; submit?: string };
   /**
    * Control height, font and padding scale.
    * @default 'md'
@@ -3731,6 +3751,6 @@ export const UiVStack: ComponentType<UiVStackProps>;
 
 export const rules: typeof import('./shared').rules;
 export { useUiTheme } from './theme';
-export { fmt, setIconBase } from './shared';
+export { fmt, setIconBase, registerIcons } from './shared';
 /** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
 export function defineUiComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, ComponentType<any>>;
