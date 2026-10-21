@@ -2,8 +2,10 @@
 import React, { createElement as h, Fragment, useState } from 'react';
 import * as UI from '../../src/react/index.js';
 import { revive, record } from './spy.js';
+import { isPro } from '../../src/meta/tiers.js';
 
 const build = (c, key) => {
+  if (!/^[a-z]/.test(c.name) && !UI['Ui' + c.name] && isPro(c.name)) return h('div', { key, className: 'doc-pro-stub', 'data-pro': c.name }, c.name + ' (Pro)');
   const comp = /^[a-z]/.test(c.name) ? c.name : UI['Ui' + c.name];
   if (!comp) throw new Error('Unknown component in example tree: ' + c.name);
   const kids = [...(c.text ? [c.text] : []), ...(c.children ?? []).map((x, i) => build(x, i))];

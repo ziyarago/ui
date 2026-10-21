@@ -5,8 +5,125 @@
   <link href="https://ziyara.vip/changelog.xml" rel="self" type="application/atom+xml"/>
   <link href="https://ziyara.vip/docs/changelog" rel="alternate" type="text/html"/>
   <id>https://ziyara.vip/docs/changelog</id>
-  <updated>2026-10-21T01:13:50.561Z</updated>
+  <updated>2026-10-21T05:18:28.137Z</updated>
   <author><name>ZiyaraGo</name></author>
+  <entry>
+    <title>0.13.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.13.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.13.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* accessibility audit with axe (0 violations), keyboard navigation for tabs, selects and menus, readable tooltips</content>
+  </entry>
+  <entry>
+    <title>0.12.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.12.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.12.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* free Core and Pro split (102 free, 106 Pro): tiers metadata, Pro badges in docs, pricing copy</content>
+  </entry>
+  <entry>
+    <title>0.11.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.11.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.11.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* Localization docs page, i18n tests, Pro language pack moved to private repo</content>
+  </entry>
+  <entry>
+    <title>0.10.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.10.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.10.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* page templates wave 4 (itinerary, prayer, group manager, public tour), QiblaCompass, bundled fonts, auth page and compat fixes</content>
+  </entry>
+  <entry>
+    <title>0.9.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.9.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.9.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* page templates wave 3 (article, changelog, help, states, legal, locations, booking flow)</content>
+  </entry>
+  <entry>
+    <title>0.8.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.8.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.8.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* page templates wave 2 (calendar, kanban, billing, team, integrations, search)</content>
+  </entry>
+  <entry>
+    <title>0.7.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.7.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.7.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* page templates wave 1 (landing, onboarding, checkout, inbox, notifications, analytics)</content>
+  </entry>
+  <entry>
+    <title>0.6.1 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.6.1" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.6.1</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Bug Fixes
+
+* stop shipping 3D icons and brand files, watermark demo icons on the docs site</content>
+  </entry>
+  <entry>
+    <title>0.6.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.6.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.6.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* SocialAuth component with Google and Apple buttons</content>
+  </entry>
+  <entry>
+    <title>0.5.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.5.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.5.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* AuthShowcase login layouts (photo, light, tint) and PageAuth variants</content>
+  </entry>
+  <entry>
+    <title>0.4.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.4.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.4.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* per-component translations (en, ar, ru free; 13 more languages in Pro pack), screenshots in README</content>
+  </entry>
+  <entry>
+    <title>0.3.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.3.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.3.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* animated aurora background, kit-owned i18n core, glass-ui-kit compat layer, new landing</content>
+  </entry>
+  <entry>
+    <title>0.2.0 (2026-10-21)</title>
+    <link href="https://ziyara.vip/docs/changelog#v0.2.0" rel="alternate" type="text/html"/>
+    <id>https://ziyara.vip/docs/changelog#v0.2.0</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <content type="text">### Features
+
+* pricing page with early access list and MCP registry metadata</content>
+  </entry>
   <entry>
     <title>0.1.1 (2026-10-21)</title>
     <link href="https://ziyara.vip/docs/changelog#v0.1.1" rel="alternate" type="text/html"/>
@@ -33,7 +150,7 @@ All notable changes follow Keep a Changelog and SemVer. Pre-1.0: minor versions 
     <title>0.1.0 — first release</title>
     <link href="https://ziyara.vip/docs/changelog#v0.1.0-2" rel="alternate" type="text/html"/>
     <id>https://ziyara.vip/docs/changelog#v0.1.0-2</id>
-    <updated>2026-10-21T01:13:50.561Z</updated>
+    <updated>2026-10-21T05:18:28.137Z</updated>
     <content type="text">### Added
 - Docs site SEO: canonical, Open Graph, Twitter and JSON-LD tags per page, generated `sitemap.xml` and `robots.txt`, 404 page with noindex, og.png, favicon; Google Analytics 4 and Yandex Metrika loaded from build variables.
 - Deployment of the docs to your own server over SSH (releases directory, atomic switch, rollback): `deploy/`, `.github/workflows/deploy-docs.yml`, `docs/DEPLOYMENT.md`.

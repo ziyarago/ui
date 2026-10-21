@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { UiButton, UiCard, UiSelect, UiDataTable, UiTextField, UiCheckbox, UiTabs, UiPagination, UiModal, UiAppShell, UiChip, UiNotificationBell, UiLoginForm } from '@ziyarago/ui/vue';
+import { UiButton, UiCard, UiSelect, UiDataTable, UiTextField, UiCheckbox, UiTabs, UiPagination, UiModal, UiAppShell, UiChip, UiLoginForm } from '@ziyarago/ui/vue';
 import type { UiButtonProps, UiSelectProps } from '@ziyarago/ui/vue';
 
 const name = ref('');
@@ -29,6 +29,5 @@ const onSort = (key: string, dir: 'asc' | 'desc') => { void key; void dir; };
   <UiDataTable :columns="[{ key: 'title', label: 'Title', sortable: true }]" :rows="rows" @sort="onSort" @select="(ids: (string | number)[]) => ids.length" />
   <UiModal :open="open" title="T" @close="open = false">content</UiModal>
   <UiAppShell nav="side" :items="[{ value: 'h', label: 'Home' }]" @change="(v: string) => v.length" />
-  <UiNotificationBell :items="[{ id: 1, title: 'Hi' }]" @read="(id: string | number) => id" @mark-all-read="() => {}" />
   <UiLoginForm @submit="(v) => v.email.length && v.remember" />
 </template>

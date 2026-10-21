@@ -5,3 +5,8 @@ export interface MetaGroup { id: string; title?: string; blurb?: string; names: 
 export function registerMeta(extra: Record<string, ComponentMeta>, options?: { tiers?: string[]; groups?: MetaGroup[] }): Record<string, ComponentMeta>;
 export const meta: Record<string, ComponentMeta>;
 export default meta;
+/** Names of the Pro components by group (src/meta/tiers.js). Documented in the public meta, implemented in @ziyarago/ui-pro. */
+export const PRO: Record<string, string[]>;
+export const PRO_NAMES: Set<string>;
+export function isPro(name: string): boolean;
+export const GROUPS: MetaGroup[];

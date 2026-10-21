@@ -1,7 +1,7 @@
 {
   "name": "@ziyarago/ui",
   "version": "0.14.0",
-  "description": "ZiyaraGo UI — glass design system for Umrah and Hajj products. OKLCH tokens, two palettes, dark and light, RTL, Thmanyah. One framework-neutral core with Vue 3, Nuxt and React adapters, 208 components and 40 page templates.",
+  "description": "ZiyaraGo UI — glass design system for Umrah and Hajj products. OKLCH tokens, two palettes, dark and light, RTL, Thmanyah. One framework-neutral core with Vue 3, Nuxt and React adapters, 102 free components and 6 page templates (more in @ziyarago/ui-pro).",
   "keywords": [
     "ui",
     "design-system",
@@ -75,21 +75,13 @@
       "types": "./types/resolver.d.ts",
       "default": "./src/resolver.js"
     },
-    "./compat": {
-      "types": "./types/compat.d.ts",
-      "default": "./src/compat/index.js"
-    },
-    "./compat/resolver": {
-      "types": "./types/compat-resolver.d.ts",
-      "default": "./src/compat/resolver.js"
-    },
-    "./compat/vite": {
-      "types": "./types/compat-vite.d.ts",
-      "default": "./src/compat/vite.js"
-    },
     "./i18n": {
       "types": "./types/i18n.d.ts",
       "default": "./src/i18n/index.js"
+    },
+    "./internal": {
+      "types": "./types/internal.d.ts",
+      "default": "./src/internal.js"
     }
   },
   "files": [
@@ -102,8 +94,7 @@
     "CHANGELOG.md",
     "THIRD_PARTY_NOTICES.md",
     "src",
-    "docs/INTEGRATION.md",
-    "docs/MIGRATION.md"
+    "docs/INTEGRATION.md"
   ],
   "scripts": {
     "types": "node scripts/types.mjs",
@@ -185,17 +176,11 @@
       "resolver": [
         "types/resolver.d.ts"
       ],
-      "compat": [
-        "types/compat.d.ts"
-      ],
-      "compat/resolver": [
-        "types/compat-resolver.d.ts"
-      ],
-      "compat/vite": [
-        "types/compat-vite.d.ts"
-      ],
       "meta": [
         "types/meta.d.ts"
+      ],
+      "internal": [
+        "types/internal.d.ts"
       ]
     }
   }

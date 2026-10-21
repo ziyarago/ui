@@ -13,7 +13,6 @@ export const CASES = [
   one('Tabs', { props: { items: TABS, modelValue: 'one' } }),
   one('SegmentedControl', { props: { items: TABS, modelValue: 'one' } }),
   one('PillTabs', { props: { items: TABS, value: 'one' } }),
-  one('PillSelect', { props: { options: OPTS, modelValue: 'a' } }),
   one('Menu', { props: { items: [{ label: 'Open', value: 'open' }, { label: 'Copy', value: 'copy', disabled: true }, { label: 'Paste', value: 'paste' }] } }),
   one('Tooltip', { props: { text: 'Copies the link' }, text: 'Hover me' }),
   one('Switch', { props: { label: 'Wi-Fi', modelValue: false } }),

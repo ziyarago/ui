@@ -1,9 +1,8 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { pd as pd2 } from '../../src/core/components2.js';
-import { pd as pd4 } from '../../src/core/components4.js';
 
-for (const [file, pd] of [['components2 (Calendar, DatePicker)', pd2], ['components4 (RangeCalendar)', pd4]]) {
+for (const [file, pd] of [['components2 (Calendar, DatePicker)', pd2]]) {
   describe('pd date parsing in ' + file, () => {
     test('empty values give null', () => {
       for (const v of [null, undefined, '']) assert.equal(pd(v), null);

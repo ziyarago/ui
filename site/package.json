@@ -4,6 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "nuxt dev",
+    "dev:pro": "ZIYARAGO_PRO=1 nuxt dev",
+    "build:pro": "ZIYARAGO_PRO=1 nuxt build",
+    "generate:pro": "ZIYARAGO_PRO=1 nuxt generate && node scripts/seo.mjs && node scripts/feed.mjs",
     "build": "nuxt build",
     "generate": "nuxt generate && node scripts/seo.mjs && node scripts/feed.mjs",
     "preview": "nuxt preview",
@@ -16,6 +19,9 @@
     "@ziyarago/ui": "file:..",
     "nuxt": "^3.0.0",
     "vue": "^3.5.0"
+  },
+  "optionalDependencies": {
+    "@ziyarago/ui-pro": "file:../../ZiyaraGo_UI_pro"
   },
   "devDependencies": {
     "puppeteer-core": "^23.11.1"

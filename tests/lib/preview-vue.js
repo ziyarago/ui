@@ -2,8 +2,11 @@
 import { defineComponent, h, ref } from 'vue';
 import * as UI from '../../src/vue/index.js';
 import { revive, record } from './spy.js';
+import { isPro } from '../../src/meta/tiers.js';
 
 const build = (c, key) => {
+  // Free templates show Pro blocks in their examples; without @ziyarago/ui-pro they render as a stub.
+  if (!/^[a-z]/.test(c.name) && !UI['Ui' + c.name] && isPro(c.name)) return h('div', { key, class: 'doc-pro-stub', 'data-pro': c.name }, c.name + ' (Pro)');
   const comp = /^[a-z]/.test(c.name) ? c.name : UI['Ui' + c.name];
   if (!comp) throw new Error('Unknown component in example tree: ' + c.name);
   const slots = {};

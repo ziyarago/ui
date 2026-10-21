@@ -4,6 +4,7 @@ import { components } from '../src/core/index.js';
 import { meta } from '../src/meta/index.js';
 import { extract } from './props-extract.mjs';
 import { BOOL_PROPS } from '../src/core/bools.js';
+import { PRO_NAMES, isPro } from '../src/meta/tiers.js';
 
 const ignore = new Set(['style', 'class', 'key', 'ref', 'id', 'actions', 'footer', 'children']);
 const found = extract();
@@ -32,7 +33,10 @@ for (const name of Object.keys(components)) {
   }
   for (const s of real.slots || []) if (!ignore.has(s) && !(s in slots)) errors.push(`${name}: undocumented slot "${s}"`);
 }
-for (const n of Object.keys(meta)) if (!(n in components)) errors.push(`${n}: metadata for unknown component`);
+// Pro names are documented here but implemented in @ziyarago/ui-pro: the public core must not define them, and each needs metadata.
+for (const n of Object.keys(meta)) if (!(n in components) && !isPro(n)) errors.push(`${n}: metadata for unknown component`);
+for (const n of Object.keys(components)) if (isPro(n)) errors.push(`${n}: Pro component implemented in the public core`);
+for (const n of PRO_NAMES) { const m = meta[n]; if (!m) errors.push(`${n}: Pro component without metadata`); else if (!m.description) errors.push(`${n}: missing description`); }
 // src/core/bools.js: every prop that is boolean in all components must be listed, and nothing that is text somewhere may be (the adapter turns '' into true).
 const kinds = {};
 for (const m of Object.values(meta)) for (const [p, d] of Object.entries(m.props || {})) (kinds[p] ||= new Set()).add(d.type === 'boolean');

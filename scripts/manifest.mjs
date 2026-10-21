@@ -12,7 +12,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 mkdirSync(join(root, 'dist'), { recursive: true });
 
-const components = GROUPS.flatMap(g => g.names.map(name => ({ name, tag: 'Ui' + name, group: g.id, tier: isPro(name) ? 'pro' : 'free', ...meta[name] })));
+const components = GROUPS.flatMap(g => g.names.map(name => ({ name, tag: 'Ui' + name, group: g.id, tier: isPro(name) ? 'pro' : 'free', implemented: !isPro(name), ...(isPro(name) ? { package: '@ziyarago/ui-pro' } : {}), ...meta[name] })));
 const manifest = {
   name: pkg.name, version: pkg.version, homepage: 'https://ziyara.vip',
   imports: { vue: "import { UiButton } from '@ziyarago/ui/vue'", react: "import { UiButton } from '@ziyarago/ui/react'", nuxt: "modules: ['@ziyarago/ui/nuxt']", css: "import '@ziyarago/ui/style.css'", theme: "import { useUiTheme } from '@ziyarago/ui/theme'" },

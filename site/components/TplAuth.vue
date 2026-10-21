@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { h } from 'vue'
-import { UiAuthLayout, UiAuthSplit, UiAuthShowcase, UiTextField, UiPasswordInput, UiPhoneInput, UiOptionCards } from '@ziyarago/ui/vue'
+import { UiAuthLayout, UiAuthSplit, UiTextField, UiPasswordInput, UiPhoneInput } from '@ziyarago/ui/vue'
+import { UiAuthShowcase, UiOptionCards } from '#ziyarago-pro'
 import TplSlot from './TplSlot.vue'
 type V = 'login' | 'register' | 'steps' | 'verify' | 'forgot' | 'reset' | 'otp'
 const v = ref<V>('login')

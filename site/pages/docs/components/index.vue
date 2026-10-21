@@ -2,7 +2,7 @@
 import { EXAMPLES } from '~/docs-data'
 import { GROUPS } from '~/docs-data/groups'
 import { isPro } from '../../../../src/meta/tiers.js'
-useSeo({ title: '208 UI components for Vue, Nuxt and React — @ziyarago/ui', description: 'Browse 208 components with live previews, code for Vue and React, and full props tables: buttons, forms, tables, charts, overlays and more.' })
+useSeo({ title: '208 UI components (102 free, 106 Pro) for Vue, Nuxt and React — @ziyarago/ui', description: 'Browse 208 components (102 free, 106 Pro) with live previews, code for Vue and React, and full props tables: buttons, forms, tables, charts, overlays and more.' })
 const total = GROUPS.reduce((n, g) => n + g.names.length, 0)
 </script>
 

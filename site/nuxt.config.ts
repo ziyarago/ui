@@ -1,14 +1,18 @@
 import { readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 
 const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'))
 const mcpPkg = JSON.parse(readFileSync(new URL('../packages/mcp/package.json', import.meta.url), 'utf8'))
 const env = (k: string) => process.env[k] ?? ''
+// Pro demos need the private @ziyarago/ui-pro. They are on when ZIYARAGO_PRO is set (1) and the package resolves; otherwise Pro components render as a
+// "Pro component, see pricing" card (modules/pro.ts), so the free docs build for everyone.
+const proOn = ['1', 'true'].includes(env('ZIYARAGO_PRO')) && (() => { try { createRequire(import.meta.url).resolve('@ziyarago/ui-pro/names'); return true } catch { console.warn('[site] ZIYARAGO_PRO is set but @ziyarago/ui-pro is not installed: Pro components render as placeholders'); return false } })()
 
 export default defineNuxtConfig({
   css: ['~/assets/site.css'],
-  modules: ['@ziyarago/ui/nuxt'],
+  modules: ['@ziyarago/ui/nuxt', './modules/pro'],
   compatibilityDate: '2025-01-01',
-  ziyarago: { theme: { theme: 'dark', palette: 'gold', dir: 'ltr', bg: 'aurora' } },
+  ziyarago: { plugins: proOn ? ['@ziyarago/ui-pro'] : [], theme: { theme: 'dark', palette: 'gold', dir: 'ltr', bg: 'aurora' } },
   // IDs and verification tokens come from the build environment (GitHub Actions variables), never from the code.
   runtimeConfig: {
     public: {
