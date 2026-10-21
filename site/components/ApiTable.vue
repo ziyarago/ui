@@ -16,16 +16,16 @@ const dv = (v: unknown) => (typeof v === 'string' ? `'${v}'` : JSON.stringify(v)
     <template v-if="rows.length">
       <h3>Props</h3>
       <div class="api__tbl" role="table" aria-label="Props">
-        <div class="api__row api__row--h" role="row"><span>Prop</span><span>Type and values</span><span>Default</span><span>Description</span></div>
+        <div class="api__row api__row--h" role="row"><span role="columnheader">Prop</span><span role="columnheader">Type and values</span><span role="columnheader">Default</span><span role="columnheader">Description</span></div>
         <div v-for="[n, p] in rows" :key="n" class="api__row" role="row">
-          <span class="api__n"><code>{{ n }}</code><i v-if="p.required" class="api__req">required</i><i v-if="p.model" class="api__mod">v-model</i></span>
-          <span class="api__t">
+          <span class="api__n" role="cell"><code>{{ n }}</code><i v-if="p.required" class="api__req">required</i><i v-if="p.model" class="api__mod">v-model</i></span>
+          <span class="api__t" role="cell">
             <template v-if="p.values?.length"><span v-for="v in p.values" :key="String(v)" class="api__v">{{ v }}</span></template>
             <code v-else class="api__ty">{{ p.type }}</code>
             <code v-if="p.values?.length && !/^'/.test(p.type)" class="api__ty">{{ p.type }}</code>
           </span>
-          <span class="api__def">{{ p.default !== undefined ? dv(p.default) : '—' }}</span>
-          <span class="api__desc">{{ p.description }}</span>
+          <span class="api__def" role="cell">{{ p.default !== undefined ? dv(p.default) : '—' }}</span>
+          <span class="api__desc" role="cell">{{ p.description }}</span>
         </div>
       </div>
     </template>

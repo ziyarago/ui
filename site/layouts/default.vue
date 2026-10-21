@@ -40,7 +40,7 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
         <UiDropdown class="more" label="More" icon="chevron-down" size="sm" :items="MORE" @select="go2" />
       </nav>
       <div class="ctl">
-        <UiButton size="sm" class="search" aria-label="Search components" @click="palette_ = true"><span class="search__t">Search</span> <kbd class="zg-kbd">⌘K</kbd></UiButton>
+        <UiButton size="sm" class="search" @click="palette_ = true"><span class="search__t">Search</span> <kbd class="zg-kbd">⌘K</kbd></UiButton>
         <ClientOnly><SiteSettings /><template #fallback><span class="ss-fb" /></template></ClientOnly>
         <UiButton v-if="isDocs" class="burger" size="sm" @click="sideOpen = !sideOpen">Menu</UiButton>
       </div>
