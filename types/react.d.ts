@@ -2814,15 +2814,16 @@ export const UiSettingsSection: ComponentType<UiSettingsSectionProps>;
  * Vertical sidebar with a brand, grouped navigation items, a footer and an optional collapse toggle.
  * Note: Collapsing is controlled: flip collapsed in the toggle handler.
  * Note: Group entries are keyed by their title, so keep group names unique.
+ * Note: In the collapsed rail the children of an open group show as icons (children without an icon get a dot).
  */
 export interface UiSideNavProps {
   /** Logo or product name at the top. */
   brand?: string | ReactNode;
   /**
-   * Entries. An object with group renders a section heading (hidden when collapsed); others are links with an optional icon and count.
+   * Entries. An object with group renders a section heading (hidden when collapsed); others are links with an optional icon and count. An entry with children is an expandable group: its button toggles the list of children (open by default while one of them is current); selecting a child calls change with the child value.
    * @default []
    */
-  items?: ({ value: string; label: string; icon?: string; count?: string | number } | { group: string })[];
+  items?: ({ value: string; label: string; icon?: string; count?: string | number; children?: ({ value: string; label: string; icon?: string; count?: string | number } | { separator: true })[] } | { group: string })[];
   /** Value of the active item (aria-current="page"). */
   value?: string;
   /**

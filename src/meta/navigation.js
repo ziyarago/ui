@@ -24,7 +24,7 @@ export default {
     description: 'Vertical sidebar with a brand, grouped navigation items, a footer and an optional collapse toggle.',
     props: {
       brand: { type: 'string | VNode', description: 'Logo or product name at the top.' },
-      items: { type: '({ value: string; label: string; icon?: string; count?: string | number } | { group: string })[]', default: '[]', description: 'Entries. An object with group renders a section heading (hidden when collapsed); others are links with an optional icon and count.' },
+      items: { type: '({ value: string; label: string; icon?: string; count?: string | number; children?: ({ value: string; label: string; icon?: string; count?: string | number } | { separator: true })[] } | { group: string })[]', default: '[]', description: 'Entries. An object with group renders a section heading (hidden when collapsed); others are links with an optional icon and count. An entry with children is an expandable group: its button toggles the list of children (open by default while one of them is current); selecting a child calls change with the child value.' },
       value: current,
       collapsed: { type: 'boolean', default: false, description: 'Icon-only mode; labels move to the title tooltip.' },
       collapsible: { type: 'boolean', default: false, description: 'Always draw the collapse button, even without a toggle handler (the button is also drawn when a toggle handler is set).' },
@@ -33,7 +33,7 @@ export default {
     },
     slots: { footer: 'Bottom area above the collapse button, e.g. user card. React also accepts a footer prop.' },
     events: { change: 'Called with the value of the clicked item.', toggle: 'Called when the collapse button is clicked. The button is drawn when this handler is set (Vue: @toggle) or when collapsible is true.' },
-    notes: ['Collapsing is controlled: flip collapsed in the toggle handler.', 'Group entries are keyed by their title, so keep group names unique.'],
+    notes: ['Collapsing is controlled: flip collapsed in the toggle handler.', 'Group entries are keyed by their title, so keep group names unique.', 'In the collapsed rail the children of an open group show as icons (children without an icon get a dot).'],
   },
 
   SubNav: {

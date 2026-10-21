@@ -126,3 +126,8 @@
 .zg-topnav__dd>.zg-navitem[aria-expanded="true"] .zg-icon:last-child:not(:first-child){transform:rotate(180deg)}
 .zg-menu__i[aria-current="page"]{background:var(--zg-s2);font-weight:700}.zg-menu__i .zg-navitem__count{margin-inline-start:auto}
 .zg-menu__h{padding:8px 12px 4px;font:600 12px var(--zg-font);letter-spacing:.06em;text-transform:uppercase;color:var(--zg-text-3)}
+/* SideNav: expandable groups */
+.zg-sidenav__sub{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
+.zg-sidenav__sub>.zg-navitem{position:relative}.zg-sidenav__chev{margin-inline-start:auto;display:inline-flex;transition:transform .2s var(--zg-ease)}.zg-sidenav__sub>.zg-navitem[aria-expanded="true"] .zg-sidenav__chev{transform:rotate(180deg)}
+.zg-sidenav__kids{display:flex;flex-direction:column;gap:2px;padding-inline-start:16px}.zg-sidenav__kids .zg-navitem{height:40px}
+.zg-sidenav--collapsed .zg-sidenav__kids{padding-inline-start:0}.zg-sidenav--collapsed .zg-sidenav__chev{display:none}

@@ -24,6 +24,7 @@ export const CASES = [
   one('Accordion', { props: { items: [{ id: 'a', title: 'First', body: 'Body A' }, { id: 'b', title: 'Second', body: 'Body B' }] } }),
   one('Dropdown', { props: { label: 'Actions', onSelect: '$spy:select', items: [{ label: 'Edit', value: 'edit', onClick: '$spy:edit' }, { separator: true }, { label: 'Delete', value: 'del', tone: 'danger', onClick: '$spy:delete' }] } }),
   one('TopNav', { props: { brand: 'Brand', value: 'home', onChange: '$spy:nav', items: [{ value: 'home', label: 'Home' }, { value: 'bookings', label: 'Bookings', children: [{ value: 'upcoming', label: 'Upcoming', icon: 'calendar-clock' }, { separator: true }, { value: 'past', label: 'Past', count: 3 }] }] } }),
+  one('SideNav', { props: { brand: 'Brand', value: 'home', onChange: '$spy:side', items: [{ value: 'home', label: 'Home', icon: 'house' }, { value: 'bookings', label: 'Bookings', icon: 'calendar-check', children: [{ value: 'upcoming', label: 'Upcoming' }, { value: 'past', label: 'Past' }] }] } }),
   one('TextField', { props: { label: 'Name', modelValue: '' } }),
   one('CommandPalette', { overlay: true, props: { onRun: '$spy:run', commands: [{ id: 'new', label: 'New booking' }, { id: 'find', label: 'Find guest' }, { id: 'set', label: 'Settings' }] } }),
   one('ContextMenu', { props: { onSelect: '$spy:ctx', items: [{ label: 'Open', value: 'open' }, { label: 'Copy', value: 'copy' }] }, text: 'Right-click here' }),

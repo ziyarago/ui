@@ -166,8 +166,19 @@ export const components = {
     return h('header', { class: 'zg-topnav' }, h('div', { class: 'zg-topnav__brand' }, p.brand),
       h('nav', { class: 'zg-topnav__items', 'data-overflow': collapse ? 'menu' : 'none', 'aria-label': t('TopNav', 'label'), ref: measure }, ...shown.map(entry), more ? entry(more) : null),
       h('div', { class: 'zg-topnav__actions' }, slots.actions || p.actions || null)); } },
-  SideNav: { render: ({ h, props: p, slots }) => h('aside', { class: cx('zg-sidenav', p.collapsed && 'zg-sidenav--collapsed') }, h('div', { class: 'zg-sidenav__brand' }, p.brand), ...(p.items || []).map(it => it.group ? h('div', { key: it.group, class: 'zg-sidenav__group', style: p.collapsed ? { display: 'none' } : undefined }, it.group) : nav(h, it, p.value, p.onChange, p.collapsed)), h('div', { class: 'zg-sidenav__sp' }), slots.footer || p.footer || null,
-    (p.onToggle || p.collapsible) ? h('button', { type: 'button', class: 'zg-navitem', onClick: p.onToggle, 'aria-label': t('SideNav', 'toggle') }, icon(h, p.collapsed ? 'panel-left-open' : 'panel-left-close', 18), h('span', null, p.collapseLabel || t('SideNav', 'collapse'))) : null) },
+  SideNav: { state: { open: {} }, render: ({ h, props: p, slots, state, set }) => {
+    const entry = it => {
+      if (it.group) return h('div', { key: it.group, class: 'zg-sidenav__group', style: p.collapsed ? { display: 'none' } : undefined }, it.group);
+      const kids = it.children;
+      if (!kids || !kids.length) return nav(h, it, p.value, p.onChange, p.collapsed);
+      const active = kids.some(c => c.value === p.value), open = state.open[it.value] ?? active;
+      return h('div', { key: it.value, class: 'zg-sidenav__sub' },
+        h('button', { type: 'button', class: 'zg-navitem', 'aria-expanded': String(open), 'aria-current': active && !open ? 'page' : undefined, title: p.collapsed ? it.label : undefined, onClick: () => set({ open: { ...state.open, [it.value]: !open } }) },
+          it.icon ? icon(h, it.icon, 18) : null, h('span', null, it.label), it.count ? h('span', { class: 'zg-navitem__count' }, it.count) : null, h('span', { class: 'zg-sidenav__chev' }, icon(h, 'chevron-down', 14))),
+        open ? h('div', { class: 'zg-sidenav__kids', role: 'group', 'aria-label': it.label }, ...kids.map((c, i) => c.separator ? h('div', { key: 's' + i, class: 'zg-menu__sep', role: 'separator' }) : nav(h, p.collapsed && !c.icon ? { ...c, icon: 'dot' } : c, p.value, p.onChange, p.collapsed))) : null);
+    };
+    return h('aside', { class: cx('zg-sidenav', p.collapsed && 'zg-sidenav--collapsed') }, h('div', { class: 'zg-sidenav__brand' }, p.brand), ...(p.items || []).map(entry), h('div', { class: 'zg-sidenav__sp' }), slots.footer || p.footer || null,
+      (p.onToggle || p.collapsible) ? h('button', { type: 'button', class: 'zg-navitem', onClick: p.onToggle, 'aria-label': t('SideNav', 'toggle') }, icon(h, p.collapsed ? 'panel-left-open' : 'panel-left-close', 18), h('span', null, p.collapseLabel || t('SideNav', 'collapse'))) : null); } },
   AppShell: { state: { collapsed: false }, render: ({ C, h, props: p, children, slots, state, set }) => {
     const brand = p.brand, top = (p.nav || 'top') === 'top', col = p.collapsed ?? state.collapsed, toggle = () => p.onCollapse ? p.onCollapse(!col) : set({ collapsed: !state.collapsed });
     return h('div', { class: cx('zg-root', 'zg-shell', top && 'zg-shell--top', p.frame && 'zg-shell--frame'), style: { background: 'var(--zg-bg)' } },

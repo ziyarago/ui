@@ -307,6 +307,20 @@ const checks = {
     assert.ok(calls.some(c => JSON.stringify(c.args || []).includes('upcoming')), 'change called with the child value: ' + JSON.stringify(calls));
   },
 
+  async SideNavGroups(page, t) {
+    const S = t.sel('SideNav'), T = `${S} .zg-sidenav__sub > .zg-navitem`;
+    assert.equal(await page.$eval(T, n => n.getAttribute('aria-expanded')), 'false', 'a group starts closed when none of its children is current');
+    assert.ok(!(await t.exists(`${S} .zg-sidenav__kids`)));
+    await page.click(T);
+    await t.waitFor(() => t.exists(`${S} .zg-sidenav__kids`), 'click expands the group');
+    assert.equal(await page.$eval(T, n => n.getAttribute('aria-expanded')), 'true');
+    await t.clearSpy(); await page.click(`${S} .zg-sidenav__kids .zg-navitem`);
+    const calls = await t.spy();
+    assert.ok(calls.some(c => JSON.stringify(c.args || []).includes('upcoming')), 'child click calls change: ' + JSON.stringify(calls));
+    await page.click(T);
+    await t.waitFor(async () => !(await t.exists(`${S} .zg-sidenav__kids`)), 'second click collapses');
+  },
+
   async DropdownKeyboard(page, t) {
     const S = t.sel('Dropdown'), T = `${S} [aria-haspopup=menu]`;
     const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
