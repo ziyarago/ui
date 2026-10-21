@@ -16,8 +16,10 @@ const wrap = (name, def) => defineComponent({
       void localeTick.value;
       const props = {}, root = {};
       for (const k in attrs) { if (/^(aria|data)-|^(class|style|id)$/.test(k)) root[k] = attrs[k]; const pk = k.includes('-') && !/^(aria|data)-/.test(k) ? k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()) : k; props[pk] = attrs[k] === '' && BOOL_PROPS.has(pk) ? true : attrs[k]; }
-      props.onChange = v => { emit('update:modelValue', v); emit('change', v); };
-      if (attrs.modelValue === undefined) delete props.modelValue;
+      // an explicit :on-change handler (kebab-case attribute) is still called after the v-model and @change emitters
+      const userChange = typeof props.onChange === 'function' ? props.onChange : null;
+      props.onChange = v => { emit('update:modelValue', v); emit('change', v); if (userChange) userChange(v); };
+      if (props.modelValue === undefined) delete props.modelValue;
       const named = {}; for (const k of Object.keys(slots)) if (k !== 'default') named[k] = slots[k]();
       const children = slots.default ? slots.default() : [];
       const out = def.render({ C, h: vh, props, children, slots: named, state, set, portal: (kids, to) => mounted.value ? h(Teleport, { to: to || 'body' }, kids) : null });
