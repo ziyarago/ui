@@ -151,3 +151,14 @@ React types: `Ui<Name>Props` (props, callbacks, named slots as `ReactNode` props
 ## 7. Checking the types yourself
 
 `npm run test:types` in this repository runs vue-tsc and tsc over `tests/types/*`: valid usage must compile, invalid enum / missing required prop / wrong event payload / wrong model type / unknown slot / wrong slot type must fail with the expected message.
+
+## 8. Add-on packages (plugins)
+
+An add-on package (for example `@ziyarago/ui-pro`) plugs components into the same registry through `registerComponents` / `defineUiComponents`, so its definitions can use `C.Button` and the core components can reference them. A plugin ships its own stylesheet: import it after the core one.
+
+```ts
+import '@ziyarago/ui/style.css'
+import '@ziyarago/ui-pro/style.css'   // plugin css, always after style.css
+```
+
+Plugin CSS must only use the public design tokens (`--zg-*`, see `@ziyarago/ui/tokens.css`) and its own prefixed classes. Auto-import: pass `plugins: ['@ziyarago/ui-pro']` to the Nuxt module options (`ziyarago: { plugins: [...] }`) or to `ZiyaragoUiResolver({ plugins: [...] })`.

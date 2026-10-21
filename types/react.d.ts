@@ -7739,3 +7739,5 @@ export const UiVersusBar: ComponentType<UiVersusBarProps>;
 export const rules: typeof import('./shared').rules;
 export { useUiTheme } from './theme';
 export { fmt, setIconBase } from './shared';
+/** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
+export function defineUiComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, ComponentType<any>>;
