@@ -53,3 +53,40 @@ export const openKeys = (isOpen, open) => e => { if (!isOpen && !mod(e) && (e.ke
 
 /** Focus the entry point of a freshly opened popup: the item with tabindex 0, else the first one. */
 export const focusIn = el => { const t = el.querySelector('[tabindex="0"]') || el.querySelector('button:not([disabled])'); if (t && t.focus) t.focus({ preventScroll: true }); };
+
+const pad2 = n => String(n).padStart(2, '0');
+/** YYYY-MM-DD of a local date, the value of a day cell's data-date attribute. */
+export const dateKey = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+/**
+ * Month grid of day buttons carrying data-date="YYYY-MM-DD" and a roving tabindex. Put it on the grid element.
+ * Arrows move one day (Left/Right mirrored in RTL) or one week, Home/End jump to the start/end of the week, PageUp/PageDown change month (Shift: year).
+ * Blocked days are skipped. When the target day is in another month, show(date, key) must make that month visible; the cell is focused once it renders.
+ */
+export const calKeys = o => e => {
+  if (mod(e)) return;
+  const root = e.currentTarget, cell = e.target.closest && e.target.closest('[data-date]');
+  if (!cell) return;
+  const [Y, M, D] = cell.getAttribute('data-date').split('-').map(Number), ws = o.ws ?? 1, rtl = isRtl(root), day = (n) => new Date(Y, M - 1, D + n);
+  const month = n => { const f = new Date(Y, M - 1 + n, 1); return new Date(f.getFullYear(), f.getMonth(), Math.min(D, new Date(f.getFullYear(), f.getMonth() + 1, 0).getDate())); };
+  const wk = (new Date(Y, M - 1, D).getDay() - ws + 7) % 7;
+  let t, unit = 1;
+  switch (e.key) {
+    case 'ArrowRight': t = day(rtl ? -1 : 1); unit = rtl ? -1 : 1; break;
+    case 'ArrowLeft': t = day(rtl ? 1 : -1); unit = rtl ? 1 : -1; break;
+    case 'ArrowDown': t = day(7); unit = 7; break;
+    case 'ArrowUp': t = day(-7); unit = -7; break;
+    case 'Home': t = day(-wk); break;
+    case 'End': t = day(6 - wk); unit = -1; break;
+    case 'PageUp': t = month(e.shiftKey ? -12 : -1); break;
+    case 'PageDown': t = month(e.shiftKey ? 12 : 1); break;
+    default: return;
+  }
+  e.preventDefault();
+  for (let i = 0; i < 62 && o.blocked && o.blocked(t); i++) t = new Date(t.getFullYear(), t.getMonth(), t.getDate() + unit);
+  if (o.blocked && o.blocked(t)) return;
+  const k = dateKey(t), find = () => root.querySelector('[data-date="' + k + '"]:not(:disabled)');
+  const el = find();
+  if (el) { el.focus(); return; }
+  o.show(t, k);
+  let n = 0; const tick = () => { const x = find(); if (x) x.focus(); else if (++n < 12) setTimeout(tick, 16); }; setTimeout(tick, 0);
+};

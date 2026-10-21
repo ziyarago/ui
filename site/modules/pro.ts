@@ -23,7 +23,7 @@ const make = name => defineComponent({
   name: 'Ui' + name, inheritAttrs: false,
   setup: () => () => h('div', { 'data-pro-placeholder': name, style: { minWidth: 0 } }, h(UiCard, { title: 'Ui' + name, subtitle: 'Pro component' }, () => [
     h('div', { style: { display: 'flex' } }, h(UiBadge, { tone: 'brand' }, () => 'Pro')),
-    h('p', { style: { margin: '10px 0 0', color: 'var(--zg-text-2)' } }, ['Ui' + name + ' is part of @ziyarago/ui-pro. ', h('a', { href: '/pricing', style: { color: 'var(--zg-brand)' } }, 'See pricing')]),
+    h('p', { style: { margin: '10px 0 0', color: 'var(--zg-text-2)' } }, ['Ui' + name + ' is part of @ziyarago/ui-pro. ', h('a', { href: '/pricing', style: { color: 'var(--zg-brand-text)' } }, 'See pricing')]),
   ])),
 })
 ${names.map(n => `export const Ui${n} = make('${n}')`).join('\n')}

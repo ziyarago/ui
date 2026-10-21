@@ -113,3 +113,10 @@
 .zg-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 .zg-select__opt:focus-visible{outline:3px solid var(--zg-brand-soft);outline-offset:-3px;background:var(--zg-s2)}
 .zg-seg button:focus-visible,.zg-tabs button:focus-visible,.zg-code-b pre:focus-visible{outline:3px solid var(--zg-brand-soft);outline-offset:2px}
+.zg-select__opt[data-active],.zg-select__opt[data-active]:hover{background:var(--zg-s2);outline:3px solid var(--zg-brand-soft);outline-offset:-3px}
+.zg-tip:hover::after,.zg-tip:focus-visible::after{pointer-events:auto}
+.zg-tip:hover::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:10px}
+.zg-tip--bottom:hover::before{bottom:auto;top:100%}
+.zg-tip--left:hover::before,.zg-tip--right:hover::before{top:0;bottom:0;height:auto;width:10px}
+.zg-tip--left:hover::before{left:auto;right:100%}.zg-tip--right:hover::before{right:auto;left:100%}
+.zg-tip[data-tip-off]::after{opacity:0!important;pointer-events:none!important}.zg-tip[data-tip-off]::before{display:none}

@@ -7,6 +7,11 @@ const keyboard: [string, string][] = [
   ['Arrow Up / Down, Enter', 'CommandPalette: moves the active option (the input uses aria-activedescendant) and runs it.'],
   ['Arrow Left / Right, Home, End', 'Tabs, PillTabs and SegmentedControl: one tab stop (roving tabindex on the selected item); the arrows move focus between items and wrap, Home and End jump to the ends, Enter or Space activates. Mirrored in RTL; vertical PillTabs use Arrow Up / Down. Carousel: previous and next slide. Tour: previous and next step, mirrored in RTL.'],
   ['Arrow Up / Down, Home, End, Enter', 'Select, PillSelect, Dropdown, Menu and ContextMenu: Arrow Down or Up on the trigger opens the list; focus moves into it (the selected option, or the first item) and the arrows move real focus. Menus wrap, listboxes stop at the ends, typing a letter jumps to a matching item, disabled items and separators are skipped. Enter or Space chooses and focus returns to the trigger; Tab closes the list and continues from the trigger.'],
+  ['Combobox', 'WAI-ARIA combobox: the input has role="combobox" with aria-expanded, aria-controls and aria-activedescendant, focus stays in the input. Arrow Down or Up opens the list and moves the active option (wraps, skips disabled), Enter chooses it, Escape closes.'],
+  ['MultiSelect, GroupedSelect', 'Same list pattern as Select: arrows move real focus between options (across groups in GroupedSelect), Home and End, type-ahead, Space or Enter toggles or chooses, Escape and Tab close. MultiSelect stays open while picking.'],
+  ['DatePicker, Calendar, RangeCalendar', 'One tab stop on the day grid. Arrows move by day (Left and Right mirrored in RTL) or week, Home and End jump to the start and end of the week, PageUp and PageDown change month (with Shift, year), disabled days are skipped, Enter or Space picks. Arrow Down or Up on the DatePicker trigger opens it and focus lands on the selected day; Escape closes and returns focus to the trigger. RangeCalendar previews the range as focus moves.'],
+  ['TreeSelect', 'The search field is outside role="tree". Arrow Down in the field enters the tree at the selected item; Up and Down move between visible items, Right expands or enters, Left collapses or goes to the parent (mirrored in RTL), Home, End, type-ahead, Enter chooses, Escape closes.'],
+  ['Tooltip', 'Escape hides a shown tooltip (hover or focus) without moving focus; it stays visible while the pointer is over the trigger or the bubble and returns on the next hover or focus (WCAG 1.4.13).'],
   ['Enter / Space', 'Buttons, switches, checkboxes, tabs and options are real button elements, so the browser handles activation.'],
 ]
 const semantics: [string, string][] = [
@@ -22,14 +27,15 @@ const semantics: [string, string][] = [
 ]
 const axe: [string, string][] = [
   ['Before the fixes', '563 violating nodes in 6 rules on 32 pages x 2 themes: aria-required-children 410 (docs props table), label-content-name-mismatch 64 (docs search button), scrollable-region-focusable 48 (code blocks), aria-progressbar-name 28 (Progress), color-contrast 11 (text-3 on table headers, brand KPI, danger button), aria-hidden-focus 2 (home hero).'],
-  ['After the fixes', '0 violations on all 33 pages x 2 themes x 2 palettes, with popups closed and open (39 rules passed).'],
-  ['Fixed in the library', 'Progress name, focusable code blocks and table wrappers, listbox names, DatePicker aria-pressed="null", text-3 in dark (0.66 to 0.74 lightness), brand KPI label and delta opacity, danger button text (new --zg-red-text token). Fixed in the docs site: props table cell roles, search button name, inert hero preview.'],
-  ['Still failing', 'Outside the default page set: TreeSelect (aria-required-children, 12 nodes, search input inside role=tree) and the picker gaps in the list above. Not measurable by axe: tooltip dismissal, placeholder contrast, screen reader output.'],
+  ['After the fixes', '0 violations on 35 pages (the 33 above plus Combobox and MultiSelect) x 2 themes x 2 palettes, with popups closed and open (38 to 39 rules passed). The gold run used a docs build with the Pro package, so GroupedSelect, TreeSelect, RangeCalendar, CalendarView and Screensaver were audited too, lists open; the tamam run used the free build with Pro placeholders.'],
+  ['Fixed in the library', 'Progress name, focusable code blocks and table wrappers, listbox names, DatePicker aria-pressed="null", text-3 in dark (0.66 to 0.74 lightness), brand KPI label and delta opacity, danger button text (new --zg-red-text token). Fixed in the docs site: props table cell roles, search button name, inert hero preview, contrast of the Pro placeholder link (found in the second run). TreeSelect: the search input moved out of role="tree", which removed the 12 aria-required-children nodes.'],
+  ['Not measurable by axe', 'Keyboard behaviour (covered by browser tests instead), placeholder contrast, tooltip dismissal and screen reader output.'],
 ]
 const notYet: [string, string][] = [
-  ['Tooltip dismissal', 'The tooltip bubble cannot be dismissed with Escape without moving focus (WCAG 1.4.13), and it is not shown on touch.'],
-  ['Select-like pickers', 'Combobox, MultiSelect, GroupedSelect, TreeSelect and DatePicker open real lists but are not on the roving pattern yet: arrows do not move focus into their lists. TreeSelect also puts a search input inside role="tree" (axe aria-required-children, 12 nodes in the open state).'],
-  ['Contrast', 'Measured with axe on 33 pages in both themes and both palettes (see below), but only on what is rendered: placeholder text, disabled controls (exempt from WCAG), text on the animated backgrounds and states that need a hover are not covered.'],
+  ['Touch tooltips', 'The tooltip bubble is shown on hover and keyboard focus only, not on touch.'],
+  ['Date grid', 'Calendar, DatePicker and RangeCalendar are a group of day buttons with a roving tabindex, not a role="grid" with rows; a day is announced by its number (with the month in the group name), not by a full date. "Today" is read from the browser clock after mount, so server-rendered HTML marks no day unless you pass the today prop.'],
+  ['Combobox details', 'Home and End keep moving the text caret inside the input (they do not jump in the list), there is no automatic first-match selection, and a second Escape does not clear the text.'],
+  ['Contrast', 'Measured with axe on 35 pages in both themes and both palettes (see below), but only on what is rendered: placeholder text, disabled controls (exempt from WCAG), text on the animated backgrounds and states that need a hover are not covered.'],
   ['Map, drag and drop', 'Map pans with the pointer only. Sortable lists are driven by drag; there is no keyboard way to reorder.'],
   ['Screen reader testing', 'No manual testing with NVDA, JAWS or VoiceOver has been recorded. axe finds about a third of WCAG issues at most, so treat the roles above as intent, not a verified result.'],
   ['Component strings', 'Built-in labels are translated for en, ar and ru (free) and 13 more languages in the Pro pack; some components still show English only, see the Localization page.'],
@@ -65,7 +71,7 @@ const notYet: [string, string][] = [
     <p class="muted">The full plan is on the <NuxtLink to="/docs/roadmap">roadmap</NuxtLink>.</p>
 
     <h2>Automated audit (axe)</h2>
-    <p>Run with <code>npm run a11y</code> (<code>scripts/a11y.mjs</code>, axe-core with the WCAG 2.0 and 2.1 A and AA tags, headless Chrome) against the docs site. It covers the home page, 25 component pages, the dashboard, auth, settings and inbox templates, this page, Localization and Colors, each in dark and light, in the gold and tamam palettes, and with every popup trigger opened (<code>--open</code>).</p>
+    <p>Run with <code>npm run a11y</code> (<code>scripts/a11y.mjs</code>, axe-core with the WCAG 2.0 and 2.1 A and AA tags, headless Chrome) against the docs site. It covers the home page, 27 component pages, the dashboard, auth, settings and inbox templates, this page, Localization and Colors, each in dark and light, in the gold and tamam palettes, and with every popup trigger opened (<code>--open</code>).</p>
     <div class="tbl" role="table" aria-label="axe results"><div v-for="[k, d] in axe" :key="k" class="row" role="row"><b role="cell">{{ k }}</b><span role="cell">{{ d }}</span></div></div>
     <p class="muted">axe checks rules it can decide automatically. A clean run is not a conformance claim.</p>
 

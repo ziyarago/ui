@@ -155,7 +155,7 @@ export default {
       size: size('bubble padding and font'),
     },
     slots: { default: 'The element the tooltip is attached to.' },
-    notes: ['Pure CSS bubble; it cannot contain markup. For rich content use HoverCard.'],
+    notes: ['Pure CSS bubble; it cannot contain markup. For rich content use HoverCard.', 'Escape hides the bubble while it is shown (hover or focus) without moving focus; it stays visible while the pointer is over the trigger or the bubble, and returns on the next hover or focus.'],
   },
 
   Dropdown: {
@@ -257,11 +257,12 @@ export default {
   },
 
   Screensaver: {
-    description: 'Full-screen idle screen with a large clock, date and the brand mark; show it after inactivity.',
+    description: 'Full-screen idle screen with a large clock, date and an optional logo; show it after inactivity.',
     props: {
       open: open('screensaver'),
       locale: { type: 'string', default: 'en-GB', description: 'BCP 47 locale for the date line.' },
       hint: { type: 'string', description: 'Small hint under the date, e.g. "Tap to continue".' },
+      logo: { type: 'string', description: 'URL of an image shown above the clock. Use an absolute URL or a root-relative path such as "/brand/logo.svg". Nothing is shown when it is not set, so the screensaver never requests a missing file.' },
       idleMs: { type: 'number', default: 0, description: 'When greater than 0 and the screensaver is closed, a hidden sentinel listens for pointer, key, wheel and touch activity and calls idle after this many milliseconds without any. 0 disables it.' },
     },
     events: { close: 'Called on click or any key (including Escape) while open.', idle: 'Called once the idleMs period passes without activity while closed; set open to true in the handler.' },
