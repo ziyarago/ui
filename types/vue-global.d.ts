@@ -13,6 +13,7 @@ declare module 'vue' {
     UiAlert: typeof Ui.UiAlert;
     UiAppShell: typeof Ui.UiAppShell;
     UiAuthLayout: typeof Ui.UiAuthLayout;
+    UiAuthShowcase: typeof Ui.UiAuthShowcase;
     UiAuthSplit: typeof Ui.UiAuthSplit;
     UiAvatar: typeof Ui.UiAvatar;
     UiBadge: typeof Ui.UiBadge;

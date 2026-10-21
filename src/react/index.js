@@ -171,6 +171,7 @@ export const UiSnackbar = C.Snackbar;
 export const UiTourPopover = C.TourPopover;
 export const UiProfileHeader = C.ProfileHeader;
 export const UiAuthSplit = C.AuthSplit;
+export const UiAuthShowcase = C.AuthShowcase;
 export const UiStatusPage = C.StatusPage;
 export const UiValidatedField = C.ValidatedField;
 export const UiFooter = C.Footer;

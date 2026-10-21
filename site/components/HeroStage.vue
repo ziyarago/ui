@@ -41,7 +41,7 @@ const fmt = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
       </UiCard>
     </div>
     <div class="hs__c hs__e"><UiRing :value="72" label="plan" :size="104" /></div>
-    <span class="hs__p hs__p1">Dark</span><span class="hs__p hs__p2">RTL</span><span class="hs__p hs__p3">182 components</span>
+    <span class="hs__p hs__p1">Dark</span><span class="hs__p hs__p2">RTL</span><span class="hs__p hs__p3">183 components</span>
   </div>
 </template>
 

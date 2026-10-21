@@ -237,6 +237,44 @@ export interface UiAuthLayoutProps {
 export const UiAuthLayout: ComponentType<UiAuthLayoutProps>;
 
 /**
+ * Sign-in layout with a media panel: dark photo card with floating avatars, light gradient card with a social-proof pill, or a tinted panel with a glass caption. The default slot is the form.
+ * Note: logo, footer, image, people are props in both Vue and React. The media panel is hidden below the form on narrow screens (stacks under it).
+ */
+export interface UiAuthShowcaseProps {
+  /**
+   * 'photo': one framed card, media on the left. 'light': gradient form card, proof pill below, glass caption on the media. 'tint': like light, with a coloured panel, a heading on the media and cyan accent.
+   * @default 'photo'
+   */
+  variant?: 'photo' | 'light' | 'tint';
+  /** Form heading. */
+  title: string;
+  /** Text under the heading. */
+  subtitle?: string;
+  /** Logo node above the heading. */
+  logo?: ReactNode;
+  /** Content under the fields, for example "No account? Sign up". */
+  footer?: ReactNode;
+  /** URL of the media image. Without it the panel shows an accent gradient. */
+  image?: string;
+  /** Large text on the media panel (photo and tint). */
+  headline?: string;
+  /** Small text on the media panel (photo) or inside the glass bar (light, tint). */
+  caption?: string;
+  /** Line at the bottom of the media panel; photo only. */
+  quote?: string;
+  /** Pill labels inside the glass bar; light and tint. */
+  chips?: string[];
+  /** Avatars: floating on the photo, stacked in the proof pill. */
+  people?: { name: string; src?: string }[];
+  /** Social-proof title, e.g. "Join 20k+ users"; light and tint. Shows the pill under the form. */
+  proof?: string;
+  /** Second line of the proof pill. */
+  proofHint?: string;
+  children?: ReactNode;
+}
+export const UiAuthShowcase: ComponentType<UiAuthShowcaseProps>;
+
+/**
  * Two-column sign-in layout with a brand panel on the left and the form on the right.
  * Note: logo and aside are props in both Vue and React (pass a VNode / element).
  */
@@ -3058,11 +3096,51 @@ export const UiPageAccount: ComponentType<UiPageAccountProps>;
  */
 export interface UiPageAuthProps {
   /**
-   * 'split' uses AuthSplit with a side panel; anything else renders a centered AuthLayout card over the background.
+   * 'split' uses AuthSplit with a side panel. 'photo', 'light' and 'tint' use AuthShowcase with a media panel. Anything else renders a centered AuthLayout card over the background.
    * @default 'card'
    * @remarks Forwarded to the inner element.
    */
-  layout?: 'card' | 'split';
+  layout?: 'card' | 'split' | 'photo' | 'light' | 'tint';
+  /**
+   * Media image URL; photo, light and tint layouts.
+   * @remarks Forwarded to the inner element.
+   */
+  image?: string;
+  /**
+   * Large text on the media panel; photo and tint.
+   * @remarks Forwarded to the inner element.
+   */
+  headline?: string;
+  /**
+   * Small text on the media panel or glass bar.
+   * @remarks Forwarded to the inner element.
+   */
+  caption?: string;
+  /**
+   * Bottom line of the media panel; photo only.
+   * @remarks Forwarded to the inner element.
+   */
+  quote?: string;
+  /**
+   * Pill labels in the glass bar; light and tint.
+   * @remarks Forwarded to the inner element.
+   */
+  chips?: string[];
+  /**
+   * Avatars on the media panel or in the proof pill.
+   * @remarks Forwarded to the inner element.
+   */
+  people?: { name: string; src?: string }[];
+  /**
+   * Social-proof title under the form; light and tint.
+   * @remarks Forwarded to the inner element.
+   */
+  proof?: string;
+  /**
+   * Second line of the proof pill.
+   * @remarks Forwarded to the inner element.
+   */
+  proofHint?: string;
   /**
    * Form heading.
    * @remarks Forwarded to the inner element.

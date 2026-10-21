@@ -42,6 +42,7 @@ const T = Object.fromEntries([
 
 T.PageAuth = { slots: ['background', 'logo', 'aside', 'form', 'footer'], render: ({ C, h, props: p, slots: s }) => {
   const body = [s.form || null, s.footer ? h('div', { class: 'zg-pg__r', 'data-slot': 'footer' }, s.footer) : null];
+  if (['photo', 'light', 'tint'].includes(p.layout)) return h(C.AuthShowcase, { variant: p.layout, title: p.title, subtitle: p.subtitle, logo: s.logo, footer: s.footer, image: p.image, headline: p.headline, caption: p.caption, quote: p.quote, chips: p.chips, people: p.people, proof: p.proof, proofHint: p.proofHint }, s.form || null);
   return p.layout === 'split'
     ? h(C.AuthSplit, { title: p.title, subtitle: p.subtitle, logo: s.logo, aside: s.aside }, ...body)
     : h('div', { class: 'zg-pgauth' }, s.background ? h('div', { class: 'zg-pg__r zg-pgauth__bg', 'data-slot': 'background' }, s.background) : null, h('div', { class: 'zg-pgauth__c' }, h(C.AuthLayout, { title: p.title, subtitle: p.subtitle, logo: s.logo }, ...body)));

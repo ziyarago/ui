@@ -393,6 +393,15 @@ const examples: Example[] = [
     ],
   },
   {
+    name: 'AuthShowcase',
+    description: 'Sign-in with a media panel. variant picks the look: photo (dark card, floating avatars), light (gradient card, proof pill, glass caption) or tint (coloured panel). Fill the default slot with the form.',
+    variants: [
+      { label: 'photo', width: '100%', props: { variant: 'photo', title: 'Get started', subtitle: 'Sign in to your account', headline: 'Glad you are back', caption: 'Plan every journey with ZiyaraGo', quote: 'Design is intelligence made visible', people: [{ name: 'Aziz Karimov' }, { name: 'Dilnoza Rahimova' }, { name: 'Omar Hassan' }] }, text: 'Form goes here' },
+      { label: 'light', width: '100%', props: { variant: 'light', title: 'Welcome to ZiyaraGo', subtitle: 'Sign in to manage your groups.', caption: 'Guiding every pilgrim step by step.', chips: ['Umrah', 'Hajj'], proof: 'Join 20k+ users', proofHint: 'See our happy customers', people: [{ name: 'Aziz Karimov' }, { name: 'Dilnoza Rahimova' }, { name: 'Omar Hassan' }] }, text: 'Form goes here' },
+      { label: 'tint', width: '100%', props: { variant: 'tint', title: 'Welcome back', subtitle: 'Sign in with your work email.', headline: 'Everything for your pilgrims in one place', caption: 'Bookings, rooms and payments, synced.', chips: ['Creating'], proof: 'Join 20k+ users', proofHint: 'Our happy customers', people: [{ name: 'Aziz Karimov' }, { name: 'Dilnoza Rahimova' }, { name: 'Omar Hassan' }] }, text: 'Form goes here' },
+    ],
+  },
+  {
     name: 'AuthSplit',
     description: 'Two-pane auth layout: the aside prop holds the brand panel, the logo prop the mark, and the default slot is the form.',
     variants: [
