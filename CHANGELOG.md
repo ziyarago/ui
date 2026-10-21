@@ -1,3 +1,9 @@
+## [0.6.1](https://github.com/ziyarago/ui/compare/v0.6.0...v0.6.1) (2026-10-21)
+
+### Bug Fixes
+
+* stop shipping 3D icons and brand files, watermark demo icons on the docs site ([4736d3e](https://github.com/ziyarago/ui/commit/4736d3e8217fa4e78a81596f8cd8da7709cbd3a8))
+
 ## [0.6.0](https://github.com/ziyarago/ui/compare/v0.5.0...v0.6.0) (2026-10-21)
 
 ### Features
