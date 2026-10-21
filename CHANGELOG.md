@@ -1,3 +1,9 @@
+## [0.15.2](https://github.com/ziyarago/ui/compare/v0.15.1...v0.15.2) (2026-10-21)
+
+### Bug Fixes
+
+* SideNav scrolls instead of squeezing items, collapsible prop ([1f1190e](https://github.com/ziyarago/ui/commit/1f1190e3d5b1c79cd6b0d82b3c2e0b8970fdcd1f))
+
 ## [0.15.1](https://github.com/ziyarago/ui/compare/v0.15.0...v0.15.1) (2026-10-21)
 
 ### Bug Fixes

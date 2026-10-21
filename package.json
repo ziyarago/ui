@@ -1,6 +1,6 @@
 {
   "name": "@ziyarago/ui",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "ZiyaraGo UI — glass design system for Umrah and Hajj products. OKLCH tokens, two palettes, dark and light, RTL, Thmanyah. One framework-neutral core with Vue 3, Nuxt and React adapters, 102 free components and 6 page templates (more in @ziyarago/ui-pro).",
   "keywords": [
     "ui",
