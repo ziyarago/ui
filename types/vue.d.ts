@@ -3200,6 +3200,46 @@ export interface UiPageAccountSlots {
 export const UiPageAccount: UiVueComponent<UiPageAccountProps, UiPageAccountSlots>;
 
 /**
+ * Analytics template: period picker, KPI strip, trend charts, a breakdown block and a table. Put Export in actions.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Trend and breakdown share a row and wrap on narrow screens. Put Export in the actions slot.
+ */
+export interface UiPageAnalyticsProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageAnalyticsSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Period presets and compare toggle; SegmentedControl, Select, Switch. */
+  period?: () => any;
+  /** Headline numbers with deltas; KpiTile, StatLine. */
+  kpis?: () => any;
+  /** Main time series; ChartCard with MiniChart. */
+  trend?: () => any;
+  /** Split by channel or country; ChartCard with SegBar and CountryRow. */
+  breakdown?: () => any;
+  /** Rows behind the numbers; DataTable. */
+  table?: () => any;
+}
+export const UiPageAnalytics: UiVueComponent<UiPageAnalyticsProps, UiPageAnalyticsSlots>;
+
+/**
  * Sign-in page template without the app shell, as a centered card or a split layout.
  * Note: Designed for the dark theme and used without AppShell.
  */
@@ -3351,6 +3391,46 @@ export interface UiPageCatalogSlots {
   pager?: () => any;
 }
 export const UiPageCatalog: UiVueComponent<UiPageCatalogProps, UiPageCatalogSlots>;
+
+/**
+ * Checkout template: step indicator, cart items, delivery address, payment and an order summary column.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Summary sits in the side column and drops below the form on narrow screens.
+ */
+export interface UiPageCheckoutProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageCheckoutSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Checkout steps above the content; Stepper. */
+  steps?: () => any;
+  /** Cart lines with quantity and price; Card with NumberInput. */
+  items?: () => any;
+  /** Contact and delivery fields; Card with TextField and Select. */
+  address?: () => any;
+  /** Payment method and card fields; OptionCards, TextField. */
+  payment?: () => any;
+  /** Totals, promo code and the pay button; Card, Descriptions, Button. */
+  summary?: () => any;
+}
+export const UiPageCheckout: UiVueComponent<UiPageCheckoutProps, UiPageCheckoutSlots>;
 
 /**
  * CRM template: summary tiles, filters, pipeline board and call queue.
@@ -3562,6 +3642,145 @@ export interface UiPageHeaderSlots {
   actions?: () => any;
 }
 export const UiPageHeader: UiVueComponent<UiPageHeaderProps, UiPageHeaderSlots>;
+
+/**
+ * Inbox template: filters and conversation list, the open thread with a composer, and a customer panel.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: List, thread and customer panel sit side by side and stack in that order at 860px and below. Keep the selected conversation in your own state.
+ */
+export interface UiPageInboxProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageInboxSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Search and folder chips above the list; SearchInput, FilterChips. */
+  filters?: () => any;
+  /** Conversation rows with unread marks; Card, Avatar, Badge. */
+  list?: () => any;
+  /** Messages of the open conversation; Card, Avatar. */
+  thread?: () => any;
+  /** Reply field and send button; Textarea, Button. */
+  composer?: () => any;
+  /** Customer details; ContactPanel, Descriptions, Tag. */
+  customer?: () => any;
+}
+export const UiPageInbox: UiVueComponent<UiPageInboxProps, UiPageInboxSlots>;
+
+/**
+ * Landing template: hero, logo strip, features, social proof, pricing teaser, call to action and footer. Used without the app shell.
+ * Note: Landing does not use the app shell: render it on its own page. Blocks stack in one column; each block may use its own grid and wraps on narrow screens.
+ */
+export interface UiPageLandingProps {
+
+}
+export interface UiPageLandingSlots {
+  /** Hero block; HeroBanner, Card, Button. */
+  hero?: () => any;
+  /** Partner row; Chip or Text. */
+  logos?: () => any;
+  /** Feature cards; Card, IconTile. */
+  features?: () => any;
+  /** Numbers and quotes; StatStrip, Card, Avatar. */
+  proof?: () => any;
+  /** Plan cards; PricingCard. */
+  pricing?: () => any;
+  /** Closing block; Card variant="gradient", Button. */
+  cta?: () => any;
+  /** Page footer; Footer. */
+  footer?: () => any;
+}
+export const UiPageLanding: UiVueComponent<UiPageLandingProps, UiPageLandingSlots>;
+
+/**
+ * Notifications template: filters, a feed grouped by day and an empty state. Put Mark all read in actions.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Fill empty only when the feed has no rows. Mark all read goes in the actions slot.
+ */
+export interface UiPageNotificationsProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageNotificationsSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Filter chips such as all, unread and mentions; FilterChips. */
+  filters?: () => any;
+  /** Notification rows grouped by day; Card, IconTile, Badge, Divider. */
+  feed?: () => any;
+  /** Shown instead of the feed when nothing matches; EmptyState. */
+  empty?: () => any;
+}
+export const UiPageNotifications: UiVueComponent<UiPageNotificationsProps, UiPageNotificationsSlots>;
+
+/**
+ * Onboarding template: progress block, active step content, setup checklist and a column of tips.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Keep the active step in your own state; the template does not switch steps. Steps and checklist share the main column, tips go to the side and stack below it on narrow screens.
+ */
+export interface UiPageOnboardingProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageOnboardingSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Stepper and a completion bar above the content; Stepper, Progress. */
+  progress?: () => any;
+  /** Content of the active step; Card with form fields. */
+  steps?: () => any;
+  /** Remaining setup tasks; Card with Checkbox rows. */
+  checklist?: () => any;
+  /** Side column with help cards; Card, IconTile, Button. */
+  tips?: () => any;
+}
+export const UiPageOnboarding: UiVueComponent<UiPageOnboardingProps, UiPageOnboardingSlots>;
 
 /**
  * Order/booking details template: status chips, items table, timeline and side info cards.

@@ -12,7 +12,7 @@ const NAV = [
   { value: 'user-list', label: 'Users', icon: 'users' },
   { value: 'settings', label: 'Settings', icon: 'settings' },
 ]
-const NAV_OF: Record<string, string> = { detail: 'catalog', form: 'catalog', profile: 'user-list', order: 'bookings', account: 'settings', pricing: 'settings', patterns: 'dashboard' }
+const NAV_OF: Record<string, string> = { detail: 'catalog', form: 'catalog', profile: 'user-list', order: 'bookings', account: 'settings', pricing: 'settings', patterns: 'dashboard', onboarding: 'dashboard', checkout: 'bookings', inbox: 'crm', notifications: 'dashboard', analytics: 'dashboard' }
 const router = useRouter()
 const current = computed(() => NAV_OF[props.page.route] ?? props.page.route)
 const go = (v: string) => { if (TEMPLATES.pages.some(p => p.route === v)) router.push(`/docs/templates/${v}`) }
@@ -22,7 +22,7 @@ const Tpl = computed(() => mods[`./${props.page.tpl}.vue`]?.default ?? Missing)
 </script>
 
 <template>
-  <div class="tpl-frame" :data-theme="page.shell ? undefined : 'dark'">
+  <div class="tpl-frame" :data-theme="page.shell || !['auth', 'status'].includes(page.route) ? undefined : 'dark'">
     <UiAppShell v-if="page.shell" :nav="nav" frame brand="ZiyaraGo" :items="NAV" :value="current" :collapsed="col" @change="go" @collapse="col = $event">
       <template #actions>
         <TplSlot id="actions">
