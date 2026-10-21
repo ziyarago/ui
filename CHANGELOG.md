@@ -1,3 +1,9 @@
+## [0.17.0](https://github.com/ziyarago/ui/compare/v0.16.0...v0.17.0) (2026-10-21)
+
+### Features
+
+* chart components metadata, charts docs page and styles (Pro: LineChart, AreaChart, BarChart, DonutChart) ([be37587](https://github.com/ziyarago/ui/commit/be37587030f01821117364d1ec3f8d7565964f53))
+
 ## [0.16.0](https://github.com/ziyarago/ui/compare/v0.15.3...v0.16.0) (2026-10-21)
 
 ### Features
