@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TEMPLATES } from '~/docs-data/templates'
-useSeo({ title: 'Page templates — @ziyarago/ui', description: '29 ready page templates with named slots: dashboard, CRM, bookings, catalog, settings, auth and more, for Vue, Nuxt and React.' })
+useSeo({ title: 'Page templates — @ziyarago/ui', description: '36 ready page templates with named slots: dashboard, CRM, bookings, catalog, settings, auth and more, for Vue, Nuxt and React.' })
 </script>
 
 <template>

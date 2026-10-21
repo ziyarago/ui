@@ -3864,6 +3864,848 @@
      "use": "<UiEmptyState icon=\"search-x\" title=\"No results\" />"
     }
    ]
+  },
+  {
+   "key": "article",
+   "route": "article",
+   "label": "Article",
+   "icon": "newspaper",
+   "desc": "Blog article: cover, title and author, body with a table of contents, share row and related posts.",
+   "component": "PageArticle",
+   "tpl": "TplArticle",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "cover",
+     "title": "Cover",
+     "desc": "Cover with category, title, author and reading time.",
+     "accepts": [
+      "Card",
+      "Chip",
+      "Avatar",
+      "LazyImage"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    },
+    {
+     "id": "body",
+     "title": "Article body",
+     "desc": "Headings, paragraphs, quote and code.",
+     "accepts": [
+      "Heading",
+      "Text",
+      "Code",
+      "Alert"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiHeading level=\"2\">…</UiHeading>"
+    },
+    {
+     "id": "toc",
+     "title": "Table of contents",
+     "desc": "Sticky list of section links.",
+     "accepts": [
+      "Card",
+      "Link"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"On this page\">…</UiCard>"
+    },
+    {
+     "id": "share",
+     "title": "Share",
+     "desc": "Share buttons and copy link.",
+     "accepts": [
+      "Button",
+      "IconButton",
+      "CopyButton"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCopyButton :value=\"url\" />"
+    },
+    {
+     "id": "related",
+     "title": "Related posts",
+     "desc": "Cards with other posts.",
+     "accepts": [
+      "Card",
+      "Chip"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "changelog",
+   "route": "changelog",
+   "label": "Changelog",
+   "icon": "git-commit-horizontal",
+   "desc": "Changelog: release timeline grouped by version with new, fix and improved tags, a filter and subscribe.",
+   "component": "PageChangelog",
+   "tpl": "TplChangelog",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Tag filter and search.",
+     "accepts": [
+      "FilterChips",
+      "SearchInput"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiFilterChips v-model=\"tag\" :items=\"tags\" />"
+    },
+    {
+     "id": "timeline",
+     "title": "Release timeline",
+     "desc": "Versions with date and tagged changes.",
+     "accepts": [
+      "Card",
+      "Chip",
+      "Divider"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    },
+    {
+     "id": "subscribe",
+     "title": "Subscribe",
+     "desc": "Email field to get release notes.",
+     "accepts": [
+      "Card",
+      "TextField",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Get updates\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "help",
+   "route": "help",
+   "label": "Help center",
+   "icon": "life-buoy",
+   "desc": "Help center home: search, category tiles, popular articles and contact.",
+   "component": "PageHelp",
+   "tpl": "TplHelp",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "search",
+     "title": "Search",
+     "desc": "Large search field.",
+     "accepts": [
+      "SearchInput"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSearchInput size=\"lg\" />"
+    },
+    {
+     "id": "categories",
+     "title": "Categories",
+     "desc": "Grid of category tiles.",
+     "accepts": [
+      "Card",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    },
+    {
+     "id": "popular",
+     "title": "Popular articles",
+     "desc": "List of top articles.",
+     "accepts": [
+      "Card",
+      "Link",
+      "Chip"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Popular\">…</UiCard>"
+    },
+    {
+     "id": "contact",
+     "title": "Contact",
+     "desc": "Ways to reach support.",
+     "accepts": [
+      "Card",
+      "Button",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Still need help?\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "states",
+   "route": "states",
+   "label": "States",
+   "icon": "layout-grid",
+   "desc": "State gallery: empty, no results, no permission, offline, error with retry, loading and success.",
+   "component": "PageStates",
+   "tpl": "TplStates",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "empty",
+     "title": "Empty list",
+     "desc": "First-use empty state with an action.",
+     "accepts": [
+      "EmptyState",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiEmptyState icon=\"inbox\" title=\"Nothing here yet\" />"
+    },
+    {
+     "id": "noresults",
+     "title": "No results",
+     "desc": "Search found nothing.",
+     "accepts": [
+      "EmptyState",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiEmptyState icon=\"search-x\" title=\"No results\" />"
+    },
+    {
+     "id": "forbidden",
+     "title": "No permission",
+     "desc": "Access denied.",
+     "accepts": [
+      "EmptyState",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiEmptyState icon=\"lock\" title=\"No access\" />"
+    },
+    {
+     "id": "offline",
+     "title": "Offline",
+     "desc": "No connection.",
+     "accepts": [
+      "DataState"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataState state=\"offline\" />"
+    },
+    {
+     "id": "error",
+     "title": "Error",
+     "desc": "Failure with a retry button.",
+     "accepts": [
+      "DataState",
+      "Alert"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataState state=\"error\" />"
+    },
+    {
+     "id": "loading",
+     "title": "Loading",
+     "desc": "Skeleton placeholders.",
+     "accepts": [
+      "Skeleton",
+      "DataState"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSkeleton />"
+    },
+    {
+     "id": "success",
+     "title": "Success",
+     "desc": "Confirmation after an action.",
+     "accepts": [
+      "Alert",
+      "EmptyState"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiAlert tone=\"success\" title=\"Saved\" />"
+    }
+   ]
+  },
+  {
+   "key": "legal",
+   "route": "legal",
+   "label": "Legal",
+   "icon": "scale",
+   "desc": "Legal document: last updated, sticky table of contents, sections, print and download.",
+   "component": "PageLegal",
+   "tpl": "TplLegal",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "meta",
+     "title": "Meta",
+     "desc": "Version, last updated and document actions.",
+     "accepts": [
+      "Chip",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiChip>Last updated 12 Mar 2026</UiChip>"
+    },
+    {
+     "id": "toc",
+     "title": "Table of contents",
+     "desc": "Sticky list of section links.",
+     "accepts": [
+      "Card",
+      "Link"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Contents\">…</UiCard>"
+    },
+    {
+     "id": "document",
+     "title": "Document",
+     "desc": "Numbered sections of text.",
+     "accepts": [
+      "Card",
+      "Heading",
+      "Text"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    },
+    {
+     "id": "contact",
+     "title": "Contact",
+     "desc": "Questions about this document.",
+     "accepts": [
+      "Card",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Questions?\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "locations",
+   "route": "locations",
+   "label": "Locations",
+   "icon": "map-pin",
+   "desc": "Locations: filters, a list of places and a sticky map panel.",
+   "component": "PageLocations",
+   "tpl": "TplLocations",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Search and category chips.",
+     "accepts": [
+      "SearchInput",
+      "FilterChips"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSearchInput v-model=\"q\" />"
+    },
+    {
+     "id": "list",
+     "title": "Places",
+     "desc": "Cards with name, distance and rating.",
+     "accepts": [
+      "Card",
+      "Chip",
+      "Rating"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard padding=\"none\">…</UiCard>"
+    },
+    {
+     "id": "map",
+     "title": "Map",
+     "desc": "Map with markers.",
+     "accepts": [
+      "Map",
+      "Card"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiMap :markers=\"pins\" />"
+    }
+   ]
+  },
+  {
+   "key": "booking-flow",
+   "route": "booking-flow",
+   "label": "Booking flow",
+   "icon": "route",
+   "desc": "Booking flow: stepper from search to confirmation with a sticky summary card.",
+   "component": "PageBookingFlow",
+   "tpl": "TplBookingFlow",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "steps",
+     "title": "Steps",
+     "desc": "Progress through the flow.",
+     "accepts": [
+      "Stepper"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStepper :steps=\"steps\" :current=\"1\" />"
+    },
+    {
+     "id": "content",
+     "title": "Active step",
+     "desc": "Search, pick, guests or confirm.",
+     "accepts": [
+      "Card",
+      "DatePicker",
+      "OptionCards",
+      "NumberInput"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Guests\">…</UiCard>"
+    },
+    {
+     "id": "nav",
+     "title": "Navigation",
+     "desc": "Back and continue buttons.",
+     "accepts": [
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiButton variant=\"primary\">Continue</UiButton>"
+    },
+    {
+     "id": "summary",
+     "title": "Summary",
+     "desc": "Price and details of the booking.",
+     "accepts": [
+      "Card",
+      "Descriptions",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Summary\">…</UiCard>"
+    }
+   ]
   }
  ]
 }

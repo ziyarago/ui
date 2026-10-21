@@ -103,11 +103,14 @@ declare module 'vue' {
     UiOptionCards: typeof Ui.UiOptionCards;
     UiPageAccount: typeof Ui.UiPageAccount;
     UiPageAnalytics: typeof Ui.UiPageAnalytics;
+    UiPageArticle: typeof Ui.UiPageArticle;
     UiPageAuth: typeof Ui.UiPageAuth;
     UiPageBilling: typeof Ui.UiPageBilling;
+    UiPageBookingFlow: typeof Ui.UiPageBookingFlow;
     UiPageBookings: typeof Ui.UiPageBookings;
     UiPageCalendar: typeof Ui.UiPageCalendar;
     UiPageCatalog: typeof Ui.UiPageCatalog;
+    UiPageChangelog: typeof Ui.UiPageChangelog;
     UiPageCheckout: typeof Ui.UiPageCheckout;
     UiPageCrm: typeof Ui.UiPageCrm;
     UiPageDashboard: typeof Ui.UiPageDashboard;
@@ -115,10 +118,13 @@ declare module 'vue' {
     UiPageFaq: typeof Ui.UiPageFaq;
     UiPageForm: typeof Ui.UiPageForm;
     UiPageHeader: typeof Ui.UiPageHeader;
+    UiPageHelp: typeof Ui.UiPageHelp;
     UiPageInbox: typeof Ui.UiPageInbox;
     UiPageIntegrations: typeof Ui.UiPageIntegrations;
     UiPageKanban: typeof Ui.UiPageKanban;
     UiPageLanding: typeof Ui.UiPageLanding;
+    UiPageLegal: typeof Ui.UiPageLegal;
+    UiPageLocations: typeof Ui.UiPageLocations;
     UiPageNotifications: typeof Ui.UiPageNotifications;
     UiPageOnboarding: typeof Ui.UiPageOnboarding;
     UiPageOrder: typeof Ui.UiPageOrder;
@@ -127,6 +133,7 @@ declare module 'vue' {
     UiPageProfile: typeof Ui.UiPageProfile;
     UiPageSearch: typeof Ui.UiPageSearch;
     UiPageSettings: typeof Ui.UiPageSettings;
+    UiPageStates: typeof Ui.UiPageStates;
     UiPageStatus: typeof Ui.UiPageStatus;
     UiPageTeam: typeof Ui.UiPageTeam;
     UiPageUserList: typeof Ui.UiPageUserList;

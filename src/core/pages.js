@@ -3,15 +3,15 @@
 // React: <UiPageDashboard title="Dashboard" kpis={<…/>} />
 import { cx } from './components.js';
 
-const region = (h, id, kids) => (kids == null || (Array.isArray(kids) && !kids.length)) ? null : h('div', { key: id, class: 'zg-pg__r', 'data-slot': id }, kids);
+const region = (h, id, kids, stick) => (kids == null || (Array.isArray(kids) && !kids.length)) ? null : h('div', { key: id, class: stick ? 'zg-pg__r zg-pg__stick' : 'zg-pg__r', 'data-slot': id }, kids);
 
 const draw = (h, node, ctx) => {
-  if (typeof node === 'string') return node === 'header' ? ctx.header() : region(h, node, ctx.slots[node]);
-  const [kind, ...a] = node, go = n => draw(h, n, ctx);
+  if (typeof node === 'string') return node === 'header' ? ctx.header() : region(h, node, ctx.slots[node], ctx.stick === node);
+  const [kind, ...a] = node, opt = kind === 'two' ? a[2] : kind === 'wrap' ? a[3] : null, st = typeof opt === 'string' && opt.startsWith('sticky:') ? opt.slice(7) : null, go = n => draw(h, n, st ? { ...ctx, stick: st } : ctx), cls = st ? 'zg-pg__two zg-pg__two--sticky' : 'zg-pg__two';
   if (kind === 'col') return h('div', { class: 'zg-pg' }, ...a.map(go));
   if (kind === 'auto') { const min = a.shift(); return h('div', { class: 'zg-pg__auto', style: { '--min': min + 'px' } }, ...a.map(go)); }
-  if (kind === 'two') return h('div', { class: 'zg-pg__two' }, h('div', { class: 'zg-pg__main' }, ...a[0].map(go)), h('div', { class: 'zg-pg__side' }, ...a[1].map(go)));
-  if (kind === 'wrap') return h('div', { class: 'zg-pg__two' }, h('div', { class: 'zg-pg__aside', style: { flexBasis: (a[2] || 300) + 'px' } }, ...a[0].map(go)), h('div', { class: 'zg-pg__main' }, ...a[1].map(go)));
+  if (kind === 'two') return h('div', { class: cls }, h('div', { class: 'zg-pg__main' }, ...a[0].map(go)), h('div', { class: 'zg-pg__side' }, ...a[1].map(go)));
+  if (kind === 'wrap') return h('div', { class: cls }, h('div', { class: 'zg-pg__aside', style: { flexBasis: (a[2] || 300) + 'px' } }, ...a[0].map(go)), h('div', { class: 'zg-pg__main' }, ...a[1].map(go)));
   return null;
 };
 
@@ -49,7 +49,14 @@ const T = Object.fromEntries([
   page('PageBilling', ['header', 'plan', 'usage', 'invoices', 'methods', 'upgrade'], ['col', 'header', ['two', ['plan', 'usage', 'invoices'], ['methods', 'upgrade']]]),
   page('PageTeam', ['header', 'stats', 'members', 'roles', 'invite'], ['col', 'header', 'stats', ['two', ['members', 'roles'], ['invite']]]),
   page('PageIntegrations', ['header', 'filters', 'connections', 'keys', 'webhooks'], ['col', 'header', 'filters', 'connections', ['auto', 420, 'keys', 'webhooks']]),
-  page('PageSearch', ['header', 'search', 'filters', 'results', 'empty'], ['col', 'header', 'search', ['wrap', ['filters'], ['results', 'empty'], 260]])
+  page('PageSearch', ['header', 'search', 'filters', 'results', 'empty'], ['col', 'header', 'search', ['wrap', ['filters'], ['results', 'empty'], 260]]),
+  page('PageArticle', ['header', 'cover', 'body', 'toc', 'share', 'related'], ['col', 'header', 'cover', ['two', ['body', 'share', 'related'], ['toc'], 'sticky:toc']]),
+  page('PageChangelog', ['header', 'filters', 'timeline', 'subscribe'], ['col', 'header', ['two', ['filters', 'timeline'], ['subscribe'], 'sticky:subscribe']]),
+  page('PageHelp', ['header', 'search', 'categories', 'popular', 'contact'], ['col', 'header', 'search', 'categories', ['auto', 360, 'popular', 'contact']]),
+  page('PageStates', ['header', 'empty', 'noresults', 'forbidden', 'offline', 'error', 'loading', 'success'], ['col', 'header', ['auto', 300, 'empty', 'noresults', 'forbidden'], ['auto', 300, 'offline', 'error', 'loading'], 'success']),
+  page('PageLegal', ['header', 'meta', 'toc', 'document', 'contact'], ['col', 'header', 'meta', ['wrap', ['toc'], ['document', 'contact'], 260, 'sticky:toc']]),
+  page('PageLocations', ['header', 'filters', 'list', 'map'], ['col', 'header', 'filters', ['wrap', ['list'], ['map'], 380, 'sticky:map']]),
+  page('PageBookingFlow', ['header', 'steps', 'content', 'nav', 'summary'], ['col', 'header', 'steps', ['two', ['content', 'nav'], ['summary'], 'sticky:summary']])
 ]);
 
 T.PageAuth = { slots: ['background', 'logo', 'aside', 'form', 'footer'], render: ({ C, h, props: p, slots: s }) => {
