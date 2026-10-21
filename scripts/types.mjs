@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generates types/vue.d.ts, types/react.d.ts and types/vue-global.d.ts from src/meta (the API source of truth). Run: npm run types
+// Generates (free components only) types/vue.d.ts, types/react.d.ts and types/vue-global.d.ts from src/meta (the API source of truth). Run: npm run types
 // Per component: Ui<Name>Props (props + events, JSDoc from the meta), Vue also Ui<Name>Slots. Hand-written helpers stay in types/shared.d.ts.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -7,7 +7,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const { meta } = await import(join(root, 'src/meta/index.js'));
-const names = Object.keys(meta).sort();
+const { isPro } = await import(join(root, 'src/meta/tiers.js'));
+// Pro names are documented in the meta but have no implementation here: their types are generated in @ziyarago/ui-pro.
+const names = Object.keys(meta).filter(n => !isPro(n)).sort();
 
 const SIZES = "'xs' | 'sm' | 'md' | 'lg' | 'xl'";
 const TONES = "'brand' | 'sky' | 'success' | 'warning' | 'danger' | 'neutral'";

@@ -23,7 +23,7 @@ const i18n = `// vue-i18n: follow the app language
 import { watch } from 'vue'
 import { setUiLocale } from '@ziyarago/ui/i18n'
 watch(() => i18n.global.locale.value, l => setUiLocale(l), { immediate: true })`
-const pro = `import '@ziyarago/ui-languages'       // Pro pack: once, before mount
+const pro = `import '@ziyarago/ui-pro/languages'       // Pro pack: once, before mount
 import { setUiLocale } from '@ziyarago/ui/i18n'
 setUiLocale('uz')`
 const order = `1. a prop of the component (labels, label, placeholder, ariaLabel ...)
@@ -56,7 +56,7 @@ const order = `1. a prop of the component (labels, label, placeholder, ariaLabel
     <h2>Sync with vue-i18n</h2>
     <pre class="code">{{ i18n }}</pre>
     <h2>Pro language pack</h2>
-    <p>Install <code>@ziyarago/ui-languages</code> (private, access after purchase), import it once and use the codes above.</p>
+    <p>Install <code>@ziyarago/ui-pro/languages</code> (private, access after purchase), import it once and use the codes above.</p>
     <pre class="code">{{ pro }}</pre>
 
     <h2>Texts per component</h2>

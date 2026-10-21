@@ -12,6 +12,8 @@ import pages from './pages.js';
 
 export const meta = { ...typography, ...layout, ...actions, ...forms, ...data, ...feedback, ...overlay, ...navigation, ...media, ...domain, ...pages };
 import { PRO_NAMES } from './tiers.js';
+export { PRO, PRO_NAMES, isPro } from './tiers.js';
+export { GROUPS } from './groups.js';
 import { GROUPS } from './groups.js';
 /** Extension API: adds API metadata for plugin components. `tiers` marks names as Pro, `groups` ({ id, title, blurb, names }) lists them in the manifest. */
 export function registerMeta(extra, { tiers, groups } = {}) {

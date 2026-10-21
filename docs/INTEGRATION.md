@@ -162,3 +162,6 @@ import '@ziyarago/ui-pro/style.css'   // plugin css, always after style.css
 ```
 
 Plugin CSS must only use the public design tokens (`--zg-*`, see `@ziyarago/ui/tokens.css`) and its own prefixed classes. Auto-import: pass `plugins: ['@ziyarago/ui-pro']` to the Nuxt module options (`ziyarago: { plugins: [...] }`) or to `ZiyaragoUiResolver({ plugins: [...] })`.
+
+## Migrating from local copies of glass-ui-kit
+The migration tooling (compat layer with the old component names, resolver and Vite plugin, step by step guide) is part of `@ziyarago/ui-pro`.

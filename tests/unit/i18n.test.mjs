@@ -17,7 +17,7 @@ test('locale lists', () => {
 });
 
 test('every component file ships en, ar and ru with the same keys and placeholders, and nothing else', async () => {
-  assert.ok(files.length > 60);
+  assert.ok(files.length > 30);
   for (const f of files) {
     const m = (await import(pathToFileURL(join(dir, f)).href)).default;
     assert.deepEqual(Object.keys(m).sort(), ['ar', 'en', 'ru'], f);

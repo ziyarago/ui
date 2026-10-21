@@ -4,7 +4,7 @@
 
 <p align="center"><a href="https://ziyara.vip"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-dark.png" alt="ziyarago/ui: glass design system for Vue, Nuxt and React" width="100%"></a></p>
 
-Glass design system for Vue 3, Nuxt and React: 208 components, 40 page templates, OKLCH tokens, dark and light, RTL and Arabic, 16 interface languages. One framework-neutral core with thin adapters. Built for Umrah and Hajj products, usable anywhere.
+Glass design system for Vue 3, Nuxt and React: 102 free components and 6 page templates (the Pro package adds 106 components and 33 templates), OKLCH tokens, dark and light, RTL and Arabic, 16 interface languages. One framework-neutral core with thin adapters. Built for Umrah and Hajj products, usable anywhere.
 
 <table>
   <tr>
@@ -12,8 +12,8 @@ Glass design system for Vue 3, Nuxt and React: 208 components, 40 page templates
     <td width="50%"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-rtl.png" alt="Arabic RTL"><br><sub>Arabic, RTL mirrored</sub></td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/components.png" alt="Component catalog"><br><sub>208 components with props and live examples</sub></td>
-    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/templates.png" alt="Page templates"><br><sub>40 page templates</sub></td>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/components.png" alt="Component catalog"><br><sub>208 components documented with props and live examples (102 free, 106 Pro)</sub></td>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/templates.png" alt="Page templates"><br><sub>page templates: 6 free, 33 Pro</sub></td>
   </tr>
   <tr>
     <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/button-docs.png" alt="Props docs"><br><sub>Every prop and variant documented</sub></td>
@@ -24,7 +24,7 @@ Glass design system for Vue 3, Nuxt and React: 208 components, 40 page templates
 Files:
 
 ```
-src/core/        components*.js, pages.js: 208 components and 40 page templates as { state, slots, render(ctx) }; no framework imports
+src/core/        components*.js, pages.js: the 102 free components and 6 page templates as { state, slots, render(ctx) }; no framework imports
 src/vue/         Vue 3 adapter  (UiButton, UiAppShell … + install(app))
 src/react/       React adapter  (same names)
 src/theme.js     useUiTheme(): theme · palette · dir → <html> attributes, persisted
@@ -63,7 +63,7 @@ Types ship with the package. Only 9 core components have typed props so far; the
 - SSR: components render on the server; icons, `UiMap`, `UiRichEditor`, `UiTour` and `useUiTheme()` touch `document` only on the client.
 - Palettes via `data-palette="gold|tamam"`, theme via `data-theme="dark|light"`, direction via `dir="rtl"` on `<html>`.
 - Releases: see `docs/PUBLISHING.md`, history in `CHANGELOG.md`.
-- Coming from `@ziyarago/glass-ui-kit` (Vue 3, `Ui*` local copies)? `@ziyarago/ui/compat` exports the old component names as wrappers over the new ones; step by step guide with prop tables: `docs/MIGRATION.md`.
+- Coming from `@ziyarago/glass-ui-kit` (Vue 3, `Ui*` local copies)? migration tooling (the `compat` layer with the old component names and a step by step guide) is part of `@ziyarago/ui-pro`.
 
 ## License
 Code: MIT (`LICENSE`). The ZiyaraGo logo and 3D icons are not part of the package and are not MIT: they appear on the docs site for demonstration only, see `LICENSE-ASSETS.md`.

@@ -1,16 +1,19 @@
 <script setup lang="ts">
+import { isPro } from '../../src/meta/tiers.js'
 import { GROUPS } from '~/docs-data/groups'
 import { TEMPLATES } from '~/docs-data/templates'
-useSeo({ title: '@ziyarago/ui — Vue, Nuxt and React UI components and page templates', description: 'Glass design system: 208 components and 40 page templates for Vue 3, Nuxt and React. OKLCH tokens, dark and light themes, RTL and Arabic, AI-ready catalog.' })
+useSeo({ title: '@ziyarago/ui — Vue, Nuxt and React UI components and page templates', description: 'Glass design system: 102 free components and 6 page templates for Vue 3, Nuxt and React, with 106 more components and 33 templates in Pro. OKLCH tokens, dark and light themes, RTL and Arabic, AI-ready catalog.' })
 
 const { siteUrl, version } = useRuntimeConfig().public
 useHead({ script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
   { '@type': 'Organization', '@id': siteUrl + '/#org', name: 'ZiyaraGo', url: 'https://ziyarago.com', logo: siteUrl + '/favicon.png' },
   { '@type': 'WebSite', '@id': siteUrl + '/#site', url: siteUrl + '/', name: '@ziyarago/ui', publisher: { '@id': siteUrl + '/#org' }, inLanguage: 'en' },
-  { '@type': 'SoftwareSourceCode', name: '@ziyarago/ui', description: 'Glass design system for Vue 3, Nuxt and React: 208 components and 40 page templates.', codeRepository: 'https://github.com/ziyarago/ui', programmingLanguage: 'JavaScript', license: 'https://opensource.org/licenses/MIT', version, publisher: { '@id': siteUrl + '/#org' } },
+  { '@type': 'SoftwareSourceCode', name: '@ziyarago/ui', description: 'Glass design system for Vue 3, Nuxt and React: 102 free components and 6 page templates (106 components and 33 templates more in Pro).', codeRepository: 'https://github.com/ziyarago/ui', programmingLanguage: 'JavaScript', license: 'https://opensource.org/licenses/MIT', version, publisher: { '@id': siteUrl + '/#org' } },
 ] }) }] })
-const total = GROUPS.reduce((n, g) => n + g.names.length, 0)
-const templatesCount = TEMPLATES.pages.length
+const total = GROUPS.reduce((n, g) => n + g.names.filter(x => !isPro(x)).length, 0)
+const proTotal = GROUPS.reduce((n, g) => n + g.names.filter(isPro).length, 0)
+const templatesCount = new Set(TEMPLATES.pages.map(p => p.component).filter(c => !isPro(c))).size
+const proTemplates = new Set(TEMPLATES.pages.map(p => p.component).filter(isPro)).size
 const install = 'npm i @ziyarago/ui'
 const sw = ref(true)
 const chk = ref(true)
@@ -36,8 +39,8 @@ export default () => (
 )`,
 }
 const features = [
-  { icon: 'kaaba', title: `${total} components`, text: 'Actions, forms, data, feedback, overlays, navigation, plus Umrah, hotel and CRM blocks.' },
-  { icon: 'logo', title: `${templatesCount} page templates`, text: 'Dashboard, CRM, bookings, catalog, settings, auth and more. Fill named slots only.' },
+  { icon: 'kaaba', title: `${total} free components`, text: `Actions, forms, data, feedback, overlays and navigation. Pro adds ${proTotal} more: Umrah, hotel and CRM blocks, charts, editors.` },
+  { icon: 'logo', title: `${templatesCount} free page templates`, text: `Dashboard, settings, user list, pricing and auth, plus ${proTemplates} more in Pro. Fill named slots only.` },
   { icon: 'map', title: 'RTL and Arabic', text: 'Direction flips with one attribute. Thmanyah ships in the package.' },
   { icon: 'tour360', title: 'Tokens for any client', text: 'OKLCH CSS variables and tokens.json for Flutter and native apps.' },
 ]
@@ -49,7 +52,7 @@ const features = [
       <div class="hero__t">
         <UiBadge tone="brand">Vue 3 · Nuxt · React 18</UiBadge>
         <h1>Vue, Nuxt &amp; React <span class="grad">UI components</span> and patterns</h1>
-        <p>A glass design system for Umrah and Hajj products. One core, adapters for each framework, {{ total }} components, {{ templatesCount }} page templates, dark and light, RTL and Arabic.</p>
+        <p>A glass design system for Umrah and Hajj products. One core, adapters for each framework, {{ total }} free components, {{ templatesCount }} free page templates (Pro: {{ proTotal }} components, {{ proTemplates }} templates), dark and light, RTL and Arabic.</p>
         <div class="row">
           <NuxtLink to="/docs"><UiButton variant="primary" size="lg">Get started</UiButton></NuxtLink>
           <NuxtLink to="/docs/components"><UiButton size="lg">Browse components</UiButton></NuxtLink>

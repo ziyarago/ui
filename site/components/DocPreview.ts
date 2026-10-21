@@ -1,7 +1,10 @@
 import { defineComponent, h, ref, type PropType } from 'vue'
 import { useRoute } from 'vue-router'
-import * as UI from '@ziyarago/ui/vue'
+import * as Free from '@ziyarago/ui/vue'
+import * as ProUI from '#ziyarago-pro'
 import type { Variant, Item, Child } from '~/docs-data/types'
+
+const UI = { ...Free, ...ProUI }
 
 const build = (c: Child, key?: number): any => {
   const comp = /^[a-z]/.test(c.name) ? c.name : (UI as any)['Ui' + c.name]

@@ -14,8 +14,9 @@ import { meta } from '@ziyarago/ui/meta'
 useSeo(() => ({ title: `Ui${name.value} component — @ziyarago/ui`, description: `${(meta as Record<string, any>)[name.value]?.description ?? name.value} Live examples, Vue and React code and the full props reference.` }))
 
 const tab = ref<'preview' | 'code'>('preview')
-const importVue = computed(() => `import { Ui${name.value} } from '@ziyarago/ui/vue'`)
-const importReact = computed(() => `import { Ui${name.value} } from '@ziyarago/ui/react'`)
+const pkg = computed(() => isPro(name.value) ? '@ziyarago/ui-pro' : '@ziyarago/ui')
+const importVue = computed(() => `import { Ui${name.value} } from '${pkg.value}/vue'`)
+const importReact = computed(() => `import { Ui${name.value} } from '${pkg.value}/react'`)
 </script>
 
 <template>

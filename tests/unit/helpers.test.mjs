@@ -49,9 +49,9 @@ describe('component registry', () => {
       if (def.state) assert.equal(Object.getPrototypeOf(def.state), Object.prototype, name);
     }
   });
-  test('component names are PascalCase and there are 208 of them', () => {
+  test('component names are PascalCase and there are 102 of them (free set only)', () => {
     const names = Object.keys(components);
     assert.ok(names.every(n => /^[A-Z][A-Za-z0-9]*$/.test(n)));
-    assert.equal(names.length, 208);
+    assert.equal(names.length, 102);
   });
 });

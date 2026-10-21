@@ -43,19 +43,33 @@ jobs:
 
       - uses: actions/checkout@v4
         if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
-        with: { ref: main }
+        with: { ref: main, path: ZiyaraGo_UI }
+      - name: Check out the Pro package (read-only deploy key)
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        uses: actions/checkout@v4
+        with:
+          repository: ziyarago/ui-pro
+          ssh-key: ${{ secrets.PRO_DEPLOY_KEY }}
+          path: ZiyaraGo_UI_pro
       - uses: actions/setup-node@v4
         if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
-        with: { node-version: 22, cache: npm }
+        with: { node-version: 22, cache: npm, cache-dependency-path: ZiyaraGo_UI/package-lock.json }
 
       - name: Build library
         if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        working-directory: ZiyaraGo_UI
         run: npm ci && npm run build
 
-      - name: Build docs site
+      - name: Build Pro package
         if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
-        working-directory: site
+        working-directory: ZiyaraGo_UI_pro
+        run: npm ci && npm run build
+
+      - name: Build docs site (with Pro demos)
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        working-directory: ZiyaraGo_UI/site
         env:
+          ZIYARAGO_PRO: '1'
           NUXT_PUBLIC_SITE_URL: https://ziyara.vip
           NUXT_PUBLIC_GA_ID: ${{ vars.NUXT_PUBLIC_GA_ID || 'G-EECT5CXTJQ' }}
           NUXT_PUBLIC_YM_ID: ${{ vars.NUXT_PUBLIC_YM_ID || '113703146' }}
@@ -65,17 +79,21 @@ jobs:
 
       - name: Ship and activate
         if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        working-directory: ZiyaraGo_UI
         run: |
           VERSION="${{ inputs.version }}"
           [ -n "$VERSION" ] || VERSION="$(node -p "require('./package.json').version")-manual.$(date -u +%Y%m%d%H%M%S)"
           echo "version=$VERSION" >> "$GITHUB_ENV"
           test -f site/.output/public/index.html
+          # production must carry real Pro demos, not placeholders: stop before anything is shipped
+          if grep -rq "data-pro-placeholder" site/.output/public/docs; then echo "::error::Pro placeholders found in the build"; exit 1; fi
           tar czf - -C site/.output/public . | ssh ziyara "receive $VERSION"
           ssh ziyara "activate $VERSION"
           ssh ziyara status
 
       - name: Smoke test
         if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        working-directory: ZiyaraGo_UI
         run: |
           for i in 1 2 3 4 5 6; do
             out="$(curl -fsSL --max-time 15 https://ziyara.vip/version.json || true)"

@@ -481,7 +481,7 @@ export default {
   PageAuth: {
     description: 'Sign-in page template without the app shell, as a centered card or a split layout.',
     props: {
-      layout: { forwarded: true, type: "'card' | 'split' | 'photo' | 'light' | 'tint'", values: ['card', 'split', 'photo', 'light', 'tint'], default: 'card', description: "'split' uses AuthSplit with a side panel. 'photo', 'light' and 'tint' use AuthShowcase with a media panel. Anything else renders a centered AuthLayout card over the background." },
+      layout: { forwarded: true, type: "'card' | 'split' | 'photo' | 'light' | 'tint'", values: ['card', 'split', 'photo', 'light', 'tint'], default: 'card', description: "'split' uses AuthSplit with a side panel. 'photo', 'light' and 'tint' use AuthShowcase with a media panel (Pro: needs @ziyarago/ui-pro, otherwise they fall back to the centered card). Anything else renders a centered AuthLayout card over the background." },
       image: { forwarded: true, type: 'string', description: 'Media image URL; photo, light and tint layouts.' },
       headline: { forwarded: true, type: 'string', description: 'Large text on the media panel; photo and tint.' },
       caption: { forwarded: true, type: 'string', description: 'Small text on the media panel or glass bar.' },
