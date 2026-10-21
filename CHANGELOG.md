@@ -1,3 +1,9 @@
+## [0.3.0](https://github.com/ziyarago/ui/compare/v0.2.0...v0.3.0) (2026-10-21)
+
+### Features
+
+* animated aurora background, kit-owned i18n core, glass-ui-kit compat layer, new landing ([f3882ca](https://github.com/ziyarago/ui/commit/f3882caa86a7bdddf4996c28140e0363d9af7e1b))
+
 ## [0.2.0](https://github.com/ziyarago/ui/compare/v0.1.1...v0.2.0) (2026-10-21)
 
 ### Features
