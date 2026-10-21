@@ -1,0 +1,85 @@
+name: Deploy docs
+# Builds the docs site (static, prerendered) and ships it to the web server over SSH as a new release directory,
+# then switches the `current` symlink atomically. Old releases stay on disk (last 5) so rollback is instant.
+# Called by release.yml after every release; run it by hand to redeploy or roll back.
+on:
+  workflow_call:
+    inputs:
+      version: { type: string, required: true }
+  workflow_dispatch:
+    inputs:
+      action:
+        description: deploy the current main, or roll back to the previous release
+        type: choice
+        options: [deploy, rollback]
+        default: deploy
+
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  DEPLOY_HOST: ${{ vars.ZIYARA_DEPLOY_HOST }}
+  DEPLOY_PORT: ${{ vars.ZIYARA_DEPLOY_PORT || '22' }}
+  DEPLOY_USER: ziyara-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.ZIYARA_DEPLOY_KEY }}" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "${{ secrets.ZIYARA_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          printf 'Host ziyara\n  HostName %s\n  Port %s\n  User %s\n  IdentityFile ~/.ssh/deploy_key\n  IdentitiesOnly yes\n  StrictHostKeyChecking yes\n' "$DEPLOY_HOST" "$DEPLOY_PORT" "$DEPLOY_USER" > ~/.ssh/config
+
+      - name: Roll back
+        if: github.event_name == 'workflow_dispatch' && inputs.action == 'rollback'
+        run: ssh ziyara rollback && ssh ziyara status
+
+      - uses: actions/checkout@v4
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        with: { ref: main }
+      - uses: actions/setup-node@v4
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        with: { node-version: 22, cache: npm }
+
+      - name: Build library
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        run: npm ci && npm run build
+
+      - name: Build docs site
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        working-directory: site
+        env:
+          NUXT_PUBLIC_SITE_URL: https://ziyara.vip
+          NUXT_PUBLIC_GA_ID: ${{ vars.NUXT_PUBLIC_GA_ID || 'G-EECT5CXTJQ' }}
+          NUXT_PUBLIC_YM_ID: ${{ vars.NUXT_PUBLIC_YM_ID || '113703146' }}
+          NUXT_PUBLIC_GOOGLE_VERIFICATION: ${{ vars.NUXT_PUBLIC_GOOGLE_VERIFICATION }}
+          NUXT_PUBLIC_YANDEX_VERIFICATION: ${{ vars.NUXT_PUBLIC_YANDEX_VERIFICATION }}
+        run: npm ci && npm run generate
+
+      - name: Ship and activate
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        run: |
+          VERSION="${{ inputs.version }}"
+          [ -n "$VERSION" ] || VERSION="$(node -p "require('./package.json').version")-manual.${{ github.run_number }}"
+          echo "version=$VERSION" >> "$GITHUB_ENV"
+          test -f site/.output/public/index.html
+          tar czf - -C site/.output/public . | ssh ziyara "receive $VERSION"
+          ssh ziyara "activate $VERSION"
+          ssh ziyara status
+
+      - name: Smoke test
+        if: github.event_name != 'workflow_dispatch' || inputs.action == 'deploy'
+        run: |
+          for i in 1 2 3 4 5 6; do
+            out="$(curl -fsSL --max-time 15 https://ziyara.vip/version.json || true)"
+            echo "$out" | grep -q "$(node -p "require('./package.json').version")" && { echo "live: $out"; exit 0; }
+            sleep 10
+          done
+          echo "::warning::version.json on https://ziyara.vip does not match yet (DNS switch or cache?)"

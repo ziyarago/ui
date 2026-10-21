@@ -1,0 +1,5 @@
+/* ── page templates ── */
+.zg-pgroot{display:block;min-width:0;width:100%}.zg-pg{display:flex;flex-direction:column;gap:16px;min-width:0}.zg-pg__r{min-width:0}
+.zg-pg__auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--min,340px)),1fr));gap:16px;align-items:start;min-width:0}
+.zg-pg__two{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;min-width:0}.zg-pg__main{flex:999 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px}.zg-pg__side{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px}.zg-pg__aside{flex:1 1 260px;min-width:0;max-width:100%;display:flex;flex-direction:column;gap:16px}
+.zg-pgauth{position:relative;min-height:100%;display:grid;place-items:center;padding:24px}.zg-pgauth__bg{position:absolute;inset:0;overflow:hidden}.zg-pgauth__c{position:relative;width:100%;max-width:440px}

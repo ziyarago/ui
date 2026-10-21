@@ -1,0 +1,43 @@
+/* motion, effects, page backgrounds and gradient cards */
+
+/* ── motion off: no animations or transitions ── */
+[data-motion="off"] *,[data-motion="off"] *::before,[data-motion="off"] *::after{animation-duration:.001ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+
+/* ── effects lite: flat surfaces for weak browsers and devices ── */
+[data-fx="lite"] *,[data-fx="lite"] *::before,[data-fx="lite"] *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+[data-fx="lite"]{--zg-shadow-1:0 2px 8px oklch(0 0 0 / .18);--zg-shadow-2:0 6px 20px oklch(0 0 0 / .28);--zg-brand-glow:transparent}
+[data-fx="lite"][data-theme="light"]{--zg-shadow-1:0 2px 8px oklch(0.4 0.03 60 / .12);--zg-shadow-2:0 6px 20px oklch(0.4 0.03 60 / .18)}
+[data-fx="lite"] .zg-glass{background:var(--zg-pop)}
+
+/* ── page backgrounds ── set data-bg on <html> (useUiTheme().setBackground) or on any element with class zg-bg ── */
+:root{--zg-bgL:.62;--zg-bgC:.16;--zg-bgA:26%}
+[data-theme="light"]{--zg-bgL:.8;--zg-bgC:.11;--zg-bgA:34%}
+[data-bg="aurora"]{--zg-bg-image:radial-gradient(60% 50% at 12% 8%,color-mix(in oklch,var(--zg-brand) var(--zg-bgA),transparent),transparent 70%),radial-gradient(50% 45% at 88% 18%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 250) var(--zg-bgA),transparent),transparent 70%),radial-gradient(65% 55% at 50% 105%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 320) var(--zg-bgA),transparent),transparent 70%)}
+[data-bg="sunset"]{--zg-bg-image:radial-gradient(70% 55% at 10% 0%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 55) var(--zg-bgA),transparent),transparent 70%),radial-gradient(60% 50% at 95% 25%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 15) var(--zg-bgA),transparent),transparent 70%),radial-gradient(70% 60% at 40% 110%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 340) var(--zg-bgA),transparent),transparent 70%)}
+[data-bg="ocean"]{--zg-bg-image:radial-gradient(70% 55% at 85% 0%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 230) var(--zg-bgA),transparent),transparent 70%),radial-gradient(60% 55% at 5% 40%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 200) var(--zg-bgA),transparent),transparent 70%),radial-gradient(70% 55% at 60% 110%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 265) var(--zg-bgA),transparent),transparent 70%)}
+[data-bg="emerald"]{--zg-bg-image:radial-gradient(65% 55% at 8% 5%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 155) var(--zg-bgA),transparent),transparent 70%),radial-gradient(55% 50% at 92% 30%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 190) var(--zg-bgA),transparent),transparent 70%),radial-gradient(70% 55% at 45% 110%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 120) var(--zg-bgA),transparent),transparent 70%)}
+[data-bg="rose"]{--zg-bg-image:radial-gradient(65% 55% at 90% 0%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 355) var(--zg-bgA),transparent),transparent 70%),radial-gradient(55% 50% at 5% 35%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 20) var(--zg-bgA),transparent),transparent 70%),radial-gradient(70% 55% at 50% 110%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 310) var(--zg-bgA),transparent),transparent 70%)}
+[data-bg="mesh"]{--zg-bg-image:radial-gradient(40% 35% at 15% 15%,color-mix(in oklch,var(--zg-brand) var(--zg-bgA),transparent),transparent 70%),radial-gradient(35% 35% at 80% 10%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 250) var(--zg-bgA),transparent),transparent 70%),radial-gradient(40% 40% at 90% 70%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 155) var(--zg-bgA),transparent),transparent 70%),radial-gradient(40% 40% at 20% 85%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 330) var(--zg-bgA),transparent),transparent 70%)}
+html[data-bg]:not([data-bg="none"]),.zg-bg:not([data-bg="none"]){background-color:var(--zg-bg);background-image:var(--zg-bg-image);background-attachment:fixed}
+.zg-bg:not([data-bg="none"]){background-attachment:scroll}
+html[data-bg]:not([data-bg="none"]) .zg-root{background:transparent}
+html[data-fx="full"][data-motion="on"][data-bg]:not([data-bg="none"]){background-size:140% 140%;animation:zg-bg-drift 48s ease-in-out infinite alternate}
+@keyframes zg-bg-drift{from{background-position:0% 0%}to{background-position:100% 100%}}
+
+/* ── gradient cards ── <UiCard variant="gradient" tone="sky" intensity="soft|vivid"> ── */
+.zg-card--grad{--t:var(--zg-brand);--tv:var(--zg-brand);--on:var(--zg-on-brand)}
+.zg-card--t-brand{--t:var(--zg-brand);--tv:var(--zg-brand);--tv2:color-mix(in oklch,var(--zg-brand) 62%,oklch(0.88 0.07 85));--on:var(--zg-on-brand)}
+.zg-card--t-sky{--t:var(--zg-sky);--tv:oklch(0.6 0.14 235);--on:#fff}
+.zg-card--t-success{--t:var(--zg-green);--tv:oklch(0.56 0.15 150);--on:#fff}
+.zg-card--t-warning{--t:var(--zg-amber);--tv:oklch(0.8 0.15 85);--tv2:oklch(0.76 0.15 55);--on:oklch(0.2 0.04 80)}
+.zg-card--t-danger{--t:var(--zg-red);--tv:oklch(0.56 0.2 25);--on:#fff}
+.zg-card--t-violet{--t:oklch(0.64 0.2 295);--tv:oklch(0.5 0.22 295);--on:#fff}
+.zg-card--t-rose{--t:oklch(0.68 0.2 5);--tv:oklch(0.58 0.21 5);--on:#fff}
+.zg-card--t-neutral{--t:oklch(0.62 0.01 60);--tv:oklch(0.32 0.01 60);--on:#fff}
+.zg-card.zg-card--grad{background:linear-gradient(140deg,color-mix(in oklch,var(--t) var(--zg-g1,36%),var(--zg-gbase,var(--zg-s1))),color-mix(in oklch,var(--t) var(--zg-g2,9%),var(--zg-gbase,var(--zg-s1))) 70%);box-shadow:var(--zg-rim),inset 0 0 0 1px color-mix(in oklch,var(--t) 32%,transparent),var(--zg-shadow-1)}
+.zg-card.zg-card--grad.zg-card--vivid{background:linear-gradient(140deg,var(--tv),var(--tv2,color-mix(in oklch,var(--tv) 62%,oklch(0.25 0.1 280))));color:var(--on);box-shadow:inset 0 1px 0 oklch(1 0 0 / .28),var(--zg-shadow-1)}
+[data-theme="dark"]{--zg-gbase:var(--zg-s1);--zg-g1:36%;--zg-g2:9%}
+[data-theme="light"]{--zg-gbase:white;--zg-g1:30%;--zg-g2:8%}
+[data-fx="full"][data-motion="on"] .zg-card.zg-card--grad{transition:transform .25s var(--zg-ease),box-shadow .25s var(--zg-ease)}
+[data-fx="full"][data-motion="on"] .zg-card.zg-card--grad:hover{transform:translateY(-2px)}
+html[data-bg]:not([data-bg="none"]) body{background:transparent}

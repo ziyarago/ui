@@ -1,0 +1,47 @@
+/* @ziyarago/ui · tokens (OKLCH). Theme: [data-theme=dark|light] · Palette: [data-palette=gold|tamam] · Direction: dir=rtl */
+:root,[data-palette="gold"]{--zg-brand:oklch(0.676 0.084 67.4);--zg-brand-hover:oklch(0.73 0.09 67.4);--zg-sky:oklch(0.703 0.09 229.6)}
+[data-palette="tamam"]{--zg-brand:oklch(0.77 0.23 142);--zg-brand-hover:oklch(0.82 0.23 142);--zg-sky:oklch(0.72 0.1 200)}
+:root,[data-theme="dark"]{--zg-pop:oklch(0.262 0.004 17.4);
+  --zg-on-brand:oklch(0.2 0.02 60);
+  --zg-brand-soft:color-mix(in oklch,var(--zg-brand) 22%,transparent);
+  --zg-brand-glow:color-mix(in oklch,var(--zg-brand) 40%,transparent);
+  --zg-brand-text:color-mix(in oklch,var(--zg-brand) 70%,white);
+  --zg-sky-text:oklch(0.8 0.08 226);
+  --zg-bg:oklch(0.216 0.003 17.4);
+  --zg-s1:oklch(1 0 0 / .055);--zg-s2:oklch(1 0 0 / .085);--zg-s3:oklch(1 0 0 / .13);
+  --zg-glass:oklch(0.235 0.006 40 / .92);
+  --zg-stroke:oklch(1 0 0 / .08);
+  --zg-text-1:oklch(0.97 0.004 70);--zg-text-2:oklch(0.82 0.008 70);--zg-text-3:oklch(0.66 0.01 70);
+  --zg-inv-bg:oklch(0.96 0.004 70);--zg-inv-fg:oklch(0.2 0.01 60);
+  --zg-green:oklch(0.76 0.15 150);--zg-amber:oklch(0.8 0.14 80);--zg-red:oklch(0.7 0.18 25);
+  --zg-rim:inset 0 1px 0 oklch(1 0 0 / .16),inset 0 0 0 1px oklch(1 0 0 / .07),inset 0 -1px 0 oklch(0 0 0 / .25);
+  --zg-shadow-1:0 8px 24px oklch(0 0 0 / .28);--zg-shadow-2:0 24px 64px oklch(0 0 0 / .5);
+}
+[data-theme="light"]{--zg-pop:oklch(0.985 0.003 70);
+  --zg-on-brand:oklch(0.2 0.02 60);
+  --zg-brand-text:oklch(0.45 0.07 65);
+  --zg-sky-text:oklch(0.48 0.08 230);
+  --zg-bg:oklch(0.919 0.007 67.6);
+  --zg-s1:oklch(1 0 0 / .62);--zg-s2:oklch(1 0 0 / .74);--zg-s3:oklch(1 0 0 / .88);
+  --zg-glass:oklch(0.975 0.004 70 / .94);
+  --zg-stroke:oklch(0.3 0.02 60 / .15);
+  --zg-text-1:oklch(0.2 0.01 60);--zg-text-2:oklch(0.36 0.012 60);--zg-text-3:oklch(0.47 0.012 60);
+  --zg-inv-bg:oklch(0.22 0.01 60);--zg-inv-fg:oklch(0.97 0.004 70);
+  --zg-green:oklch(0.5 0.14 150);--zg-amber:oklch(0.55 0.13 70);--zg-red:oklch(0.52 0.19 25);
+  --zg-rim:inset 0 1px 0 oklch(1 0 0 / .95),inset 0 0 0 1px oklch(1 0 0 / .45),0 0 0 1px oklch(0.3 0.02 60 / .13);
+  --zg-shadow-1:0 8px 24px oklch(0.4 0.03 60 / .17);--zg-shadow-2:0 24px 64px oklch(0.4 0.03 60 / .22);
+}
+:root{--zg-z-bar:50;--zg-z-pop:60;--zg-z-modal:200;
+  --zg-font:'Manrope','Thmanyah Sans',system-ui,sans-serif;--zg-font-ar:'Thmanyah Sans',system-ui,sans-serif;--zg-font-ar-display:'Thmanyah Serif Display','Thmanyah Sans',serif;--zg-font-ar-text:'Thmanyah Serif Text','Thmanyah Sans',serif;--zg-font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --zg-h-xs:28px;--zg-h-sm:32px;--zg-h-md:40px;--zg-h-lg:48px;--zg-h-xl:56px;
+  --zg-r-card:32px;--zg-r-tile:20px;--zg-ease:cubic-bezier(.2,.8,.2,1);
+}
+[dir="rtl"]{--zg-font:var(--zg-font-ar)}
+
+/* Size scale. Adapters put data-size="xs|sm|md|lg|xl" on a component root when it has a size prop.
+   Component CSS must read these only inside its own [data-size] selector, never in default rules, so sizes do not leak into children. */
+[data-size="xs"]{--zg-sz-h:28px;--zg-sz-fs:12px;--zg-sz-px:10px;--zg-sz-gap:6px;--zg-sz-icon:14px;--zg-sz-pad:10px}
+[data-size="sm"]{--zg-sz-h:32px;--zg-sz-fs:13px;--zg-sz-px:12px;--zg-sz-gap:8px;--zg-sz-icon:16px;--zg-sz-pad:12px}
+[data-size="md"]{--zg-sz-h:40px;--zg-sz-fs:14px;--zg-sz-px:16px;--zg-sz-gap:10px;--zg-sz-icon:18px;--zg-sz-pad:16px}
+[data-size="lg"]{--zg-sz-h:48px;--zg-sz-fs:15px;--zg-sz-px:20px;--zg-sz-gap:12px;--zg-sz-icon:20px;--zg-sz-pad:20px}
+[data-size="xl"]{--zg-sz-h:56px;--zg-sz-fs:16px;--zg-sz-px:24px;--zg-sz-gap:14px;--zg-sz-icon:22px;--zg-sz-pad:24px}

@@ -1,0 +1,13 @@
+stages: [verify, publish]
+verify:
+  stage: verify
+  image: node:20
+  script: [npm run build, npm run check]
+publish:
+  stage: publish
+  image: node:20
+  rules: [{ if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+/' }]
+  script:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+    - npm run build
+    - npm publish --access public

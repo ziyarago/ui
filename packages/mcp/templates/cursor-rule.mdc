@@ -1,0 +1,5 @@
+---
+description: Use @ziyarago/ui for all UI
+alwaysApply: true
+---
+Build UI with @ziyarago/ui. Use the `ziyarago-ui` MCP server (`suggest_ui`, `get_component`, `get_template`) or `node_modules/@ziyarago/ui/dist/llms.txt`. Use only documented props. Style with `var(--zg-*)` tokens, no hard-coded colors. Do not create custom components for things the library provides.

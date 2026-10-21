@@ -1,0 +1,22 @@
+node_modules/
+*.tgz
+.npmrc
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# generated
+dist/
+site/.nuxt/
+site/.output/
+site/.nitro/
+site/.data/
+site/public/llms.txt
+site/public/llms-full.txt
+site/public/manifest.json
+site/node_modules/
+packages/mcp/node_modules/
+
+# private ops notes (server addresses, DNS, runbooks): never commit
+docs-private/

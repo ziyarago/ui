@@ -1,0 +1,47 @@
+/* components, part 8 — surfaces, stacking and motion for popups, bars and dialogs */
+.zg-select__list,.zg-menu,.zg-pop,.zg-hc__c{background:var(--zg-pop);-webkit-backdrop-filter:none;backdrop-filter:none;z-index:var(--zg-z-pop)}
+.zg-select__list,.zg-menu,.zg-pop{transform-origin:top;animation:zg-pop-in .16s var(--zg-ease) both}
+.zg-hc__c{transform-origin:top;transform:translateY(-4px) scale(.98);transition:opacity .16s var(--zg-ease),transform .16s var(--zg-ease),visibility .16s}
+.zg-hc:hover .zg-hc__c,.zg-hc:focus-within .zg-hc__c{transform:none}
+.zg-tip::after{z-index:var(--zg-z-pop)}
+.zg-cal{background:transparent}
+.zg-select__list .zg-cal,.zg-pop .zg-cal{padding:6px}
+@keyframes zg-pop-in{from{opacity:0;transform:translateY(-6px) scale(.97)}}
+
+.zg-card:has(.zg-select__list),.zg-card:has(.zg-menu),.zg-card:has(.zg-pop),.zg-card:has(.zg-hc:hover),.zg-card:has(.zg-tip:hover),
+.zg-glass:has(.zg-select__list),.zg-glass:has(.zg-menu),.zg-glass:has(.zg-pop),.zg-glass:has(.zg-hc:hover),.zg-glass:has(.zg-tip:hover){position:relative;z-index:var(--zg-z-pop)}
+
+.zg-topnav,.zg-shell__bar{z-index:var(--zg-z-bar);background:color-mix(in oklch,var(--zg-bg) 94%,transparent)}
+.zg-sidenav{background:color-mix(in oklch,var(--zg-bg) 94%,transparent)}
+
+.zg-modal-scrim{z-index:var(--zg-z-modal);animation:zg-fade-in .18s var(--zg-ease) both}
+.zg-modal{background:var(--zg-pop);-webkit-backdrop-filter:none;backdrop-filter:none;animation:zg-modal-in .22s var(--zg-ease) both}
+.zg-drawer-scrim--end .zg-drawer{animation-name:zg-drawer-in-end}
+.zg-drawer-scrim--start .zg-drawer{animation-name:zg-drawer-in-start}
+.zg-sheet{background:var(--zg-pop)}
+@keyframes zg-fade-in{from{opacity:0}}
+@keyframes zg-modal-in{from{opacity:0;transform:translateY(12px) scale(.97)}}
+@keyframes zg-drawer-in-end{from{transform:translateX(32px);opacity:0}}
+@keyframes zg-drawer-in-start{from{transform:translateX(-32px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.zg-select__list,.zg-menu,.zg-pop,.zg-modal-scrim,.zg-modal,.zg-drawer{animation:none}.zg-hc__c{transition:none}}
+
+.zg-bell__n{color:oklch(0.16 0.03 25)}
+[data-theme="light"] .zg-bell__n{color:#fff}
+.zg-inc__ok{color:oklch(0.16 0.03 150)}
+[data-theme="light"] .zg-inc__ok{color:#fff}
+
+/* disabled states: switch, checkbox/radio, options, menu items */
+.zg-switch:disabled,.zg-check:disabled,.zg-switch[aria-disabled="true"],.zg-check[aria-disabled="true"]{opacity:.45;cursor:not-allowed;pointer-events:auto}
+.zg-select__opt:disabled,.zg-menu__i:disabled,.zg-tree__n:disabled{opacity:.45;cursor:not-allowed;pointer-events:auto;background:none}
+.zg-select__opt:disabled:hover,.zg-menu__i:disabled:hover,.zg-tree__n:disabled:hover{background:none}
+[role="radiogroup"][aria-disabled="true"]{opacity:1;pointer-events:auto;cursor:not-allowed}
+.zg-drop{display:contents}.zg-drop>.zg-kcol{transition:box-shadow .15s,background .15s}.zg-drop[data-over="true"]>.zg-kcol{background:var(--zg-brand-soft);box-shadow:inset 0 0 0 2px var(--zg-brand)}.zg-drag{cursor:grab}.zg-drag:active{cursor:grabbing}
+/* default Button variant is intentional: matches the base .zg-btn look */
+.zg-btn--secondary{background:var(--zg-s2);color:var(--zg-text-1);box-shadow:var(--zg-rim)}.zg-btn--secondary:hover{background:var(--zg-s3)}
+/* Pagination: ellipsis + prev/next */
+.zg-pager{align-items:center}.zg-pager__gap{min-width:24px;text-align:center;color:var(--zg-text-3);font:600 13px var(--zg-font);user-select:none}
+.zg-pager button:disabled{opacity:.4;cursor:not-allowed}.zg-pager__nav{display:inline-flex;align-items:center;justify-content:center;padding:0}
+[dir="rtl"] .zg-pager__nav .zg-icon{transform:scaleX(-1)}
+/* CommandPalette active row, dialog focus */
+.zg-menu__i.is-active,.zg-menu__i[aria-selected="true"]{background:var(--zg-s2)}
+.zg-modal:focus,.zg-sheet:focus,.zg-fsd:focus,.zg-saver:focus{outline:0}

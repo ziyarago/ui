@@ -1,0 +1,15 @@
+{
+  "name": "@ziyarago/ui-mcp",
+  "version": "0.1.0",
+  "description": "MCP server and project setup for @ziyarago/ui: lets AI coding tools find components, props and page templates and build interfaces with them.",
+  "keywords": ["mcp", "model-context-protocol", "ui", "ziyarago", "vue", "react", "nuxt"],
+  "type": "module",
+  "license": "MIT",
+  "bin": { "ziyarago-ui-mcp": "./bin/cli.mjs" },
+  "files": ["bin", "templates", "README.md"],
+  "engines": { "node": ">=18" },
+  "dependencies": { "@modelcontextprotocol/sdk": "^1.0.0", "zod": "^3.23.0" },
+  "peerDependencies": { "@ziyarago/ui": ">=0.1.0" },
+  "peerDependenciesMeta": { "@ziyarago/ui": { "optional": true } },
+  "publishConfig": { "access": "public", "provenance": true }
+}

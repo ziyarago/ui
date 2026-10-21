@@ -1,0 +1,15 @@
+/* size overrides for the layout group. Only [data-size] selectors, see the size scale at the end of tokens.css */
+.zg-div[data-size="xs"]{font-size:10px;gap:8px}.zg-div[data-size="sm"]{font-size:11px;gap:10px}.zg-div[data-size="lg"]{font-size:13px;gap:14px}.zg-div[data-size="xl"]{font-size:15px;gap:16px}
+.zg-setsec[data-size="xs"]{padding:10px 0;gap:12px}.zg-setsec[data-size="sm"]{padding:14px 0;gap:16px}.zg-setsec[data-size="lg"]{padding:26px 0;gap:32px}.zg-setsec[data-size="xl"]{padding:34px 0;gap:40px}
+.zg-setsec[data-size="xs"] b{font-size:13px!important}.zg-setsec[data-size="sm"] b{font-size:14px!important}.zg-setsec[data-size="lg"] b{font-size:18px!important}.zg-setsec[data-size="xl"] b{font-size:21px!important}
+.zg-setsec[data-size="xs"] .zg-hint{font-size:11px!important}.zg-setsec[data-size="sm"] .zg-hint{font-size:12px!important}.zg-setsec[data-size="lg"] .zg-hint{font-size:14px!important}.zg-setsec[data-size="xl"] .zg-hint{font-size:15px!important}
+.zg-setsec[data-size="xs"]>.zg-field{gap:8px!important}.zg-setsec[data-size="sm"]>.zg-field{gap:10px!important}.zg-setsec[data-size="lg"]>.zg-field{gap:18px!important}.zg-setsec[data-size="xl"]>.zg-field{gap:22px!important}
+.zg-page-head[data-size="xs"] h1{font-size:20px}.zg-page-head[data-size="sm"] h1{font-size:24px}.zg-page-head[data-size="lg"] h1{font-size:clamp(32px,3.6vw,48px)}.zg-page-head[data-size="xl"] h1{font-size:clamp(38px,4.4vw,58px)}
+.zg-page-head[data-size="xs"] p{font-size:12px}.zg-page-head[data-size="sm"] p{font-size:13px}.zg-page-head[data-size="lg"] p{font-size:17px}.zg-page-head[data-size="xl"] p{font-size:19px}
+.zg-page-head[data-size="xs"]{gap:8px}.zg-page-head[data-size="sm"]{gap:12px}.zg-page-head[data-size="lg"]{gap:20px}.zg-page-head[data-size="xl"]{gap:24px}
+.zg-liquid[data-size="xs"]{padding:8px}.zg-liquid[data-size="sm"]{padding:12px}.zg-liquid[data-size="lg"]{padding:28px}.zg-liquid[data-size="xl"]{padding:36px}
+.zg-foot[data-size="xs"]{padding:8px 4px;gap:8px}.zg-foot[data-size="sm"]{padding:12px 4px;gap:12px}.zg-foot[data-size="lg"]{padding:24px 4px;gap:20px}.zg-foot[data-size="xl"]{padding:32px 4px;gap:24px}
+.zg-foot[data-size="xs"] span,.zg-foot[data-size="xs"] a{font-size:11px!important}.zg-foot[data-size="sm"] span,.zg-foot[data-size="sm"] a{font-size:12px!important}.zg-foot[data-size="lg"] span,.zg-foot[data-size="lg"] a{font-size:15px!important}.zg-foot[data-size="xl"] span,.zg-foot[data-size="xl"] a{font-size:17px!important}
+.zg-sort[data-size="xs"]{gap:4px;font-size:.8em}.zg-sort[data-size="sm"]{gap:5px;font-size:.9em}.zg-sort[data-size="lg"]{gap:8px;font-size:1.1em}.zg-sort[data-size="xl"]{gap:10px;font-size:1.25em}
+.zg-sort[data-size="xs"] .zg-sort__i{padding:3px 4px 3px 8px;gap:6px;border-radius:10px}.zg-sort[data-size="sm"] .zg-sort__i{padding:5px 6px 5px 10px;gap:8px;border-radius:13px}
+.zg-sort[data-size="lg"] .zg-sort__i{padding:11px 11px 11px 15px;gap:12px}.zg-sort[data-size="xl"] .zg-sort__i{padding:14px 14px 14px 18px;gap:14px}
