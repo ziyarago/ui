@@ -1,3 +1,9 @@
+## [0.7.0](https://github.com/ziyarago/ui/compare/v0.6.1...v0.7.0) (2026-10-21)
+
+### Features
+
+* page templates wave 1 (landing, onboarding, checkout, inbox, notifications, analytics) ([82bfc3c](https://github.com/ziyarago/ui/commit/82bfc3cd3b80ef875131040490d7d5dfba94adc9))
+
 ## [0.6.1](https://github.com/ziyarago/ui/compare/v0.6.0...v0.6.1) (2026-10-21)
 
 ### Bug Fixes
