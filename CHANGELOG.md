@@ -1,3 +1,9 @@
+## [0.16.0](https://github.com/ziyarago/ui/compare/v0.15.3...v0.16.0) (2026-10-21)
+
+### Features
+
+* keyboard and ARIA for Combobox, MultiSelect, Calendar and DatePicker, Tooltip Escape, client-side today, changelog cleanup ([ec905ac](https://github.com/ziyarago/ui/commit/ec905ace4be6d59c884b62941a697b53a2d236b7))
+
 ## [0.15.3](https://github.com/ziyarago/ui/compare/v0.15.2...v0.15.3) (2026-10-21)
 
 ### Bug Fixes
