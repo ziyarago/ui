@@ -7,6 +7,13 @@ const q = ref('')
 const palette_ = ref(false)
 const router = useRouter()
 const commands = GROUPS.flatMap(g => g.names.map(n => ({ id: n, label: n, keywords: g.title, icon: 'box' })))
+const MORE = [
+  { label: 'Integration', value: '/docs/integration' }, { label: 'Theming', value: '/docs/theming' },
+  { label: 'Colors', value: '/docs/colors' }, { label: 'Fonts', value: '/docs/fonts' }, { label: 'Backgrounds', value: '/docs/backgrounds' },
+  { label: 'AI and MCP', value: '/docs/ai' }, { label: 'Accessibility', value: '/docs/accessibility' },
+  { label: 'Changelog', value: '/docs/changelog' }, { label: 'Roadmap', value: '/docs/roadmap' },
+]
+const go2 = (it: string | { value: string }) => router.push(typeof it === 'string' ? it : it.value)
 const go = (id: string) => router.push(`/docs/components/${id}`)
 onMounted(() => {
   const onKey = (e: KeyboardEvent) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); palette_.value = !palette_.value } }
@@ -29,11 +36,8 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
         <NuxtLink to="/docs" :class="{ on: route.path === '/docs' }">Docs</NuxtLink>
         <NuxtLink to="/docs/components" :class="{ on: route.path.startsWith('/docs/components') }">Components</NuxtLink>
         <NuxtLink to="/docs/templates" :class="{ on: route.path.startsWith('/docs/templates') }">Templates</NuxtLink>
-        <NuxtLink to="/docs/theming" :class="{ on: route.path === '/docs/theming' }">Theming</NuxtLink>
-        <NuxtLink to="/docs/colors" :class="{ on: route.path === '/docs/colors' }">Colors</NuxtLink>
-        <NuxtLink to="/docs/backgrounds" :class="{ on: route.path === '/docs/backgrounds' }">Backgrounds</NuxtLink>
-        <NuxtLink to="/docs/fonts" :class="{ on: route.path === '/docs/fonts' }">Fonts</NuxtLink>
         <NuxtLink to="/pricing" :class="{ on: route.path === '/pricing' }">Pricing</NuxtLink>
+        <UiDropdown class="more" label="More" icon="chevron-down" size="sm" :items="MORE" @select="go2" />
       </nav>
       <div class="ctl">
         <UiButton size="sm" class="search" aria-label="Search components" @click="palette_ = true"><span class="search__t">Search</span> <kbd class="zg-kbd">⌘K</kbd></UiButton>
@@ -46,11 +50,15 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
       <aside v-if="isDocs" :class="['side', { 'side--open': sideOpen }]">
         <UiSearchInput v-model="q" placeholder="Search components" />
         <NuxtLink to="/docs" class="s-link">Getting started</NuxtLink>
+        <NuxtLink to="/docs/integration" class="s-link">Integration</NuxtLink>
         <NuxtLink to="/docs/theming" class="s-link">Theming</NuxtLink>
         <NuxtLink to="/docs/colors" class="s-link">Colors</NuxtLink>
         <NuxtLink to="/docs/backgrounds" class="s-link">Backgrounds</NuxtLink>
-        <NuxtLink to="/docs/ai" class="s-link">AI and MCP</NuxtLink>
         <NuxtLink to="/docs/fonts" class="s-link">Fonts</NuxtLink>
+        <NuxtLink to="/docs/ai" class="s-link">AI and MCP</NuxtLink>
+        <NuxtLink to="/docs/accessibility" class="s-link">Accessibility</NuxtLink>
+        <NuxtLink to="/docs/changelog" class="s-link">Changelog</NuxtLink>
+        <NuxtLink to="/docs/roadmap" class="s-link">Roadmap</NuxtLink>
         <NuxtLink to="/docs/components" class="s-link">All components</NuxtLink>
         <NuxtLink to="/docs/templates" class="s-link">Page templates</NuxtLink>
         <div v-for="g in groups" :key="g.id" class="s-group">
@@ -65,6 +73,12 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
 
     <footer class="foot">
       <span>© 2026 ZiyaraGo. MIT license.</span>
+      <nav class="foot__l" aria-label="Footer">
+        <NuxtLink to="/docs/changelog">Changelog</NuxtLink>
+        <NuxtLink to="/docs/roadmap">Roadmap</NuxtLink>
+        <NuxtLink to="/docs/accessibility">Accessibility</NuxtLink>
+        <NuxtLink to="/docs/integration">Integration</NuxtLink>
+      </nav>
       <span>Vue 3.5+ · Nuxt 3/4 · React 18+</span>
     </footer>
   </div>
@@ -74,11 +88,13 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
 .site { min-height: 100vh; display: flex; flex-direction: column; }
 .top { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 14px; padding: 12px 20px; background: color-mix(in oklch, var(--zg-bg) 82%, transparent); backdrop-filter: blur(14px); box-shadow: inset 0 -1px 0 var(--zg-stroke); flex-wrap: wrap; }
 .logo { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--zg-text-1); text-decoration: none; }
-.links { display: flex; gap: 4px; }
+.links { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; min-width: 0; }
 .links a { padding: 8px 10px; border-radius: 10px; color: var(--zg-text-2); text-decoration: none; font-size: 15px; }
 .links a:hover, .links a.on { color: var(--zg-text-1); background: color-mix(in oklch, var(--zg-text-1) 8%, transparent); }
 .ctl { margin-inline-start: auto; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .burger { display: none; }
+.foot__l { display: flex; gap: 14px; flex-wrap: wrap; }
+.foot__l a:hover { color: var(--zg-text-1); }
 .ss-fb { display: inline-block; width: 190px; height: 32px; }
 @media (max-width: 1500px) { .search__t { display: none; } }
 .skip { position: absolute; left: 8px; top: -48px; z-index: 300; padding: 10px 14px; border-radius: 10px; background: var(--zg-brand); color: var(--zg-on-brand); text-decoration: none; transition: top .15s; }

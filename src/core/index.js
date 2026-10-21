@@ -7,3 +7,5 @@ import { more6 } from './components6.js';
 import { more7 } from './components7.js';
 export const components = { ...base, ...more, ...more3, ...more4, ...more6, ...more7, ...pages };
 export { fmt, setIconBase, rules };
+export { LOCALES, t, setUiLocale, getUiLocale, setUiMessages, isRtlLocale, subscribeUiLocale, getUiVersion, defineMessages } from '../i18n/index.js';
+import '../i18n/components/index.js';

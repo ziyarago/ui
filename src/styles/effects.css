@@ -10,8 +10,8 @@
 [data-fx="lite"] .zg-glass{background:var(--zg-pop)}
 
 /* ── page backgrounds ── set data-bg on <html> (useUiTheme().setBackground) or on any element with class zg-bg ── */
-:root{--zg-bgL:.62;--zg-bgC:.16;--zg-bgA:26%}
-[data-theme="light"]{--zg-bgL:.8;--zg-bgC:.11;--zg-bgA:34%}
+:root{--zg-bgL:.62;--zg-bgC:.2;--zg-bgA:42%}
+[data-theme="light"]{--zg-bgL:.8;--zg-bgC:.14;--zg-bgA:50%}
 [data-bg="aurora"]{--zg-bg-image:radial-gradient(60% 50% at 12% 8%,color-mix(in oklch,var(--zg-brand) var(--zg-bgA),transparent),transparent 70%),radial-gradient(50% 45% at 88% 18%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 250) var(--zg-bgA),transparent),transparent 70%),radial-gradient(65% 55% at 50% 105%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 320) var(--zg-bgA),transparent),transparent 70%)}
 [data-bg="sunset"]{--zg-bg-image:radial-gradient(70% 55% at 10% 0%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 55) var(--zg-bgA),transparent),transparent 70%),radial-gradient(60% 50% at 95% 25%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 15) var(--zg-bgA),transparent),transparent 70%),radial-gradient(70% 60% at 40% 110%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 340) var(--zg-bgA),transparent),transparent 70%)}
 [data-bg="ocean"]{--zg-bg-image:radial-gradient(70% 55% at 85% 0%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 230) var(--zg-bgA),transparent),transparent 70%),radial-gradient(60% 55% at 5% 40%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 200) var(--zg-bgA),transparent),transparent 70%),radial-gradient(70% 55% at 60% 110%,color-mix(in oklch,oklch(var(--zg-bgL) var(--zg-bgC) 265) var(--zg-bgA),transparent),transparent 70%)}
@@ -21,8 +21,10 @@
 html[data-bg]:not([data-bg="none"]),.zg-bg:not([data-bg="none"]){background-color:var(--zg-bg);background-image:var(--zg-bg-image);background-attachment:fixed}
 .zg-bg:not([data-bg="none"]){background-attachment:scroll}
 html[data-bg]:not([data-bg="none"]) .zg-root{background:transparent}
-html[data-fx="full"][data-motion="on"][data-bg]:not([data-bg="none"]){background-size:140% 140%;animation:zg-bg-drift 48s ease-in-out infinite alternate}
-@keyframes zg-bg-drift{from{background-position:0% 0%}to{background-position:100% 100%}}
+html[data-motion="on"][data-bg]:not([data-bg="none"]){background-image:none}
+html[data-motion="on"][data-bg]:not([data-bg="none"])::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;background-image:var(--zg-bg-image);background-repeat:no-repeat;animation:zg-bg-float 18s ease-in-out infinite alternate,zg-bg-hue 40s linear infinite;will-change:transform,filter}
+@keyframes zg-bg-hue{from{filter:hue-rotate(0deg) saturate(1.15)}to{filter:hue-rotate(360deg) saturate(1.15)}}
+@keyframes zg-bg-float{0%{transform:translate3d(-3%,-2%,0) scale(1) rotate(0deg)}50%{transform:translate3d(4%,3%,0) scale(1.18) rotate(3deg)}100%{transform:translate3d(-2%,5%,0) scale(1.08) rotate(-3deg)}}
 
 /* ── gradient cards ── <UiCard variant="gradient" tone="sky" intensity="soft|vivid"> ── */
 .zg-card--grad{--t:var(--zg-brand);--tv:var(--zg-brand);--on:var(--zg-on-brand)}

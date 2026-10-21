@@ -1,0 +1,1 @@
+{ "name": "zg-test-app-vue", "private": true, "type": "module", "description": "Test harness: renders every docs example with the Vue adapter. Dependencies come from the repo root." }

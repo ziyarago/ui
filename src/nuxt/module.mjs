@@ -5,7 +5,7 @@ import { themeInitScript } from '../theme.js';
 
 export default defineNuxtModule({
   meta: { name: '@ziyarago/ui', configKey: 'ziyarago', compatibility: { nuxt: '>=3.0.0' } },
-  defaults: { css: true, prefix: 'Ui', theme: { theme: 'dark', palette: 'gold', dir: 'ltr' } },
+  defaults: { css: true, prefix: 'Ui', theme: { theme: 'dark', palette: 'gold', dir: 'ltr', bg: 'none', locale: 'en' } },
   setup(opts, nuxt) {
     const { resolve } = createResolver(import.meta.url);
     if (opts.css) nuxt.options.css.push('@ziyarago/ui/style.css');
@@ -21,7 +21,7 @@ export default defineNuxtModule({
     if (opts.theme) {
       nuxt.options.runtimeConfig.public.ziyarago = opts.theme;
       const head = nuxt.options.app.head ||= {};
-      head.htmlAttrs = { ...(head.htmlAttrs || {}), 'data-theme': opts.theme.theme, 'data-palette': opts.theme.palette, dir: opts.theme.dir };
+      head.htmlAttrs = { ...(head.htmlAttrs || {}), 'data-theme': opts.theme.theme, 'data-palette': opts.theme.palette, 'data-bg': opts.theme.bg || 'none', dir: opts.theme.dir };
       addPlugin(resolve('./plugin.mjs'));
       head.script = [...(head.script || []), { innerHTML: themeInitScript, tagPosition: 'head' }];
     }

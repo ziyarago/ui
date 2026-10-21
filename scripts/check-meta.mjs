@@ -3,6 +3,7 @@
 import { components } from '../src/core/index.js';
 import { meta } from '../src/meta/index.js';
 import { extract } from './props-extract.mjs';
+import { BOOL_PROPS } from '../src/core/bools.js';
 
 const ignore = new Set(['style', 'class', 'key', 'ref', 'id', 'actions', 'footer', 'children']);
 const found = extract();
@@ -32,6 +33,14 @@ for (const name of Object.keys(components)) {
   for (const s of real.slots || []) if (!ignore.has(s) && !(s in slots)) errors.push(`${name}: undocumented slot "${s}"`);
 }
 for (const n of Object.keys(meta)) if (!(n in components)) errors.push(`${n}: metadata for unknown component`);
+// src/core/bools.js: every prop that is boolean in all components must be listed, and nothing that is text somewhere may be (the adapter turns '' into true).
+const kinds = {};
+for (const m of Object.values(meta)) for (const [p, d] of Object.entries(m.props || {})) (kinds[p] ||= new Set()).add(d.type === 'boolean');
+for (const [p, k] of Object.entries(kinds)) {
+  if (k.size === 1 && k.has(true) && !BOOL_PROPS.has(p)) errors.push(`bools: boolean prop "${p}" missing from src/core/bools.js (Vue bare-attribute form would be falsy)`);
+  if (k.size > 1 && BOOL_PROPS.has(p)) errors.push(`bools: "${p}" is text in some components, remove it from src/core/bools.js`);
+}
+for (const p of BOOL_PROPS) if (!kinds[p]) errors.push(`bools: "${p}" is not a documented prop`);
 
 console.log(`${documented}/${Object.keys(components).length} components documented, ${errors.length} errors, ${warnings.length} warnings`);
 if (process.argv.includes('-v') || errors.length) console.log([...errors.map(e => 'ERROR ' + e), ...(process.argv.includes('-v') ? warnings.map(w => 'warn  ' + w) : [])].join('\n'));

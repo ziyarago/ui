@@ -12,19 +12,22 @@ export default {
     props: {
       title: { type: 'string', description: 'Header title. The header renders only when title or the actions slot is set.' },
       subtitle: { type: 'string', description: 'Muted line under the title.' },
-      variant: { type: "'inverse' | 'gradient'", values: ['inverse', 'gradient'], description: 'inverse is a dark card regardless of the page theme; gradient is a tinted gradient card colored by tone. Omit for the default glass card.' },
+      variant: { type: "'inverse' | 'gradient' | 'outline'", values: ['inverse', 'gradient', 'outline'], description: 'inverse is a dark card regardless of the page theme; gradient is a tinted gradient card colored by tone; outline is transparent with a border. Omit for the default glass card.' },
       tone: { type: "'brand' | 'sky' | 'success' | 'warning' | 'danger' | 'neutral' | 'rose' | 'violet'", values: ['brand', 'sky', 'success', 'warning', 'danger', 'neutral', 'rose', 'violet'], default: 'brand', description: 'Gradient color. Used only with variant="gradient".' },
       intensity: { type: "'vivid'", values: ['vivid'], description: 'With variant="gradient", fills the card with a saturated color instead of a soft tint.' },
+      padding: { type: "'none'", values: ['none'], description: 'none removes the inner padding (for full-bleed tables or images). Other paddings come from size.' },
+      interactive: { type: 'boolean', default: false, description: 'Adds a pointer cursor and hover lift. With a click handler the card also becomes keyboard focusable (Enter activates).' },
       size: size('md', 'Padding, gap and title size.'),
     },
-    slots: { default: 'Card body.', actions: 'Right side of the header, for buttons or menus.' },
+    slots: { default: 'Card body.', actions: 'Right side of the header, for buttons or menus.', header: 'Replaces the whole title/actions header with custom content.', footer: 'Row under the body, for buttons or meta.' },
+    events: { click: 'Native click on the card. Combine with interactive.' },
     notes: ['Vue slot names are React props (actions) and children (default).'],
   },
 
   DataTable: {
     description: 'Table with sortable columns, custom cell rendering and optional row selection checkboxes.',
     props: {
-      columns: { type: '{ key: string; label: string; sortable?: boolean; num?: boolean; render?: (value, row, h) => VNode | string }[]', required: true, default: [], description: 'Column definitions. key reads row[key]; num right-aligns numbers; render customizes the cell; sortable shows a sort button in the header.' },
+      columns: { type: '{ key: string; label: string; sortable?: boolean; num?: boolean; align?: "left" | "center" | "right"; width?: string; render?: (value, row, h) => VNode | string }[]', required: true, default: [], description: 'Column definitions. key reads row[key]; num right-aligns numbers; render customizes the cell; sortable shows a sort button in the header.' },
       rows: { type: '({ id: string | number; [key: string]: any })[]', required: true, default: [], description: 'Row objects. Every row needs a unique id; missing cell values render as an em dash.' },
       selected: { type: '(string | number)[]', default: [], description: 'Ids of selected rows. Checkboxes show only when the select event is handled.' },
       sortKey: { type: 'string', description: 'Key of the column currently sorted. The component does not sort rows itself.' },
@@ -33,7 +36,9 @@ export default {
       labels: { type: '{ selectAll?: string; selectRow?: string }', default: "{ selectAll: 'Select all', selectRow: 'Select row' }", description: 'Accessible names of the selection checkboxes.' },
       size: size('md', 'Row density and font size.'),
     },
+    slots: { empty: 'Replaces the empty text with custom content when rows is empty.' },
     events: {
+      rowClick: 'Called with (row, index) when a body row is clicked. Rows get a pointer cursor.',
       select: 'Called with the new array of selected row ids. Handling it enables the checkbox column and select-all.',
       sort: 'Called with (key, dir) where dir is "asc" or "desc". Sort the rows yourself and pass sortKey/sortDir back.',
     },

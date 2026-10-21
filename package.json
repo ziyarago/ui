@@ -64,7 +64,32 @@
     "./llms.txt": "./dist/llms.txt",
     "./llms-full.txt": "./dist/llms-full.txt",
     "./meta": {
+      "types": "./types/meta.d.ts",
       "default": "./src/meta/index.js"
+    },
+    "./vue/global": {
+      "types": "./types/vue-global.d.ts",
+      "default": "./src/vue/global.js"
+    },
+    "./resolver": {
+      "types": "./types/resolver.d.ts",
+      "default": "./src/resolver.js"
+    },
+    "./compat": {
+      "types": "./types/compat.d.ts",
+      "default": "./src/compat/index.js"
+    },
+    "./compat/resolver": {
+      "types": "./types/compat-resolver.d.ts",
+      "default": "./src/compat/resolver.js"
+    },
+    "./compat/vite": {
+      "types": "./types/compat-vite.d.ts",
+      "default": "./src/compat/vite.js"
+    },
+    "./i18n": {
+      "types": "./types/i18n.d.ts",
+      "default": "./src/i18n/index.js"
     }
   },
   "files": [
@@ -76,14 +101,21 @@
     "LICENSE",
     "CHANGELOG.md",
     "THIRD_PARTY_NOTICES.md",
-    "src"
+    "src",
+    "docs/INTEGRATION.md",
+    "docs/MIGRATION.md"
   ],
   "scripts": {
     "types": "node scripts/types.mjs",
-    "build": "node scripts/build.mjs && node scripts/types.mjs && node scripts/manifest.mjs",
-    "check": "node scripts/check.mjs && node scripts/check-meta.mjs",
+    "build": "node scripts/i18n-index.mjs && node scripts/build.mjs && node scripts/types.mjs && node scripts/manifest.mjs",
+    "check": "node scripts/check.mjs && node scripts/check-meta.mjs && node scripts/i18n-index.mjs",
+    "test": "npm run test:unit && npm run test:ssr && npm run test:browser",
+    "test:unit": "node --test tests/unit/*.test.mjs",
+    "test:ssr": "node --test tests/ssr/*.test.mjs",
+    "test:browser": "node tests/browser/run.mjs && node tests/browser/interactions.mjs",
     "prepack": "npm run build && npm run check",
-    "pack:dry": "npm pack --dry-run"
+    "pack:dry": "npm pack --dry-run",
+    "test:types": "node scripts/typecheck-fixtures.mjs"
   },
   "engines": {
     "node": ">=18"
@@ -91,7 +123,8 @@
   "peerDependencies": {
     "@nuxt/kit": ">=3.0.0",
     "react": ">=18",
-    "vue": ">=3.5"
+    "vue": ">=3.5",
+    "react-dom": ">=18"
   },
   "peerDependenciesMeta": {
     "vue": {
@@ -101,6 +134,9 @@
       "optional": true
     },
     "@nuxt/kit": {
+      "optional": true
+    },
+    "react-dom": {
       "optional": true
     }
   },
@@ -113,8 +149,52 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/exec": "^7.1.0",
     "@semantic-release/git": "^10.0.1",
+    "@types/react": "^19.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-vue": "^5.2.4",
     "conventional-changelog-conventionalcommits": "^9.3.1",
+    "esbuild": "^0.28.2",
+    "puppeteer-core": "^23.11.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "semantic-release": "^24.2.9",
-    "vue": "^3.5.44"
+    "typescript": "5.9",
+    "vite": "^6.4.4",
+    "vue": "^3.5.44",
+    "vue-tsc": "^3.3.13"
+  },
+  "typesVersions": {
+    "*": {
+      "vue": [
+        "types/vue.d.ts"
+      ],
+      "vue/global": [
+        "types/vue-global.d.ts"
+      ],
+      "react": [
+        "types/react.d.ts"
+      ],
+      "theme": [
+        "types/theme.d.ts"
+      ],
+      "nuxt": [
+        "types/nuxt.d.ts"
+      ],
+      "resolver": [
+        "types/resolver.d.ts"
+      ],
+      "compat": [
+        "types/compat.d.ts"
+      ],
+      "compat/resolver": [
+        "types/compat-resolver.d.ts"
+      ],
+      "compat/vite": [
+        "types/compat-vite.d.ts"
+      ],
+      "meta": [
+        "types/meta.d.ts"
+      ]
+    }
   }
 }

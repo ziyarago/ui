@@ -17,10 +17,13 @@ export default {
       loading: { type: 'boolean', default: false, description: 'Shows a spinner instead of the icon and disables the button.' },
       disabled: { type: 'boolean', default: false, description: 'Blocks interaction and dims the button.' },
       block: { type: 'boolean', default: false, description: 'Stretches the button to the full width of its container.' },
+      type: { type: "'button' | 'submit' | 'reset'", values: ['button', 'submit', 'reset'], default: 'button', description: 'Native button type. Use submit inside a form.' },
+      iconOnly: { type: 'boolean', default: false, description: 'Square button (width equals height) with no horizontal padding, for a lone icon. Pass an aria-label.' },
+      title: { type: 'string', description: 'Native tooltip text.' },
     },
     events: { click: 'Native click event. Not fired while disabled or loading.' },
     slots: { default: 'Button label.' },
-    notes: ['Always renders type="button", so it never submits a form by itself.'],
+    notes: ['Renders type="button" unless type is set, so it never submits a form by itself.'],
   },
   IconButton: {
     description: 'Square button with only an icon; use for toolbars and compact actions.',
@@ -80,9 +83,12 @@ export default {
   SegmentedControl: {
     description: 'Segmented switch for choosing exactly one of a few options.',
     props: {
-      items: { type: '{ value: string; label: string }[]', default: '[]', required: true, description: 'Segments to render.' },
+      items: { type: '{ value: string; label: string; icon?: string; disabled?: boolean }[]', default: '[]', required: true, description: 'Segments to render. icon is an icon name; disabled: true dims one segment.' },
       modelValue: { type: 'string', model: true, description: 'Value of the selected segment.' },
       size: sizeProp('md', 'Control size. sm and md also have a dedicated compact style.'),
+      block: { type: 'boolean', default: false, description: 'Stretches the control to the container width with equal-width segments.' },
+      iconOnly: { type: 'boolean', default: false, description: 'Hides labels of segments that have an icon; the label stays as tooltip and aria-label.' },
+      ariaLabel: { type: 'string', description: 'Accessible name of the group.' },
     },
     events: { change: 'Called with the value of the clicked segment.' },
   },
@@ -119,8 +125,9 @@ export default {
   Badge: {
     description: 'Status badge with a colored tone and optional dot.',
     props: {
-      tone: { type: "'brand' | 'success' | 'warning' | 'danger' | 'info'", values: ['brand', 'success', 'warning', 'danger', 'info'], description: 'Color. Omit for the neutral style.' },
+      tone: { type: "'brand' | 'success' | 'warning' | 'danger' | 'info' | 'inverse'", values: ['brand', 'success', 'warning', 'danger', 'info', 'inverse'], description: 'Color. inverse is a solid high-contrast badge (dark on light themes, light on dark). Omit for the neutral style.' },
       dot: { type: 'boolean', default: false, description: 'Shows a status dot before the content.' },
+      shape: { type: "'pill' | 'square'", values: ['pill', 'square'], default: 'pill', description: 'square uses small rounded corners instead of a full pill.' },
       size: sizeProp('md', 'Badge height: xs 18px, sm 20px, md 24px, lg 28px, xl 32px.'),
     },
     slots: { default: 'Badge content.' },

@@ -16,8 +16,9 @@ export default {
     props: {
       ...alertProps,
       banner: { type: 'boolean', default: false, description: 'Removes the border radius so the alert spans the full width like a Banner.' },
+      hideIcon: { type: 'boolean', default: false, description: 'Hides the leading tone icon (the icon slot is hidden too).' },
     },
-    slots: { default: 'Message text.' },
+    slots: { default: 'Message text.', title: 'Replaces the title prop with custom content.', icon: 'Replaces the tone icon inside the icon tile.', actions: 'Row under the message for buttons or links.' },
     events: { close: 'Called when the close button is clicked. The button is rendered only when this handler is set.' },
     notes: ['Has role="alert", so screen readers announce it when it appears.', 'Not self-dismissing: hide it yourself in the close handler.'],
   },

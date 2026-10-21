@@ -1,6 +1,13 @@
 /* @ziyarago/ui · components. Every class is zg-*; no global resets except .zg-root */
 .zg-root{font-family:var(--zg-font);color:var(--zg-text-1);background:var(--zg-bg);-webkit-font-smoothing:antialiased}
 .zg-root *,.zg-root *::before,.zg-root *::after{box-sizing:border-box}
+/* Host-CSS robustness. Zero specificity (:where), so any zg-* rule, utility class or app rule wins. Makes a component look the same with or without
+   Tailwind preflight / a CSS reset: form controls inherit font and color, no UA padding, border-box, normal line-height, svg without a baseline gap. */
+:where(.zg-root,[class*="zg-"]){line-height:normal}
+:where([class*="zg-"]),:where([class*="zg-"])::before,:where([class*="zg-"])::after,:where(.zg-root,[class*="zg-"]) :where(*,*::before,*::after){box-sizing:border-box}
+:where(.zg-root,[class*="zg-"]) :where(button,input,select,textarea),:where(button,input,select,textarea):where([class*="zg-"]){font:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0;background-color:transparent}
+:where(.zg-root,[class*="zg-"]) a:where(:not([class])){text-decoration:underline}
+:where(.zg-root,[class*="zg-"]) svg,svg:where([class*="zg-"]){vertical-align:middle}
 .zg-glass{background:var(--zg-s1);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);box-shadow:var(--zg-rim),var(--zg-shadow-1)}
 .zg-icon:not([style*="--zg-icon"]){visibility:hidden}
 .zg-icon{display:inline-block;flex:none;width:1em;height:1em;background:currentColor;-webkit-mask:var(--zg-icon) center/contain no-repeat;mask:var(--zg-icon) center/contain no-repeat}

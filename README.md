@@ -42,6 +42,7 @@ Types ship with the package. Only 9 core components have typed props so far; the
 - SSR: components render on the server; icons, `UiMap`, `UiRichEditor`, `UiTour` and `useUiTheme()` touch `document` only on the client.
 - Palettes via `data-palette="gold|tamam"`, theme via `data-theme="dark|light"`, direction via `dir="rtl"` on `<html>`.
 - Releases: see `docs/PUBLISHING.md`, history in `CHANGELOG.md`.
+- Coming from `@ziyarago/glass-ui-kit` (Vue 3, `Ui*` local copies)? `@ziyarago/ui/compat` exports the old component names as wrappers over the new ones; step by step guide with prop tables: `docs/MIGRATION.md`.
 
 ## License
 Code: MIT (`LICENSE`). Brand assets (logo, 3D icons) are not MIT: see `LICENSE-ASSETS.md`.
