@@ -13,8 +13,18 @@
   ],
   "type": "module",
   "license": "MIT",
+  "author": "ZiyaraGo <dev@ziyarago.com>",
+  "homepage": "https://ziyara.vip/docs/ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziyarago/ui.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/ziyarago/ui/issues"
+  },
   "bin": {
-    "ziyarago-ui-mcp": "./bin/cli.mjs"
+    "ziyarago-ui-mcp": "bin/cli.mjs"
   },
   "files": [
     "bin",
