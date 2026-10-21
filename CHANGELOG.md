@@ -1,3 +1,9 @@
+## [0.11.0](https://github.com/ziyarago/ui/compare/v0.10.0...v0.11.0) (2026-10-21)
+
+### Features
+
+* Localization docs page, i18n tests, Pro language pack moved to private repo ([89dfed3](https://github.com/ziyarago/ui/commit/89dfed36ce7a9de6204fe54e912564ef19723160))
+
 ## [0.10.0](https://github.com/ziyarago/ui/compare/v0.9.0...v0.10.0) (2026-10-21)
 
 ### Features
