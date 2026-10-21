@@ -2822,6 +2822,11 @@ export interface UiSideNavProps {
    */
   collapsed?: boolean;
   /**
+   * Always draw the collapse button, even without a toggle handler (the button is also drawn when a toggle handler is set).
+   * @default false
+   */
+  collapsible?: boolean;
+  /**
    * Label of the collapse button.
    * @default 'Collapse'
    */
@@ -2837,7 +2842,7 @@ export interface UiSideNavProps {
    */
   onChange?: (value: string) => void;
   /**
-   * Called when the collapse button is clicked. The button is rendered only when this handler is set.
+   * Called when the collapse button is clicked. The button is drawn when this handler is set (Vue: @toggle) or when collapsible is true.
    * @event toggle
    */
   onToggle?: () => void;

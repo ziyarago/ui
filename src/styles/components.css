@@ -140,7 +140,7 @@
 .zg-sidenav{--w:272px;position:sticky;top:0;height:100vh;width:var(--w);flex:none;display:flex;flex-direction:column;gap:6px;padding:16px 12px;background:color-mix(in oklch,var(--zg-bg) 62%,transparent);-webkit-backdrop-filter:blur(40px) saturate(1.6);backdrop-filter:blur(40px) saturate(1.6);box-shadow:inset -1px 0 0 var(--zg-stroke);transition:width .3s var(--zg-ease);overflow:hidden}
 [dir="rtl"] .zg-sidenav{box-shadow:inset 1px 0 0 var(--zg-stroke)}
 .zg-sidenav--collapsed{--w:76px}
-.zg-sidenav .zg-navitem{width:100%;height:46px;border-radius:16px;justify-content:flex-start;padding:0 14px}
+.zg-sidenav{overflow-y:auto;overscroll-behavior:contain}.zg-sidenav>*{flex-shrink:0}.zg-sidenav .zg-navitem{flex-shrink:0;width:100%;height:46px;border-radius:16px;justify-content:flex-start;padding:0 14px}
 .zg-sidenav--collapsed .zg-navitem{justify-content:center;padding:0}.zg-sidenav--collapsed .zg-navitem span:not(.zg-icon){display:none}
 .zg-sidenav__brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px;font:700 18px var(--zg-font);white-space:nowrap}
 .zg-sidenav--collapsed .zg-sidenav__brand span{display:none}
