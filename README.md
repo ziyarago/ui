@@ -14,6 +14,12 @@ tokens/          tokens.json for Flutter and native clients
 assets/          fonts/thmanyah · 3d (PNG icons) · brand (logo)
 ```
 
+## Packages
+- `@ziyarago/ui`: the component library (Vue 3, Nuxt module, React adapter, styles, tokens, API manifest).
+- `@ziyarago/ui-mcp`: MCP server and `init` command that connects AI coding tools to the component catalog.
+
+Docs, props and live examples: https://ziyara.vip
+
 ## Install
 
 ```bash
