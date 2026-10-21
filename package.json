@@ -95,7 +95,7 @@
   "files": [
     "dist",
     "types",
-    "assets",
+    "assets/fonts",
     "tokens",
     "README.md",
     "LICENSE",

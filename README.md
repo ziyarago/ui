@@ -32,7 +32,7 @@ src/styles/      tokens.css (OKLCH) · components*.css (zg-* classes) · fonts.c
 dist/            style.css (single file, fonts rewritten) · tokens.css   ← what you import
 types/           .d.ts for core, vue, react, theme
 tokens/          tokens.json for Flutter and native clients
-assets/          fonts/thmanyah · 3d (PNG icons) · brand (logo)
+assets/          fonts/thmanyah (the only assets in the npm package)
 ```
 
 ## Packages
@@ -66,7 +66,7 @@ Types ship with the package. Only 9 core components have typed props so far; the
 - Coming from `@ziyarago/glass-ui-kit` (Vue 3, `Ui*` local copies)? `@ziyarago/ui/compat` exports the old component names as wrappers over the new ones; step by step guide with prop tables: `docs/MIGRATION.md`.
 
 ## License
-Code: MIT (`LICENSE`). Brand assets (logo, 3D icons) are not MIT: see `LICENSE-ASSETS.md`.
+Code: MIT (`LICENSE`). The ZiyaraGo logo and 3D icons are not part of the package and are not MIT: they appear on the docs site for demonstration only, see `LICENSE-ASSETS.md`.
 
 ## AI and MCP
 `npx @ziyarago/ui-mcp init` connects Claude Code, Cursor and others to the component catalog (props, values, slots, templates). Without MCP the package ships `llms.txt`, `llms-full.txt` and `manifest.json`. See `/docs/ai`.
