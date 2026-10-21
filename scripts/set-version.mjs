@@ -13,4 +13,7 @@ for (const f of ['package.json', 'packages/mcp/package.json']) {
   if (d.peerDependencies?.['@ziyarago/ui']) d.peerDependencies['@ziyarago/ui'] = '>=' + v.replace(/-.*/, '');
   writeFileSync(p, JSON.stringify(d, null, 2) + '\n');
 }
+const sj = join(root, 'packages/mcp/server.json'), srv = JSON.parse(readFileSync(sj, 'utf8'));
+srv.version = v; for (const k of srv.packages || []) k.version = v;
+writeFileSync(sj, JSON.stringify(srv, null, 2) + '\n');
 console.log('version set to ' + v);

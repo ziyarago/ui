@@ -29,7 +29,8 @@
   "files": [
     "bin",
     "templates",
-    "README.md"
+    "README.md",
+    "server.json"
   ],
   "engines": {
     "node": ">=18"
@@ -49,5 +50,6 @@
   "publishConfig": {
     "access": "public",
     "provenance": true
-  }
+  },
+  "mcpName": "io.github.ziyarago/ui-mcp"
 }
