@@ -26,7 +26,7 @@ const fmt = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 </script>
 
 <template>
-  <div class="hs" aria-hidden="true">
+  <div class="hs" aria-hidden="true" inert>
     <div class="hs__c hs__a"><UiKpiTile label="Bookings" :value="fmt(bookings)" delta="+12%" sub="vs last week" /></div>
     <div class="hs__c hs__b">
       <UiCard title="Occupancy" subtitle="Next 7 days" size="sm"><UiOccupancyChart :values="occ" :labels="['M', 'T', 'W', 'T', 'F', 'S', 'S']" /></UiCard>

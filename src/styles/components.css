@@ -23,7 +23,7 @@
 .zg-btn--primary{background:var(--zg-brand);color:var(--zg-on-brand);box-shadow:inset 0 1px 0 oklch(1 0 0 / .3),0 8px 24px var(--zg-brand-glow)}.zg-btn--primary:hover{background:var(--zg-brand-hover)}
 .zg-btn--inverse{background:var(--zg-inv-bg);color:var(--zg-inv-fg)}.zg-btn--inverse:hover{background:var(--zg-inv-bg);filter:brightness(1.1)}
 .zg-btn--ghost{background:transparent;box-shadow:none}.zg-btn--ghost:hover{background:var(--zg-s2)}
-.zg-btn--danger{background:color-mix(in oklch,var(--zg-red) 18%,transparent);color:var(--zg-red)}
+.zg-btn--danger{background:color-mix(in oklch,var(--zg-red) 18%,transparent);color:var(--zg-red-text)}
 .zg-btn--xs{--h:var(--zg-h-xs);font-size:12px}.zg-btn--sm{--h:var(--zg-h-sm);font-size:13px}.zg-btn--lg{--h:var(--zg-h-lg);font-size:15px}.zg-btn--xl{--h:var(--zg-h-xl);font-size:16px}
 .zg-btn--block{display:flex;width:100%}
 .zg-spin{width:1em;height:1em;border-radius:50%;border:2px solid currentColor;border-inline-end-color:transparent;animation:zg-spin .7s linear infinite}

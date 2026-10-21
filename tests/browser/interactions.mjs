@@ -217,6 +217,115 @@ const checks = {
     await t.waitFor(async () => !(await t.exists(`${S} [role=menu]`)), 'outside click closes');
   },
 
+  async TabsKeyboard(page, t) {
+    const S = t.sel('Tabs'), tabs = `${S} [role=tab]`;
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    const idx = () => page.$$eval('[data-component="Tabs"] [data-variant="0"] [role=tab]', els => els.map(e => e.tabIndex));
+    assert.deepEqual(await page.$$eval(tabs, els => els.map(e => e.tabIndex === 0)), await page.$$eval(tabs, els => els.map(e => e.getAttribute('aria-selected') === 'true')), 'roving tabindex: only the selected tab is in the tab order');
+    await page.focus(`${tabs}:nth-child(1)`);
+    await page.keyboard.press('ArrowRight'); assert.equal(await txt(), 'Two');
+    assert.deepEqual(await idx(), [-1, 0, -1], 'tabindex follows focus');
+    await page.keyboard.press('End'); assert.equal(await txt(), 'Three');
+    await page.keyboard.press('ArrowRight'); assert.equal(await txt(), 'One', 'wraps to the first tab');
+    await page.keyboard.press('ArrowLeft'); assert.equal(await txt(), 'Three', 'wraps to the last tab');
+    await page.keyboard.press('Home'); assert.equal(await txt(), 'One');
+    await page.keyboard.press('ArrowRight'); await t.clearSpy(); await page.keyboard.press('Enter');
+    await t.waitFor(async () => (await t.lastModel()) === 'two', 'Enter activates the focused tab');
+    await page.evaluate(() => { document.documentElement.dir = 'rtl'; });
+    try {
+      await page.focus(`${tabs}:nth-child(1)`);
+      await page.keyboard.press('ArrowLeft'); assert.equal(await txt(), 'Two', 'ArrowLeft is "next" in RTL');
+      await page.keyboard.press('ArrowRight'); assert.equal(await txt(), 'One', 'ArrowRight is "previous" in RTL');
+    } finally { await page.evaluate(() => { document.documentElement.dir = 'ltr'; }); }
+  },
+
+  async PillTabs(page, t) {
+    const S = t.sel('PillTabs'), tabs = `${S} [role=tab]`;
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    assert.deepEqual(await page.$$eval(tabs, els => els.map(e => e.tabIndex)), [0, -1, -1]);
+    await page.focus(`${tabs}:nth-child(1)`);
+    await page.keyboard.press('ArrowRight'); assert.equal(await txt(), 'Two');
+    await page.keyboard.press('End'); assert.equal(await txt(), 'Three');
+    await page.keyboard.press('Home'); assert.equal(await txt(), 'One');
+  },
+
+  async SegmentedKeyboard(page, t) {
+    const S = t.sel('SegmentedControl');
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    assert.deepEqual(await page.$$eval(`${S} button`, els => els.map(e => e.tabIndex === 0)), await page.$$eval(`${S} button`, els => els.map(e => e.getAttribute('aria-pressed') === 'true')), 'only the pressed segment is in the tab order');
+    await page.focus(`${S} button:nth-child(1)`);
+    await page.keyboard.press('ArrowRight'); assert.equal(await txt(), 'Two');
+    await page.keyboard.press('End'); assert.equal(await txt(), 'Three');
+    await page.keyboard.press('ArrowLeft'); assert.equal(await txt(), 'Two');
+    await t.clearSpy(); await page.keyboard.press('Space');
+    await t.waitFor(async () => (await t.lastModel()) === 'two', 'Space presses the focused segment');
+  },
+
+  async SelectKeyboard(page, t) {
+    const S = t.sel('Select'), T = `${S} .zg-select__trigger`;
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    const cur = await page.$eval(T, e => e.textContent.trim());
+    await page.focus(T);
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} [role=listbox]`), 'ArrowDown on the trigger opens the list');
+    await t.waitFor(async () => (await txt()) === cur, 'focus moves to the selected option');
+    await page.keyboard.press('Home'); assert.equal(await txt(), 'Alpha');
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Beta');
+    await page.keyboard.press('End'); assert.equal(await txt(), 'Gamma');
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Gamma', 'listbox does not wrap');
+    await page.keyboard.press('Home'); assert.equal(await txt(), 'Alpha');
+    await page.keyboard.press('g'); assert.equal(await txt(), 'Gamma', 'type-ahead');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=listbox]`)), 'Escape closes');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger');
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} [role=listbox]`), 'reopen');
+    await t.waitFor(async () => (await txt()) === cur, 'focus in list');
+    await page.keyboard.press('Home'); await page.keyboard.press('ArrowDown'); await t.clearSpy(); await page.keyboard.press('Enter');
+    await t.waitFor(async () => (await t.lastModel()) === 'b', 'Enter chooses Beta');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=listbox]`)), 'closes after Enter');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger after choosing');
+  },
+
+  async DropdownKeyboard(page, t) {
+    const S = t.sel('Dropdown'), T = `${S} [aria-haspopup=menu]`;
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    await page.focus(T);
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} [role=menu]`), 'ArrowDown opens the menu');
+    await t.waitFor(async () => (await txt()) === 'Edit', 'focus moves to the first item');
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Delete', 'separator is skipped');
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Edit', 'menu wraps');
+    await page.keyboard.press('ArrowUp'); assert.equal(await txt(), 'Delete');
+    await page.keyboard.press('Home'); assert.equal(await txt(), 'Edit');
+    await page.keyboard.press('End'); assert.equal(await txt(), 'Delete');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=menu]`)), 'Escape closes');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger');
+    await page.keyboard.press('Enter');
+    await t.waitFor(() => t.exists(`${S} [role=menu]`), 'Enter opens');
+    await t.clearSpy(); await page.keyboard.press('Enter');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=menu]`)), 'Enter on an item closes');
+    assert.ok((await t.spy()).some(c => c.label === 'edit'), 'item handler ran');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger after choosing');
+  },
+
+  async MenuKeyboard(page, t) {
+    const S = t.sel('Menu');
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    assert.deepEqual(await page.$$eval(`${S} [role=menuitem]`, els => els.map(e => e.tabIndex)), [0, -1, -1], 'one tab stop');
+    await page.focus(`${S} [role=menuitem]`);
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Paste', 'disabled item is skipped');
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Open', 'wraps');
+    await page.keyboard.press('End'); assert.equal(await txt(), 'Paste');
+  },
+
+  async Tooltip(page, t) {
+    const S = `${t.sel('Tooltip')} .zg-tip`;
+    const r = await page.$eval(S, el => { const d = document.getElementById(el.getAttribute('aria-describedby')); return d ? { role: d.getAttribute('role'), text: d.textContent } : null; });
+    assert.deepEqual(r, { role: 'tooltip', text: 'Copies the link' }, 'aria-describedby points to a role=tooltip element with the text');
+  },
+
   async TextField(page, t) {
     const S = `${t.sel('TextField')} input`;
     await page.click(S);

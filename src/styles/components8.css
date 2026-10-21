@@ -110,3 +110,6 @@
 .zg-qb__txt b{font-size:calc(22px*var(--dz,1));font-weight:600;color:var(--zg-text-1)}.zg-qb__txt small{color:var(--zg-text-3)}
 /* Numbers: tabular figures with a plain zero (no slashed or dotted zero) in KPI values, tables and code cells */
 .zg-num,.zg-mono,.zg-kpi__value,.zg-table .num{font-feature-settings:"zero" 0,"tnum" 1}
+.zg-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.zg-select__opt:focus-visible{outline:3px solid var(--zg-brand-soft);outline-offset:-3px;background:var(--zg-s2)}
+.zg-seg button:focus-visible,.zg-tabs button:focus-visible,.zg-code-b pre:focus-visible{outline:3px solid var(--zg-brand-soft);outline-offset:2px}
