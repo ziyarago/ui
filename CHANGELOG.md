@@ -1,3 +1,9 @@
+## [0.10.0](https://github.com/ziyarago/ui/compare/v0.9.0...v0.10.0) (2026-10-21)
+
+### Features
+
+* page templates wave 4 (itinerary, prayer, group manager, public tour), QiblaCompass, bundled fonts, auth page and compat fixes ([4809362](https://github.com/ziyarago/ui/commit/48093620085425bb936a44294c6d2c6cf2a888f6))
+
 ## [0.9.0](https://github.com/ziyarago/ui/compare/v0.8.0...v0.9.0) (2026-10-21)
 
 ### Features
