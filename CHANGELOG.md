@@ -1,3 +1,9 @@
+## [0.5.0](https://github.com/ziyarago/ui/compare/v0.4.0...v0.5.0) (2026-10-21)
+
+### Features
+
+* AuthShowcase login layouts (photo, light, tint) and PageAuth variants ([4ea5503](https://github.com/ziyarago/ui/commit/4ea5503e223f2c651292372be91987538f0517c8))
+
 ## [0.4.0](https://github.com/ziyarago/ui/compare/v0.3.0...v0.4.0) (2026-10-21)
 
 ### Features
