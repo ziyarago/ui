@@ -1,3 +1,9 @@
+## [0.2.0](https://github.com/ziyarago/ui/compare/v0.1.1...v0.2.0) (2026-10-21)
+
+### Features
+
+* pricing page with early access list and MCP registry metadata ([b71cb10](https://github.com/ziyarago/ui/commit/b71cb100ff903574bafddc70bebf1b0193256b2e))
+
 ## [0.1.1](https://github.com/ziyarago/ui/compare/v0.1.0...v0.1.1) (2026-10-21)
 
 ### Bug Fixes
