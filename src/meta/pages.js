@@ -267,6 +267,78 @@ export default {
     },
     notes: [hdrNote, "Trend and breakdown share a row and wrap on narrow screens. Put Export in the actions slot."],
   },
+  PageCalendar: {
+    description: "Calendar template: view switch, time grid, mini calendar and event details.",
+    props: header,
+    slots: {
+      ...headSlots,
+      toolbar: "SegmentedControl, Button, IconButton.",
+      grid: "Time grid with events; Card with custom grid, or CalendarView for the month.",
+      mini: "Month picker; Calendar.",
+      details: "Selected event; Card, Descriptions, Avatar, Button.",
+    },
+    notes: [hdrNote, "The grid sits beside the mini calendar and details; they stack under 860 px."],
+  },
+  PageKanban: {
+    description: "Kanban template: filters, task board columns and a card detail panel.",
+    props: header,
+    slots: {
+      ...headSlots,
+      filters: "SearchInput, FilterChips, Select.",
+      board: "Columns with cards; KanbanColumn, KanbanCard.",
+      detail: "Selected card; Card, Descriptions, Checkbox, Timeline.",
+    },
+    notes: [hdrNote, "Board scrolls horizontally inside its area; detail goes below it under 860 px."],
+  },
+  PageBilling: {
+    description: "Billing template: current plan, usage meters, invoices, payment methods and an upgrade card.",
+    props: header,
+    slots: {
+      ...headSlots,
+      plan: "Current plan; Card with Badge and Buttons.",
+      usage: "Usage meters; Progress.",
+      invoices: "Invoices; DataTable.",
+      methods: "Saved cards; Card, IconTile, Badge.",
+      upgrade: "Upgrade call to action; Card variant=\"inverse\" or PricingCard.",
+    },
+    notes: [hdrNote, "Plan, usage and invoices share the main column; methods and upgrade form the side column."],
+  },
+  PageTeam: {
+    description: "Team template: member stats, members table, roles and permissions matrix, and an invite form.",
+    props: header,
+    slots: {
+      ...headSlots,
+      stats: "Counters; KpiTile, StatsCard.",
+      members: "Members; DataTable with UserCell, Select, Badge.",
+      roles: "Permissions matrix; DataTable with Checkbox cells.",
+      invite: "Invite form; Card, TextField, Select, Button.",
+    },
+    notes: [hdrNote, "Members and roles share the main column; the invite form is the side column."],
+  },
+  PageIntegrations: {
+    description: "Integrations template: connection cards, API keys and webhooks.",
+    props: header,
+    slots: {
+      ...headSlots,
+      filters: "SearchInput, FilterChips.",
+      connections: "IntegrationCard grid.",
+      keys: "Keys; DataTable with CopyButton and IconButton.",
+      webhooks: "Webhooks list; Card, Switch, Chip.",
+    },
+    notes: [hdrNote, "Keys and webhooks share a row and wrap on narrow screens."],
+  },
+  PageSearch: {
+    description: "Search template: query field, filter sidebar, result groups and an empty state.",
+    props: header,
+    slots: {
+      ...headSlots,
+      search: "SearchInput, Tabs.",
+      filters: "Filters; Card, Checkbox, Select.",
+      results: "Result groups; Card, Chip, Divider.",
+      empty: "Shown only when there are no results; EmptyState.",
+    },
+    notes: [hdrNote, "Filters sit left of the results and stack above them under 860 px. Fill empty only when there are no results."],
+  },
   PageAuth: {
     description: 'Sign-in page template without the app shell, as a centered card or a split layout.',
     props: {

@@ -3241,6 +3241,66 @@ export interface UiPageAuthProps {
 export const UiPageAuth: ComponentType<UiPageAuthProps>;
 
 /**
+ * Billing template: current plan, usage meters, invoices, payment methods and an upgrade card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Plan, usage and invoices share the main column; methods and upgrade form the side column.
+ */
+export interface UiPageBillingProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * Current plan; Card with Badge and Buttons.
+   * @slot plan (React: pass as a prop)
+   */
+  plan?: ReactNode;
+  /**
+   * Usage meters; Progress.
+   * @slot usage (React: pass as a prop)
+   */
+  usage?: ReactNode;
+  /**
+   * Invoices; DataTable.
+   * @slot invoices (React: pass as a prop)
+   */
+  invoices?: ReactNode;
+  /**
+   * Saved cards; Card, IconTile, Badge.
+   * @slot methods (React: pass as a prop)
+   */
+  methods?: ReactNode;
+  /**
+   * Upgrade call to action; Card variant="inverse" or PricingCard.
+   * @slot upgrade (React: pass as a prop)
+   */
+  upgrade?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageBilling: ComponentType<UiPageBillingProps>;
+
+/**
  * Bookings list template: stats, toolbar, bulk-action bar, table and pagination.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -3298,6 +3358,61 @@ export interface UiPageBookingsProps {
   children?: ReactNode;
 }
 export const UiPageBookings: ComponentType<UiPageBookingsProps>;
+
+/**
+ * Calendar template: view switch, time grid, mini calendar and event details.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The grid sits beside the mini calendar and details; they stack under 860 px.
+ */
+export interface UiPageCalendarProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * SegmentedControl, Button, IconButton.
+   * @slot toolbar (React: pass as a prop)
+   */
+  toolbar?: ReactNode;
+  /**
+   * Time grid with events; Card with custom grid, or CalendarView for the month.
+   * @slot grid (React: pass as a prop)
+   */
+  grid?: ReactNode;
+  /**
+   * Month picker; Calendar.
+   * @slot mini (React: pass as a prop)
+   */
+  mini?: ReactNode;
+  /**
+   * Selected event; Card, Descriptions, Avatar, Button.
+   * @slot details (React: pass as a prop)
+   */
+  details?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageCalendar: ComponentType<UiPageCalendarProps>;
 
 /**
  * Catalog template with a filter sidebar and a card grid (hotels, tours).
@@ -3779,6 +3894,111 @@ export interface UiPageInboxProps {
 export const UiPageInbox: ComponentType<UiPageInboxProps>;
 
 /**
+ * Integrations template: connection cards, API keys and webhooks.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Keys and webhooks share a row and wrap on narrow screens.
+ */
+export interface UiPageIntegrationsProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * SearchInput, FilterChips.
+   * @slot filters (React: pass as a prop)
+   */
+  filters?: ReactNode;
+  /**
+   * IntegrationCard grid.
+   * @slot connections (React: pass as a prop)
+   */
+  connections?: ReactNode;
+  /**
+   * Keys; DataTable with CopyButton and IconButton.
+   * @slot keys (React: pass as a prop)
+   */
+  keys?: ReactNode;
+  /**
+   * Webhooks list; Card, Switch, Chip.
+   * @slot webhooks (React: pass as a prop)
+   */
+  webhooks?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageIntegrations: ComponentType<UiPageIntegrationsProps>;
+
+/**
+ * Kanban template: filters, task board columns and a card detail panel.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Board scrolls horizontally inside its area; detail goes below it under 860 px.
+ */
+export interface UiPageKanbanProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * SearchInput, FilterChips, Select.
+   * @slot filters (React: pass as a prop)
+   */
+  filters?: ReactNode;
+  /**
+   * Columns with cards; KanbanColumn, KanbanCard.
+   * @slot board (React: pass as a prop)
+   */
+  board?: ReactNode;
+  /**
+   * Selected card; Card, Descriptions, Checkbox, Timeline.
+   * @slot detail (React: pass as a prop)
+   */
+  detail?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageKanban: ComponentType<UiPageKanbanProps>;
+
+/**
  * Landing template: hero, logo strip, features, social proof, pricing teaser, call to action and footer. Used without the app shell.
  * Note: Landing does not use the app shell: render it on its own page. Blocks stack in one column; each block may use its own grid and wraps on narrow screens.
  */
@@ -4179,6 +4399,61 @@ export interface UiPageProfileProps {
 export const UiPageProfile: ComponentType<UiPageProfileProps>;
 
 /**
+ * Search template: query field, filter sidebar, result groups and an empty state.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Filters sit left of the results and stack above them under 860 px. Fill empty only when there are no results.
+ */
+export interface UiPageSearchProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * SearchInput, Tabs.
+   * @slot search (React: pass as a prop)
+   */
+  search?: ReactNode;
+  /**
+   * Filters; Card, Checkbox, Select.
+   * @slot filters (React: pass as a prop)
+   */
+  filters?: ReactNode;
+  /**
+   * Result groups; Card, Chip, Divider.
+   * @slot results (React: pass as a prop)
+   */
+  results?: ReactNode;
+  /**
+   * Shown only when there are no results; EmptyState.
+   * @slot empty (React: pass as a prop)
+   */
+  empty?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageSearch: ComponentType<UiPageSearchProps>;
+
+/**
  * Settings template with a section sub-navigation and stacked settings sections.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -4301,6 +4576,61 @@ export interface UiPageStatusProps {
   children?: ReactNode;
 }
 export const UiPageStatus: ComponentType<UiPageStatusProps>;
+
+/**
+ * Team template: member stats, members table, roles and permissions matrix, and an invite form.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Members and roles share the main column; the invite form is the side column.
+ */
+export interface UiPageTeamProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * Counters; KpiTile, StatsCard.
+   * @slot stats (React: pass as a prop)
+   */
+  stats?: ReactNode;
+  /**
+   * Members; DataTable with UserCell, Select, Badge.
+   * @slot members (React: pass as a prop)
+   */
+  members?: ReactNode;
+  /**
+   * Permissions matrix; DataTable with Checkbox cells.
+   * @slot roles (React: pass as a prop)
+   */
+  roles?: ReactNode;
+  /**
+   * Invite form; Card, TextField, Select, Button.
+   * @slot invite (React: pass as a prop)
+   */
+  invite?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageTeam: ComponentType<UiPageTeamProps>;
 
 /**
  * User or customer list template: stats, filters, toolbar, table and a right-hand add/edit drawer.

@@ -104,7 +104,9 @@ declare module 'vue' {
     UiPageAccount: typeof Ui.UiPageAccount;
     UiPageAnalytics: typeof Ui.UiPageAnalytics;
     UiPageAuth: typeof Ui.UiPageAuth;
+    UiPageBilling: typeof Ui.UiPageBilling;
     UiPageBookings: typeof Ui.UiPageBookings;
+    UiPageCalendar: typeof Ui.UiPageCalendar;
     UiPageCatalog: typeof Ui.UiPageCatalog;
     UiPageCheckout: typeof Ui.UiPageCheckout;
     UiPageCrm: typeof Ui.UiPageCrm;
@@ -114,6 +116,8 @@ declare module 'vue' {
     UiPageForm: typeof Ui.UiPageForm;
     UiPageHeader: typeof Ui.UiPageHeader;
     UiPageInbox: typeof Ui.UiPageInbox;
+    UiPageIntegrations: typeof Ui.UiPageIntegrations;
+    UiPageKanban: typeof Ui.UiPageKanban;
     UiPageLanding: typeof Ui.UiPageLanding;
     UiPageNotifications: typeof Ui.UiPageNotifications;
     UiPageOnboarding: typeof Ui.UiPageOnboarding;
@@ -121,8 +125,10 @@ declare module 'vue' {
     UiPagePatterns: typeof Ui.UiPagePatterns;
     UiPagePricing: typeof Ui.UiPagePricing;
     UiPageProfile: typeof Ui.UiPageProfile;
+    UiPageSearch: typeof Ui.UiPageSearch;
     UiPageSettings: typeof Ui.UiPageSettings;
     UiPageStatus: typeof Ui.UiPageStatus;
+    UiPageTeam: typeof Ui.UiPageTeam;
     UiPageUserList: typeof Ui.UiPageUserList;
     UiPagination: typeof Ui.UiPagination;
     UiPasswordInput: typeof Ui.UiPasswordInput;
