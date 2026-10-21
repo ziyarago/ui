@@ -1,3 +1,9 @@
+## [0.19.2](https://github.com/ziyarago/ui/compare/v0.19.1...v0.19.2) (2026-10-21)
+
+### Bug Fixes
+
+* Progress track stripes and hatch pattern visible in the light theme ([f2b7352](https://github.com/ziyarago/ui/commit/f2b7352703e5c86c95a2a6c3aaf90020242c0baa))
+
 ## [0.19.1](https://github.com/ziyarago/ui/compare/v0.19.0...v0.19.1) (2026-10-21)
 
 ### Bug Fixes
