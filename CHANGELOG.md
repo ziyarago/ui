@@ -1,3 +1,9 @@
+## [0.9.0](https://github.com/ziyarago/ui/compare/v0.8.0...v0.9.0) (2026-10-21)
+
+### Features
+
+* page templates wave 3 (article, changelog, help, states, legal, locations, booking flow) ([435d5b8](https://github.com/ziyarago/ui/commit/435d5b8209a527c845897968da4ffe8a8e009618))
+
 ## [0.8.0](https://github.com/ziyarago/ui/compare/v0.7.0...v0.8.0) (2026-10-21)
 
 ### Features
