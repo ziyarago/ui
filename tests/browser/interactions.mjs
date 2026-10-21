@@ -326,6 +326,136 @@ const checks = {
     assert.deepEqual(r, { role: 'tooltip', text: 'Copies the link' }, 'aria-describedby points to a role=tooltip element with the text');
   },
 
+  async CalendarToday(page, t) {
+    const S = t.sel('Calendar');
+    const want = await page.evaluate(() => new Date().getDate());
+    await t.waitFor(async () => (await t.count(`${S} [data-today=true]`)) === 1, 'today is marked after mount');
+    assert.equal(await t.text(`${S} [data-today=true]`), String(want), 'the marked day is the browser date');
+    assert.equal(await t.attr(`${S} [data-today=true]`, 'aria-current'), 'date');
+    const P = t.sel('Calendar', 1);
+    assert.equal(await t.text(`${P} [data-today=true]`), '15', 'the today prop wins over the clock');
+    assert.match(await t.text(`${P} .zg-cal__h b`), /March 2026/);
+  },
+
+  async TooltipEscape(page, t) {
+    const S = `${t.sel('Tooltip')} .zg-tip`;
+    const op = () => page.$eval(S, el => getComputedStyle(el, '::after').opacity);
+    await page.mouse.click(5, 5);
+    assert.equal(await op(), '0', 'hidden at rest');
+    await page.hover(S);
+    await t.waitFor(async () => (await op()) === '1', 'bubble on hover');
+    const box = await (await page.$(S)).boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y - 5);
+    await sleep(250);
+    assert.equal(await op(), '1', 'stays visible while the pointer crosses the gap to the bubble');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => (await op()) === '0', 'Escape hides the hovered bubble');
+    assert.equal(await page.evaluate(() => document.activeElement === document.body), true, 'Escape does not move focus');
+    await page.mouse.move(5, 5); await sleep(150);
+    await page.hover(S);
+    await t.waitFor(async () => (await op()) === '1', 'bubble returns on the next hover');
+    await page.mouse.move(5, 5); await sleep(150);
+    await page.keyboard.press('Tab'); await page.focus(S);
+    await t.waitFor(async () => (await op()) === '1', 'bubble on focus');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => (await op()) === '0', 'Escape hides the focused bubble');
+    assert.equal(await page.evaluate(sel => document.activeElement === document.querySelector(sel), S), true, 'focus stays on the trigger');
+  },
+
+  async ComboboxKeyboard(page, t) {
+    const S = t.sel('Combobox', 1), I = `${S} input`, ao = () => page.$eval(I, e => { const o = document.getElementById(e.getAttribute('aria-activedescendant')); return o ? o.textContent : null; });
+    assert.equal(await t.attr(I, 'role'), 'combobox');
+    assert.equal(await t.attr(I, 'aria-expanded'), 'false');
+    assert.equal(await page.$eval(I, e => e.hasAttribute('aria-controls')), false, 'no aria-controls while closed');
+    await page.focus(I);
+    await t.waitFor(() => t.exists(`${S} [role=listbox]`), 'opens on focus');
+    assert.equal(await t.attr(I, 'aria-expanded'), 'true');
+    assert.equal(await page.$eval(I, e => e.getAttribute('aria-controls') === document.querySelector('[role=listbox]').id), true, 'aria-controls points to the listbox');
+    assert.equal(await ao(), null, 'no active option before arrows');
+    await page.keyboard.press('ArrowDown'); assert.equal(await ao(), 'Alpha');
+    await page.keyboard.press('ArrowDown'); assert.equal(await ao(), 'Beta');
+    await page.keyboard.press('ArrowUp'); await page.keyboard.press('ArrowUp'); assert.equal(await ao(), 'Gamma', 'wraps to the last option');
+    assert.equal(await t.activeIn(I), true, 'real focus stays in the input');
+    await t.clearSpy(); await page.keyboard.press('Enter');
+    await t.waitFor(async () => (await t.lastModel()) === 'c', 'Enter chooses the active option');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=listbox]`)), 'list closes after Enter');
+    assert.equal(await t.attr(I, 'aria-expanded'), 'false');
+    assert.equal(await t.activeIn(I), true, 'focus stays in the input after choosing');
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} [role=listbox]`), 'ArrowDown reopens the closed list');
+    assert.equal(await ao(), 'Gamma', 'the chosen option is active on open');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=listbox]`)), 'Escape closes');
+    assert.equal(await t.activeIn(I), true, 'focus stays in the input after Escape');
+    await page.keyboard.press('ArrowDown'); await page.keyboard.type('be');
+    await t.waitFor(async () => (await t.count(`${S} [role=option]`)) === 1, 'filter');
+    await page.keyboard.press('ArrowDown'); assert.equal(await ao(), 'Beta');
+  },
+
+  async MultiSelectKeyboard(page, t) {
+    const S = t.sel('MultiSelect', 1), T = `${S} .zg-select__trigger`;
+    const txt = () => page.evaluate(() => document.activeElement.textContent.trim());
+    await page.focus(T);
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} [role=listbox]`), 'ArrowDown opens');
+    await t.waitFor(async () => (await txt()) === 'Alpha', 'focus moves to the first selected option');
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Beta');
+    await page.keyboard.press('End'); assert.equal(await txt(), 'Gamma');
+    await page.keyboard.press('ArrowDown'); assert.equal(await txt(), 'Gamma', 'does not wrap');
+    await page.keyboard.press('Home'); await page.keyboard.press('b'); assert.equal(await txt(), 'Beta', 'type-ahead');
+    await t.clearSpy(); await page.keyboard.press('Space');
+    await t.waitFor(async () => JSON.stringify(await t.lastModel()) === '["a","b"]', 'Space toggles the option');
+    assert.equal(await t.exists(`${S} [role=listbox]`), true, 'stays open while picking');
+    assert.equal(await txt(), 'Beta', 'focus stays on the option');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=listbox]`)), 'Escape closes');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger');
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} [role=listbox]`), 'reopen');
+    await page.keyboard.press('Tab');
+    await t.waitFor(async () => !(await t.exists(`${S} [role=listbox]`)), 'Tab closes the list');
+  },
+
+  async DatePickerKeyboard(page, t) {
+    const S = t.sel('DatePicker', 1), T = `${S} .zg-select__trigger`;
+    const cur = () => page.evaluate(() => { const a = document.activeElement; return a && a.getAttribute('data-date'); });
+    const key = async (k, want, why) => { await page.keyboard.press(k); await t.waitFor(async () => (await cur()) === want, `${why}: ${k} to reach ${want}, at ${await cur()}`); };
+    await page.focus(T);
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} .zg-cal`), 'ArrowDown opens the calendar');
+    await t.waitFor(async () => (await cur()) === '2026-03-10', 'focus lands on the selected day');
+    assert.equal(await page.$$eval(`${S} .zg-cal__d`, els => els.filter(e => e.tabIndex === 0).length), 1, 'one tab stop in the grid');
+    await key('ArrowRight', '2026-03-11', 'next day');
+    await key('ArrowDown', '2026-03-18', 'next week');
+    await key('ArrowUp', '2026-03-11', 'previous week');
+    await key('ArrowLeft', '2026-03-10', 'previous day');
+    await key('Home', '2026-03-09', 'week start (Monday)');
+    await key('End', '2026-03-15', 'week end (Sunday)');
+    await key('PageDown', '2026-04-15', 'next month');
+    assert.match(await t.text(`${S} .zg-cal__h b`), /April 2026/);
+    await key('PageUp', '2026-03-15', 'previous month');
+    await key('ArrowDown', '2026-03-22', 'week'); await key('ArrowDown', '2026-03-29', 'week');
+    await key('ArrowDown', '2026-04-05', 'across the month end');
+    assert.match(await t.text(`${S} .zg-cal__h b`), /April 2026/);
+    await page.keyboard.down('Shift'); await page.keyboard.press('PageDown'); await page.keyboard.up('Shift');
+    await t.waitFor(async () => (await cur()) === '2027-04-05', 'Shift+PageDown changes the year');
+    await page.keyboard.down('Shift'); await page.keyboard.press('PageUp'); await page.keyboard.up('Shift');
+    await t.waitFor(async () => (await cur()) === '2026-04-05', 'Shift+PageUp');
+    await key('ArrowLeft', '2026-04-04', 'day'); await key('ArrowLeft', '2026-04-03', 'day');
+    await t.clearSpy(); await page.keyboard.press('Enter');
+    await t.waitFor(async () => (await t.lastModel()) === 'date:2026-04-03', 'Enter selects the focused day');
+    await t.waitFor(async () => !(await t.exists(`${S} .zg-cal`)), 'closes after Enter');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger after choosing');
+    await page.keyboard.press('ArrowDown');
+    await t.waitFor(() => t.exists(`${S} .zg-cal`), 'reopen');
+    await t.waitFor(async () => (await cur()) === '2026-04-03', 'selected day is focused');
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('Escape');
+    await t.waitFor(async () => !(await t.exists(`${S} .zg-cal`)), 'Escape closes');
+    assert.ok(await t.activeIn(T), 'focus returns to the trigger after Escape');
+    assert.equal(await t.lastModel(), 'date:2026-04-03', 'Escape does not change the value');
+  },
+
   async TextField(page, t) {
     const S = `${t.sel('TextField')} input`;
     await page.click(S);

@@ -402,6 +402,7 @@ export const UiButton: UiVueComponent<UiButtonProps, UiButtonSlots>;
 /**
  * Month grid for picking one date. Use inline, or inside a popover via DatePicker.
  * Note: The event payload is a Date, not a string: convert to ISO yourself if the model is a string.
+ * Note: Keyboard: one tab stop on the day grid; arrows move by day or week, Home and End to the week start and end, PageUp and PageDown change month (Shift: year), Enter or Space picks. Without a selected date the visible month is the current month, which server and client can disagree on right at a month boundary; pass modelValue or today to make it deterministic.
  */
 export interface UiCalendarProps {
   /** Selected date: a Date, ISO string or timestamp. Also sets the visible month. A date-only string like "2026-10-21" is read as a local date, so the day does not shift with the time zone. */
@@ -422,6 +423,8 @@ export interface UiCalendarProps {
   max?: Date | string | number;
   /** Return true to disable a specific day. */
   disabledDate?: (date: Date) => boolean;
+  /** The day marked as today. By default it is read from the browser clock after mount (nothing is marked in server-rendered HTML), so server and client never disagree near midnight or across time zones. Pass it to mark a day in the HTML too. */
+  today?: Date | string | number;
   /**
    * Marked days: keys are YYYY-MM-DD, values are the tooltip text.
    * @default {}
@@ -656,6 +659,7 @@ export const UiCodeInput: UiVueComponent<UiCodeInputProps, UiCodeInputSlots>;
  * Searchable single-choice dropdown. Use for long option lists where typing to filter is faster than scrolling.
  * Note: Selecting from the list is the only way to set a value: free text is never emitted.
  * Note: The list closes on outside click and on Escape.
+ * Note: Keyboard (WAI-ARIA combobox): the input has role=combobox with aria-expanded, aria-controls and aria-activedescendant; focus stays in the input, Arrow Down and Up open the list and move the active option (wraps, skips disabled), Enter chooses it, Escape closes.
  */
 export interface UiComboboxProps {
   /** Value of the selected option. */
@@ -963,7 +967,7 @@ export const UiDataTable: UiVueComponent<UiDataTableProps, UiDataTableSlots>;
 /**
  * Field with a calendar popup for choosing a date. Use in forms where a single date is needed.
  * Note: The event payload is a Date, not a string: convert to ISO yourself if the model is a string.
- * Note: The popup closes on outside click and on Escape.
+ * Note: The popup closes on outside click and on Escape (focus returns to the trigger). Arrow Down or Up on the trigger opens it and focus moves into the calendar, which uses the Calendar keys.
  */
 export interface UiDatePickerProps {
   /** Selected date (ISO string recommended, e.g. 2026-10-21). */
@@ -998,6 +1002,11 @@ export interface UiDatePickerProps {
    * @remarks Forwarded to the inner element.
    */
   disabledDate?: (date: Date) => boolean;
+  /**
+   * The day marked as today in the calendar; by default read from the browser clock after mount. Forwarded to the calendar.
+   * @remarks Forwarded to the inner element.
+   */
+  today?: Date | string | number;
   /**
    * Adds a red asterisk to the label. Does not validate.
    * @default false
@@ -3692,6 +3701,7 @@ export const UiToggleGroup: UiVueComponent<UiToggleGroupProps, UiToggleGroupSlot
 /**
  * Short text bubble shown on hover or focus of the wrapped element; use for icon-only controls and hints.
  * Note: Pure CSS bubble; it cannot contain markup. For rich content use HoverCard.
+ * Note: Escape hides the bubble while it is shown (hover or focus) without moving focus; it stays visible while the pointer is over the trigger or the bubble, and returns on the next hover or focus.
  */
 export interface UiTooltipProps {
   /** Tooltip text. */

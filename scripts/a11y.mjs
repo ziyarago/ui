@@ -14,7 +14,7 @@ const base = (args.find(a => !a.startsWith('--')) || 'http://localhost:3000').re
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 if (!existsSync(CHROME)) throw new Error('Chrome not found; set CHROME_PATH');
 
-const COMPONENTS = ['Button', 'TextField', 'Select', 'Tabs', 'Modal', 'DataTable', 'Calendar', 'DatePicker', 'Menu', 'Dropdown', 'Tooltip', 'Accordion', 'Alert', 'Pagination', 'SegmentedControl', 'PillTabs', 'Checkbox', 'Switch', 'Slider', 'CommandPalette', 'Drawer', 'Card', 'Badge', 'Progress', 'Avatar'];
+const COMPONENTS = ['Button', 'TextField', 'Select', 'Combobox', 'MultiSelect', 'Tabs', 'Modal', 'DataTable', 'Calendar', 'DatePicker', 'Menu', 'Dropdown', 'Tooltip', 'Accordion', 'Alert', 'Pagination', 'SegmentedControl', 'PillTabs', 'Checkbox', 'Switch', 'Slider', 'CommandPalette', 'Drawer', 'Card', 'Badge', 'Progress', 'Avatar'];
 const pages = flag('only') ? flag('only').split(',') : [
   '/', ...COMPONENTS.map(n => `/docs/components/${n}`),
   ...['dashboard', 'auth', 'settings', 'inbox'].map(t => `/docs/templates/${t}`),
