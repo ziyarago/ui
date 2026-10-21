@@ -1,3 +1,9 @@
+## [0.12.0](https://github.com/ziyarago/ui/compare/v0.11.0...v0.12.0) (2026-10-21)
+
+### Features
+
+* free Core and Pro split (102 free, 106 Pro): tiers metadata, Pro badges in docs, pricing copy ([9b50a96](https://github.com/ziyarago/ui/commit/9b50a966e9ae0857758630624d6f8c1175063be2))
+
 ## [0.11.0](https://github.com/ziyarago/ui/compare/v0.10.0...v0.11.0) (2026-10-21)
 
 ### Features
