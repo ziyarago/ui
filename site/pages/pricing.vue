@@ -6,14 +6,14 @@ const mail = 'dev@ziyarago.com'
 
 type Plan = { id: string; name: string; price: string; period?: string; badge?: string; featured?: boolean; cta: string; features: string[]; goal: string }
 const plans: Plan[] = [
-  { id: 'free', name: 'Open source', price: '$0', period: 'forever', cta: 'Get started', goal: 'pricing_free', features: ['196 components', '29 page templates with source', 'Vue 3, Nuxt and React', 'Dark, light, RTL and Arabic', 'MCP server and llms.txt for AI tools', 'MIT license, community support'] },
+  { id: 'free', name: 'Open source', price: '$0', period: 'forever', cta: 'Get started', goal: 'pricing_free', features: ['203 components', '36 page templates with source', 'Vue 3, Nuxt and React', 'Dark, light, RTL and Arabic', 'MCP server and llms.txt for AI tools', 'MIT license, community support'] },
   { id: 'solo', name: 'Pro Solo', price: '$149', period: 'one-time', badge: 'Early access', featured: true, cta: 'Join the waitlist', goal: 'waitlist_solo', features: ['Everything in Open source', 'Starter apps: CRM, hotel booking, Umrah operator admin', 'Domain pack: hotel, tour, booking and prayer blocks', '1 developer, unlimited own projects', '12 months of updates', 'Email support'] },
   { id: 'team', name: 'Pro Team', price: '$399', period: 'one-time', cta: 'Join the waitlist', goal: 'waitlist_team', features: ['Everything in Pro Solo', 'Up to 5 developers', 'Priority support, 2 business days', 'Early access to new starters'] },
   { id: 'agency', name: 'Pro Agency', price: '$899', period: 'one-time', cta: 'Join the waitlist', goal: 'waitlist_agency', features: ['Everything in Pro Team', 'Unlimited developers in your company', 'Use in client projects', 'Private support channel'] },
 ]
 const faq = [
   { id: 1, title: 'Can I buy Pro today?', body: 'Not yet. The starters and the domain pack are in development. Join the waitlist and you get early access and the launch price, which is lower than the list price. The open source library is complete and free now.' },
-  { id: 2, title: 'What stays free?', body: 'All 196 components, all 29 page templates with their source, the docs, the MCP server and the AI catalog stay MIT-licensed. We will not move existing free features behind a paywall.' },
+  { id: 2, title: 'What stays free?', body: 'All 203 components, all 36 page templates with their source, the docs, the MCP server and the AI catalog stay MIT-licensed. We will not move existing free features behind a paywall.' },
   { id: 3, title: 'What is in Pro exactly?', body: 'New work that is not in the open source repository: complete starter apps built on the templates (CRM, hotel booking, Umrah operator admin), domain components for hotels, tours, bookings and prayer times, and support.' },
   { id: 4, title: 'Can I use it for client work?', body: 'The MIT library: yes, always. Pro Solo and Team: in your own projects. Agency: in projects you build for clients.' },
   { id: 5, title: 'Do you build custom interfaces?', body: 'Yes. We design and build admin panels and booking products on this system, with Arabic and RTL. Write to us with a short description.' },

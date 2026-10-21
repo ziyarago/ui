@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { GROUPS } from '~/docs-data/groups'
 import { TEMPLATES } from '~/docs-data/templates'
-useSeo({ title: '@ziyarago/ui — Vue, Nuxt and React UI components and page templates', description: 'Glass design system: 196 components and 29 page templates for Vue 3, Nuxt and React. OKLCH tokens, dark and light themes, RTL and Arabic, AI-ready catalog.' })
+useSeo({ title: '@ziyarago/ui — Vue, Nuxt and React UI components and page templates', description: 'Glass design system: 203 components and 36 page templates for Vue 3, Nuxt and React. OKLCH tokens, dark and light themes, RTL and Arabic, AI-ready catalog.' })
 
 const { siteUrl, version } = useRuntimeConfig().public
 useHead({ script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
   { '@type': 'Organization', '@id': siteUrl + '/#org', name: 'ZiyaraGo', url: 'https://ziyarago.com', logo: siteUrl + '/favicon.png' },
   { '@type': 'WebSite', '@id': siteUrl + '/#site', url: siteUrl + '/', name: '@ziyarago/ui', publisher: { '@id': siteUrl + '/#org' }, inLanguage: 'en' },
-  { '@type': 'SoftwareSourceCode', name: '@ziyarago/ui', description: 'Glass design system for Vue 3, Nuxt and React: 196 components and 29 page templates.', codeRepository: 'https://github.com/ziyarago/ui', programmingLanguage: 'JavaScript', license: 'https://opensource.org/licenses/MIT', version, publisher: { '@id': siteUrl + '/#org' } },
+  { '@type': 'SoftwareSourceCode', name: '@ziyarago/ui', description: 'Glass design system for Vue 3, Nuxt and React: 203 components and 36 page templates.', codeRepository: 'https://github.com/ziyarago/ui', programmingLanguage: 'JavaScript', license: 'https://opensource.org/licenses/MIT', version, publisher: { '@id': siteUrl + '/#org' } },
 ] }) }] })
 const total = GROUPS.reduce((n, g) => n + g.names.length, 0)
 const templatesCount = TEMPLATES.pages.length

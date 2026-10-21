@@ -14,7 +14,7 @@ body{margin:0;width:1200px;height:630px;overflow:hidden}
 .t{display:flex;align-items:center;gap:16px;font:600 30px var(--zg-font)}.t img{width:56px;height:56px}
 h1{margin:0;font:300 76px/1.05 var(--zg-font);letter-spacing:-.035em;max-width:980px}
 .s{display:flex;gap:14px}.s span{padding:10px 20px;border-radius:999px;background:var(--zg-s2);box-shadow:var(--zg-rim);font:600 24px var(--zg-font)}
-</style></head><body><div class="w"><div class="t"><img src="${logo}"> @ziyarago/ui</div><h1>Vue, Nuxt &amp; React UI components and page templates</h1><div class="s"><span>196 components</span><span>17 templates</span><span>Dark · Light · RTL</span><span>AI-ready</span></div></div></body></html>`;
+</style></head><body><div class="w"><div class="t"><img src="${logo}"> @ziyarago/ui</div><h1>Vue, Nuxt &amp; React UI components and page templates</h1><div class="s"><span>203 components</span><span>36 templates</span><span>Dark · Light · RTL</span><span>AI-ready</span></div></div></body></html>`;
 
 const b = await puppeteer.launch({ executablePath: process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--allow-file-access-from-files'], defaultViewport: { width: 1200, height: 630 } });
 const p = await b.newPage();

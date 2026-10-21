@@ -3240,6 +3240,46 @@ export interface UiPageAnalyticsSlots {
 export const UiPageAnalytics: UiVueComponent<UiPageAnalyticsProps, UiPageAnalyticsSlots>;
 
 /**
+ * Article template: cover, post body, sticky table of contents, share row and related posts.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Body, share and related share the main column; the table of contents stays visible on the right while the body scrolls and drops under the body below 860 px.
+ */
+export interface UiPageArticleProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageArticleSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Cover image area with title and author line; a gradient Card or LazyImage. */
+  cover?: () => any;
+  /** Article text; Heading, Text, Code, Alert. */
+  body?: () => any;
+  /** Sticky table of contents; Card with a list of anchor links. */
+  toc?: () => any;
+  /** Share and reaction row; Button, IconButton, CopyButton. */
+  share?: () => any;
+  /** Related posts; Card grid. */
+  related?: () => any;
+}
+export const UiPageArticle: UiVueComponent<UiPageArticleProps, UiPageArticleSlots>;
+
+/**
  * Sign-in page template without the app shell, as a centered card or a split layout.
  * Note: Designed for the dark theme and used without AppShell.
  */
@@ -3356,6 +3396,44 @@ export interface UiPageBillingSlots {
 export const UiPageBilling: UiVueComponent<UiPageBillingProps, UiPageBillingSlots>;
 
 /**
+ * Booking flow template: stepper, the active step content, back and continue buttons and a sticky summary card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Render only the active step in content. The summary stays visible on the right and goes below the step under 860 px.
+ */
+export interface UiPageBookingFlowProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageBookingFlowSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Progress; Stepper. */
+  steps?: () => any;
+  /** Content of the active step (search, pick, guests, confirm); Card, DatePicker, OptionCards, NumberInput. */
+  content?: () => any;
+  /** Back and Continue buttons. */
+  nav?: () => any;
+  /** Booking summary; Card, Descriptions. */
+  summary?: () => any;
+}
+export const UiPageBookingFlow: UiVueComponent<UiPageBookingFlowProps, UiPageBookingFlowSlots>;
+
+/**
  * Bookings list template: stats, toolbar, bulk-action bar, table and pagination.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -3469,6 +3547,42 @@ export interface UiPageCatalogSlots {
   pager?: () => any;
 }
 export const UiPageCatalog: UiVueComponent<UiPageCatalogProps, UiPageCatalogSlots>;
+
+/**
+ * Changelog template: release timeline grouped by version with new, fix and improved tags, a filter and a subscribe card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Filters and timeline share the main column; the subscribe card is a sticky side column.
+ */
+export interface UiPageChangelogProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageChangelogSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Tag filter; FilterChips, SearchInput. */
+  filters?: () => any;
+  /** Releases grouped by version; Card, Chip, Divider. */
+  timeline?: () => any;
+  /** Sticky subscribe card; Card, TextField, Button. */
+  subscribe?: () => any;
+}
+export const UiPageChangelog: UiVueComponent<UiPageChangelogProps, UiPageChangelogSlots>;
 
 /**
  * Checkout template: step indicator, cart items, delivery address, payment and an order summary column.
@@ -3722,6 +3836,44 @@ export interface UiPageHeaderSlots {
 export const UiPageHeader: UiVueComponent<UiPageHeaderProps, UiPageHeaderSlots>;
 
 /**
+ * Help center home: search, category grid, popular articles and a contact card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Popular articles and contact share a row and wrap on narrow screens. For a single question list use PageFaq.
+ */
+export interface UiPageHelpProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageHelpSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Large search field; SearchInput. */
+  search?: () => any;
+  /** Category tiles; Card with IconTile. */
+  categories?: () => any;
+  /** Popular articles list; Card. */
+  popular?: () => any;
+  /** Contact options; Card, Button. */
+  contact?: () => any;
+}
+export const UiPageHelp: UiVueComponent<UiPageHelpProps, UiPageHelpSlots>;
+
+/**
  * Inbox template: filters and conversation list, the open thread with a composer, and a customer panel.
  * Note: Place inside AppShell; fill only the slots you need.
  * Note: List, thread and customer panel sit side by side and stack in that order at 860px and below. Keep the selected conversation in your own state.
@@ -3859,6 +4011,80 @@ export interface UiPageLandingSlots {
   footer?: () => any;
 }
 export const UiPageLanding: UiVueComponent<UiPageLandingProps, UiPageLandingSlots>;
+
+/**
+ * Legal document template: last-updated line, sticky table of contents, numbered sections and a contact card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The table of contents sits left of the document and stacks above it under 860 px.
+ */
+export interface UiPageLegalProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageLegalSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Version, last-updated date and print or download buttons; Chip, Button. */
+  meta?: () => any;
+  /** Sticky table of contents; Card with anchor links. */
+  toc?: () => any;
+  /** Document sections; Card, Heading, Text. */
+  document?: () => any;
+  /** Questions card; Card, Button. */
+  contact?: () => any;
+}
+export const UiPageLegal: UiVueComponent<UiPageLegalProps, UiPageLegalSlots>;
+
+/**
+ * Locations template: filters, a scrollable list of places and a sticky map panel.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The list is a fixed-width column left of the map; under 860 px the map goes below the list.
+ */
+export interface UiPageLocationsProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageLocationsSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Search and category filters; SearchInput, FilterChips. */
+  filters?: () => any;
+  /** Places list; Card rows. */
+  list?: () => any;
+  /** Map panel; Map, or a gradient placeholder. */
+  map?: () => any;
+}
+export const UiPageLocations: UiVueComponent<UiPageLocationsProps, UiPageLocationsSlots>;
 
 /**
  * Notifications template: filters, a feed grouped by day and an empty state. Put Mark all read in actions.
@@ -4172,6 +4398,50 @@ export interface UiPageSettingsSlots {
   danger?: () => any;
 }
 export const UiPageSettings: UiVueComponent<UiPageSettingsProps, UiPageSettingsSlots>;
+
+/**
+ * State gallery: empty list, no results, no permission, offline, error with retry, loading and success on one page.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The first six slots sit in two rows of auto-fit cards; success spans the full width.
+ */
+export interface UiPageStatesProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageStatesSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Empty list; EmptyState with a primary action. */
+  empty?: () => any;
+  /** No search results; EmptyState with a reset action. */
+  noresults?: () => any;
+  /** No permission; EmptyState with a request-access action. */
+  forbidden?: () => any;
+  /** Offline; DataState state="offline". */
+  offline?: () => any;
+  /** Error with retry; DataState state="error". */
+  error?: () => any;
+  /** Loading; Skeleton or DataState state="loading". */
+  loading?: () => any;
+  /** Success confirmation; Alert tone="success" or EmptyState. */
+  success?: () => any;
+}
+export const UiPageStates: UiVueComponent<UiPageStatesProps, UiPageStatesSlots>;
 
 /**
  * Full-page status screen (404, 401, maintenance, coming soon) with one action.
