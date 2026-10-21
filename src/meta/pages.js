@@ -194,7 +194,15 @@ export default {
   PageAuth: {
     description: 'Sign-in page template without the app shell, as a centered card or a split layout.',
     props: {
-      layout: { forwarded: true, type: "'card' | 'split'", values: ['card', 'split'], default: 'card', description: "'split' uses AuthSplit with a side panel; anything else renders a centered AuthLayout card over the background." },
+      layout: { forwarded: true, type: "'card' | 'split' | 'photo' | 'light' | 'tint'", values: ['card', 'split', 'photo', 'light', 'tint'], default: 'card', description: "'split' uses AuthSplit with a side panel. 'photo', 'light' and 'tint' use AuthShowcase with a media panel. Anything else renders a centered AuthLayout card over the background." },
+      image: { forwarded: true, type: 'string', description: 'Media image URL; photo, light and tint layouts.' },
+      headline: { forwarded: true, type: 'string', description: 'Large text on the media panel; photo and tint.' },
+      caption: { forwarded: true, type: 'string', description: 'Small text on the media panel or glass bar.' },
+      quote: { forwarded: true, type: 'string', description: 'Bottom line of the media panel; photo only.' },
+      chips: { forwarded: true, type: 'string[]', description: 'Pill labels in the glass bar; light and tint.' },
+      people: { forwarded: true, type: '{ name: string; src?: string }[]', description: 'Avatars on the media panel or in the proof pill.' },
+      proof: { forwarded: true, type: 'string', description: 'Social-proof title under the form; light and tint.' },
+      proofHint: { forwarded: true, type: 'string', description: 'Second line of the proof pill.' },
       title: { forwarded: true, type: 'string', description: 'Form heading.' },
       subtitle: { forwarded: true, type: 'string', description: 'Text under the heading.' },
     },

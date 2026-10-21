@@ -198,6 +198,26 @@ export default {
     },
     events: { decline: 'Decline button clicked.', answer: 'Answer button clicked.' },
   },
+  AuthShowcase: {
+    description: 'Sign-in layout with a media panel: dark photo card with floating avatars, light gradient card with a social-proof pill, or a tinted panel with a glass caption. The default slot is the form.',
+    props: {
+      variant: { type: "'photo' | 'light' | 'tint'", values: ['photo', 'light', 'tint'], default: 'photo', description: "'photo': one framed card, media on the left. 'light': gradient form card, proof pill below, glass caption on the media. 'tint': like light, with a coloured panel, a heading on the media and cyan accent." },
+      title: { type: 'string', required: true, description: 'Form heading.' },
+      subtitle: { type: 'string', description: 'Text under the heading.' },
+      logo: { type: 'VNode', description: 'Logo node above the heading.' },
+      footer: { type: 'VNode', description: 'Content under the fields, for example "No account? Sign up".' },
+      image: { type: 'string', description: 'URL of the media image. Without it the panel shows an accent gradient.' },
+      headline: { type: 'string', description: 'Large text on the media panel (photo and tint).' },
+      caption: { type: 'string', description: 'Small text on the media panel (photo) or inside the glass bar (light, tint).' },
+      quote: { type: 'string', description: 'Line at the bottom of the media panel; photo only.' },
+      chips: { type: 'string[]', description: 'Pill labels inside the glass bar; light and tint.' },
+      people: { type: '{ name: string; src?: string }[]', description: 'Avatars: floating on the photo, stacked in the proof pill.' },
+      proof: { type: 'string', description: 'Social-proof title, e.g. "Join 20k+ users"; light and tint. Shows the pill under the form.' },
+      proofHint: { type: 'string', description: 'Second line of the proof pill.' },
+    },
+    slots: { default: 'Form fields and buttons. React passes them as children.' },
+    notes: ['logo, footer, image, people are props in both Vue and React. The media panel is hidden below the form on narrow screens (stacks under it).'],
+  },
   AuthSplit: {
     description: 'Two-column sign-in layout with a brand panel on the left and the form on the right.',
     props: {

@@ -2030,7 +2030,7 @@
    "route": "auth",
    "label": "Authentication (6)",
    "icon": "lock-keyhole",
-   "desc": "Six sign-in screens in two layouts: centered card and split with a side panel. Always dark theme.",
+   "desc": "Seven sign-in screens in five layouts: centered card, split with a side panel, and three with a media panel (photo, light, tint).",
    "component": "PageAuth",
    "tpl": "TplAuth",
    "shell": false,
