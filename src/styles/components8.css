@@ -82,6 +82,11 @@
 .zg-ash__chips{display:flex;gap:10px;flex-wrap:wrap}
 .zg-ash__chip{flex:1;text-align:center;padding:14px 18px;border-radius:999px;box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--zg-text-1) 40%,transparent)}
 @media(max-width:860px){.zg-ash--photo .zg-ash__frame,.zg-ash__grid{grid-template-columns:1fr}.zg-ash--photo .zg-ash__media{min-height:300px}.zg-ash__grid>.zg-ash__media{min-height:320px!important;order:2}}
+/* SocialAuth */
+.zg-social{display:flex;flex-direction:column;gap:14px}
+.zg-social__or{display:flex;align-items:center;gap:12px;color:var(--zg-text-3);font-size:13px}.zg-social__or::before,.zg-social__or::after{content:"";flex:1;height:1px;background:var(--zg-stroke)}
+.zg-social__row{display:flex;gap:10px}.zg-social--stack .zg-social__row{flex-direction:column}
+.zg-social .zg-btn{gap:10px}.zg-social:not(.zg-social--stack) .zg-social__row{justify-content:center}
 /* default media art when no image is given */
 .zg-ash__media::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 78% 24%,color-mix(in oklch,#fff 55%,transparent) 0,transparent 30%),radial-gradient(circle at 18% 78%,color-mix(in oklch,var(--ash-acc) 70%,transparent) 0,transparent 38%),conic-gradient(from 210deg at 62% 48%,transparent 0 .08turn,color-mix(in oklch,#fff 22%,transparent) .1turn .18turn,transparent .2turn 1turn)}
 .zg-ash__media[style*="url("]::after{display:none}

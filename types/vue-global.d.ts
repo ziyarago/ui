@@ -153,6 +153,7 @@ declare module 'vue' {
     UiSkeleton: typeof Ui.UiSkeleton;
     UiSlider: typeof Ui.UiSlider;
     UiSnackbar: typeof Ui.UiSnackbar;
+    UiSocialAuth: typeof Ui.UiSocialAuth;
     UiSortable: typeof Ui.UiSortable;
     UiSpinner: typeof Ui.UiSpinner;
     UiSplitLayout: typeof Ui.UiSplitLayout;

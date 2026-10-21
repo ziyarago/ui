@@ -393,6 +393,15 @@ const examples: Example[] = [
     ],
   },
   {
+    name: 'SocialAuth',
+    description: 'Google and Apple sign-in buttons. onSelect gets the provider id; wire your OAuth flow there.',
+    variants: [
+      { label: 'stack', width: '360px', props: { variant: 'stack' } },
+      { label: 'icons', width: '360px', props: { variant: 'icons' } },
+      { label: 'no divider', width: '360px', props: { variant: 'stack', divider: false, providers: ['google'] } },
+    ],
+  },
+  {
     name: 'AuthShowcase',
     description: 'Sign-in with a media panel. variant picks the look: photo (dark card, floating avatars), light (gradient card, proof pill, glass caption) or tint (coloured panel). Fill the default slot with the form.',
     variants: [
