@@ -4,7 +4,7 @@
 [data-motion="off"] *,[data-motion="off"] *::before,[data-motion="off"] *::after{animation-duration:.001ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
 
 /* ── effects lite: flat surfaces for weak browsers and devices ── */
-[data-fx="lite"] *,[data-fx="lite"] *::before,[data-fx="lite"] *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+[data-fx="lite"]:not([data-effects="full"]) *,[data-fx="lite"]:not([data-effects="full"]) *::before,[data-fx="lite"]:not([data-effects="full"]) *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 [data-fx="lite"]{--zg-shadow-1:0 2px 8px oklch(0 0 0 / .18);--zg-shadow-2:0 6px 20px oklch(0 0 0 / .28);--zg-brand-glow:transparent}
 [data-fx="lite"][data-theme="light"]{--zg-shadow-1:0 2px 8px oklch(0.4 0.03 60 / .12);--zg-shadow-2:0 6px 20px oklch(0.4 0.03 60 / .18)}
 [data-fx="lite"] .zg-glass{background:var(--zg-pop)}
@@ -22,6 +22,7 @@ html[data-bg]:not([data-bg="none"]),.zg-bg:not([data-bg="none"]){background-colo
 .zg-bg:not([data-bg="none"]){background-attachment:scroll}
 html[data-bg]:not([data-bg="none"]) .zg-root{background:transparent}
 html[data-motion="on"][data-bg]:not([data-bg="none"]){background-image:none}
+html[data-motion="on"][data-bg]:not([data-bg="none"]){overflow-x:clip}
 html[data-motion="on"][data-bg]:not([data-bg="none"])::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;background-image:var(--zg-bg-image);background-repeat:no-repeat;animation:zg-bg-float 18s ease-in-out infinite alternate,zg-bg-hue 40s linear infinite;will-change:transform,filter}
 @keyframes zg-bg-hue{from{filter:hue-rotate(0deg) saturate(1.15)}to{filter:hue-rotate(360deg) saturate(1.15)}}
 @keyframes zg-bg-float{0%{transform:translate3d(-3%,-2%,0) scale(1) rotate(0deg)}50%{transform:translate3d(4%,3%,0) scale(1.18) rotate(3deg)}100%{transform:translate3d(-2%,5%,0) scale(1.08) rotate(-3deg)}}

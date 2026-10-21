@@ -2,11 +2,11 @@
 useSeo({ title: 'Fonts and Arabic typography — @ziyarago/ui', description: 'Manrope for Latin, Thmanyah for Arabic and RTL, JetBrains Mono for code: tokens, weight mapping and self-hosting.' })
 
 const stacks = [
-  { token: '--zg-font', role: 'UI text (LTR)', stack: "'Manrope', 'Thmanyah Sans', system-ui, sans-serif", source: 'Manrope, Google Fonts', license: 'SIL OFL 1.1', weights: '200 to 700', note: 'Latin and Cyrillic. Loaded from Google Fonts in dist/style.css.' },
+  { token: '--zg-font', role: 'UI text (LTR)', stack: "'Manrope', 'Thmanyah Sans', system-ui, sans-serif", source: 'Manrope, self-hosted (assets/fonts)', license: 'SIL OFL 1.1', weights: '200 to 700', note: 'Latin and Cyrillic. Loaded from Google Fonts in dist/style.css.' },
   { token: '--zg-font-ar', role: 'UI text (RTL, Arabic)', stack: "'Thmanyah Sans', system-ui, sans-serif", source: 'Thmanyah, shipped in the package', license: 'Free incl. commercial', weights: '300, 400, 500, 700, 900 (mapped, see below)', note: 'Replaces --zg-font automatically when dir="rtl".' },
   { token: '--zg-font-ar-display', role: 'Arabic display headlines', stack: "'Thmanyah Serif Display', 'Thmanyah Sans', serif", source: 'Thmanyah, shipped', license: 'Free incl. commercial', weights: '300, 400, 500, 700', note: 'Optional. For editorial headings and articles.' },
   { token: '--zg-font-ar-text', role: 'Arabic reading text', stack: "'Thmanyah Serif Text', 'Thmanyah Sans', serif", source: 'Thmanyah, shipped', license: 'Free incl. commercial', weights: '300, 400, 500, 700', note: 'Optional. For long articles.' },
-  { token: '--zg-font-mono', role: 'Code, numbers in tables', stack: "'JetBrains Mono', ui-monospace, monospace", source: 'JetBrains Mono, Google Fonts', license: 'SIL OFL 1.1', weights: '400, 500, 600', note: 'Used by Code, Kbd, codes and IDs.' },
+  { token: '--zg-font-mono', role: 'Code, numbers in tables', stack: "'JetBrains Mono', ui-monospace, monospace", source: 'JetBrains Mono, self-hosted (assets/fonts)', license: 'SIL OFL 1.1', weights: '400, 500, 600', note: 'Used by Code, Kbd, codes and IDs.' },
 ]
 const mapping = [
   { ui: '200 to 300', file: 'Light', use: 'Large headings, big numbers' },

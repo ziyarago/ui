@@ -78,6 +78,9 @@ export default {
     props: {
       modelValue: { type: 'string', model: true, default: '', description: 'Current password.' },
       label, placeholder: placeholder(), hint, error,
+      required: { type: 'boolean', default: false, description: 'Adds a red asterisk to the label and the native required attribute.' },
+      name: { type: 'string', forwarded: true, description: 'Native name attribute of the input.' },
+      autofocus: { type: 'boolean', forwarded: true, description: 'Focuses the input on mount.' },
       autocomplete: { type: 'string', default: 'current-password', description: 'Native autocomplete token. Use "new-password" on sign-up and password-change forms so managers offer to generate one.' },
       size: size(),
     },
@@ -465,6 +468,7 @@ export default {
       error: { type: 'string', description: 'Failure message shown in a danger alert above the fields.' },
       loading: { type: 'boolean', default: false, description: 'Disables the submit button and shows a spinner.' },
       showForgot: { type: 'boolean', default: true, description: 'Show the "Forgot password?" link.' },
+      showRemember: { type: 'boolean', default: true, description: 'Show the "Remember device" checkbox. Hide it when your backend has no such option; the submit payload then keeps remember: true.' },
       submitLabel: { type: 'string', default: 'Sign in', description: 'Submit button text. Wins over labels.submit.' },
       labels: { type: '{ email?: string; password?: string; remember?: string; forgot?: string; submit?: string }', default: "{ email: 'Email or phone', password: 'Password', remember: 'Remember device', forgot: 'Forgot password?', submit: 'Sign in' }", description: 'Texts of the form; any missing key keeps its English default.' },
       size: size(),

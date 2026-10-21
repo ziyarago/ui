@@ -56,7 +56,11 @@ const T = Object.fromEntries([
   page('PageStates', ['header', 'empty', 'noresults', 'forbidden', 'offline', 'error', 'loading', 'success'], ['col', 'header', ['auto', 300, 'empty', 'noresults', 'forbidden'], ['auto', 300, 'offline', 'error', 'loading'], 'success']),
   page('PageLegal', ['header', 'meta', 'toc', 'document', 'contact'], ['col', 'header', 'meta', ['wrap', ['toc'], ['document', 'contact'], 260, 'sticky:toc']]),
   page('PageLocations', ['header', 'filters', 'list', 'map'], ['col', 'header', 'filters', ['wrap', ['list'], ['map'], 380, 'sticky:map']]),
-  page('PageBookingFlow', ['header', 'steps', 'content', 'nav', 'summary'], ['col', 'header', 'steps', ['two', ['content', 'nav'], ['summary'], 'sticky:summary']])
+  page('PageBookingFlow', ['header', 'steps', 'content', 'nav', 'summary'], ['col', 'header', 'steps', ['two', ['content', 'nav'], ['summary'], 'sticky:summary']]),
+  page('PageItinerary', ['header', 'days', 'timeline', 'transport', 'hotel', 'summary'], ['col', 'header', 'days', ['two', ['timeline', 'transport', 'hotel'], ['summary'], 'sticky:summary']]),
+  page('PagePrayer', ['header', 'location', 'today', 'month', 'qibla'], ['col', 'header', 'location', ['two', ['today', 'month'], ['qibla'], 'sticky:qibla']]),
+  page('PageGroupManager', ['header', 'trip', 'toolbar', 'bulk', 'pilgrims', 'rooms', 'payments'], ['col', 'header', 'trip', ['two', ['toolbar', 'bulk', 'pilgrims', 'rooms'], ['payments'], 'sticky:payments']]),
+  page('PageTourPublic', ['header', 'gallery', 'highlights', 'itinerary', 'included', 'reviews', 'booking'], ['col', 'header', 'gallery', ['two', ['highlights', 'itinerary', 'included', 'reviews'], ['booking'], 'sticky:booking']])
 ]);
 
 T.PageAuth = { slots: ['background', 'logo', 'aside', 'form', 'footer'], render: ({ C, h, props: p, slots: s }) => {

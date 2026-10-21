@@ -117,10 +117,12 @@ declare module 'vue' {
     UiPageDetail: typeof Ui.UiPageDetail;
     UiPageFaq: typeof Ui.UiPageFaq;
     UiPageForm: typeof Ui.UiPageForm;
+    UiPageGroupManager: typeof Ui.UiPageGroupManager;
     UiPageHeader: typeof Ui.UiPageHeader;
     UiPageHelp: typeof Ui.UiPageHelp;
     UiPageInbox: typeof Ui.UiPageInbox;
     UiPageIntegrations: typeof Ui.UiPageIntegrations;
+    UiPageItinerary: typeof Ui.UiPageItinerary;
     UiPageKanban: typeof Ui.UiPageKanban;
     UiPageLanding: typeof Ui.UiPageLanding;
     UiPageLegal: typeof Ui.UiPageLegal;
@@ -129,6 +131,7 @@ declare module 'vue' {
     UiPageOnboarding: typeof Ui.UiPageOnboarding;
     UiPageOrder: typeof Ui.UiPageOrder;
     UiPagePatterns: typeof Ui.UiPagePatterns;
+    UiPagePrayer: typeof Ui.UiPagePrayer;
     UiPagePricing: typeof Ui.UiPagePricing;
     UiPageProfile: typeof Ui.UiPageProfile;
     UiPageSearch: typeof Ui.UiPageSearch;
@@ -136,6 +139,7 @@ declare module 'vue' {
     UiPageStates: typeof Ui.UiPageStates;
     UiPageStatus: typeof Ui.UiPageStatus;
     UiPageTeam: typeof Ui.UiPageTeam;
+    UiPageTourPublic: typeof Ui.UiPageTourPublic;
     UiPageUserList: typeof Ui.UiPageUserList;
     UiPagination: typeof Ui.UiPagination;
     UiPasswordInput: typeof Ui.UiPasswordInput;
@@ -151,6 +155,7 @@ declare module 'vue' {
     UiPricingCard: typeof Ui.UiPricingCard;
     UiProfileHeader: typeof Ui.UiProfileHeader;
     UiProgress: typeof Ui.UiProgress;
+    UiQiblaCompass: typeof Ui.UiQiblaCompass;
     UiRadioGroup: typeof Ui.UiRadioGroup;
     UiRamadanTracker: typeof Ui.UiRamadanTracker;
     UiRangeCalendar: typeof Ui.UiRangeCalendar;

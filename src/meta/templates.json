@@ -4706,6 +4706,554 @@
      "use": "<UiCard title=\"Summary\">…</UiCard>"
     }
    ]
+  },
+  {
+   "key": "itinerary",
+   "route": "itinerary",
+   "label": "Itinerary",
+   "icon": "map",
+   "desc": "Itinerary: day tabs, a timeline of stops, transport and hotel blocks and a sticky trip summary.",
+   "component": "PageItinerary",
+   "tpl": "TplItinerary",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "days",
+     "title": "Days",
+     "desc": "Switch between the days of the trip.",
+     "accepts": [
+      "Tabs",
+      "PillTabs"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiTabs v-model=\"day\" :items=\"days\" />"
+    },
+    {
+     "id": "timeline",
+     "title": "Day timeline",
+     "desc": "Stops of the active day with times, places and durations.",
+     "accepts": [
+      "Card",
+      "Timeline",
+      "StatRow"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Day 2 · Makkah\">…</UiCard>"
+    },
+    {
+     "id": "transport",
+     "title": "Transport",
+     "desc": "Flights, buses and transfers of the day.",
+     "accepts": [
+      "Card",
+      "StatRow"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Transport\">…</UiCard>"
+    },
+    {
+     "id": "hotel",
+     "title": "Hotel",
+     "desc": "Where the group stays.",
+     "accepts": [
+      "Card",
+      "Badge",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    },
+    {
+     "id": "summary",
+     "title": "Trip summary",
+     "desc": "Dates, group size and what is booked.",
+     "accepts": [
+      "Card",
+      "Descriptions",
+      "Progress"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Trip summary\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "prayer",
+   "route": "prayer",
+   "label": "Prayer times",
+   "icon": "clock",
+   "desc": "Prayer times: location picker, today with the next prayer, a month table and a sticky Qibla compass.",
+   "component": "PagePrayer",
+   "tpl": "TplPrayer",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "location",
+     "title": "Location",
+     "desc": "City and calculation method.",
+     "accepts": [
+      "Select",
+      "PillSelect",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSelect v-model=\"city\" :options=\"cities\" />"
+    },
+    {
+     "id": "today",
+     "title": "Today",
+     "desc": "Five prayers with the next one highlighted and a countdown.",
+     "accepts": [
+      "Card",
+      "PrayerTimes"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiPrayerTimes :items=\"times\" :next=\"2\" />"
+    },
+    {
+     "id": "month",
+     "title": "Month table",
+     "desc": "Prayer times for every day of the month.",
+     "accepts": [
+      "Card",
+      "DataTable"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"days\" />"
+    },
+    {
+     "id": "qibla",
+     "title": "Qibla",
+     "desc": "Direction to the Kaaba.",
+     "accepts": [
+      "Card",
+      "QiblaCompass"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiQiblaCompass :bearing=\"248\" />"
+    }
+   ]
+  },
+  {
+   "key": "group-manager",
+   "route": "group-manager",
+   "label": "Group manager",
+   "icon": "users-round",
+   "desc": "Group manager: trip summary, pilgrims with documents and visa, bulk actions, rooming and payments.",
+   "component": "PageGroupManager",
+   "tpl": "TplGroupManager",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "trip",
+     "title": "Trip summary",
+     "desc": "Dates, route, seats and readiness counters.",
+     "accepts": [
+      "Card",
+      "StatStrip",
+      "Progress"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStatStrip :items=\"stats\" />"
+    },
+    {
+     "id": "toolbar",
+     "title": "Toolbar",
+     "desc": "Search and status filters.",
+     "accepts": [
+      "SearchInput",
+      "FilterChips"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSearchInput v-model=\"q\" />"
+    },
+    {
+     "id": "bulk",
+     "title": "Bulk actions",
+     "desc": "Shown when pilgrims are selected.",
+     "accepts": [
+      "Button",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiButton icon=\"send\">Remind selected</UiButton>"
+    },
+    {
+     "id": "pilgrims",
+     "title": "Pilgrims",
+     "desc": "Table with passport, visa and payment status.",
+     "accepts": [
+      "Card",
+      "DataTable",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"rows\" />"
+    },
+    {
+     "id": "rooms",
+     "title": "Rooming",
+     "desc": "Room assignment for the hotel.",
+     "accepts": [
+      "Card",
+      "RoomGrid"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiRoomGrid :rooms=\"rooms\" />"
+    },
+    {
+     "id": "payments",
+     "title": "Payments",
+     "desc": "Collected, outstanding and the manager contact.",
+     "accepts": [
+      "Card",
+      "Progress",
+      "ContactPanel"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Payments\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "tour-public",
+   "route": "tour-public",
+   "label": "Tour page",
+   "icon": "plane",
+   "desc": "Public tour page without the shell: gradient gallery, highlights, itinerary, inclusions, reviews and a sticky booking card.",
+   "component": "PageTourPublic",
+   "tpl": "TplTourPublic",
+   "shell": false,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "gallery",
+     "title": "Gallery",
+     "desc": "Hero area made of gradients or photos.",
+     "accepts": [
+      "Gallery",
+      "Card"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    },
+    {
+     "id": "highlights",
+     "title": "Highlights",
+     "desc": "Key facts: nights, hotels, flights.",
+     "accepts": [
+      "StatStrip",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStatStrip :items=\"facts\" />"
+    },
+    {
+     "id": "itinerary",
+     "title": "Itinerary",
+     "desc": "Day by day program in an accordion.",
+     "accepts": [
+      "Accordion"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiAccordion :items=\"days\" />"
+    },
+    {
+     "id": "included",
+     "title": "Included",
+     "desc": "What the price includes and excludes.",
+     "accepts": [
+      "Card",
+      "Descriptions"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Included\">…</UiCard>"
+    },
+    {
+     "id": "reviews",
+     "title": "Reviews",
+     "desc": "What pilgrims say.",
+     "accepts": [
+      "Card",
+      "Rating",
+      "Avatar"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Reviews\">…</UiCard>"
+    },
+    {
+     "id": "booking",
+     "title": "Booking",
+     "desc": "Price, dates, seats and the booking button.",
+     "accepts": [
+      "Card",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Book\">…</UiCard>"
+    }
+   ]
   }
  ]
 }

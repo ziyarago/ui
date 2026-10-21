@@ -2619,6 +2619,11 @@ export interface UiLoginFormProps {
    */
   showForgot?: boolean;
   /**
+   * Show the "Remember device" checkbox. Hide it when your backend has no such option; the submit payload then keeps remember: true.
+   * @default true
+   */
+  showRemember?: boolean;
+  /**
    * Submit button text. Wins over labels.submit.
    * @default Sign in
    */
@@ -3976,6 +3981,71 @@ export interface UiPageFormProps {
 }
 export const UiPageForm: ComponentType<UiPageFormProps>;
 
+/**
+ * Group manager template: trip summary, pilgrims table with document and visa status, bulk actions, rooming and a sticky payments summary.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The payments card stays visible on the right and goes below the table under 860 px.
+ */
+export interface UiPageGroupManagerProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * Trip header with dates, route and counters; Card, StatStrip, Progress.
+   * @slot trip (React: pass as a prop)
+   */
+  trip?: ReactNode;
+  /**
+   * Search and status filters; SearchInput, FilterChips.
+   * @slot toolbar (React: pass as a prop)
+   */
+  toolbar?: ReactNode;
+  /**
+   * Actions for the selected pilgrims; Button, Badge.
+   * @slot bulk (React: pass as a prop)
+   */
+  bulk?: ReactNode;
+  /**
+   * Pilgrims table with documents and visa; Card, DataTable, Badge.
+   * @slot pilgrims (React: pass as a prop)
+   */
+  pilgrims?: ReactNode;
+  /**
+   * Rooming assignment; Card, RoomGrid.
+   * @slot rooms (React: pass as a prop)
+   */
+  rooms?: ReactNode;
+  /**
+   * Payments summary and manager contact; Card, Progress, ContactPanel.
+   * @slot payments (React: pass as a prop)
+   */
+  payments?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageGroupManager: ComponentType<UiPageGroupManagerProps>;
+
 /** Page title block with optional breadcrumbs, subtitle and an actions area. */
 export interface UiPageHeaderProps {
   /** Page title (rendered as h1). */
@@ -4167,6 +4237,66 @@ export interface UiPageIntegrationsProps {
   children?: ReactNode;
 }
 export const UiPageIntegrations: ComponentType<UiPageIntegrationsProps>;
+
+/**
+ * Itinerary template: day tabs, a timeline of stops for the chosen day, transport and hotel blocks and a sticky trip summary card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Render only the active day in timeline, transport and hotel. The summary stays visible on the right and goes below the day under 860 px.
+ */
+export interface UiPageItineraryProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * Day switcher; Tabs or PillTabs.
+   * @slot days (React: pass as a prop)
+   */
+  days?: ReactNode;
+  /**
+   * Stops of the active day with times and places; Card, Timeline, StatRow.
+   * @slot timeline (React: pass as a prop)
+   */
+  timeline?: ReactNode;
+  /**
+   * Flights, buses and transfers of the day; Card, StatRow.
+   * @slot transport (React: pass as a prop)
+   */
+  transport?: ReactNode;
+  /**
+   * Where the group stays that night; Card, Badge, IconTile.
+   * @slot hotel (React: pass as a prop)
+   */
+  hotel?: ReactNode;
+  /**
+   * Trip summary; Card, Descriptions, Progress.
+   * @slot summary (React: pass as a prop)
+   */
+  summary?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageItinerary: ComponentType<UiPageItineraryProps>;
 
 /**
  * Kanban template: filters, task board columns and a card detail panel.
@@ -4616,6 +4746,61 @@ export interface UiPagePatternsProps {
 export const UiPagePatterns: ComponentType<UiPagePatternsProps>;
 
 /**
+ * Prayer times template: a location picker, today's times with the next prayer highlighted, a month table and a sticky Qibla compass.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The Qibla card stays visible on the right and goes below the times under 860 px.
+ */
+export interface UiPagePrayerProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * City and method pickers; Select, PillSelect, SegmentedControl.
+   * @slot location (React: pass as a prop)
+   */
+  location?: ReactNode;
+  /**
+   * Today's prayers and the countdown to the next one; Card, PrayerTimes.
+   * @slot today (React: pass as a prop)
+   */
+  today?: ReactNode;
+  /**
+   * Prayer times for the whole month; Card, DataTable.
+   * @slot month (React: pass as a prop)
+   */
+  month?: ReactNode;
+  /**
+   * Qibla direction; Card, QiblaCompass.
+   * @slot qibla (React: pass as a prop)
+   */
+  qibla?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPagePrayer: ComponentType<UiPagePrayerProps>;
+
+/**
  * Pricing template: billing-period toggle, plan cards and an FAQ.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -5028,6 +5213,71 @@ export interface UiPageTeamProps {
 export const UiPageTeam: ComponentType<UiPageTeamProps>;
 
 /**
+ * Public tour page: header, gradient gallery area, highlights, itinerary accordion, included and excluded lists, reviews and a sticky price and booking card. Has no shell and follows the theme.
+ * Note: Render the page on its own, without AppShell: it supplies its own width and padding in your layout.
+ * Note: The booking card stays visible on the right and goes below the content under 860 px.
+ */
+export interface UiPageTourPublicProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+  /**
+   * Custom page header; replaces the built-in title/subtitle/crumbs header.
+   * @slot header (React: pass as a prop)
+   */
+  header?: ReactNode;
+  /**
+   * Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled).
+   * @slot actions (React: pass as a prop)
+   */
+  actions?: ReactNode;
+  /**
+   * Hero area made of gradients or photos; Gallery, Card.
+   * @slot gallery (React: pass as a prop)
+   */
+  gallery?: ReactNode;
+  /**
+   * Key facts and highlights; StatStrip, IconTile.
+   * @slot highlights (React: pass as a prop)
+   */
+  highlights?: ReactNode;
+  /**
+   * Day by day program; Accordion.
+   * @slot itinerary (React: pass as a prop)
+   */
+  itinerary?: ReactNode;
+  /**
+   * What the price includes and excludes; Card, Descriptions.
+   * @slot included (React: pass as a prop)
+   */
+  included?: ReactNode;
+  /**
+   * Pilgrim reviews; Card, Rating, Avatar.
+   * @slot reviews (React: pass as a prop)
+   */
+  reviews?: ReactNode;
+  /**
+   * Price, dates, seats and the booking button; Card, Button.
+   * @slot booking (React: pass as a prop)
+   */
+  booking?: ReactNode;
+  children?: ReactNode;
+}
+export const UiPageTourPublic: ComponentType<UiPageTourPublicProps>;
+
+/**
  * User or customer list template: stats, filters, toolbar, table and a right-hand add/edit drawer.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -5160,6 +5410,21 @@ export interface UiPasswordInputProps {
    * @remarks Forwarded to the inner element.
    */
   error?: string;
+  /**
+   * Adds a red asterisk to the label and the native required attribute.
+   * @default false
+   */
+  required?: boolean;
+  /**
+   * Native name attribute of the input.
+   * @remarks Forwarded to the inner element.
+   */
+  name?: string;
+  /**
+   * Focuses the input on mount.
+   * @remarks Forwarded to the inner element.
+   */
+  autofocus?: boolean;
   /**
    * Native autocomplete token. Use "new-password" on sign-up and password-change forms so managers offer to generate one.
    * @default 'current-password'
@@ -5506,6 +5771,32 @@ export interface UiProgressProps {
   children?: ReactNode;
 }
 export const UiProgress: ComponentType<UiProgressProps>;
+
+/**
+ * Compass dial with a Kaaba marker pointing to the Qibla and the bearing in degrees below it.
+ * Note: Exposed as role="img" with a label that states the bearing. Compute the bearing and heading yourself (geolocation and DeviceOrientation); the component only draws them.
+ */
+export interface UiQiblaCompassProps {
+  /**
+   * Qibla bearing in degrees clockwise from true north, 0 to 360; other values wrap.
+   * @default 0
+   */
+  bearing: number;
+  /**
+   * Direction the device points to, in degrees. The dial turns against it so the marker follows the real Qibla; 0 keeps north up.
+   * @default 0
+   */
+  heading?: number;
+  /** Optional small caption under the bearing, such as "4 210 km to the Kaaba". */
+  distance?: string;
+  /**
+   * Diameter: xs 120, sm 160, md 200, lg 250, xl 300 px; a number is used as px.
+   * @default 'md'
+   */
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+  children?: ReactNode;
+}
+export const UiQiblaCompass: ComponentType<UiQiblaCompassProps>;
 
 /** Group of radio options with optional hints. Use for a short single-choice list that should stay visible. */
 export interface UiRadioGroupProps {

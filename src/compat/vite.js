@@ -11,7 +11,7 @@ export function ziyaragoCompat(options = {}) {
     enforce: 'pre',
     resolveId(source, importer) {
       const norm = source.replace(/\\/g, '/');
-      if (!importer || norm.startsWith('\0') || norm.startsWith(from)) return null;
+      if (!importer || importer.includes('node_modules') || norm.startsWith('\0') || norm.startsWith(from) || !norm.includes('components/ui')) return null;
       if (importer.replace(/\\/g, '/').includes('/components/ui/')) return null;
       if (exclude.some(r => r.test(norm))) return null;
       const m = ui.exec(norm);

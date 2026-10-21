@@ -78,7 +78,7 @@ With Tailwind in Nuxt, use the layered import from section 3: set `css: false` i
 Tailwind 4 puts preflight in `@layer base` and utilities in `@layer utilities`. CSS outside any layer beats every layer, regardless of specificity. So an unlayered `@ziyarago/ui/style.css` next to Tailwind has two problems (both reproduced):
 
 1. Utilities on our components lose: `<UiButton class="px-10 rounded-none bg-red-500">` keeps the padding, radius and background of `.zg-btn`.
-2. Order matters: `@import "tailwindcss"; @import "@ziyarago/ui/style.css";` silently dropped the Google Fonts `@import url(...)` from our file (Manrope did not load).
+2. Order matters: `@import "tailwindcss"; @import "@ziyarago/ui/style.css";` silently dropped the old Google Fonts `@import url(...)`. Since 0.7 the fonts are bundled (`@font-face` with local files), so there is no `@import` to lose.
 
 Recipe (single CSS entry, Vite or Nuxt):
 
@@ -87,7 +87,7 @@ Recipe (single CSS entry, Vite or Nuxt):
 @import "@ziyarago/ui/style.css" layer(components);
 ```
 
-Result: preflight < our styles < utilities. `class="w-48"`, `px-10`, `rounded-none`, `bg-red-500` on `UiButton`/`UiCard` all apply; the Google Fonts import is kept. Do not also import the stylesheet from `main.ts`.
+Result: preflight < our styles < utilities. `class="w-48"`, `px-10`, `rounded-none`, `bg-red-500` on `UiButton`/`UiCard` all apply; the fonts load from your own origin. Do not also import the stylesheet from `main.ts`.
 
 Put `class="zg-root"` on your app root (`<div id="app" class="zg-root">` or body). It sets font, text color, background and the reduced-motion rule.
 
@@ -105,7 +105,7 @@ Compared computed styles of every element of every documented example (182 compo
 
 After the fix the remaining differences between the two setups are `appearance: button`, `img { max-width: 100% }`, `svg { display: block }` and running animation frames; none is visible.
 
-Fonts: `style.css` pulls Manrope and JetBrains Mono from Google Fonts with an `@import url(...)`, which must be the first statement of the final CSS. If your build moves it (or you self-host), load the fonts yourself (for example `@fontsource-variable/manrope`) and keep `--zg-font` in sync. Thmanyah (Arabic) ships inside the package (`assets/fonts`).
+Fonts: Manrope, JetBrains Mono (latin and cyrillic) and Thmanyah (Arabic) ship inside the package (`assets/fonts`) and `style.css` loads them from there. No request goes to Google, so a strict CSP (`style-src 'self'`, `font-src 'self'`) works. Your bundler must resolve the `url(../assets/fonts/...)` references; Vite and Nuxt do it by default.
 
 ## 4. vue-i18n, pinia, vue-router
 
