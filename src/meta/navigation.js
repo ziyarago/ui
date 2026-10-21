@@ -25,11 +25,12 @@ export default {
       items: { type: '({ value: string; label: string; icon?: string; count?: string | number } | { group: string })[]', default: '[]', description: 'Entries. An object with group renders a section heading (hidden when collapsed); others are links with an optional icon and count.' },
       value: current,
       collapsed: { type: 'boolean', default: false, description: 'Icon-only mode; labels move to the title tooltip.' },
+      collapsible: { type: 'boolean', default: false, description: 'Always draw the collapse button, even without a toggle handler (the button is also drawn when a toggle handler is set).' },
       collapseLabel: { type: 'string', default: 'Collapse', description: 'Label of the collapse button.' },
       size: size('width (216 to 336 px), padding and item height'),
     },
     slots: { footer: 'Bottom area above the collapse button, e.g. user card. React also accepts a footer prop.' },
-    events: { change: 'Called with the value of the clicked item.', toggle: 'Called when the collapse button is clicked. The button is rendered only when this handler is set.' },
+    events: { change: 'Called with the value of the clicked item.', toggle: 'Called when the collapse button is clicked. The button is drawn when this handler is set (Vue: @toggle) or when collapsible is true.' },
     notes: ['Collapsing is controlled: flip collapsed in the toggle handler.', 'Group entries are keyed by their title, so keep group names unique.'],
   },
 
