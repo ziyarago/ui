@@ -1,3 +1,9 @@
+## [0.19.1](https://github.com/ziyarago/ui/compare/v0.19.0...v0.19.1) (2026-10-21)
+
+### Bug Fixes
+
+* UserCell avatar letters no longer stick to the top ([533087d](https://github.com/ziyarago/ui/commit/533087d4b490375a1f3642db7a4b5be16cf4dae4))
+
 ## [0.19.0](https://github.com/ziyarago/ui/compare/v0.18.0...v0.19.0) (2026-10-21)
 
 ### Features
