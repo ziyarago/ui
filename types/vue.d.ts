@@ -3316,6 +3316,46 @@ export interface UiPageAuthSlots {
 export const UiPageAuth: UiVueComponent<UiPageAuthProps, UiPageAuthSlots>;
 
 /**
+ * Billing template: current plan, usage meters, invoices, payment methods and an upgrade card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Plan, usage and invoices share the main column; methods and upgrade form the side column.
+ */
+export interface UiPageBillingProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageBillingSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Current plan; Card with Badge and Buttons. */
+  plan?: () => any;
+  /** Usage meters; Progress. */
+  usage?: () => any;
+  /** Invoices; DataTable. */
+  invoices?: () => any;
+  /** Saved cards; Card, IconTile, Badge. */
+  methods?: () => any;
+  /** Upgrade call to action; Card variant="inverse" or PricingCard. */
+  upgrade?: () => any;
+}
+export const UiPageBilling: UiVueComponent<UiPageBillingProps, UiPageBillingSlots>;
+
+/**
  * Bookings list template: stats, toolbar, bulk-action bar, table and pagination.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -3353,6 +3393,44 @@ export interface UiPageBookingsSlots {
   pager?: () => any;
 }
 export const UiPageBookings: UiVueComponent<UiPageBookingsProps, UiPageBookingsSlots>;
+
+/**
+ * Calendar template: view switch, time grid, mini calendar and event details.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The grid sits beside the mini calendar and details; they stack under 860 px.
+ */
+export interface UiPageCalendarProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageCalendarSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** SegmentedControl, Button, IconButton. */
+  toolbar?: () => any;
+  /** Time grid with events; Card with custom grid, or CalendarView for the month. */
+  grid?: () => any;
+  /** Month picker; Calendar. */
+  mini?: () => any;
+  /** Selected event; Card, Descriptions, Avatar, Button. */
+  details?: () => any;
+}
+export const UiPageCalendar: UiVueComponent<UiPageCalendarProps, UiPageCalendarSlots>;
 
 /**
  * Catalog template with a filter sidebar and a card grid (hotels, tours).
@@ -3684,6 +3762,80 @@ export interface UiPageInboxSlots {
 export const UiPageInbox: UiVueComponent<UiPageInboxProps, UiPageInboxSlots>;
 
 /**
+ * Integrations template: connection cards, API keys and webhooks.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Keys and webhooks share a row and wrap on narrow screens.
+ */
+export interface UiPageIntegrationsProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageIntegrationsSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** SearchInput, FilterChips. */
+  filters?: () => any;
+  /** IntegrationCard grid. */
+  connections?: () => any;
+  /** Keys; DataTable with CopyButton and IconButton. */
+  keys?: () => any;
+  /** Webhooks list; Card, Switch, Chip. */
+  webhooks?: () => any;
+}
+export const UiPageIntegrations: UiVueComponent<UiPageIntegrationsProps, UiPageIntegrationsSlots>;
+
+/**
+ * Kanban template: filters, task board columns and a card detail panel.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Board scrolls horizontally inside its area; detail goes below it under 860 px.
+ */
+export interface UiPageKanbanProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageKanbanSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** SearchInput, FilterChips, Select. */
+  filters?: () => any;
+  /** Columns with cards; KanbanColumn, KanbanCard. */
+  board?: () => any;
+  /** Selected card; Card, Descriptions, Checkbox, Timeline. */
+  detail?: () => any;
+}
+export const UiPageKanban: UiVueComponent<UiPageKanbanProps, UiPageKanbanSlots>;
+
+/**
  * Landing template: hero, logo strip, features, social proof, pricing teaser, call to action and footer. Used without the app shell.
  * Note: Landing does not use the app shell: render it on its own page. Blocks stack in one column; each block may use its own grid and wraps on narrow screens.
  */
@@ -3945,6 +4097,44 @@ export interface UiPageProfileSlots {
 export const UiPageProfile: UiVueComponent<UiPageProfileProps, UiPageProfileSlots>;
 
 /**
+ * Search template: query field, filter sidebar, result groups and an empty state.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Filters sit left of the results and stack above them under 860 px. Fill empty only when there are no results.
+ */
+export interface UiPageSearchProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageSearchSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** SearchInput, Tabs. */
+  search?: () => any;
+  /** Filters; Card, Checkbox, Select. */
+  filters?: () => any;
+  /** Result groups; Card, Chip, Divider. */
+  results?: () => any;
+  /** Shown only when there are no results; EmptyState. */
+  empty?: () => any;
+}
+export const UiPageSearch: UiVueComponent<UiPageSearchProps, UiPageSearchSlots>;
+
+/**
  * Settings template with a section sub-navigation and stacked settings sections.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -4039,6 +4229,44 @@ export interface UiPageStatusSlots {
   action?: () => any;
 }
 export const UiPageStatus: UiVueComponent<UiPageStatusProps, UiPageStatusSlots>;
+
+/**
+ * Team template: member stats, members table, roles and permissions matrix, and an invite form.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Members and roles share the main column; the invite form is the side column.
+ */
+export interface UiPageTeamProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageTeamSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Counters; KpiTile, StatsCard. */
+  stats?: () => any;
+  /** Members; DataTable with UserCell, Select, Badge. */
+  members?: () => any;
+  /** Permissions matrix; DataTable with Checkbox cells. */
+  roles?: () => any;
+  /** Invite form; Card, TextField, Select, Button. */
+  invite?: () => any;
+}
+export const UiPageTeam: UiVueComponent<UiPageTeamProps, UiPageTeamSlots>;
 
 /**
  * User or customer list template: stats, filters, toolbar, table and a right-hand add/edit drawer.

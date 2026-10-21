@@ -3163,6 +3163,707 @@
      "use": "<UiDataTable :columns=\"cols\" :rows=\"rows\" />"
     }
    ]
+  },
+  {
+   "key": "calendar",
+   "route": "calendar",
+   "label": "Calendar",
+   "icon": "calendar-days",
+   "desc": "Schedule: week, day and month switch, event grid, mini calendar and an event details side panel.",
+   "component": "PageCalendar",
+   "tpl": "TplCalendar",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "toolbar",
+     "title": "Toolbar",
+     "desc": "View switch, date navigation and filters.",
+     "accepts": [
+      "SegmentedControl",
+      "Button",
+      "IconButton",
+      "Select"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSegmentedControl v-model=\"view\" :items=\"views\" />"
+    },
+    {
+     "id": "grid",
+     "title": "Event grid",
+     "desc": "Week, day or month grid with events.",
+     "accepts": [
+      "CalendarView",
+      "Card"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard padding=\"none\">…grid…</UiCard>"
+    },
+    {
+     "id": "mini",
+     "title": "Mini calendar",
+     "desc": "Small month picker.",
+     "accepts": [
+      "Calendar"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCalendar v-model=\"day\" />"
+    },
+    {
+     "id": "details",
+     "title": "Event details",
+     "desc": "Selected event with time, place, guests and actions.",
+     "accepts": [
+      "Card",
+      "Descriptions",
+      "Avatar",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Hotel check-in\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "kanban",
+   "route": "kanban",
+   "label": "Kanban",
+   "icon": "kanban",
+   "desc": "Task board: columns with cards, filters and a card detail panel.",
+   "component": "PageKanban",
+   "tpl": "TplKanban",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Search, assignee and label filters.",
+     "accepts": [
+      "SearchInput",
+      "FilterChips",
+      "Select"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiFilterChips v-model=\"f\" :items=\"labels\" />"
+    },
+    {
+     "id": "board",
+     "title": "Board",
+     "desc": "Task columns with cards.",
+     "accepts": [
+      "KanbanColumn",
+      "KanbanCard"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiKanbanColumn title=\"To do\" :count=\"3\">…</UiKanbanColumn>"
+    },
+    {
+     "id": "detail",
+     "title": "Card detail",
+     "desc": "Side panel for the selected card.",
+     "accepts": [
+      "Card",
+      "Descriptions",
+      "Timeline",
+      "Checkbox"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Task\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "billing",
+   "route": "billing",
+   "label": "Billing",
+   "icon": "credit-card",
+   "desc": "Billing: current plan, usage meters, invoices table, payment methods and upgrade.",
+   "component": "PageBilling",
+   "tpl": "TplBilling",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "plan",
+     "title": "Current plan",
+     "desc": "Plan name, price, renewal date and actions.",
+     "accepts": [
+      "Card",
+      "Badge",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Pro plan\">…</UiCard>"
+    },
+    {
+     "id": "usage",
+     "title": "Usage",
+     "desc": "Meters for seats, storage and requests.",
+     "accepts": [
+      "Progress",
+      "Card"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiProgress :value=\"72\" label=\"Seats\" />"
+    },
+    {
+     "id": "invoices",
+     "title": "Invoices",
+     "desc": "Past invoices with status and download.",
+     "accepts": [
+      "DataTable",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"rows\" />"
+    },
+    {
+     "id": "methods",
+     "title": "Payment methods",
+     "desc": "Saved cards with default marker.",
+     "accepts": [
+      "Card",
+      "IconTile",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Payment methods\">…</UiCard>"
+    },
+    {
+     "id": "upgrade",
+     "title": "Upgrade",
+     "desc": "Upsell card for the next plan.",
+     "accepts": [
+      "Card",
+      "PricingCard",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard variant=\"inverse\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "team",
+   "route": "team",
+   "label": "Team",
+   "icon": "users-round",
+   "desc": "Team: members table, invite form and a roles and permissions matrix.",
+   "component": "PageTeam",
+   "tpl": "TplTeam",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "stats",
+     "title": "Summary",
+     "desc": "Seats, pending invites and admins.",
+     "accepts": [
+      "StatsCard",
+      "KpiTile"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiKpiTile label=\"Members\" value=\"12\" />"
+    },
+    {
+     "id": "members",
+     "title": "Members",
+     "desc": "Members table with role and status.",
+     "accepts": [
+      "DataTable",
+      "UserCell",
+      "Select",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"rows\" />"
+    },
+    {
+     "id": "roles",
+     "title": "Roles and permissions",
+     "desc": "Matrix of permissions per role.",
+     "accepts": [
+      "DataTable",
+      "Checkbox",
+      "Switch"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"roleCols\" :rows=\"perms\" />"
+    },
+    {
+     "id": "invite",
+     "title": "Invite",
+     "desc": "Email, role and send button.",
+     "accepts": [
+      "Card",
+      "TextField",
+      "Select",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Invite\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "integrations",
+   "route": "integrations",
+   "label": "Integrations",
+   "icon": "plug",
+   "desc": "Integrations: connection cards with status, API keys table with reveal, copy and revoke, and a webhooks list.",
+   "component": "PageIntegrations",
+   "tpl": "TplIntegrations",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Search and category filter.",
+     "accepts": [
+      "SearchInput",
+      "FilterChips"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSearchInput v-model=\"q\" />"
+    },
+    {
+     "id": "connections",
+     "title": "Connections",
+     "desc": "Cards with connected, error or off status.",
+     "accepts": [
+      "IntegrationCard"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiIntegrationCard name=\"Telegram\" status=\"connected\" />"
+    },
+    {
+     "id": "keys",
+     "title": "API keys",
+     "desc": "Keys with reveal, copy and revoke.",
+     "accepts": [
+      "DataTable",
+      "CopyButton",
+      "IconButton"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"keys\" />"
+    },
+    {
+     "id": "webhooks",
+     "title": "Webhooks",
+     "desc": "Endpoints with event types and on/off switch.",
+     "accepts": [
+      "Card",
+      "Switch",
+      "Chip"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Webhooks\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "search",
+   "route": "search",
+   "label": "Search results",
+   "icon": "search",
+   "desc": "Search results: query field, filters, grouped results and an empty state.",
+   "component": "PageSearch",
+   "tpl": "TplSearch",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "search",
+     "title": "Search field",
+     "desc": "Large query field with tabs for result types.",
+     "accepts": [
+      "SearchInput",
+      "Tabs"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSearchInput v-model=\"q\" />"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Sidebar with checkboxes, range and select.",
+     "accepts": [
+      "Card",
+      "Checkbox",
+      "RangeSlider",
+      "Select"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Filters\">…</UiCard>"
+    },
+    {
+     "id": "results",
+     "title": "Results",
+     "desc": "Result groups with titles and counts.",
+     "accepts": [
+      "Card",
+      "Chip",
+      "Divider"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard padding=\"none\">…</UiCard>"
+    },
+    {
+     "id": "empty",
+     "title": "Empty state",
+     "desc": "Shown when nothing matches.",
+     "accepts": [
+      "EmptyState"
+     ],
+     "props": [
+      {
+       "name": "content",
+       "type": "VNode",
+       "desc": ""
+      }
+     ],
+     "use": "<UiEmptyState icon=\"search-x\" title=\"No results\" />"
+    }
+   ]
   }
  ]
 }

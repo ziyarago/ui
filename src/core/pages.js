@@ -43,7 +43,13 @@ const T = Object.fromEntries([
   page('PageCheckout', ['header', 'steps', 'items', 'address', 'payment', 'summary'], ['col', 'header', 'steps', ['two', ['items', 'address', 'payment'], ['summary']]]),
   page('PageInbox', ['header', 'filters', 'list', 'thread', 'composer', 'customer'], ['col', 'header', ['wrap', ['filters', 'list'], [['two', ['thread', 'composer'], ['customer']]], 320]]),
   page('PageNotifications', ['header', 'filters', 'feed', 'empty'], ['col', 'header', 'filters', 'feed', 'empty']),
-  page('PageAnalytics', ['header', 'period', 'kpis', 'trend', 'breakdown', 'table'], ['col', 'header', 'period', 'kpis', ['auto', 420, 'trend', 'breakdown'], 'table'])
+  page('PageAnalytics', ['header', 'period', 'kpis', 'trend', 'breakdown', 'table'], ['col', 'header', 'period', 'kpis', ['auto', 420, 'trend', 'breakdown'], 'table']),
+  page('PageCalendar', ['header', 'toolbar', 'grid', 'mini', 'details'], ['col', 'header', 'toolbar', ['two', ['grid'], ['mini', 'details']]]),
+  page('PageKanban', ['header', 'filters', 'board', 'detail'], ['col', 'header', 'filters', ['two', ['board'], ['detail']]]),
+  page('PageBilling', ['header', 'plan', 'usage', 'invoices', 'methods', 'upgrade'], ['col', 'header', ['two', ['plan', 'usage', 'invoices'], ['methods', 'upgrade']]]),
+  page('PageTeam', ['header', 'stats', 'members', 'roles', 'invite'], ['col', 'header', 'stats', ['two', ['members', 'roles'], ['invite']]]),
+  page('PageIntegrations', ['header', 'filters', 'connections', 'keys', 'webhooks'], ['col', 'header', 'filters', 'connections', ['auto', 420, 'keys', 'webhooks']]),
+  page('PageSearch', ['header', 'search', 'filters', 'results', 'empty'], ['col', 'header', 'search', ['wrap', ['filters'], ['results', 'empty'], 260]])
 ]);
 
 T.PageAuth = { slots: ['background', 'logo', 'aside', 'form', 'footer'], render: ({ C, h, props: p, slots: s }) => {

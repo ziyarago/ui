@@ -12,7 +12,7 @@ const NAV = [
   { value: 'user-list', label: 'Users', icon: 'users' },
   { value: 'settings', label: 'Settings', icon: 'settings' },
 ]
-const NAV_OF: Record<string, string> = { detail: 'catalog', form: 'catalog', profile: 'user-list', order: 'bookings', account: 'settings', pricing: 'settings', patterns: 'dashboard', onboarding: 'dashboard', checkout: 'bookings', inbox: 'crm', notifications: 'dashboard', analytics: 'dashboard' }
+const NAV_OF: Record<string, string> = { detail: 'catalog', form: 'catalog', profile: 'user-list', order: 'bookings', account: 'settings', pricing: 'settings', patterns: 'dashboard', onboarding: 'dashboard', checkout: 'bookings', inbox: 'crm', notifications: 'dashboard', analytics: 'dashboard', calendar: 'bookings', kanban: 'crm', billing: 'settings', team: 'user-list', integrations: 'settings', search: 'dashboard' }
 const router = useRouter()
 const current = computed(() => NAV_OF[props.page.route] ?? props.page.route)
 const go = (v: string) => { if (TEMPLATES.pages.some(p => p.route === v)) router.push(`/docs/templates/${v}`) }
