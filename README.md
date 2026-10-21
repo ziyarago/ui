@@ -1,9 +1,30 @@
 # @ziyarago/ui
 
-Glass design system for ZiyaraGo products (Umrah / Hajj). Vue 3 **and** React adapters over one framework-neutral core. Reference: `ziyarago/glass-ui-kit`.
+[![npm](https://img.shields.io/npm/v/@ziyarago/ui?color=c89b5e)](https://www.npmjs.com/package/@ziyarago/ui) [![license](https://img.shields.io/npm/l/@ziyarago/ui?color=555)](LICENSE) [![docs](https://img.shields.io/badge/docs-ziyara.vip-c89b5e)](https://ziyara.vip)
+
+<p align="center"><a href="https://ziyara.vip"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-dark.png" alt="ziyarago/ui: glass design system for Vue, Nuxt and React" width="100%"></a></p>
+
+Glass design system for Vue 3, Nuxt and React: 182 components, 17 page templates, OKLCH tokens, dark and light, RTL and Arabic, 16 interface languages. One framework-neutral core with thin adapters. Built for Umrah and Hajj products, usable anywhere.
+
+<table>
+  <tr>
+    <td width="50%"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-light.png" alt="Light theme"><br><sub>Light and dark themes</sub></td>
+    <td width="50%"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-rtl.png" alt="Arabic RTL"><br><sub>Arabic, RTL mirrored</sub></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/components.png" alt="Component catalog"><br><sub>182 components with props and live examples</sub></td>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/templates.png" alt="Page templates"><br><sub>17 page templates</sub></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/button-docs.png" alt="Props docs"><br><sub>Every prop and variant documented</sub></td>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/backgrounds.png" alt="Animated backgrounds"><br><sub>Animated backgrounds and gradient cards</sub></td>
+  </tr>
+</table>
+
+Files:
 
 ```
-src/core/        components.js … components6.js, pages.js — 160+ components and 16 page templates as { state, slots, render(ctx) }; no framework imports
+src/core/        components*.js, pages.js: 182 components and 17 page templates as { state, slots, render(ctx) }; no framework imports
 src/vue/         Vue 3 adapter  (UiButton, UiAppShell … + install(app))
 src/react/       React adapter  (same names)
 src/theme.js     useUiTheme(): theme · palette · dir → <html> attributes, persisted

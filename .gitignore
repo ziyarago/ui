@@ -20,3 +20,5 @@ packages/mcp/node_modules/
 
 # private ops notes (server addresses, DNS, runbooks): never commit
 docs-private/
+
+pro-private/
