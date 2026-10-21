@@ -1,3 +1,9 @@
+## [0.14.0](https://github.com/ziyarago/ui/compare/v0.13.0...v0.14.0) (2026-10-21)
+
+### Features
+
+* plugin API (registerComponents, defineUiComponents, registerMeta, resolver and Nuxt plugins option) ([ab8b844](https://github.com/ziyarago/ui/commit/ab8b8442a9968cfc0c978d9a5d4c3dc22b28b467))
+
 ## [0.13.0](https://github.com/ziyarago/ui/compare/v0.12.0...v0.13.0) (2026-10-21)
 
 ### Features
