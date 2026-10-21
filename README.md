@@ -4,7 +4,7 @@
 
 <p align="center"><a href="https://ziyara.vip"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-dark.png" alt="ziyarago/ui: glass design system for Vue, Nuxt and React" width="100%"></a></p>
 
-Glass design system for Vue 3, Nuxt and React: 102 free components and 6 page templates (the Pro package adds 106 components and 33 templates), OKLCH tokens, dark and light, RTL and Arabic, 16 interface languages. One framework-neutral core with thin adapters. Built for Umrah and Hajj products, usable anywhere.
+Glass design system for Vue 3, Nuxt and React: 102 free components and 6 page templates (the Pro package adds 110 components and 33 templates), OKLCH tokens, dark and light, RTL and Arabic, 16 interface languages. One framework-neutral core with thin adapters. Built for Umrah and Hajj products, usable anywhere.
 
 <table>
   <tr>
@@ -12,7 +12,7 @@ Glass design system for Vue 3, Nuxt and React: 102 free components and 6 page te
     <td width="50%"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-rtl.png" alt="Arabic RTL"><br><sub>Arabic, RTL mirrored</sub></td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/components.png" alt="Component catalog"><br><sub>208 components documented with props and live examples (102 free, 106 Pro)</sub></td>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/components.png" alt="Component catalog"><br><sub>212 components documented with props and live examples (102 free, 110 Pro)</sub></td>
     <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/templates.png" alt="Page templates"><br><sub>page templates: 6 free, 33 Pro</sub></td>
   </tr>
   <tr>

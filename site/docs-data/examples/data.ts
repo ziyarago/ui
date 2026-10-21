@@ -17,6 +17,57 @@ const bookings = [
   { id: 4, code: 'ZG-1045', guest: 'Maryam Said', hotel: 'Swissotel Makkah', nights: 10, total: '9,900' },
 ]
 
+// Sample data of the chart examples (also used by /docs/charts). Deterministic, so server and client render the same.
+export type Pt = { x: string | number | Date; y: number | null }
+export type Series = { key: string; label: string; values: Pt[]; tone?: 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'; dashed?: boolean }
+
+const rng = (seed: number) => () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296 }
+const iso = (start: string, i: number) => new Date(Date.parse(start + 'T00:00:00Z') + i * 86400000).toISOString().slice(0, 10)
+
+export const week = (start = '2026-10-12'): Pt[] => [41, 52, 48, 63, 71, 88, 79].map((y, i) => ({ x: iso(start, i), y }))
+export const twoWeeks: Series[] = [
+  { key: 'this', label: 'This week', tone: 'brand', values: week('2026-10-12') },
+  { key: 'prev', label: 'Previous week', tone: 'neutral', dashed: true, values: [36, 47, 51, 55, 60, 74, 82].map((y, i) => ({ x: iso('2026-10-12', i), y })) },
+]
+
+/** 90 days of revenue in UZS (tens of millions). */
+export const revenue90 = (): Series[] => {
+  const r = rng(7)
+  return [{ key: 'rev', label: 'Revenue', tone: 'brand', values: Array.from({ length: 90 }, (_, i) => ({ x: iso('2026-07-24', i), y: Math.round((42 + 14 * Math.sin(i / 6) + (i % 7 >= 5 ? 16 : 0) + i * 0.18 + r() * 9) * 1e6) })) }]
+}
+
+export const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0') + ':00')
+export const orders24 = (): Series[] => {
+  const r = rng(11), shape = [1, 1, 0, 0, 0, 1, 3, 7, 12, 15, 18, 26, 31, 28, 21, 17, 19, 24, 33, 38, 29, 18, 9, 4]
+  return [{ key: 'orders', label: 'Orders', tone: 'brand', values: hours.map((x, i) => ({ x, y: Math.round(shape[i] * (0.85 + r() * 0.3)) })) }]
+}
+
+export const branches: Series[] = [
+  { key: 'cash', label: 'Cash', tone: 'brand', values: [['Tashkent', 124], ['Samarkand', 86], ['Bukhara', 64], ['Namangan', 52], ['Khiva', 31]].map(([x, y]) => ({ x: x as string, y: y as number })) },
+  { key: 'card', label: 'Card', tone: 'info', values: [['Tashkent', 212], ['Samarkand', 118], ['Bukhara', 97], ['Namangan', 70], ['Khiva', 44]].map(([x, y]) => ({ x: x as string, y: y as number })) },
+]
+
+export const channels = [
+  { key: 'direct', label: 'Direct', value: 48200000, tone: 'brand' },
+  { key: 'market', label: 'Marketplace', value: 31400000, tone: 'info' },
+  { key: 'partners', label: 'Partners', value: 17900000, tone: 'success' },
+  { key: 'social', label: 'Social', value: 9300000, tone: 'warning' },
+] as const
+
+export const days365 = (): Series[] => {
+  const r = rng(3)
+  return [{ key: 'visits', label: 'Visits', values: Array.from({ length: 365 }, (_, i) => ({ x: iso('2026-01-01', i), y: Math.round(1200 + 500 * Math.sin(i / 58) + i * 2.2 + r() * 260) })) }]
+}
+
+export const huge: Series[] = [{ key: 'gmv', label: 'Gross volume', tone: 'brand', values: ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06'].map((x, i) => ({ x, y: [1.2e12, 1.9e12, 2.4e12, 3.1e12, 4.8e12, 6.5e12][i] })) }]
+
+export const negatives: Series[] = [{ key: 'net', label: 'Net cash flow', tone: 'success', values: [38, 12, -24, -52, -18, 27, 44, 61, -9, -31, 16, 55].map((y, i) => ({ x: iso('2026-01-05', i * 7), y })) }]
+
+export const gaps: Series[] = [
+  { key: 'a', label: 'Branch A', tone: 'brand', values: [34, 41, null, null, 52, 58, 47, null, 63, 70].map((y, i) => ({ x: iso('2026-09-01', i), y })) },
+  { key: 'b', label: 'Branch B', tone: 'info', values: [22, null, 30, 35, 31, null, 44, 41, 39, 48].map((y, i) => ({ x: iso('2026-09-01', i), y })) },
+]
+
 const examples: Example[] = [
   {
     name: 'Card',
@@ -216,6 +267,65 @@ const examples: Example[] = [
     description: 'Card shell for a chart with a title, a subtitle and an optional overflow menu.',
     variants: [
       { label: 'With chart', width: '420px', props: { title: 'Weekly bookings', subtitle: 'Last 12 weeks', menu: ['Export', 'Share', 'Delete'] }, text: 'Chart goes here' },
+    ],
+  },
+  {
+    name: 'LineChart',
+    description: 'Line chart for time series: several series (a dashed one for the previous period), a localized time axis with automatic label step, nice value ticks, gaps for null values, negative values, a tooltip on hover and tap, and keyboard navigation. Empty data shows the empty state.',
+    variants: [
+      { label: 'Two series, one dashed', width: '680px', props: { series: twoWeeks, label: 'Orders per day' } },
+      { label: '90 days of revenue (UZS)', width: '680px', props: { series: revenue90(), unit: 'currency', currency: 'UZS', label: 'Revenue', size: 'lg' } },
+      { label: 'Empty series', width: '680px', props: { series: [] } },
+      { label: 'Only null values', width: '680px', props: { series: [{ key: 'a', label: 'Orders', values: [{ x: '2026-10-12', y: null }, { x: '2026-10-13', y: null }] }], emptyText: 'Nothing sold yet' } },
+      { label: 'Single point', width: '680px', props: { series: [{ key: 'a', label: 'Orders', tone: 'brand', values: [{ x: '2026-10-12', y: 42 }] }] } },
+      { label: 'All values equal', width: '680px', props: { series: [{ key: 'a', label: 'Orders', values: week().map(p => ({ x: p.x, y: 5 })) }] } },
+      { label: 'Negative values', width: '680px', props: { series: negatives, unit: 'currency', currency: 'USD' } },
+      { label: 'Gaps (null)', width: '680px', props: { series: gaps } },
+      { label: '365 points', width: '680px', props: { series: days365(), showPoints: false } },
+      { label: 'Huge numbers', width: '680px', props: { series: huge, unit: 'currency', currency: 'USD' } },
+      { label: 'Arabic, right to left', width: '680px', props: { locale: 'ar', series: [{ key: 'a', label: 'المبيعات', tone: 'brand', values: week().map(p => ({ x: p.x, y: (p.y as number) * 1000 })) }, { key: 'b', label: 'الأسبوع السابق', tone: 'neutral', dashed: true, values: week().map((p, i) => ({ x: p.x, y: [31, 40, 44, 52, 58, 70, 66][i] * 1000 })) }], unit: 'currency', currency: 'SAR' } },
+      { label: 'Loading', width: '680px', props: { series: [], loading: true } },
+      { label: 'Sizes', width: '680px', items: ['xs', 'sm', 'md', 'lg'].map(size => ({ props: { series: twoWeeks, size } })) },
+    ],
+  },
+  {
+    name: 'AreaChart',
+    description: 'Line chart with a gradient fill built from the series color; same data, axes, gaps, tooltip and keyboard behavior as LineChart.',
+    variants: [
+      { label: 'Revenue, 90 days (UZS)', width: '680px', props: { series: revenue90(), unit: 'currency', currency: 'UZS', label: 'Revenue', size: 'lg' } },
+      { label: 'Two series', width: '680px', props: { series: twoWeeks } },
+      { label: 'Gaps (null)', width: '680px', props: { series: gaps } },
+      { label: 'Negative values', width: '680px', props: { series: negatives } },
+      { label: 'Empty', width: '680px', props: { series: [] } },
+      { label: 'Loading', width: '680px', props: { series: [], loading: true } },
+    ],
+  },
+  {
+    name: 'BarChart',
+    description: 'Vertical or horizontal bar chart, grouped or stacked: orders by hour, revenue per branch. Zero baseline, negative values, text legend with toggles, tooltip and keyboard navigation.',
+    variants: [
+      { label: '24 hours of orders', width: '680px', props: { series: orders24(), label: 'Orders by hour' } },
+      { label: 'Revenue per branch (grouped)', width: '680px', props: { series: branches, unit: 'currency', currency: 'USD' } },
+      { label: 'Stacked', width: '680px', props: { series: branches, stacked: true, unit: 'currency', currency: 'USD' } },
+      { label: 'Horizontal', width: '680px', props: { series: branches, orientation: 'horizontal', unit: 'currency', currency: 'USD' } },
+      { label: 'Days of the week', width: '680px', props: { series: [{ key: 'w', label: 'Bookings', tone: 'success', values: week().map(p => ({ x: p.x, y: p.y })) }] } },
+      { label: 'Negative values', width: '680px', props: { series: negatives } },
+      { label: 'All zeros', width: '680px', props: { series: [{ key: 'a', label: 'Orders', values: hours.slice(0, 6).map(x => ({ x, y: 0 })) }] } },
+      { label: 'Empty', width: '680px', props: { series: [] } },
+      { label: 'Loading', width: '680px', props: { series: [], loading: true } },
+    ],
+  },
+  {
+    name: 'DonutChart',
+    description: 'Donut chart of shares (sales channels, payment methods, plans) with a text legend, the total in the centre formatted like the axes, and a legend toggle.',
+    variants: [
+      { label: 'Four shares (UZS)', width: '680px', props: { data: channels, unit: 'currency', currency: 'UZS', label: 'Sales by channel' } },
+      { label: 'Percent', width: '680px', props: { data: [{ key: 'a', label: 'Paid', value: 72 }, { key: 'b', label: 'Pending', value: 21 }, { key: 'c', label: 'Failed', value: 7 }], unit: 'percent' } },
+      { label: 'Single slice', width: '680px', props: { data: [{ key: 'a', label: 'Direct', value: 120 }] } },
+      { label: 'All zeros', width: '680px', props: { data: [{ key: 'a', label: 'Direct', value: 0 }, { key: 'b', label: 'Partners', value: 0 }] } },
+      { label: 'Empty', width: '680px', props: { data: [] } },
+      { label: 'Loading', width: '680px', props: { data: [], loading: true } },
+      { label: 'Sizes', width: '680px', items: ['xs', 'sm', 'md'].map(size => ({ props: { data: channels, size, legend: false } })) },
     ],
   },
   {

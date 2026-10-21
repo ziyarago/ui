@@ -2,13 +2,13 @@
 import { isPro } from '../../src/meta/tiers.js'
 import { GROUPS } from '~/docs-data/groups'
 import { TEMPLATES } from '~/docs-data/templates'
-useSeo({ title: '@ziyarago/ui — Vue, Nuxt and React UI components and page templates', description: 'Glass design system: 102 free components and 6 page templates for Vue 3, Nuxt and React, with 106 more components and 33 templates in Pro. OKLCH tokens, dark and light themes, RTL and Arabic, AI-ready catalog.' })
+useSeo({ title: '@ziyarago/ui — Vue, Nuxt and React UI components and page templates', description: 'Glass design system: 102 free components and 6 page templates for Vue 3, Nuxt and React, with 110 more components and 33 templates in Pro. OKLCH tokens, dark and light themes, RTL and Arabic, AI-ready catalog.' })
 
 const { siteUrl, version } = useRuntimeConfig().public
 useHead({ script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
   { '@type': 'Organization', '@id': siteUrl + '/#org', name: 'ZiyaraGo', url: 'https://ziyarago.com', logo: siteUrl + '/favicon.png' },
   { '@type': 'WebSite', '@id': siteUrl + '/#site', url: siteUrl + '/', name: '@ziyarago/ui', publisher: { '@id': siteUrl + '/#org' }, inLanguage: 'en' },
-  { '@type': 'SoftwareSourceCode', name: '@ziyarago/ui', description: 'Glass design system for Vue 3, Nuxt and React: 102 free components and 6 page templates (106 components and 33 templates more in Pro).', codeRepository: 'https://github.com/ziyarago/ui', programmingLanguage: 'JavaScript', license: 'https://opensource.org/licenses/MIT', version, publisher: { '@id': siteUrl + '/#org' } },
+  { '@type': 'SoftwareSourceCode', name: '@ziyarago/ui', description: 'Glass design system for Vue 3, Nuxt and React: 102 free components and 6 page templates (110 components and 33 templates more in Pro).', codeRepository: 'https://github.com/ziyarago/ui', programmingLanguage: 'JavaScript', license: 'https://opensource.org/licenses/MIT', version, publisher: { '@id': siteUrl + '/#org' } },
 ] }) }] })
 const total = GROUPS.reduce((n, g) => n + g.names.filter(x => !isPro(x)).length, 0)
 const proTotal = GROUPS.reduce((n, g) => n + g.names.filter(isPro).length, 0)
