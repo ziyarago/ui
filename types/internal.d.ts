@@ -28,3 +28,5 @@ export function defineMessages(component: string, messages: Record<string, Recor
 export function registerComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, import('./core').ComponentDefinition>;
 export const components: Record<string, import('./core').ComponentDefinition>;
 export const BOOL_PROPS: Set<string>;
+/** Quoted CSS url() for background-image values. */
+export function cssUrl(url: string): string;
