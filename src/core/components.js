@@ -59,6 +59,33 @@ const fmt = {
   sar: n => (n == null || Number.isNaN(n)) ? '—' : 'SAR\u00a0' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '\u2009'),
   dur: (s, u) => { if (s == null || Number.isNaN(+s)) return '—'; s = Math.max(0, Math.round(+s)); const m = Math.floor(s / 60), r = s % 60; return `${m} ${(u && u.m) || 'm'} ${String(r).padStart(2, '0')} ${(u && u.s) || 's'}`; },
 };
+// TopNav overflow: items that do not fit move into a trailing "More" menu. Measured in the browser after render (ResizeObserver on the header);
+// item widths are cached from the render where every item is visible, so hidden items need no measuring. SSR renders every item.
+const tn = new WeakMap();
+const tnMeasure = (el, ctx) => {
+  if (!el || !ctx.collapse || typeof ResizeObserver === 'undefined') return;
+  let r = tn.get(el);
+  if (!r) { r = { w: {}, sig: '' }; r.ro = new ResizeObserver(() => r.run()); tn.set(el, r); if (el.parentElement) r.ro.observe(el.parentElement); }
+  r.ctx = ctx;
+  r.run = () => {
+    const { items, more, set, state } = r.ctx, kids = [...el.children], header = el.parentElement;
+    if (!header || !items.length) return;
+    const sig = items.map(i => i.value).join('|');
+    if (sig !== r.sig) { r.sig = sig; r.w = {}; }
+    const n = items.length, shownN = kids.length - (more ? 1 : 0);
+    for (let i = 0; i < shownN; i++) r.w[items[i].value] = kids[i].offsetWidth;
+    if (more) r.w.__more = kids[kids.length - 1].offsetWidth;
+    if (items.some(i => r.w[i.value] == null)) { if (state.fit != null) set({ fit: null }); return; }
+    const hs = getComputedStyle(header), es = getComputedStyle(el), bar = header.querySelector('.zg-topnav__brand'), act = header.querySelector('.zg-topnav__actions');
+    const gap = parseFloat(hs.columnGap) || 0, ig = parseFloat(es.columnGap) || 0;
+    const avail = header.clientWidth - parseFloat(hs.paddingLeft) - parseFloat(hs.paddingRight) - (bar ? bar.offsetWidth : 0) - (act ? act.offsetWidth : 0) - 2 * gap - parseFloat(es.paddingLeft) - parseFloat(es.paddingRight);
+    const total = items.reduce((a, i) => a + r.w[i.value], 0) + ig * (n - 1);
+    let want = n;
+    if (total > avail) { let acc = r.w.__more || 56, k = 0; for (const i of items) { const need = r.w[i.value] + ig; if (acc + need <= avail) { acc += need; k++; } else break; } want = k; }
+    if (want !== (state.fit == null ? n : state.fit)) set({ fit: want >= n ? null : want });
+  };
+  r.run();
+};
 const nav = (h, it, cur, onChange, collapsed) => h('button', { key: it.value, class: 'zg-navitem', 'aria-current': it.value === cur ? 'page' : undefined, title: collapsed ? it.label : undefined, onClick: () => onChange && onChange(it.value) },
   it.icon ? icon(h, it.icon, 18) : null, h('span', null, it.label), it.count ? h('span', { class: 'zg-navitem__count' }, it.count) : null);
 
@@ -116,7 +143,29 @@ export const components = {
     return h('div', { class: 'zg-table-wrap', tabIndex: 0 }, h('table', { class: 'zg-table' }, h('thead', null, h('tr', null, p.onSelect ? h('th', { style: { width: '44px' } }, h('button', { type: 'button', role: 'checkbox', class: 'zg-check', 'aria-checked': String(!!all), 'aria-label': (p.labels && p.labels.selectAll) || t('DataTable', 'selectAll'), onClick: () => p.onSelect(all ? [] : rows.map(r => r.id)) }, h('span', { class: 'zg-check__box' }, all ? icon(h, 'check', 14) : null))) : null, ...cols.map(th))),
       h('tbody', null, ...(rows.length ? rows.map((r, ri) => h('tr', { key: r.id, 'aria-selected': sel.includes(r.id) ? 'true' : undefined, class: p.onRowClick ? 'zg-tr--click' : undefined, onClick: p.onRowClick ? () => p.onRowClick(r, ri) : undefined }, p.onSelect ? h('td', null, h('button', { type: 'button', role: 'checkbox', class: 'zg-check', 'aria-checked': String(sel.includes(r.id)), 'aria-label': (p.labels && p.labels.selectRow) || t('DataTable', 'selectRow'), onClick: () => p.onSelect(sel.includes(r.id) ? sel.filter(i => i !== r.id) : [...sel, r.id]) }, h('span', { class: 'zg-check__box' }, sel.includes(r.id) ? icon(h, 'check', 14) : null))) : null, ...cols.map(c => h('td', { key: c.key, class: c.num ? 'num' : undefined, style: cs(c) }, c.render ? c.render(r[c.key], r, h) : (r[c.key] ?? '—'))))) : [h('tr', { key: 'e' }, h('td', { colSpan: cols.length + 1 }, h('div', { class: 'zg-empty' }, slots.empty || p.empty || '—')))])))); } },
   Timeline: { render: ({ h, props: p }) => h('div', { class: 'zg-timeline' }, ...(p.items || []).map((it, i, a) => h('div', { key: i, class: 'zg-tl' }, h('div', { class: 'zg-tl__rail' }, h('span', { class: 'zg-tl__dot' }), i < a.length - 1 ? h('span', { class: 'zg-tl__line' }) : null), h('div', { class: 'zg-tl__body' }, h('b', null, it.title), it.text ? h('span', null, it.text) : null, h('span', { class: 'zg-tl__time' }, it.time))))) },
-  TopNav: { render: ({ h, props: p, slots }) => h('header', { class: 'zg-topnav' }, h('div', { class: 'zg-topnav__brand' }, p.brand), h('nav', { class: 'zg-topnav__items', 'aria-label': t('TopNav', 'label') }, ...(p.items || []).map(it => nav(h, it, p.value, p.onChange))), h('div', { class: 'zg-topnav__actions' }, slots.actions || p.actions || null)) },
+  TopNav: { state: { open: null, fit: null }, render: ({ h, props: p, slots, state, set }) => {
+    const items = p.items || [], collapse = p.overflow !== 'none';
+    const fit = collapse && state.fit != null && state.fit < items.length ? state.fit : items.length;
+    const shown = items.slice(0, fit), rest = items.slice(fit);
+    const more = rest.length ? { value: '__more', label: p.moreLabel || t('TopNav', 'more'), icon: 'ellipsis', children: rest.flatMap(it => it.children && it.children.length ? [{ heading: it.label }, ...it.children] : [it]) } : null;
+    const close = () => set({ open: null });
+    const entry = it => {
+      const kids = it.children;
+      if (!kids || !kids.length) return nav(h, it, p.value, p.onChange);
+      const open = state.open === it.value, active = it.value !== '__more' ? kids.some(c => c.value === p.value) : rest.some(r => r.value === p.value || (r.children || []).some(c => c.value === p.value));
+      const flat = kids.map(c => ({ value: c.value, disabled: c.separator || c.heading || c.disabled }));
+      return h('div', { key: it.value, class: 'zg-dd zg-topnav__dd' },
+        h('button', { type: 'button', class: 'zg-navitem', 'aria-haspopup': 'menu', 'aria-expanded': String(open), 'aria-current': active ? 'page' : undefined, onClick: () => set({ open: open ? null : it.value }), onKeydown: openKeys(open, () => set({ open: it.value })) },
+          it.icon ? icon(h, it.icon, 18) : null, it.value === '__more' ? h('span', { class: 'zg-sr' }, it.label) : h('span', null, it.label), it.count ? h('span', { class: 'zg-navitem__count' }, it.count) : null, it.value === '__more' ? null : icon(h, 'chevron-down', 14)),
+        open ? h('div', { class: 'zg-menu', role: 'menu', 'data-zg-dd': '', ref: ddRef(close, { focus: true }), onKeydown: listKeys('[role=menuitem]', { wrap: true, onTab: e => { const tr = trigger(e.currentTarget); tr && tr.focus(); close(); } }) },
+          ...kids.map((c, i) => c.separator ? h('div', { key: 's' + i, class: 'zg-menu__sep', role: 'separator' }) : c.heading ? h('div', { key: 'h' + i, class: 'zg-menu__h', role: 'presentation' }, c.heading)
+            : h('button', { key: c.value, type: 'button', role: 'menuitem', tabIndex: tabIdx(flat, x => x.value === p.value)(i), disabled: c.disabled, 'aria-disabled': c.disabled ? 'true' : undefined, 'aria-current': c.value === p.value ? 'page' : undefined, class: 'zg-menu__i', onClick: e => { toTrigger(e); close(); p.onChange && p.onChange(c.value); } },
+              c.icon ? icon(h, c.icon, 16) : null, h('span', null, c.label), c.count ? h('span', { class: 'zg-navitem__count' }, c.count) : null))) : null);
+    };
+    const measure = el => tnMeasure(el, { items, more, set, state, collapse });
+    return h('header', { class: 'zg-topnav' }, h('div', { class: 'zg-topnav__brand' }, p.brand),
+      h('nav', { class: 'zg-topnav__items', 'data-overflow': collapse ? 'menu' : 'none', 'aria-label': t('TopNav', 'label'), ref: measure }, ...shown.map(entry), more ? entry(more) : null),
+      h('div', { class: 'zg-topnav__actions' }, slots.actions || p.actions || null)); } },
   SideNav: { render: ({ h, props: p, slots }) => h('aside', { class: cx('zg-sidenav', p.collapsed && 'zg-sidenav--collapsed') }, h('div', { class: 'zg-sidenav__brand' }, p.brand), ...(p.items || []).map(it => it.group ? h('div', { key: it.group, class: 'zg-sidenav__group', style: p.collapsed ? { display: 'none' } : undefined }, it.group) : nav(h, it, p.value, p.onChange, p.collapsed)), h('div', { class: 'zg-sidenav__sp' }), slots.footer || p.footer || null,
     (p.onToggle || p.collapsible) ? h('button', { type: 'button', class: 'zg-navitem', onClick: p.onToggle, 'aria-label': t('SideNav', 'toggle') }, icon(h, p.collapsed ? 'panel-left-open' : 'panel-left-close', 18), h('span', null, p.collapseLabel || t('SideNav', 'collapse'))) : null) },
   AppShell: { state: { collapsed: false }, render: ({ C, h, props: p, children, slots, state, set }) => {

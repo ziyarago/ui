@@ -120,3 +120,9 @@
 .zg-tip--left:hover::before,.zg-tip--right:hover::before{top:0;bottom:0;height:auto;width:10px}
 .zg-tip--left:hover::before{left:auto;right:100%}.zg-tip--right:hover::before{right:auto;left:100%}
 .zg-tip[data-tip-off]::after{opacity:0!important;pointer-events:none!important}.zg-tip[data-tip-off]::before{display:none}
+/* TopNav: no edge fade; items that do not fit move into a "More" menu, sub-menus open under their item */
+.zg-topnav__items{overflow:visible;flex-wrap:nowrap}.zg-topnav__items[data-overflow="none"]{overflow-x:auto}
+.zg-topnav__dd{display:flex}.zg-topnav__dd>.zg-navitem{height:100%}.zg-topnav__dd .zg-menu{top:calc(100% + 10px);min-width:220px}
+.zg-topnav__dd>.zg-navitem[aria-expanded="true"] .zg-icon:last-child:not(:first-child){transform:rotate(180deg)}
+.zg-menu__i[aria-current="page"]{background:var(--zg-s2);font-weight:700}.zg-menu__i .zg-navitem__count{margin-inline-start:auto}
+.zg-menu__h{padding:8px 12px 4px;font:600 12px var(--zg-font);letter-spacing:.06em;text-transform:uppercase;color:var(--zg-text-3)}
