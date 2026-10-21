@@ -45,8 +45,10 @@
 /* CommandPalette active row, dialog focus */
 .zg-menu__i.is-active,.zg-menu__i[aria-selected="true"]{background:var(--zg-s2)}
 .zg-modal:focus,.zg-sheet:focus,.zg-fsd:focus,.zg-saver:focus{outline:0}
+/* auth page templates fill the viewport */
+.zg-split2{min-height:100vh;min-height:100dvh}
 /* AuthShowcase: photo (dark framed card), light (gradient card + proof pill + glass caption), tint (coloured panel, pill fields) */
-.zg-ash{min-height:100%;padding:clamp(12px,3vw,40px);display:grid;place-items:center;--ash-r:28px;--ash-acc:var(--zg-brand)}
+.zg-ash{min-height:100vh;min-height:100dvh;padding:clamp(12px,3vw,40px);display:grid;place-items:center;--ash-r:28px;--ash-acc:var(--zg-brand)}
 .zg-ash--tint{--ash-acc:oklch(.7 .13 215)}
 .zg-ash__title{margin:0;font:300 clamp(28px,3.4vw,40px)/1.1 var(--zg-font);letter-spacing:-.03em}
 .zg-ash__sub{margin:10px 0 0;color:var(--zg-text-2);line-height:1.55}
@@ -94,3 +96,17 @@
 
 /* page templates: sticky region */
 .zg-pg__two--sticky{align-items:stretch}.zg-pg__stick{position:sticky;inset-block-start:16px;align-self:flex-start;width:100%}
+
+/* QiblaCompass */
+.zg-qb{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:100%;direction:ltr}
+.zg-qb__svg{width:100%;height:auto;display:block}
+.zg-qb__ring{fill:var(--zg-s1);stroke:var(--zg-stroke);stroke-width:1}
+.zg-qb__tk{stroke:var(--zg-text-3);stroke-width:1;stroke-linecap:round}.zg-qb__tk--m{stroke:var(--zg-text-2);stroke-width:1.8}
+.zg-qb__n{fill:var(--zg-red)}.zg-qb__ln{stroke:var(--zg-brand);stroke-width:3;stroke-linecap:round}
+.zg-qb__kb{fill:var(--zg-bg);stroke:var(--zg-brand);stroke-width:2}.zg-qb__kg{fill:var(--zg-brand)}
+.zg-qb__hub{fill:var(--zg-brand)}
+.zg-qb__dial,.zg-qb__ptr{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.zg-qb__txt{display:flex;flex-direction:column;align-items:center;line-height:1.2;color:var(--zg-text-2);font-size:calc(13px*var(--dz,1))}
+.zg-qb__txt b{font-size:calc(22px*var(--dz,1));font-weight:600;color:var(--zg-text-1)}.zg-qb__txt small{color:var(--zg-text-3)}
+/* Numbers: tabular figures with a plain zero (no slashed or dotted zero) in KPI values, tables and code cells */
+.zg-num,.zg-mono,.zg-kpi__value,.zg-table .num{font-feature-settings:"zero" 0,"tnum" 1}

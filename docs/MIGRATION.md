@@ -45,6 +45,8 @@ npm i @ziyarago/ui
 
 You can later remove `@floating-ui/vue`, `class-variance-authority` and (when no page imports it) `tailwind-merge` from the UI layer; the pages themselves still use `clsx`, `lucide-vue-next` and Tailwind.
 
+**CSP warning:** icons are fetched at runtime. Under `connect-src 'self'` they disappear unless you self-host them as shown below (`setIconBase`). Do this before shipping to a server with a strict CSP.
+
 Keep `lucide-vue-next`. The new kit takes icons by NAME (`icon="trash-2"`) and fetches Lucide SVGs from `unpkg.com/lucide-static@0.460.0/icons/` at runtime; the compat layer converts your Lucide components to names for you (`iconName()`), including the 9 icons that lucide-vue-next 1.x renamed (`funnel` to `filter`, `circle-question-mark` to `circle-help`, `text-align-start` to `align-left`, ...). To avoid the CDN (offline, CSP, flash on first paint) self-host once:
 
 ```bash
@@ -58,7 +60,7 @@ setIconBase("/lucide/");
 
 ## 3. CSS
 
-In `src/styles/main.css`, directly after Tailwind, import the kit INTO the `components` layer (so Tailwind utilities such as `w-44`, `p-0`, `h-20`, `bg-red-500` on kit components still win, and the Google Fonts `@import` survives):
+In `src/styles/main.css`, directly after Tailwind, import the kit INTO the `components` layer (so Tailwind utilities such as `w-44`, `p-0`, `h-20`, `bg-red-500` on kit components still win, and the bundled `@font-face` rules stay valid inside the layer; since 0.7 there is no remote `@import` in `style.css`):
 
 ```css
 @import "tailwindcss";

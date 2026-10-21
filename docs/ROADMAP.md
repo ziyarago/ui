@@ -39,6 +39,8 @@ Rules for every page: composed from existing components (a missing small compone
 
 ## Now
 
+- **Bundled icons.** Lucide icons are fetched from a CDN by default and break under a strict CSP. Plan: an `@ziyarago/ui/icons` entry with the used icons bundled, no network.
+
 - **Per-component tree-shaking and smaller bundles.** The Vue, Nuxt and React adapters build every component at import time, so the Vue demo bundle is about 150 KB even when a page uses three components.
 - **Map component fixes.** `UiMap` has known gaps in panning, markers and SSR behaviour that we are fixing before recommending it for production.
 - **Accessibility audit with axe.** An automated axe run over the docs pages and component previews, with the results published on the Accessibility page.

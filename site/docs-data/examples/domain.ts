@@ -79,6 +79,15 @@ const examples: Example[] = [
     ],
   },
   {
+    name: 'QiblaCompass',
+    description: 'Compass dial with a Kaaba marker for the Qibla bearing. heading turns the dial against the device direction; size takes xs to xl or a number of px.',
+    variants: [
+      { label: 'Tashkent', width: '260px', props: { bearing: 248, distance: '3 960 km to the Kaaba' } },
+      { label: 'Device heading 90', width: '260px', props: { bearing: 248, heading: 90 } },
+      { label: 'Small', width: '260px', props: { bearing: 118, size: 'sm' } },
+    ],
+  },
+  {
     name: 'RamadanTracker',
     description: 'Thirty-day Ramadan grid that marks past days, the current day and the last ten nights. The size prop (xs, sm, md, lg, xl) scales padding, text and avatar size.',
     variants: [

@@ -7,6 +7,19 @@ const sp = v => (typeof v === 'number' ? v + 'px' : v);
 const stack = (dir) => ({ render: ({ h, props: p, children }) => h(p.as || 'div', { class: 'zg-stack', style: { flexDirection: dir, gap: sp(p.gap ?? 12), alignItems: p.align, justifyContent: p.justify, flexWrap: p.wrap ? 'wrap' : undefined, ...(p.style || {}) } }, ...children) });
 
 export const more7 = {
+  QiblaCompass: { render: ({ h, props: p }) => {
+    const px = { xs: 120, sm: 160, md: 200, lg: 250, xl: 300 }[p.size] || (Number(p.size) > 0 ? Number(p.size) : 200), norm = v => ((Number(v) || 0) % 360 + 360) % 360, b = norm(p.bearing), hd = norm(p.heading), deg = Math.round(b), ticks = [];
+    for (let i = 0; i < 72; i++) { const major = i % 9 === 0, a = i * 5 * Math.PI / 180, r1 = 92, r2 = major ? 80 : i % 3 ? 87 : 84; ticks.push(h('line', { key: i, class: major ? 'zg-qb__tk zg-qb__tk--m' : 'zg-qb__tk', x1: +(100 + Math.sin(a) * r1).toFixed(2), y1: +(100 - Math.cos(a) * r1).toFixed(2), x2: +(100 + Math.sin(a) * r2).toFixed(2), y2: +(100 - Math.cos(a) * r2).toFixed(2) })); }
+    return h('div', { class: 'zg-qb zg-dm', role: 'img', 'aria-label': t('QiblaCompass', 'label', { deg }), style: { width: px + 'px' } },
+      h('svg', { class: 'zg-qb__svg', viewBox: '0 0 200 200', 'aria-hidden': 'true', focusable: 'false' },
+        h('circle', { class: 'zg-qb__ring', cx: 100, cy: 100, r: 98 }),
+        h('g', { class: 'zg-qb__dial', transform: `rotate(${-hd} 100 100)` }, ...ticks, h('path', { class: 'zg-qb__n', d: 'M100 6 L106 20 L94 20 Z' })),
+        h('g', { class: 'zg-qb__ptr', transform: `rotate(${b - hd} 100 100)` },
+          h('line', { class: 'zg-qb__ln', x1: 100, y1: 100, x2: 100, y2: 46 }),
+          h('rect', { class: 'zg-qb__kb', x: 88, y: 24, width: 24, height: 24, rx: 5 }),
+          h('rect', { class: 'zg-qb__kg', x: 88, y: 31, width: 24, height: 4 })),
+        h('circle', { class: 'zg-qb__hub', cx: 100, cy: 100, r: 5 })),
+      h('div', { class: 'zg-qb__txt' }, h('b', { class: 'zg-num' }, deg + '°'), h('span', null, t('QiblaCompass', 'qibla')), p.distance ? h('small', null, p.distance) : null)); } },
   Heading: { render: ({ h, props: p, children }) => h('h' + clamp(p.level || 2, 1, 6), { class: cx('zg-heading', 'zg-heading--' + (p.size || 'lg'), p.brand && 'zg-heading--brand') }, ...children) },
   Text: { render: ({ h, props: p, children }) => h(p.as || 'p', { class: cx('zg-text', 'zg-text--' + (p.size || 'md'), p.tone && 'zg-text--' + p.tone, p.bold && 'zg-text--bold', p.truncate && 'zg-text--truncate') }, ...children) },
   Box: { render: ({ h, props: p, children }) => h(p.as || 'div', { class: cx('zg-box', p.glass && 'zg-glass'), style: { padding: sp(p.p), ...(p.style || {}) } }, ...children) },

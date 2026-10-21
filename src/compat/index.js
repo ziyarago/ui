@@ -438,6 +438,8 @@ export const UiMultilangInput = defineComponent({
 
 // ───────────────────────── theme ─────────────────────────
 const LEGACY_KEY = 'glass-ui-theme', themeRef = ref('light');
+// Read the storage BEFORE the kit's theme controller initialises: it writes its defaults (dark) to "zg-ui" on first use, which would hide the old choice.
+const boot = (() => { try { return typeof localStorage === 'undefined' ? {} : { legacy: localStorage.getItem(LEGACY_KEY), hasNew: !!JSON.parse(localStorage.getItem('zg-ui') || '{}').theme }; } catch { return {}; } })();
 let themeInit = false;
 /** Drop-in for the old useTheme(): { theme, setTheme, toggleTheme }. Also toggles the .dark class (for Tailwind dark:) next to the new data-theme attribute. Reads the old localStorage key once. */
 export function useTheme() {
@@ -445,8 +447,7 @@ export function useTheme() {
   if (!themeInit && typeof window !== 'undefined') {
     themeInit = true;
     const sync = tm => { themeRef.value = tm; document.documentElement.classList.toggle('dark', tm === 'dark'); try { localStorage.setItem(LEGACY_KEY, tm); } catch { /* storage blocked */ } };
-    let legacy = null, hasNew = false;
-    try { legacy = localStorage.getItem(LEGACY_KEY); hasNew = !!JSON.parse(localStorage.getItem('zg-ui') || '{}').theme; } catch { /* storage blocked */ }
+    const legacy = boot.legacy, hasNew = boot.hasNew;
     if (!hasNew) ui.setTheme(legacy === 'light' || legacy === 'dark' ? legacy : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
     sync(ui.theme);
     ui.subscribe(s => sync(s.theme));

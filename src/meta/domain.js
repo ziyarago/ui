@@ -49,6 +49,16 @@ export default {
     },
     notes: ['Exposed as role="img" with aria-label "Day N of 30".'],
   },
+  QiblaCompass: {
+    description: 'Compass dial with a Kaaba marker pointing to the Qibla and the bearing in degrees below it.',
+    props: {
+      bearing: { type: 'number', required: true, default: 0, description: 'Qibla bearing in degrees clockwise from true north, 0 to 360; other values wrap.' },
+      heading: { type: 'number', default: 0, description: 'Direction the device points to, in degrees. The dial turns against it so the marker follows the real Qibla; 0 keeps north up.' },
+      distance: { type: 'string', description: 'Optional small caption under the bearing, such as "4 210 km to the Kaaba".' },
+      size: { type: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | number", values: ['xs', 'sm', 'md', 'lg', 'xl'], default: 'md', description: 'Diameter: xs 120, sm 160, md 200, lg 250, xl 300 px; a number is used as px.' },
+    },
+    notes: ['Exposed as role="img" with a label that states the bearing. Compute the bearing and heading yourself (geolocation and DeviceOrientation); the component only draws them.'],
+  },
   BookingCard: {
     description: 'Compact booking summary: code, status, guest, hotel, dates and total.',
     props: {

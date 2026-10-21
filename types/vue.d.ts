@@ -2729,6 +2729,11 @@ export interface UiLoginFormProps {
    */
   showForgot?: boolean;
   /**
+   * Show the "Remember device" checkbox. Hide it when your backend has no such option; the submit payload then keeps remember: true.
+   * @default true
+   */
+  showRemember?: boolean;
+  /**
    * Submit button text. Wins over labels.submit.
    * @default Sign in
    */
@@ -3815,6 +3820,48 @@ export interface UiPageFormSlots {
 }
 export const UiPageForm: UiVueComponent<UiPageFormProps, UiPageFormSlots>;
 
+/**
+ * Group manager template: trip summary, pilgrims table with document and visa status, bulk actions, rooming and a sticky payments summary.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The payments card stays visible on the right and goes below the table under 860 px.
+ */
+export interface UiPageGroupManagerProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageGroupManagerSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Trip header with dates, route and counters; Card, StatStrip, Progress. */
+  trip?: () => any;
+  /** Search and status filters; SearchInput, FilterChips. */
+  toolbar?: () => any;
+  /** Actions for the selected pilgrims; Button, Badge. */
+  bulk?: () => any;
+  /** Pilgrims table with documents and visa; Card, DataTable, Badge. */
+  pilgrims?: () => any;
+  /** Rooming assignment; Card, RoomGrid. */
+  rooms?: () => any;
+  /** Payments summary and manager contact; Card, Progress, ContactPanel. */
+  payments?: () => any;
+}
+export const UiPageGroupManager: UiVueComponent<UiPageGroupManagerProps, UiPageGroupManagerSlots>;
+
 /** Page title block with optional breadcrumbs, subtitle and an actions area. */
 export interface UiPageHeaderProps {
   /** Page title (rendered as h1). */
@@ -3950,6 +3997,46 @@ export interface UiPageIntegrationsSlots {
   webhooks?: () => any;
 }
 export const UiPageIntegrations: UiVueComponent<UiPageIntegrationsProps, UiPageIntegrationsSlots>;
+
+/**
+ * Itinerary template: day tabs, a timeline of stops for the chosen day, transport and hotel blocks and a sticky trip summary card.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: Render only the active day in timeline, transport and hotel. The summary stays visible on the right and goes below the day under 860 px.
+ */
+export interface UiPageItineraryProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageItinerarySlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Day switcher; Tabs or PillTabs. */
+  days?: () => any;
+  /** Stops of the active day with times and places; Card, Timeline, StatRow. */
+  timeline?: () => any;
+  /** Flights, buses and transfers of the day; Card, StatRow. */
+  transport?: () => any;
+  /** Where the group stays that night; Card, Badge, IconTile. */
+  hotel?: () => any;
+  /** Trip summary; Card, Descriptions, Progress. */
+  summary?: () => any;
+}
+export const UiPageItinerary: UiVueComponent<UiPageItineraryProps, UiPageItinerarySlots>;
 
 /**
  * Kanban template: filters, task board columns and a card detail panel.
@@ -4249,6 +4336,44 @@ export interface UiPagePatternsSlots {
 export const UiPagePatterns: UiVueComponent<UiPagePatternsProps, UiPagePatternsSlots>;
 
 /**
+ * Prayer times template: a location picker, today's times with the next prayer highlighted, a month table and a sticky Qibla compass.
+ * Note: Place inside AppShell; fill only the slots you need.
+ * Note: The Qibla card stays visible on the right and goes below the times under 860 px.
+ */
+export interface UiPagePrayerProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPagePrayerSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** City and method pickers; Select, PillSelect, SegmentedControl. */
+  location?: () => any;
+  /** Today's prayers and the countdown to the next one; Card, PrayerTimes. */
+  today?: () => any;
+  /** Prayer times for the whole month; Card, DataTable. */
+  month?: () => any;
+  /** Qibla direction; Card, QiblaCompass. */
+  qibla?: () => any;
+}
+export const UiPagePrayer: UiVueComponent<UiPagePrayerProps, UiPagePrayerSlots>;
+
+/**
  * Pricing template: billing-period toggle, plan cards and an FAQ.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -4539,6 +4664,48 @@ export interface UiPageTeamSlots {
 export const UiPageTeam: UiVueComponent<UiPageTeamProps, UiPageTeamSlots>;
 
 /**
+ * Public tour page: header, gradient gallery area, highlights, itinerary accordion, included and excluded lists, reviews and a sticky price and booking card. Has no shell and follows the theme.
+ * Note: Render the page on its own, without AppShell: it supplies its own width and padding in your layout.
+ * Note: The booking card stays visible on the right and goes below the content under 860 px.
+ */
+export interface UiPageTourPublicProps {
+  /**
+   * Page heading. The built-in header renders only when title is set and the header slot is empty.
+   * @remarks Forwarded to the inner element.
+   */
+  title?: string;
+  /**
+   * Caption under the heading.
+   * @remarks Forwarded to the inner element.
+   */
+  subtitle?: string;
+  /**
+   * Breadcrumb trail above the title.
+   * @remarks Forwarded to the inner element.
+   */
+  crumbs?: { label: string; href?: string }[];
+}
+export interface UiPageTourPublicSlots {
+  /** Custom page header; replaces the built-in title/subtitle/crumbs header. */
+  header?: () => any;
+  /** Buttons on the right of the built-in header. With a title they sit beside it; without a title they render alone, right-aligned (unless the header slot is filled). */
+  actions?: () => any;
+  /** Hero area made of gradients or photos; Gallery, Card. */
+  gallery?: () => any;
+  /** Key facts and highlights; StatStrip, IconTile. */
+  highlights?: () => any;
+  /** Day by day program; Accordion. */
+  itinerary?: () => any;
+  /** What the price includes and excludes; Card, Descriptions. */
+  included?: () => any;
+  /** Pilgrim reviews; Card, Rating, Avatar. */
+  reviews?: () => any;
+  /** Price, dates, seats and the booking button; Card, Button. */
+  booking?: () => any;
+}
+export const UiPageTourPublic: UiVueComponent<UiPageTourPublicProps, UiPageTourPublicSlots>;
+
+/**
  * User or customer list template: stats, filters, toolbar, table and a right-hand add/edit drawer.
  * Note: Place inside AppShell; fill only the slots you need.
  */
@@ -4651,6 +4818,21 @@ export interface UiPasswordInputProps {
    * @remarks Forwarded to the inner element.
    */
   error?: string;
+  /**
+   * Adds a red asterisk to the label and the native required attribute.
+   * @default false
+   */
+  required?: boolean;
+  /**
+   * Native name attribute of the input.
+   * @remarks Forwarded to the inner element.
+   */
+  name?: string;
+  /**
+   * Focuses the input on mount.
+   * @remarks Forwarded to the inner element.
+   */
+  autofocus?: boolean;
   /**
    * Native autocomplete token. Use "new-password" on sign-up and password-change forms so managers offer to generate one.
    * @default 'current-password'
@@ -5015,6 +5197,32 @@ export interface UiProgressProps {
 }
 export interface UiProgressSlots {}
 export const UiProgress: UiVueComponent<UiProgressProps, UiProgressSlots>;
+
+/**
+ * Compass dial with a Kaaba marker pointing to the Qibla and the bearing in degrees below it.
+ * Note: Exposed as role="img" with a label that states the bearing. Compute the bearing and heading yourself (geolocation and DeviceOrientation); the component only draws them.
+ */
+export interface UiQiblaCompassProps {
+  /**
+   * Qibla bearing in degrees clockwise from true north, 0 to 360; other values wrap.
+   * @default 0
+   */
+  bearing: number;
+  /**
+   * Direction the device points to, in degrees. The dial turns against it so the marker follows the real Qibla; 0 keeps north up.
+   * @default 0
+   */
+  heading?: number;
+  /** Optional small caption under the bearing, such as "4 210 km to the Kaaba". */
+  distance?: string;
+  /**
+   * Diameter: xs 120, sm 160, md 200, lg 250, xl 300 px; a number is used as px.
+   * @default 'md'
+   */
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+}
+export interface UiQiblaCompassSlots {}
+export const UiQiblaCompass: UiVueComponent<UiQiblaCompassProps, UiQiblaCompassSlots>;
 
 /** Group of radio options with optional hints. Use for a short single-choice list that should stay visible. */
 export interface UiRadioGroupProps {

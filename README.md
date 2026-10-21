@@ -4,7 +4,7 @@
 
 <p align="center"><a href="https://ziyara.vip"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-dark.png" alt="ziyarago/ui: glass design system for Vue, Nuxt and React" width="100%"></a></p>
 
-Glass design system for Vue 3, Nuxt and React: 203 components, 36 page templates, OKLCH tokens, dark and light, RTL and Arabic, 16 interface languages. One framework-neutral core with thin adapters. Built for Umrah and Hajj products, usable anywhere.
+Glass design system for Vue 3, Nuxt and React: 208 components, 40 page templates, OKLCH tokens, dark and light, RTL and Arabic, 16 interface languages. One framework-neutral core with thin adapters. Built for Umrah and Hajj products, usable anywhere.
 
 <table>
   <tr>
@@ -12,8 +12,8 @@ Glass design system for Vue 3, Nuxt and React: 203 components, 36 page templates
     <td width="50%"><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/hero-rtl.png" alt="Arabic RTL"><br><sub>Arabic, RTL mirrored</sub></td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/components.png" alt="Component catalog"><br><sub>203 components with props and live examples</sub></td>
-    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/templates.png" alt="Page templates"><br><sub>36 page templates</sub></td>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/components.png" alt="Component catalog"><br><sub>208 components with props and live examples</sub></td>
+    <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/templates.png" alt="Page templates"><br><sub>40 page templates</sub></td>
   </tr>
   <tr>
     <td><img src="https://raw.githubusercontent.com/ziyarago/ui/main/docs/images/button-docs.png" alt="Props docs"><br><sub>Every prop and variant documented</sub></td>
@@ -24,7 +24,7 @@ Glass design system for Vue 3, Nuxt and React: 203 components, 36 page templates
 Files:
 
 ```
-src/core/        components*.js, pages.js: 203 components and 36 page templates as { state, slots, render(ctx) }; no framework imports
+src/core/        components*.js, pages.js: 208 components and 40 page templates as { state, slots, render(ctx) }; no framework imports
 src/vue/         Vue 3 adapter  (UiButton, UiAppShell … + install(app))
 src/react/       React adapter  (same names)
 src/theme.js     useUiTheme(): theme · palette · dir → <html> attributes, persisted
@@ -59,7 +59,7 @@ Types ship with the package. Only 9 core components have typed props so far; the
 
 ### Requirements and notes
 - Node 18+ for tooling; any bundler that handles ES modules and CSS imports (Vite, webpack 5, Nuxt, Next). The package is plain ESM, not pre-bundled.
-- Fonts: Manrope (Latin, Cyrillic), Thmanyah Sans (Arabic, `dir="rtl"`), JetBrains Mono (code). Thmanyah ships in `assets/fonts`; Manrope and JetBrains Mono load from Google Fonts. Full table, weight mapping and self-hosting: docs site `/docs/fonts`. Colors: `/docs/colors`. Icons (Lucide) and map tiles load from the network — see `THIRD_PARTY_NOTICES.md` for self-hosting.
+- Fonts: Manrope (Latin, Cyrillic), Thmanyah Sans (Arabic, `dir="rtl"`), JetBrains Mono (code). All three ship in `assets/fonts` and load from your own origin, no Google request. Full table, weight mapping and self-hosting: docs site `/docs/fonts`. Colors: `/docs/colors`. Icons (Lucide) and map tiles load from the network — see `THIRD_PARTY_NOTICES.md` for self-hosting.
 - SSR: components render on the server; icons, `UiMap`, `UiRichEditor`, `UiTour` and `useUiTheme()` touch `document` only on the client.
 - Palettes via `data-palette="gold|tamam"`, theme via `data-theme="dark|light"`, direction via `dir="rtl"` on `<html>`.
 - Releases: see `docs/PUBLISHING.md`, history in `CHANGELOG.md`.
@@ -87,7 +87,7 @@ Controls and density-bearing components take `size="xs|sm|md|lg|xl"` (default `m
 ## Conventions
 - Controlled inputs: Vue `v-model` / `@change`; React `modelValue` + `onChange(value)`.
 - Slots: Vue named slots (`#actions`, `#footer`); React props `actions`, `footer`.
-- Icons are Lucide names (`icon="search"`). SVGs are fetched once from unpkg `lucide-static@0.460.0` and inlined as data-URI masks (they take `currentColor`). Self-host with `setIconBase('/icons/')` from `@ziyarago/ui`.
+- Icons are Lucide names (`icon="search"`). SVGs are fetched once from unpkg `lucide-static@0.460.0` and inlined as data-URI masks (they take `currentColor`). Under a strict CSP (`connect-src 'self'`) the CDN request is blocked: copy `lucide-static/icons` to your public folder and call `setIconBase('/icons/')` from `@ziyarago/ui` before mount.
 - Theme: `[data-theme=dark|light]`, palette `[data-palette=gold|tamam]`, direction `dir`.
 - Formatters `fmt.num / sar / dur`: `-1 → ∞`, NaN/null → `—`, `1 м 05 с`.
 - Brand fill for ONE hero element per view.
@@ -99,7 +99,7 @@ Surfaces: Card · Modal · Drawer · Toast
 Data: KpiTile · Progress · Ring · DataTable · KanbanColumn · KanbanCard · Timeline
 Navigation: TopNav · SideNav · Breadcrumbs · Pagination
 Layout: AppShell · PageHeader · AuthLayout
-Domain: LeadCard · HotelCard · TourCard · PrayerTimes · RamadanTracker · CallRow
+Domain: LeadCard · HotelCard · TourCard · PrayerTimes · RamadanTracker · QiblaCompass · CallRow
 
 ## Not done yet
 TypeScript typings, a build step (the package ships ES source), tests, DatePicker, CommandPalette, Map components, i18n bundle (6 locales), and a Flutter widget port (tokens.json is ready for it).
