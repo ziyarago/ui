@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { EXAMPLES } from '~/docs-data'
 import { GROUPS } from '~/docs-data/groups'
+import { isPro } from '../../../../src/meta/tiers.js'
 useSeo({ title: '208 UI components for Vue, Nuxt and React — @ziyarago/ui', description: 'Browse 208 components with live previews, code for Vue and React, and full props tables: buttons, forms, tables, charts, overlays and more.' })
 const total = GROUPS.reduce((n, g) => n + g.names.length, 0)
 </script>
@@ -14,7 +15,7 @@ const total = GROUPS.reduce((n, g) => n + g.names.length, 0)
       <p class="muted">{{ g.blurb }}</p>
       <div class="grid">
         <NuxtLink v-for="n in g.names" :key="n" :to="`/docs/components/${n}`" class="tile">
-          <b>{{ n }}</b>
+          <b>{{ n }} <UiBadge v-if="isPro(n)" tone="brand" size="xs">Pro</UiBadge></b>
           <span v-if="EXAMPLES[n]">{{ EXAMPLES[n].variants.length }} example{{ EXAMPLES[n].variants.length > 1 ? 's' : '' }}</span>
           <span v-else class="muted">import only</span>
         </NuxtLink>
