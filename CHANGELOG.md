@@ -1,3 +1,9 @@
+## [0.6.0](https://github.com/ziyarago/ui/compare/v0.5.0...v0.6.0) (2026-10-21)
+
+### Features
+
+* SocialAuth component with Google and Apple buttons ([398b36d](https://github.com/ziyarago/ui/commit/398b36dcc808e8f4656c09e8c12acf2e21c6084d))
+
 ## [0.5.0](https://github.com/ziyarago/ui/compare/v0.4.0...v0.5.0) (2026-10-21)
 
 ### Features
