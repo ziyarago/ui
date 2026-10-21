@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.ziyarago/ui-mcp",
+  "description": "Component catalog for @ziyarago/ui (Vue, Nuxt, React): search components, read props, slots and page templates so AI tools build screens with the library.",
+  "repository": {
+    "url": "https://github.com/ziyarago/ui",
+    "source": "github",
+    "subfolder": "packages/mcp"
+  },
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@ziyarago/ui-mcp",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

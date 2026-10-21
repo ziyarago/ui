@@ -33,6 +33,7 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
         <NuxtLink to="/docs/colors" :class="{ on: route.path === '/docs/colors' }">Colors</NuxtLink>
         <NuxtLink to="/docs/backgrounds" :class="{ on: route.path === '/docs/backgrounds' }">Backgrounds</NuxtLink>
         <NuxtLink to="/docs/fonts" :class="{ on: route.path === '/docs/fonts' }">Fonts</NuxtLink>
+        <NuxtLink to="/pricing" :class="{ on: route.path === '/pricing' }">Pricing</NuxtLink>
       </nav>
       <div class="ctl">
         <UiButton size="sm" class="search" aria-label="Search components" @click="palette_ = true"><span class="search__t">Search</span> <kbd class="zg-kbd">⌘K</kbd></UiButton>
