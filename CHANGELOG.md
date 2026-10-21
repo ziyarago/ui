@@ -1,3 +1,9 @@
+## [0.15.3](https://github.com/ziyarago/ui/compare/v0.15.2...v0.15.3) (2026-10-21)
+
+### Bug Fixes
+
+* Vue adapter keeps kebab-case :model-value and still calls an explicit :on-change ([3fbfce4](https://github.com/ziyarago/ui/commit/3fbfce4a12d46d8557044c57cf60294b3ccf2aa7))
+
 ## [0.15.2](https://github.com/ziyarago/ui/compare/v0.15.1...v0.15.2) (2026-10-21)
 
 ### Bug Fixes
