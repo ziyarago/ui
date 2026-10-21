@@ -1,3 +1,9 @@
+## [0.15.1](https://github.com/ziyarago/ui/compare/v0.15.0...v0.15.1) (2026-10-21)
+
+### Bug Fixes
+
+* backdrop-filter order for lightningcss, LoginForm autocomplete and name, built-in icon set (no CDN for component icons), registerIcons ([18dd228](https://github.com/ziyarago/ui/commit/18dd2286c71ac2ff64a126bb1ead76d412b6a92d))
+
 ## [0.15.0](https://github.com/ziyarago/ui/compare/v0.14.0...v0.15.0) (2026-10-21)
 
 ### Features
