@@ -5,13 +5,14 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { meta } from '../src/meta/index.js';
 import { GROUPS } from '../src/meta/groups.js';
+import { isPro } from '../src/meta/tiers.js';
 const templates = JSON.parse(readFileSync(new URL('../src/meta/templates.json', import.meta.url), 'utf8'));
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 mkdirSync(join(root, 'dist'), { recursive: true });
 
-const components = GROUPS.flatMap(g => g.names.map(name => ({ name, tag: 'Ui' + name, group: g.id, ...meta[name] })));
+const components = GROUPS.flatMap(g => g.names.map(name => ({ name, tag: 'Ui' + name, group: g.id, tier: isPro(name) ? 'pro' : 'free', ...meta[name] })));
 const manifest = {
   name: pkg.name, version: pkg.version, homepage: 'https://ziyara.vip',
   imports: { vue: "import { UiButton } from '@ziyarago/ui/vue'", react: "import { UiButton } from '@ziyarago/ui/react'", nuxt: "modules: ['@ziyarago/ui/nuxt']", css: "import '@ziyarago/ui/style.css'", theme: "import { useUiTheme } from '@ziyarago/ui/theme'" },
@@ -31,7 +32,7 @@ writeFileSync(join(root, 'dist/manifest.json'), JSON.stringify(manifest, null, 1
 
 const propLine = (n, p) => `- \`${n}\`${p.required ? ' (required)' : ''}: ${p.type}${p.default !== undefined ? ` = ${JSON.stringify(p.default)}` : ''}${p.model ? ' [v-model]' : ''}. ${p.description || ''}`;
 const full = c => [
-  `## Ui${c.name}  (${c.group})`, c.description || '',
+  `## Ui${c.name}  (${c.group}${c.tier === 'pro' ? ', Pro' : ''})`, c.description || '',
   ...(Object.keys(c.props || {}).length ? ['Props:', ...Object.entries(c.props).map(([n, p]) => propLine(n, p))] : []),
   ...(Object.keys(c.slots || {}).length ? ['Slots:', ...Object.entries(c.slots).map(([n, d]) => `- ${n}: ${d}`)] : []),
   ...(Object.keys(c.events || {}).length ? ['Events:', ...Object.entries(c.events).map(([n, d]) => `- ${n}: ${d}`)] : []),
@@ -40,7 +41,7 @@ const full = c => [
 ].filter(x => x !== undefined).join('\n');
 
 const head = `# ${pkg.name}\n\n> ${pkg.description}\n\nVersion ${pkg.version}. Docs: https://ziyara.vip . Manifest (machine readable): https://ziyara.vip/manifest.json\n\n## Setup\n${Object.values(manifest.imports).map(x => '- ' + x).join('\n')}\n\n## Conventions\n${manifest.conventions.map(x => '- ' + x).join('\n')}\n`;
-const index = GROUPS.map(g => `\n## ${g.title}\n${g.blurb}\n${g.names.map(n => `- Ui${n}: ${meta[n]?.description || ''}`).join('\n')}`).join('\n');
+const index = GROUPS.map(g => `\n## ${g.title}\n${g.blurb}\n${g.names.map(n => `- Ui${n}${isPro(n) ? ' (Pro)' : ''}: ${meta[n]?.description || ''}`).join('\n')}`).join('\n');
 writeFileSync(join(root, 'dist/llms.txt'), head + index + '\n\nPage templates: ' + templates.pages.map(p => `Ui${p.component} (${p.slots.map(s => s.id).join(', ')})`).join('; ') + '\n\nFull API of every component: llms-full.txt\n');
 writeFileSync(join(root, 'dist/llms-full.txt'), head + '\n' + components.map(full).join('\n'));
 console.log(`manifest: ${components.length} components, llms.txt ${(head.length + index.length) / 1024 | 0} KB, llms-full.txt ${(components.map(full).join('\n').length / 1024) | 0} KB`);

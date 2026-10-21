@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isPro } from '../../../../src/meta/tiers.js'
 import { EXAMPLES, allNames } from '~/docs-data'
 import { groupOf } from '~/docs-data/groups'
 import { vueCode, reactCode } from '~/utils/codegen'
@@ -20,7 +21,8 @@ const importReact = computed(() => `import { Ui${name.value} } from '@ziyarago/u
 <template>
   <article class="doc">
     <UiBreadcrumbs :items="[{ label: 'Components', href: '/docs/components' }, { label: group?.title ?? '' }, { label: name }]" />
-    <h1 class="doc__h">{{ name }}</h1>
+    <h1 class="doc__h">{{ name }} <UiBadge v-if="isPro(name)" tone="brand">Pro</UiBadge></h1>
+    <p v-if="isPro(name)" class="doc__pro">Part of <NuxtLink to="/pricing">Pro</NuxtLink>. Versions up to 0.10 of the open source package include it under MIT; later releases keep it in Pro.</p>
     <p class="doc__d">{{ ex?.description ?? `${name} from the ${group?.title.toLowerCase()} group.` }}</p>
 
     <p class="doc__jump"><a href="#api">Jump to API reference</a></p>
@@ -46,6 +48,7 @@ const importReact = computed(() => `import { Ui${name.value} } from '@ziyarago/u
 </template>
 
 <style scoped>
+.doc__pro { margin: 0; color: var(--zg-text-2); font-size: 14px; }
 .doc { display: flex; flex-direction: column; gap: 20px; }
 .doc__h { margin: 0; font: 300 clamp(34px, 5vw, 52px) var(--zg-font); letter-spacing: -.03em; }
 .doc__d { margin: 0; color: var(--zg-text-2); font-size: 17px; line-height: 1.5; max-width: 70ch; }
