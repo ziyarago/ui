@@ -49,7 +49,7 @@ const steps = computed(() => [
       <component :is="showcase ? UiAuthShowcase : layout === 'split' ? UiAuthSplit : UiAuthLayout" v-bind="showcase ? { variant: layout, people: PEOPLE, footer: h(TplSlot, { id: 'footer' }, () => h('div', { class: 'ta__row' }, [h('a', { href: '#' }, 'Help'), h('a', { href: '#' }, 'Privacy')])), ...SHOW[layout] } : {}" :title="T[v][0]" :subtitle="T[v][1]" :logo="logoV()" :aside="asideV()">
         <TplSlot id="form">
           <div class="ta__col">
-            <UiLoginForm v-if="v === 'login'" />
+            <template v-if="v === 'login'"><UiLoginForm /><UiSocialAuth :variant="layout === 'photo' ? 'icons' : 'stack'" /></template>
             <template v-else-if="v === 'register'">
               <UiTextField label="Username" />
               <UiTextField label="Email" icon="mail" />

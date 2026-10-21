@@ -198,6 +198,19 @@ export default {
     },
     events: { decline: 'Decline button clicked.', answer: 'Answer button clicked.' },
   },
+  SocialAuth: {
+    description: 'Continue with Google and Apple buttons with an "or" divider. Place it under the sign-in form.',
+    props: {
+      providers: { type: "('google' | 'apple')[]", default: "['google', 'apple']", description: 'Which buttons to show, in order.' },
+      variant: { type: "'stack' | 'icons'", values: ['stack', 'icons'], default: 'stack', description: "'stack': full-width buttons with a label, one per row. 'icons': a row of square icon buttons." },
+      divider: { type: 'boolean', default: 'true', description: 'Show the "or" line above the buttons.' },
+      labels: { type: '{ google?: string; apple?: string }', description: 'Provider names inserted into "Continue with {provider}".' },
+      onSelect: { type: "(provider: 'google' | 'apple') => void", description: 'Called with the clicked provider. Start your OAuth flow here.' },
+      size,
+    },
+    events: { select: 'A provider button was clicked; payload is "google" or "apple".' },
+    notes: ['The kit only renders the buttons. The OAuth flow itself is yours.'],
+  },
   AuthShowcase: {
     description: 'Sign-in layout with a media panel: dark photo card with floating avatars, light gradient card with a social-proof pill, or a tinted panel with a glass caption. The default slot is the form.',
     props: {

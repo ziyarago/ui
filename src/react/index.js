@@ -172,6 +172,7 @@ export const UiTourPopover = C.TourPopover;
 export const UiProfileHeader = C.ProfileHeader;
 export const UiAuthSplit = C.AuthSplit;
 export const UiAuthShowcase = C.AuthShowcase;
+export const UiSocialAuth = C.SocialAuth;
 export const UiStatusPage = C.StatusPage;
 export const UiValidatedField = C.ValidatedField;
 export const UiFooter = C.Footer;

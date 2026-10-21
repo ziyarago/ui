@@ -4997,6 +4997,39 @@ export interface UiSnackbarSlots {
 export const UiSnackbar: UiVueComponent<UiSnackbarProps, UiSnackbarSlots>;
 
 /**
+ * Continue with Google and Apple buttons with an "or" divider. Place it under the sign-in form.
+ * Note: The kit only renders the buttons. The OAuth flow itself is yours.
+ */
+export interface UiSocialAuthProps {
+  /**
+   * Which buttons to show, in order.
+   * @default ['google', 'apple']
+   */
+  providers?: ('google' | 'apple')[];
+  /**
+   * 'stack': full-width buttons with a label, one per row. 'icons': a row of square icon buttons.
+   * @default 'stack'
+   */
+  variant?: 'stack' | 'icons';
+  /**
+   * Show the "or" line above the buttons.
+   * @default 'true'
+   */
+  divider?: boolean;
+  /** Provider names inserted into "Continue with {provider}". */
+  labels?: { google?: string; apple?: string };
+  /** Called with the clicked provider. Start your OAuth flow here. */
+  onSelect?: (provider: 'google' | 'apple') => void;
+  /**
+   * Scales padding, text and avatars.
+   * @default 'md'
+   */
+  size?: Size;
+}
+export interface UiSocialAuthSlots {}
+export const UiSocialAuth: UiVueComponent<UiSocialAuthProps, UiSocialAuthSlots>;
+
+/**
  * Drag-and-drop reorderable list with grip handles and up/down buttons.
  * Note: Controlled: the parent must store the array from change and pass it back as items.
  * Note: Keyboard-friendly reordering is available through the up/down buttons.

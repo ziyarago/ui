@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { EXAMPLES } from '~/docs-data'
 import { GROUPS } from '~/docs-data/groups'
-useSeo({ title: '182 UI components for Vue, Nuxt and React — @ziyarago/ui', description: 'Browse 183 components with live previews, code for Vue and React, and full props tables: buttons, forms, tables, charts, overlays and more.' })
+useSeo({ title: '182 UI components for Vue, Nuxt and React — @ziyarago/ui', description: 'Browse 184 components with live previews, code for Vue and React, and full props tables: buttons, forms, tables, charts, overlays and more.' })
 const total = GROUPS.reduce((n, g) => n + g.names.length, 0)
 </script>
 
