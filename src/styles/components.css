@@ -13,7 +13,7 @@
 .zg-icon{display:inline-block;flex:none;width:1em;height:1em;background:currentColor;-webkit-mask:var(--zg-icon) center/contain no-repeat;mask:var(--zg-icon) center/contain no-repeat}
 .zg-mono{font-family:var(--zg-font-mono);font-variant-numeric:tabular-nums}
 .zg-num{font-variant-numeric:tabular-nums;font-weight:200;letter-spacing:-.035em}
-.zg-hatch{background:repeating-linear-gradient(135deg,var(--zg-s3) 0 1.5px,transparent 1.5px 6px)}
+.zg-hatch{background:repeating-linear-gradient(135deg,color-mix(in oklch,var(--zg-text-1) 22%,transparent) 0 1.5px,transparent 1.5px 6px)}
 
 /* Button */
 .zg-btn{--h:var(--zg-h-md);display:inline-flex;align-items:center;justify-content:center;gap:8px;height:var(--h);padding:0 calc(var(--h)*.45);border:0;border-radius:999px;cursor:pointer;font:600 14px var(--zg-font);white-space:nowrap;color:var(--zg-text-1);background:var(--zg-s2);box-shadow:var(--zg-rim);transition:transform .15s var(--zg-ease),background .15s,filter .15s}
@@ -107,7 +107,7 @@
 .zg-kpi__label{font-size:13px;opacity:.75}.zg-kpi__value{font-size:36px;line-height:1}.zg-kpi__sub{font-size:12px;opacity:.75}
 .zg-delta{font:700 12px var(--zg-font-mono)}.zg-delta--up{color:var(--zg-green)}.zg-delta--down{color:var(--zg-red)}
 .zg-progress{display:flex;flex-direction:column;gap:6px}.zg-progress__row{display:flex;justify-content:space-between;font-size:13px}
-.zg-progress__track{height:8px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(135deg,var(--zg-s3) 0 1.5px,transparent 1.5px 6px)}
+.zg-progress__track{height:8px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(135deg,color-mix(in oklch,var(--zg-text-1) 22%,transparent) 0 1.5px,transparent 1.5px 6px),color-mix(in oklch,var(--zg-text-1) 6%,transparent)}
 .zg-progress__bar{height:100%;border-radius:999px;background:var(--zg-brand);transition:width .8s var(--zg-ease)}
 .zg-progress--success .zg-progress__bar{background:var(--zg-green)}.zg-progress--warning .zg-progress__bar{background:var(--zg-amber)}.zg-progress--danger .zg-progress__bar{background:var(--zg-red)}
 .zg-ring{position:relative;display:inline-grid;place-items:center}.zg-ring svg{transform:rotate(-90deg)}.zg-ring__c{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:4px;text-align:center}.zg-ring__v{font-weight:300;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1;color:var(--zg-text-1)}.zg-ring__l{font:500 12px/1.2 var(--zg-font);color:var(--zg-text-3)}
