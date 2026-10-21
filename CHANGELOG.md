@@ -1,3 +1,9 @@
+## [0.8.0](https://github.com/ziyarago/ui/compare/v0.7.0...v0.8.0) (2026-10-21)
+
+### Features
+
+* page templates wave 2 (calendar, kanban, billing, team, integrations, search) ([22397b0](https://github.com/ziyarago/ui/commit/22397b000bcb473708eba3f91c415688bb668932))
+
 ## [0.7.0](https://github.com/ziyarago/ui/compare/v0.6.1...v0.7.0) (2026-10-21)
 
 ### Features
