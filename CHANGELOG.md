@@ -1,3 +1,9 @@
+## [0.4.0](https://github.com/ziyarago/ui/compare/v0.3.0...v0.4.0) (2026-10-21)
+
+### Features
+
+* per-component translations (en, ar, ru free; 13 more languages in Pro pack), screenshots in README ([5fc8d9f](https://github.com/ziyarago/ui/commit/5fc8d9ffd85be7cacf42c5413561159d287d0316))
+
 ## [0.3.0](https://github.com/ziyarago/ui/compare/v0.2.0...v0.3.0) (2026-10-21)
 
 ### Features
