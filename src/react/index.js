@@ -2,7 +2,7 @@
 // React 18+ adapter. Usage: import { UiButton, UiAppShell } from '@ziyarago/ui/react'
 import React, { useState, useRef, useEffect, useLayoutEffect, useSyncExternalStore, createElement, cloneElement, isValidElement } from 'react';
 import { createPortal } from 'react-dom';
-import { components, subscribeUiLocale, getUiVersion } from '../core/index.js';
+import { components, registerComponents, subscribeUiLocale, getUiVersion } from '../core/index.js';
 
 const C = {};
 const useIsoLayoutEffect = typeof document === 'undefined' ? useEffect : useLayoutEffect;
@@ -37,6 +37,13 @@ const wrap = (name, def) => {
   return Comp;
 };
 for (const [name, def] of Object.entries(components)) C[name] = wrap(name, def);
+/** Wraps definitions like the built-in ones, registers them in C (cross references work both ways) and returns { UiName: Component }. */
+export function defineUiComponents(defs, { override = false } = {}) {
+  registerComponents(defs, { override });
+  const out = {};
+  for (const [name, def] of Object.entries(defs)) out['Ui' + name] = C[name] = wrap(name, def);
+  return out;
+}
 
 // Explicit named exports (not destructuring): Next.js reads the export names of a 'use client' module statically.
 export const UiButton = C.Button;

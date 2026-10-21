@@ -7217,6 +7217,8 @@ export const UiVersusBar: UiVueComponent<UiVersusBarProps, UiVersusBarSlots>;
 
 export const rules: typeof import('./shared').rules;
 export function install(app: import('vue').App): void;
+/** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
+export function defineUiComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, import('vue').Component>;
 declare const _default: { install: typeof install };
 export default _default;
 export { useUiTheme } from './theme';

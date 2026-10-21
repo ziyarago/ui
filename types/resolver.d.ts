@@ -7,6 +7,8 @@ export interface ZiyaragoUiResolverOptions {
   exclude?: string[];
   /** Module the components come from. Default '@ziyarago/ui/vue'. */
   from?: string;
+  /** Add-on packages whose components auto-import too: a package name exporting ./names and ./vue, or an explicit { from, names }. */
+  plugins?: Array<string | { from: string; names: string[] }>;
 }
 export interface ZiyaragoUiResolverResult { name: string; from: string; sideEffects?: string }
 export interface ZiyaragoUiResolver { type: 'component'; resolve(name: string): ZiyaragoUiResolverResult | undefined }
