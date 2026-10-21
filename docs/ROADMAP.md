@@ -2,6 +2,41 @@
 
 What we plan to work on, in rough priority. No dates: items move between columns when we learn something. Want something sooner or have a use case? [Open an issue](https://github.com/ziyarago/ui/issues).
 
+## Page templates plan
+
+Goal: a ready layout for almost every screen a product needs. Each template ships as `UiPage<Name>` with named slots, a props table, a live demo on the docs site (dark, light, RTL, mobile), SSR and type tests. Built in four waves; a wave is released when all its pages pass the checks.
+
+**Wave 1: every product needs these**
+- Landing: hero, features, proof, pricing, footer.
+- Onboarding: setup steps, checklist, progress.
+- Checkout: cart, address, payment, summary.
+- Inbox and chat: conversation list, thread, customer panel.
+- Notifications and activity: feed, filters, mark as read.
+- Analytics and reports: charts, period picker, table, export.
+
+**Wave 2: product scenarios**
+- Calendar and schedule: week, day, events.
+- Kanban and tasks: board, card in a side panel.
+- Billing: plan, invoices, payment methods, usage.
+- Team and roles: members, invites, permissions.
+- Integrations and API keys: connections, keys, webhooks.
+- Search results: results, filters, empty state.
+
+**Wave 3: content and utility**
+- Blog and article, Changelog, Help center (category and article).
+- Empty and error states: one page with every variant.
+- Legal: document with a table of contents.
+- Map and locations: list plus map.
+- Booking flow: search, pick, guests, confirm.
+
+**Wave 4: Umrah and Hajj**
+- Itinerary: days, places, times.
+- Prayer times and Qibla.
+- Group manager: pilgrims, rooms, documents, payments.
+- Public tour page: tour details with price and booking.
+
+Rules for every page: composed from existing components (a missing small component is added properly with meta and example), no hard-coded English that the i18n layer should own, no 3D icons (icon names only), mobile first, works with `data-size`.
+
 ## Now
 
 - **Per-component tree-shaking and smaller bundles.** The Vue, Nuxt and React adapters build every component at import time, so the Vue demo bundle is about 150 KB even when a page uses three components.

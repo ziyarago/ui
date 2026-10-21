@@ -37,7 +37,13 @@ const T = Object.fromEntries([
   page('PageOrder', ['header', 'status', 'items', 'shipping', 'side'], ['col', 'header', 'status', ['two', ['items', 'shipping'], ['side']]]),
   page('PageAccount', ['header', 'tabs', 'panel'], ['col', 'header', 'tabs', 'panel']),
   page('PagePricing', ['header', 'toggle', 'plans', 'faq'], ['col', 'header', 'toggle', 'plans', 'faq']),
-  page('PageFaq', ['header', 'search', 'cats', 'answers', 'contact'], ['col', 'header', 'search', ['wrap', ['cats'], ['answers'], 200], 'contact'])
+  page('PageFaq', ['header', 'search', 'cats', 'answers', 'contact'], ['col', 'header', 'search', ['wrap', ['cats'], ['answers'], 200], 'contact']),
+  page('PageLanding', ['hero', 'logos', 'features', 'proof', 'pricing', 'cta', 'footer'], ['col', 'hero', 'logos', 'features', 'proof', 'pricing', 'cta', 'footer']),
+  page('PageOnboarding', ['header', 'progress', 'steps', 'checklist', 'tips'], ['col', 'header', 'progress', ['two', ['steps', 'checklist'], ['tips']]]),
+  page('PageCheckout', ['header', 'steps', 'items', 'address', 'payment', 'summary'], ['col', 'header', 'steps', ['two', ['items', 'address', 'payment'], ['summary']]]),
+  page('PageInbox', ['header', 'filters', 'list', 'thread', 'composer', 'customer'], ['col', 'header', ['wrap', ['filters', 'list'], [['two', ['thread', 'composer'], ['customer']]], 320]]),
+  page('PageNotifications', ['header', 'filters', 'feed', 'empty'], ['col', 'header', 'filters', 'feed', 'empty']),
+  page('PageAnalytics', ['header', 'period', 'kpis', 'trend', 'breakdown', 'table'], ['col', 'header', 'period', 'kpis', ['auto', 420, 'trend', 'breakdown'], 'table'])
 ]);
 
 T.PageAuth = { slots: ['background', 'logo', 'aside', 'form', 'footer'], render: ({ C, h, props: p, slots: s }) => {

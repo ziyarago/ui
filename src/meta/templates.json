@@ -2417,6 +2417,752 @@
      "use": "<UiAccordion :items=\"faq\" />"
     }
    ]
+  },
+  {
+   "key": "landing",
+   "route": "landing",
+   "label": "Landing",
+   "icon": "rocket",
+   "desc": "Marketing page: hero, logos, feature grid, social proof, pricing teaser, final call to action and footer.",
+   "component": "PageLanding",
+   "tpl": "TplLanding",
+   "shell": false,
+   "slots": [
+    {
+     "id": "hero",
+     "title": "Hero",
+     "desc": "Headline, subtitle and two buttons on a gradient card.",
+     "accepts": [
+      "HeroBanner",
+      "Card",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1 and a short supporting line"
+      }
+     ],
+     "use": "<UiHeroBanner title=\"Plan your Umrah\" cta=\"Get started\" />"
+    },
+    {
+     "id": "logos",
+     "title": "Logo strip",
+     "desc": "Row of partner names under the hero.",
+     "accepts": [
+      "Chip",
+      "Text"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "string[]",
+       "desc": "Partner names"
+      }
+     ],
+     "use": "<UiChip pill>Hilton</UiChip>"
+    },
+    {
+     "id": "features",
+     "title": "Features",
+     "desc": "Grid of icon, title and text cards.",
+     "accepts": [
+      "Card",
+      "IconTile"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{icon,title,text}[]",
+       "desc": "Three to six features"
+      }
+     ],
+     "use": "<UiCard title=\"Offline guides\">…</UiCard>"
+    },
+    {
+     "id": "proof",
+     "title": "Social proof",
+     "desc": "Stats strip and customer quotes.",
+     "accepts": [
+      "StatStrip",
+      "Card",
+      "Avatar"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{value,label}[]",
+       "desc": "Headline numbers"
+      }
+     ],
+     "use": "<UiStatStrip :items=\"stats\" />"
+    },
+    {
+     "id": "pricing",
+     "title": "Pricing teaser",
+     "desc": "Two or three plans with a link to the full pricing page.",
+     "accepts": [
+      "PricingCard",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "plans",
+       "type": "Plan[]",
+       "desc": "Name, price, features"
+      }
+     ],
+     "use": "<UiPricingCard name=\"Plus\" price=\"$4.99\" />"
+    },
+    {
+     "id": "cta",
+     "title": "Call to action",
+     "desc": "Closing block with one primary button.",
+     "accepts": [
+      "Card",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "cta",
+       "type": "string",
+       "desc": "Button label"
+      }
+     ],
+     "use": "<UiCard variant=\"gradient\">…</UiCard>"
+    },
+    {
+     "id": "footer",
+     "title": "Footer",
+     "desc": "Copyright and links.",
+     "accepts": [
+      "Footer"
+     ],
+     "props": [
+      {
+       "name": "links",
+       "type": "{label,href}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiFooter copyright=\"© 2026\" :links=\"links\" />"
+    }
+   ]
+  },
+  {
+   "key": "onboarding",
+   "route": "onboarding",
+   "label": "Onboarding",
+   "icon": "list-checks",
+   "desc": "First-run setup: progress, step content, checklist and side tips.",
+   "component": "PageOnboarding",
+   "tpl": "TplOnboarding",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "progress",
+     "title": "Progress",
+     "desc": "Stepper and overall completion bar.",
+     "accepts": [
+      "Stepper",
+      "Progress"
+     ],
+     "props": [
+      {
+       "name": "current",
+       "type": "number",
+       "desc": "Index of the active step"
+      }
+     ],
+     "use": "<UiStepper :steps=\"steps\" :current=\"1\" />"
+    },
+    {
+     "id": "steps",
+     "title": "Step content",
+     "desc": "Form or choice for the active step.",
+     "accepts": [
+      "Card",
+      "TextField",
+      "OptionCards",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "step",
+       "type": "number",
+       "desc": "Active step"
+      }
+     ],
+     "use": "<UiCard title=\"Your company\">…</UiCard>"
+    },
+    {
+     "id": "checklist",
+     "title": "Checklist",
+     "desc": "Tasks to finish setup with done marks.",
+     "accepts": [
+      "Card",
+      "Checkbox",
+      "Progress"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{id,label,done}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCheckbox v-model=\"done\" label=\"Add a hotel\" />"
+    },
+    {
+     "id": "tips",
+     "title": "Tips",
+     "desc": "Side cards with help and a contact link.",
+     "accepts": [
+      "Card",
+      "IconTile",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "tips",
+       "type": "{icon,title,text}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Need help?\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "checkout",
+   "route": "checkout",
+   "label": "Checkout",
+   "icon": "shopping-cart",
+   "desc": "Checkout: steps, cart items, address, payment method and an order summary.",
+   "component": "PageCheckout",
+   "tpl": "TplCheckout",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "steps",
+     "title": "Steps",
+     "desc": "Cart, details, payment, done.",
+     "accepts": [
+      "Stepper"
+     ],
+     "props": [
+      {
+       "name": "current",
+       "type": "number",
+       "desc": ""
+      }
+     ],
+     "use": "<UiStepper :steps=\"steps\" :current=\"1\" />"
+    },
+    {
+     "id": "items",
+     "title": "Cart items",
+     "desc": "Lines with quantity and price.",
+     "accepts": [
+      "Card",
+      "NumberInput",
+      "IconButton"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{title,qty,price}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Your cart\">…</UiCard>"
+    },
+    {
+     "id": "address",
+     "title": "Address",
+     "desc": "Contact and delivery fields.",
+     "accepts": [
+      "Card",
+      "TextField",
+      "Select"
+     ],
+     "props": [
+      {
+       "name": "address",
+       "type": "object",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Address\">…</UiCard>"
+    },
+    {
+     "id": "payment",
+     "title": "Payment",
+     "desc": "Payment method choice and card fields.",
+     "accepts": [
+      "OptionCards",
+      "TextField"
+     ],
+     "props": [
+      {
+       "name": "method",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiOptionCards v-model=\"method\" :options=\"methods\" />"
+    },
+    {
+     "id": "summary",
+     "title": "Order summary",
+     "desc": "Totals, promo code and the pay button.",
+     "accepts": [
+      "Card",
+      "Descriptions",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "total",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Summary\">…</UiCard>"
+    }
+   ]
+  },
+  {
+   "key": "inbox",
+   "route": "inbox",
+   "label": "Inbox",
+   "icon": "inbox",
+   "desc": "Conversation list, message thread with composer and a customer panel; stacks on mobile.",
+   "component": "PageInbox",
+   "tpl": "TplInbox",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Search and folder chips above the list.",
+     "accepts": [
+      "SearchInput",
+      "FilterChips"
+     ],
+     "props": [
+      {
+       "name": "query",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSearchInput v-model=\"q\" />"
+    },
+    {
+     "id": "list",
+     "title": "Conversations",
+     "desc": "List of conversations with unread marks.",
+     "accepts": [
+      "Card",
+      "Avatar",
+      "Badge"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{id,name,preview,time,unread}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard>…</UiCard>"
+    },
+    {
+     "id": "thread",
+     "title": "Thread",
+     "desc": "Messages of the open conversation.",
+     "accepts": [
+      "Card",
+      "Avatar"
+     ],
+     "props": [
+      {
+       "name": "messages",
+       "type": "{from,text,time}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Aziz Karimov\">…</UiCard>"
+    },
+    {
+     "id": "composer",
+     "title": "Composer",
+     "desc": "Reply field and send button.",
+     "accepts": [
+      "Textarea",
+      "Button"
+     ],
+     "props": [
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiTextarea v-model=\"reply\" />"
+    },
+    {
+     "id": "customer",
+     "title": "Customer",
+     "desc": "Contact details and tags of the person.",
+     "accepts": [
+      "ContactPanel",
+      "Descriptions",
+      "Tag"
+     ],
+     "props": [
+      {
+       "name": "name",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiContactPanel name=\"Aziz Karimov\" />"
+    }
+   ]
+  },
+  {
+   "key": "notifications",
+   "route": "notifications",
+   "label": "Notifications",
+   "icon": "bell",
+   "desc": "Activity feed grouped by day with filters, mark all as read and an empty state.",
+   "component": "PageNotifications",
+   "tpl": "TplNotifications",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "filters",
+     "title": "Filters",
+     "desc": "Filter chips: all, unread, mentions.",
+     "accepts": [
+      "FilterChips",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiFilterChips v-model=\"f\" :items=\"filters\" />"
+    },
+    {
+     "id": "feed",
+     "title": "Feed",
+     "desc": "Day groups with notification rows.",
+     "accepts": [
+      "Card",
+      "IconTile",
+      "Badge",
+      "Divider"
+     ],
+     "props": [
+      {
+       "name": "groups",
+       "type": "{day,items}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiCard title=\"Today\">…</UiCard>"
+    },
+    {
+     "id": "empty",
+     "title": "Empty state",
+     "desc": "Shown when nothing matches or all is read.",
+     "accepts": [
+      "EmptyState"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiEmptyState icon=\"bell-off\" title=\"All caught up\" />"
+    }
+   ]
+  },
+  {
+   "key": "analytics",
+   "route": "analytics",
+   "label": "Analytics",
+   "icon": "chart-no-axes-combined",
+   "desc": "Reports: period picker, KPI strip, charts, breakdown and a data table with export.",
+   "component": "PageAnalytics",
+   "tpl": "TplAnalytics",
+   "shell": true,
+   "slots": [
+    {
+     "id": "header",
+     "title": "Page heading",
+     "desc": "Breadcrumbs, heading, caption and action buttons on the right.",
+     "accepts": [
+      "PageHeader",
+      "Breadcrumbs",
+      "Button",
+      "SegmentedControl"
+     ],
+     "props": [
+      {
+       "name": "title",
+       "type": "string",
+       "desc": "H1, up to 60 characters"
+      },
+      {
+       "name": "subtitle",
+       "type": "string?",
+       "desc": "Gray caption below the heading"
+      },
+      {
+       "name": "crumbs",
+       "type": "{label,href?}[]",
+       "desc": "Breadcrumbs"
+      },
+      {
+       "name": "actions",
+       "type": "VNode",
+       "desc": "Buttons on the right; wrap below on a narrow screen"
+      }
+     ],
+     "use": "<UiPageHeader title=\"Dashboard\" :crumbs=\"crumbs\">\n  <template #actions><UiButton variant=\"primary\">Export</UiButton></template>\n</UiPageHeader>"
+    },
+    {
+     "id": "period",
+     "title": "Period",
+     "desc": "Range presets and compare toggle.",
+     "accepts": [
+      "SegmentedControl",
+      "Select",
+      "Switch"
+     ],
+     "props": [
+      {
+       "name": "value",
+       "type": "string",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSegmentedControl v-model=\"p\" :items=\"periods\" />"
+    },
+    {
+     "id": "kpis",
+     "title": "KPI strip",
+     "desc": "Four headline numbers with deltas.",
+     "accepts": [
+      "KpiTile",
+      "StatLine"
+     ],
+     "props": [
+      {
+       "name": "items",
+       "type": "{label,value,delta}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiKpiTile label=\"Revenue\" value=\"$48k\" delta=\"+8%\" />"
+    },
+    {
+     "id": "trend",
+     "title": "Trend chart",
+     "desc": "Main time series.",
+     "accepts": [
+      "ChartCard",
+      "MiniChart"
+     ],
+     "props": [
+      {
+       "name": "values",
+       "type": "number[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiChartCard title=\"Revenue\">…</UiChartCard>"
+    },
+    {
+     "id": "breakdown",
+     "title": "Breakdown",
+     "desc": "Split by channel or country.",
+     "accepts": [
+      "SegBar",
+      "CountryRow",
+      "Progress"
+     ],
+     "props": [
+      {
+       "name": "segments",
+       "type": "{label,value}[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiSegBar :segments=\"segments\" />"
+    },
+    {
+     "id": "table",
+     "title": "Detail table",
+     "desc": "Rows behind the numbers.",
+     "accepts": [
+      "DataTable"
+     ],
+     "props": [
+      {
+       "name": "rows",
+       "type": "object[]",
+       "desc": ""
+      }
+     ],
+     "use": "<UiDataTable :columns=\"cols\" :rows=\"rows\" />"
+    }
+   ]
   }
  ]
 }

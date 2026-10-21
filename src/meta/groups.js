@@ -10,7 +10,7 @@ export const GROUPS = [
   { id: 'navigation', title: 'Navigation', blurb: 'Menus, tabs and paging.', names: ['TopNav', 'SideNav', 'SubNav', 'Tabs', 'PillTabs', 'Breadcrumbs', 'Pagination', 'Accordion'] },
   { id: 'media', title: 'Media and icons', blurb: 'Avatars, images, maps and icons.', names: ['Avatar', 'Icon', 'LazyImage', 'Gallery', 'Carousel', 'Map', 'ProfileHeader', 'ChatAi'] },
   { id: 'domain', title: 'Domain', blurb: 'Umrah, Hajj, hotel and CRM blocks.', names: ['HotelCard', 'TourCard', 'PrayerTimes', 'RamadanTracker', 'BookingCard', 'GuestCard', 'RoomGrid', 'RoomCalendar', 'LeadCard', 'DealCard', 'PipelineBoard', 'ContactPanel', 'KanbanColumn', 'KanbanCard', 'CallRow', 'CallCard', 'IncomingCall', 'AuthSplit', 'AuthShowcase', 'SocialAuth'] },
-  { id: 'pages', title: 'Page templates', blurb: 'Ready layouts with named slots.', names: ['PageDashboard', 'PagePatterns', 'PageCrm', 'PageBookings', 'PageCatalog', 'PageDetail', 'PageSettings', 'PageUserList', 'PageProfile', 'PageForm', 'PageOrder', 'PageAccount', 'PagePricing', 'PageFaq', 'PageAuth', 'PageStatus'] },
+  { id: 'pages', title: 'Page templates', blurb: 'Ready layouts with named slots.', names: ['PageDashboard', 'PagePatterns', 'PageCrm', 'PageBookings', 'PageCatalog', 'PageDetail', 'PageSettings', 'PageUserList', 'PageProfile', 'PageForm', 'PageOrder', 'PageAccount', 'PagePricing', 'PageFaq', 'PageAnalytics', 'PageNotifications', 'PageInbox', 'PageCheckout', 'PageOnboarding', 'PageLanding', 'PageAuth', 'PageStatus'] },
 ];
 
 export const groupOf = name => GROUPS.find(g => g.names.includes(name));

@@ -32,6 +32,12 @@ const examples: Example[] = [
   e('PageAccount', 'Account page with tabs and one panel. Slots: header, tabs, panel.', { title: 'Account', subtitle: 'Profile, security and billing' }, { tabs: 'Tabs slot', panel: 'Active panel slot' }),
   e('PagePricing', 'Pricing page. Slots: toggle, plans, faq.', {}, { toggle: 'Billing toggle slot', plans: 'Pricing plans slot', faq: 'FAQ slot' }),
   e('PageFaq', 'Help center page. Slots: search, cats, answers, contact.', {}, { search: 'Search slot', cats: 'Categories slot', answers: 'Answers slot', contact: 'Contact slot' }),
+  e('PageAnalytics', 'Analytics page. Slots: period, kpis, trend, breakdown, table.', { title: 'Analytics', subtitle: 'Section' }, { period: 'Period slot', kpis: 'KPI strip slot', trend: 'Trend chart slot', breakdown: 'Breakdown slot', table: 'Detail table slot' }),
+  e('PageNotifications', 'Notifications page. Slots: filters, feed, empty.', { title: 'Notifications', subtitle: 'Section' }, { filters: 'Filters slot', feed: 'Feed slot', empty: 'Empty state slot' }),
+  e('PageInbox', 'Inbox page. Slots: filters, list, thread, composer, customer.', { title: 'Inbox', subtitle: 'Section' }, { filters: 'Filters slot', list: 'Conversations slot', thread: 'Thread slot', composer: 'Composer slot', customer: 'Customer slot' }),
+  e('PageCheckout', 'Checkout page. Slots: steps, items, address, payment, summary.', { title: 'Checkout', subtitle: 'Section' }, { steps: 'Steps slot', items: 'Cart items slot', address: 'Address slot', payment: 'Payment slot', summary: 'Order summary slot' }),
+  e('PageOnboarding', 'Onboarding page. Slots: progress, steps, checklist, tips.', { title: 'Onboarding', subtitle: 'Section' }, { progress: 'Progress slot', steps: 'Step content slot', checklist: 'Checklist slot', tips: 'Tips slot' }),
+  e('PageLanding', 'Landing page. Slots: hero, logos, features, proof, pricing, cta, footer.', {}, { hero: 'Hero slot', logos: 'Logo strip slot', features: 'Features slot', proof: 'Social proof slot', pricing: 'Pricing teaser slot', cta: 'Call to action slot', footer: 'Footer slot' }),
   {
     name: 'PageAuth',
     description: 'Full-screen auth page. Slots: background, logo, aside, form, footer; props: title, subtitle, layout (card or split).',
