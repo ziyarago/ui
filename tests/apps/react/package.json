@@ -1,0 +1,1 @@
+{ "name": "zg-test-app-react", "private": true, "type": "module", "description": "Test harness: renders every docs example with the React adapter. Dependencies come from the repo root." }

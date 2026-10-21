@@ -72,6 +72,7 @@ export default {
     props: {
       items: { type: '{ label: string; href?: string }[]', default: '[]', description: 'Trail from root to current. All but the last render as links (href defaults to "#"); the last is bold with aria-current="page".' },
       size: size('text and separator size'),
+      separator: { type: "'chevron' | 'slash' | 'dot'", values: ['chevron', 'slash', 'dot'], default: 'chevron', description: 'Glyph between items.' },
     },
   },
 
@@ -82,6 +83,8 @@ export default {
       pages: { type: 'number', default: 1, description: 'Total number of pages.' },
       siblings: { type: 'number', default: 1, description: 'Page buttons shown on each side of the current page. First and last page are always shown; gaps become an ellipsis.' },
       label: { type: 'string', default: 'Pagination', description: 'Accessible name of the navigation landmark.' },
+      hideArrows: { type: 'boolean', default: false, description: 'Hides the previous and next buttons.' },
+      labels: { type: '{ prev?: string; next?: string; page?: string }', default: "{ prev: 'Previous page', next: 'Next page', page: 'Page' }", description: 'Accessible names of the arrow buttons and of each page button ("Page 3").' },
       size: size('button size and text'),
     },
     events: { change: 'Called with the clicked page number (also from the previous and next buttons).' },

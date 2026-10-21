@@ -1,6 +1,7 @@
 // Vue 3 adapter. Usage: import { UiButton, UiAppShell } from '@ziyarago/ui/vue'
-import { h, ref, reactive, defineComponent, Teleport, cloneVNode, isVNode } from 'vue';
-import { components } from '../core/index.js';
+import { h, ref, reactive, defineComponent, onMounted, onBeforeUnmount, Teleport, cloneVNode, isVNode } from 'vue';
+import { components, subscribeUiLocale } from '../core/index.js';
+import { BOOL_PROPS } from '../core/bools.js';
 
 const C = {};
 const vh = (t, p, ...k) => { const kids = k.flat(); if (p && typeof t === 'string') for (const key of Object.keys(p)) if (/^on[A-Z]/.test(key) && !key.startsWith('onVnode')) { const nk = 'on' + key[2] + key.slice(3).toLowerCase(); if (nk !== key) { p[nk] = p[key]; delete p[key]; } } return typeof t === 'string' || !kids.length ? h(t, p, kids.length ? kids : undefined) : h(t, p, { default: () => kids }); };
@@ -9,14 +10,20 @@ const wrap = (name, def) => defineComponent({
   setup(_, { attrs, slots, emit }) {
     const state = reactive({ ...(def.state || {}) });
     const set = o => Object.assign(state, o);
+    // Teleports are client-only: during SSR and hydration portal() renders nothing (a teleport to <body> cannot hydrate), then appears once mounted.
+    const mounted = ref(false), localeTick = ref(0); let offLocale; onMounted(() => { mounted.value = true; offLocale = subscribeUiLocale(() => { localeTick.value++; }); }); onBeforeUnmount(() => offLocale && offLocale());
     return () => {
-      const props = { ...attrs, onChange: v => { emit('update:modelValue', v); emit('change', v); } };
+      void localeTick.value;
+      const props = {}, root = {};
+      for (const k in attrs) { if (/^(aria|data)-|^(class|style|id)$/.test(k)) root[k] = attrs[k]; const pk = k.includes('-') && !/^(aria|data)-/.test(k) ? k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()) : k; props[pk] = attrs[k] === '' && BOOL_PROPS.has(pk) ? true : attrs[k]; }
+      props.onChange = v => { emit('update:modelValue', v); emit('change', v); };
       if (attrs.modelValue === undefined) delete props.modelValue;
       const named = {}; for (const k of Object.keys(slots)) if (k !== 'default') named[k] = slots[k]();
       const children = slots.default ? slots.default() : [];
-      const out = def.render({ C, h: vh, props, children, slots: named, state, set, portal: (kids, to) => h(Teleport, { to: to || 'body' }, kids) });
+      const out = def.render({ C, h: vh, props, children, slots: named, state, set, portal: (kids, to) => mounted.value ? h(Teleport, { to: to || 'body' }, kids) : null });
       const sz = attrs.size;
-      return sz && isVNode(out) && typeof out.type === 'string' ? cloneVNode(out, { 'data-size': sz }) : out;
+      if (sz) root['data-size'] = sz;
+      return isVNode(out) && typeof out.type === 'string' && Object.keys(root).length ? cloneVNode(out, root) : out;
     };
   },
 });
@@ -27,3 +34,4 @@ export const install = app => { for (const [n, c] of Object.entries(C)) app.comp
 export { fmt, setIconBase, rules } from '../core/index.js';
 export { useUiTheme } from '../theme.js';
 export default { install };
+export { LOCALES, setUiLocale, getUiLocale, setUiMessages, isRtlLocale } from '../core/index.js';

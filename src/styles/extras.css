@@ -1,0 +1,55 @@
+/* Additions for parity with older UI kits (icon-only buttons, avatar status, card slots, tooltip placement, ...). Plain classes, no size selectors. */
+.zg-req{color:var(--zg-red)}
+.zg-btn--sq{width:var(--h);padding:0}
+.zg-ta--fixed{resize:none}.zg-ta--auto{field-sizing:content}.zg-ta__count{align-self:flex-end}
+.zg-select__trigger--error{box-shadow:var(--zg-rim),inset 0 0 0 1.5px var(--zg-red)}
+.zg-check--error .zg-check__box{box-shadow:inset 0 0 0 1.5px var(--zg-red)}
+.zg-check[aria-checked="mixed"] .zg-check__box{background:var(--zg-brand);box-shadow:none}
+.zg-seg--block{display:flex;width:100%}.zg-seg--block button{flex:1}
+.zg-seg button{display:inline-flex;align-items:center;justify-content:center;gap:6px}.zg-seg button[disabled]{opacity:.45;cursor:not-allowed}
+.zg-alert__act{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.zg-badge--sq{border-radius:8px}.zg-badge--inverse{background:var(--zg-inv-bg);color:var(--zg-inv-fg)}
+.zg-avatar--sq{border-radius:30%}
+.zg-avatar--ring{box-shadow:var(--zg-rim),0 0 0 2px var(--zg-bg)}
+.zg-avatar--st{position:relative;overflow:visible}.zg-avatar--st img{border-radius:inherit}
+.zg-avatar__st{position:absolute;inset-inline-end:0;bottom:0;width:max(8px,calc(var(--s)*.26));height:max(8px,calc(var(--s)*.26));border-radius:50%;background:var(--zg-text-3);box-shadow:0 0 0 2px var(--zg-bg)}
+.zg-avatar__st--online{background:var(--zg-green)}.zg-avatar__st--away{background:var(--zg-amber)}.zg-avatar__st--busy{background:var(--zg-red)}
+.zg-avatar--sky{background:var(--zg-sky);color:var(--zg-bg)}.zg-avatar--success{background:var(--zg-green);color:var(--zg-bg)}.zg-avatar--warning{background:var(--zg-amber);color:var(--zg-bg)}.zg-avatar--danger{background:var(--zg-red);color:var(--zg-bg)}.zg-avatar--neutral{background:var(--zg-s3);color:var(--zg-text-1)}
+.zg-card.zg-card--outline{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:inset 0 0 0 1px var(--zg-stroke)}
+.zg-card.zg-card--flush{padding:0}
+.zg-card--click{cursor:pointer;transition:transform .2s var(--zg-ease)}.zg-card--click:hover{transform:translateY(-2px)}.zg-card--click:focus-visible{outline:2px solid var(--zg-brand);outline-offset:2px}
+.zg-card__foot{display:flex;align-items:center;gap:8px;padding-top:14px;box-shadow:0 -1px 0 var(--zg-stroke)}
+.zg-modal__sub{font-size:13px;font-weight:500;color:var(--zg-text-3);margin-top:2px}
+.zg-crumbs__sep{color:var(--zg-text-3)}
+.zg-tr--click{cursor:pointer}
+.zg-tip--bottom::after{bottom:auto;top:calc(100% + 8px);transform:translateX(-50%) translateY(-4px)}
+.zg-tip--bottom:hover::after,.zg-tip--bottom:focus-visible::after{transform:translateX(-50%) translateY(0)}
+.zg-tip--left::after,.zg-tip--right::after{bottom:auto;top:50%;inset-inline-start:auto}
+.zg-tip--left::after{left:auto;right:calc(100% + 8px);transform:translateY(-50%) translateX(4px)}
+.zg-tip--right::after{right:auto;left:calc(100% + 8px);transform:translateY(-50%) translateX(-4px)}
+.zg-tip--left:hover::after,.zg-tip--left:focus-visible::after,.zg-tip--right:hover::after,.zg-tip--right:focus-visible::after{transform:translateY(-50%) translateX(0)}
+.zg-rg{display:flex;flex-direction:column;gap:10px}.zg-rg--row{flex-direction:row;flex-wrap:wrap;gap:10px 22px}
+/* compat layer (@ziyarago/ui/compat): compound components that have no counterpart in the new kit */
+.zg-dd-trig{display:inline-block}.zg-dd__panel{position:fixed;z-index:var(--zg-z-pop,60);animation:zg-pop-in .16s var(--zg-ease) both}
+.zg-menu__lbl{padding:10px 12px 4px;font:700 11px var(--zg-font);letter-spacing:.1em;text-transform:uppercase;color:var(--zg-text-3)}
+.zg-avgroup{display:flex}.zg-avgroup>*+*{margin-inline-start:-8px}.zg-avgroup--tight>*+*{margin-inline-start:-12px}.zg-avgroup--loose>*+*{margin-inline-start:-4px}
+.zg-avgroup>.zg-avatar{box-shadow:var(--zg-rim),0 0 0 2px var(--zg-bg)}.zg-avgroup--rev{flex-direction:row-reverse;justify-content:flex-end}
+.zg-toasts{position:fixed;z-index:calc(var(--zg-z-modal,200) + 20);display:flex;flex-direction:column;gap:10px;padding:16px;max-width:100vw;pointer-events:none}
+.zg-toasts--top-right{top:0;right:0;align-items:flex-end}.zg-toasts--top-left{top:0;left:0;align-items:flex-start}.zg-toasts--top-center{top:0;left:50%;transform:translateX(-50%);align-items:center}
+.zg-toasts--bottom-right{bottom:0;right:0;align-items:flex-end;flex-direction:column-reverse}.zg-toasts--bottom-left{bottom:0;left:0;align-items:flex-start;flex-direction:column-reverse}.zg-toasts--bottom-center{bottom:0;left:50%;transform:translateX(-50%);align-items:center;flex-direction:column-reverse}
+.zg-toasts__i{position:relative;pointer-events:auto}.zg-toasts__x{position:absolute;top:6px;inset-inline-end:6px}.zg-toasts__act{margin-top:6px}
+.zg-sidenav--compat{position:fixed;inset-block:0;inset-inline-start:0;z-index:60;width:min(288px,80vw);height:100vh;transform:translateX(-100%);transition:transform .3s var(--zg-ease),width .3s var(--zg-ease);background-color:var(--sidebar-bg,oklch(0.108 0.022 50));color:var(--zg-text-2)}
+[dir="rtl"] .zg-sidenav--compat{transform:translateX(100%)}.zg-sidenav--compat.is-open{transform:none}
+.zg-sidenav__nav{flex:1;min-height:0;display:flex;flex-direction:column;gap:18px;overflow-y:auto;overflow-x:hidden;padding:8px 0}.zg-sidenav__sec{display:flex;flex-direction:column;gap:2px}
+.zg-sidenav__foot{padding-top:12px;box-shadow:0 -1px 0 var(--zg-stroke)}
+.zg-sidenav-scrim{position:fixed;inset:0;z-index:55;background:oklch(0.12 0.005 40 / .45);backdrop-filter:blur(4px)}
+@media (min-width:1024px){.zg-sidenav--compat{position:sticky;top:12px;margin:12px 0 12px 12px;height:calc(100vh - 24px);width:var(--w);transform:none;border-radius:24px;flex:none}[dir="rtl"] .zg-sidenav--compat{margin:12px 12px 12px 0}.zg-sidenav-scrim{display:none}}
+.zg-sidenav--collapsed .zg-sidenav__group{display:none}
+.zg-topnav--compat{padding-inline:clamp(16px,3vw,32px);min-height:64px}.zg-topnav--compat.zg-topnav--md{min-height:56px}.zg-topnav__mid{flex:1;min-width:0;display:flex;justify-content:center}
+.zg-topnav--compat .zg-topnav__brand{gap:12px}
+.zg-subnav--compat .zg-navitem{text-decoration:none;width:100%}.zg-subnav--compat .zg-sidenav__group{display:flex;align-items:center;gap:8px}
+@media (min-width:1024px){.zg-subnav--compat{position:sticky;top:16px;align-self:flex-start}}
+.zg-check,.zg-switch{text-align:start}
+.zg-sidenav__close{position:absolute;top:12px;inset-inline-end:12px}@media (min-width:1024px){.zg-sidenav__close{display:none}}
+.zg-cal__d:disabled{opacity:.35;cursor:not-allowed;background:none}
+.zg-tipbox{position:fixed;z-index:calc(var(--zg-z-modal,200) + 40);max-width:min(320px,90vw);padding:6px 10px;border-radius:10px;font:600 12px var(--zg-font);background:var(--zg-inv-bg);color:var(--zg-inv-fg);box-shadow:var(--zg-shadow-1);pointer-events:none}.zg-tipbox--glass{background:var(--zg-pop);color:var(--zg-text-1);box-shadow:var(--zg-rim),var(--zg-shadow-1)}

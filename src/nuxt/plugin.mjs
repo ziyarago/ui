@@ -1,9 +1,10 @@
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports';
-import { useUiTheme } from '../theme.js';
+import { applySavedLocale, configureTheme, useUiTheme } from '../theme.js';
+import { setUiLocale } from '../i18n/index.js';
 
-export default defineNuxtPlugin(() => {
-  const ui = useUiTheme();
+export default defineNuxtPlugin(nuxtApp => {
   const d = useRuntimeConfig().public.ziyarago || {};
-  const saved = (() => { try { return localStorage.getItem('zg-ui'); } catch { return null; } })();
-  if (!saved) { ui.setTheme(d.theme || 'dark'); ui.setPalette(d.palette || 'gold'); ui.setDir(d.dir || 'ltr'); }
+  configureTheme({ theme: d.theme || 'dark', palette: d.palette || 'gold', dir: d.dir || 'ltr', bg: d.bg || 'none', locale: d.locale || 'en' });
+  useUiTheme();
+  nuxtApp.hook('app:mounted', () => { if (d.locale) setUiLocale(d.locale); applySavedLocale(); });
 });

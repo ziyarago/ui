@@ -9,6 +9,11 @@ export default {
     props: {
       name: { type: 'string', description: 'Full name. Shown as the tooltip and used for up to two initials; "?" when empty.' },
       src: { type: 'string', description: 'Image URL. Initials are shown without it.' },
+      initials: { type: 'string', description: 'Explicit initials (up to 3 characters, uppercased) instead of the ones derived from name.' },
+      tone: { type: "'brand' | 'sky' | 'success' | 'warning' | 'danger' | 'neutral'", values: ['brand', 'sky', 'success', 'warning', 'danger', 'neutral'], default: 'brand', description: 'Background color of the initials avatar.' },
+      shape: { type: "'circle' | 'rounded'", values: ['circle', 'rounded'], default: 'circle', description: 'rounded gives a squircle with a 30% corner radius.' },
+      ring: { type: 'boolean', default: false, description: 'Adds a background-colored ring so overlapping avatars stay separated.' },
+      status: { type: "'online' | 'offline' | 'away' | 'busy'", values: ['online', 'offline', 'away', 'busy'], description: 'Shows a presence dot in the bottom corner.' },
       size: { type: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | number", values: SZ, default: 'md', description: 'Diameter: xs 24, sm 32, md 40, lg 56, xl 72 px. A number is used directly as px.' },
     },
     notes: ['Avatar sizes differ from other components (lg 56, xl 72), and a number gives any custom size.'],
@@ -74,8 +79,8 @@ export default {
       label: { type: 'string', default: 'Map', description: 'aria-label of the map region.' },
       labels: { type: '{ zoomIn?: string; zoomOut?: string }', default: "{ zoomIn: 'Zoom in', zoomOut: 'Zoom out' }", description: 'Accessible names of the zoom buttons.' },
     },
-    events: { select: 'Called with the marker object when a marker is clicked.' },
-    notes: ['The center and zoom props are initial values; user panning and zooming is kept in internal state.', 'Tiles come from a third-party CDN, so it needs network access.'],
+    events: { select: 'Called with the marker object when a marker is clicked.', move: 'Called with { lat, lon, zoom } while the user pans or zooms (drag, touch, wheel, double click or the +/- buttons).', zoom: 'Called with the new zoom level when it changes.' },
+    notes: ['The center and zoom props are initial values; user panning and zooming is kept in internal state. Listen to move/zoom to track it.','Drag or touch to pan, wheel or double click to zoom around the pointer. The tile theme follows the page data-theme after mount (light tiles on the server render) unless theme or style is set.', 'Tiles come from a third-party CDN, so it needs network access.'],
   },
 
   ProfileHeader: {

@@ -17,9 +17,14 @@ export default {
     props: {
       open: open('dialog'),
       title: { type: 'string', description: 'Header text and aria-label of the dialog.' },
+      subtitle: { type: 'string', description: 'Muted line under the title in the header.' },
+      closable: { type: 'boolean', default: true, description: 'false hides the close (x) button in the header.' },
+      closeOnBackdrop: { type: 'boolean', default: true, description: 'false ignores clicks on the scrim.' },
+      closeOnEsc: { type: 'boolean', default: true, description: 'false ignores the Escape key (focus trap stays active).' },
+      width: { type: 'string', description: 'CSS max-width of the dialog, for example "960px". Overrides the width of size.' },
       size: size('width (320 to 720 px max), padding and text'),
     },
-    slots: { default: 'Dialog body.', footer: 'Footer area, usually action buttons. Rendered only when provided.' },
+    slots: { default: 'Dialog body.', footer: 'Footer area, usually action buttons. Rendered only when provided.', title: 'Replaces the title prop with custom header content.', subtitle: 'Replaces the subtitle prop.' },
     events: { close: 'Called on the close button, a click on the scrim or the Escape key. Set open to false in the handler.' },
     notes: ['Has role="dialog" and aria-modal. Escape calls close; on open focus moves into the dialog, Tab is trapped inside it and focus returns to the previously focused element on close.', 'Put data-autofocus on an element to choose which one receives initial focus (default: first focusable).', 'Closed state renders nothing, so inner state is lost on close.'],
   },
@@ -146,10 +151,11 @@ export default {
     description: 'Short text bubble shown on hover or focus of the wrapped element; use for icon-only controls and hints.',
     props: {
       text: { type: 'string', required: true, description: 'Tooltip text.' },
+      placement: { type: "'top' | 'bottom' | 'left' | 'right'", values: ['top', 'bottom', 'left', 'right'], default: 'top', description: 'Side of the wrapped element where the bubble appears.' },
       size: size('bubble padding and font'),
     },
     slots: { default: 'The element the tooltip is attached to.' },
-    notes: ['Pure CSS bubble with fixed placement; it cannot contain markup. For rich content use HoverCard.'],
+    notes: ['Pure CSS bubble; it cannot contain markup. For rich content use HoverCard.'],
   },
 
   Dropdown: {

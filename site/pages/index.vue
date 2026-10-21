@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { GROUPS } from '~/docs-data/groups'
+import { TEMPLATES } from '~/docs-data/templates'
 useSeo({ title: '@ziyarago/ui — Vue, Nuxt and React UI components and page templates', description: 'Glass design system: 182 components and 17 page templates for Vue 3, Nuxt and React. OKLCH tokens, dark and light themes, RTL and Arabic, AI-ready catalog.' })
 
 const { siteUrl, version } = useRuntimeConfig().public
@@ -9,6 +10,7 @@ useHead({ script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@
   { '@type': 'SoftwareSourceCode', name: '@ziyarago/ui', description: 'Glass design system for Vue 3, Nuxt and React: 182 components and 17 page templates.', codeRepository: 'https://github.com/ziyarago/ui', programmingLanguage: 'JavaScript', license: 'https://opensource.org/licenses/MIT', version, publisher: { '@id': siteUrl + '/#org' } },
 ] }) }] })
 const total = GROUPS.reduce((n, g) => n + g.names.length, 0)
+const templatesCount = TEMPLATES.pages.length
 const install = 'npm i @ziyarago/ui'
 const sw = ref(true)
 const chk = ref(true)
@@ -35,7 +37,7 @@ export default () => (
 }
 const features = [
   { icon: 'kaaba', title: `${total} components`, text: 'Actions, forms, data, feedback, overlays, navigation, plus Umrah, hotel and CRM blocks.' },
-  { icon: 'logo', title: '16 page templates', text: 'Dashboard, CRM, bookings, catalog, settings, auth and more. Fill named slots only.' },
+  { icon: 'logo', title: `${templatesCount} page templates`, text: 'Dashboard, CRM, bookings, catalog, settings, auth and more. Fill named slots only.' },
   { icon: 'map', title: 'RTL and Arabic', text: 'Direction flips with one attribute. Thmanyah ships in the package.' },
   { icon: 'tour360', title: 'Tokens for any client', text: 'OKLCH CSS variables and tokens.json for Flutter and native apps.' },
 ]
@@ -44,14 +46,18 @@ const features = [
 <template>
   <div class="land">
     <section class="hero">
-      <UiBadge tone="brand">Vue 3 · Nuxt · React 18</UiBadge>
-      <h1>Vue, Nuxt &amp; React UI components and patterns</h1>
-      <p>A glass design system for Umrah and Hajj products. One framework-neutral core, adapters for each framework, {{ total }} components, 16 page templates.</p>
-      <div class="row">
-        <NuxtLink to="/docs"><UiButton variant="primary" size="lg">Get started</UiButton></NuxtLink>
-        <NuxtLink to="/docs/components"><UiButton size="lg">Browse components</UiButton></NuxtLink>
+      <div class="hero__t">
+        <UiBadge tone="brand">Vue 3 · Nuxt · React 18</UiBadge>
+        <h1>Vue, Nuxt &amp; React <span class="grad">UI components</span> and patterns</h1>
+        <p>A glass design system for Umrah and Hajj products. One core, adapters for each framework, {{ total }} components, {{ templatesCount }} page templates, dark and light, RTL and Arabic.</p>
+        <div class="row">
+          <NuxtLink to="/docs"><UiButton variant="primary" size="lg">Get started</UiButton></NuxtLink>
+          <NuxtLink to="/docs/components"><UiButton size="lg">Browse components</UiButton></NuxtLink>
+          <a href="#customize"><UiButton size="lg" variant="ghost">Customize live</UiButton></a>
+        </div>
+        <div class="install"><UiCode :code="install" title="terminal" /></div>
       </div>
-      <div class="install"><UiCode :code="install" title="terminal" /></div>
+      <HeroStage class="hero__s" />
     </section>
 
     <section class="mosaic" aria-label="Component preview">
@@ -90,9 +96,10 @@ const features = [
       <CodeTabs :vue="same.vue" :react="same.react" />
     </section>
 
+    <LiveCustomize />
+
     <section class="sec">
-      <h2>Customize all the way</h2>
-      <p class="muted">Use the controls in the header: dark and light, two palettes, LTR and RTL. Everything on this page follows.</p>
+      <h2>What is inside</h2>
       <div class="feat">
         <UiCard v-for="f in features" :key="f.title" :title="f.title">
           <img :src="`/3d/${f.icon}.png`" alt="" width="56" height="56">
@@ -112,7 +119,12 @@ const features = [
 
 <style scoped>
 .land { display: flex; flex-direction: column; gap: 80px; padding: 64px 0 40px; }
-.hero { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; max-width: 800px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 40px; align-items: center; }
+.hero__t { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+.grad { background: linear-gradient(100deg, var(--zg-brand-text), var(--zg-sky-text), oklch(0.72 0.17 320), var(--zg-brand-text)); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+[data-motion="on"] .grad { animation: grad-shift 9s linear infinite; }
+@keyframes grad-shift { to { background-position: -300% 0; } }
+@media (max-width: 980px) { .hero { grid-template-columns: minmax(0, 1fr); } }
 .hero h1 { margin: 0; font: 300 clamp(38px, 6.5vw, 68px) / 1.04 var(--zg-font); letter-spacing: -.035em; }
 .hero p { margin: 0; font-size: 19px; line-height: 1.5; color: var(--zg-text-2); max-width: 60ch; }
 .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
