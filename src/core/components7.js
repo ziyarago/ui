@@ -1,4 +1,5 @@
 // @ziyarago/ui · components, part 7 — gluestack parity: typography, layout primitives, Link, Pressable, Icon, Portal, sheets, ImageViewer, ChatAi, LiquidGlass.
+import { t } from '../i18n/index.js';
 import { icon, cx } from './components.js';
 import { trap } from './dialog.js';
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -22,21 +23,21 @@ export const more7 = {
     h('span', { class: 'zg-sheet__grab', 'aria-hidden': 'true' }), p.title ? h('h3', { class: 'zg-sheet__t' }, p.title) : null, h('div', { class: 'zg-sheet__b' }, ...children), (slots.footer || p.footer) ? h('div', { class: 'zg-sheet__f' }, slots.footer || p.footer) : null)) },
   Actionsheet: { render: ({ C, h, props: p }) => h(C.BottomSheet, { open: p.open, size: p.size, onClose: p.onClose, title: p.title },
     h('div', { class: 'zg-as' }, ...(p.items || []).map((it, i) => h('button', { key: i, type: 'button', class: cx('zg-as__i', it.tone && 'zg-as__i--' + it.tone), disabled: it.disabled, onClick: () => { it.onClick && it.onClick(); p.onSelect && p.onSelect(it); p.onClose && p.onClose(); } }, it.icon ? icon(h, it.icon, 18) : null, h('span', null, it.label)))),
-    h('button', { type: 'button', class: 'zg-as__i zg-as__i--cancel', onClick: p.onClose }, p.cancelLabel || 'Cancel')) },
+    h('button', { type: 'button', class: 'zg-as__i zg-as__i--cancel', onClick: p.onClose }, p.cancelLabel || t('Actionsheet', 'cancel'))) },
   ImageViewer: { state: { i: null }, render: ({ h, props: p, state, set }) => {
     if (!p.open) return null;
     const im = p.images || [], i = clamp(state.i ?? p.index ?? 0, 0, Math.max(0, im.length - 1)), go = d => set({ i: (i + d + im.length) % im.length });
-    return h('div', { class: 'zg-iv', role: 'dialog', 'aria-modal': 'true', 'aria-label': p.alt || 'Image viewer', onClick: p.onClose },
-      h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--ghost zg-iv__x', 'aria-label': 'Close', onClick: p.onClose }, icon(h, 'x', 20)),
-      im.length > 1 ? h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--ghost zg-iv__p', 'aria-label': 'Previous', onClick: e => { e.stopPropagation(); go(-1); } }, icon(h, 'chevron-left', 22)) : null,
+    return h('div', { class: 'zg-iv', role: 'dialog', 'aria-modal': 'true', 'aria-label': p.alt || t('ImageViewer', 'label'), onClick: p.onClose },
+      h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--ghost zg-iv__x', 'aria-label': t('ImageViewer', 'close'), onClick: p.onClose }, icon(h, 'x', 20)),
+      im.length > 1 ? h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--ghost zg-iv__p', 'aria-label': t('ImageViewer', 'previous'), onClick: e => { e.stopPropagation(); go(-1); } }, icon(h, 'chevron-left', 22)) : null,
       h('img', { class: 'zg-iv__img', src: im[i], alt: p.alt || '', onClick: e => e.stopPropagation() }),
-      im.length > 1 ? h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--ghost zg-iv__n', 'aria-label': 'Next', onClick: e => { e.stopPropagation(); go(1); } }, icon(h, 'chevron-right', 22)) : null,
+      im.length > 1 ? h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--ghost zg-iv__n', 'aria-label': t('ImageViewer', 'next'), onClick: e => { e.stopPropagation(); go(1); } }, icon(h, 'chevron-right', 22)) : null,
       h('span', { class: 'zg-badge zg-iv__c' }, `${i + 1} / ${im.length}`)); } },
   ChatAi: { state: { q: '' }, render: ({ h, props: p, state, set }) => {
     const send = () => { const t = state.q.trim(); if (!t || p.loading) return; set({ q: '' }); p.onSend && p.onSend(t); };
-    return h('section', { class: 'zg-chat zg-glass', 'aria-label': p.title || 'Assistant' },
+    return h('section', { class: 'zg-chat zg-glass', 'aria-label': p.title || t('ChatAi', 'assistant') },
       p.title ? h('div', { class: 'zg-chat__h' }, h('b', null, p.title), p.subtitle ? h('span', { class: 'zg-hint' }, p.subtitle) : null) : null,
-      h('div', { class: 'zg-chat__m', role: 'log', 'aria-live': 'polite' }, ...(p.messages || []).map((m, i) => h('div', { key: i, class: cx('zg-chat__b', 'zg-chat__b--' + (m.role === 'user' ? 'user' : 'ai')) }, m.text)), p.loading ? h('div', { class: 'zg-chat__b zg-chat__b--ai zg-chat__dots', 'aria-label': 'Typing' }, h('i'), h('i'), h('i')) : null),
-      h('div', { class: 'zg-chat__f' }, h('input', { class: 'zg-chat__in', value: state.q, placeholder: p.placeholder || 'Ask anything…', 'aria-label': 'Message', onInput: e => set({ q: e.target.value }), onKeydown: e => { if (e.key === 'Enter') { e.preventDefault(); send(); } } }),
-        h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--brand', 'aria-label': 'Send', disabled: p.loading || !state.q.trim(), onClick: send }, icon(h, 'send', 18)))); } },
+      h('div', { class: 'zg-chat__m', role: 'log', 'aria-live': 'polite' }, ...(p.messages || []).map((m, i) => h('div', { key: i, class: cx('zg-chat__b', 'zg-chat__b--' + (m.role === 'user' ? 'user' : 'ai')) }, m.text)), p.loading ? h('div', { class: 'zg-chat__b zg-chat__b--ai zg-chat__dots', 'aria-label': t('ChatAi', 'typing') }, h('i'), h('i'), h('i')) : null),
+      h('div', { class: 'zg-chat__f' }, h('input', { class: 'zg-chat__in', value: state.q, placeholder: p.placeholder || t('ChatAi', 'placeholder'), 'aria-label': t('ChatAi', 'message'), onInput: e => set({ q: e.target.value }), onKeydown: e => { if (e.key === 'Enter') { e.preventDefault(); send(); } } }),
+        h('button', { type: 'button', class: 'zg-ibtn zg-ibtn--brand', 'aria-label': t('ChatAi', 'send'), disabled: p.loading || !state.q.trim(), onClick: send }, icon(h, 'send', 18)))); } },
 };
