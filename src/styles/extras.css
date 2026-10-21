@@ -15,7 +15,7 @@
 .zg-avatar__st{position:absolute;inset-inline-end:0;bottom:0;width:max(8px,calc(var(--s)*.26));height:max(8px,calc(var(--s)*.26));border-radius:50%;background:var(--zg-text-3);box-shadow:0 0 0 2px var(--zg-bg)}
 .zg-avatar__st--online{background:var(--zg-green)}.zg-avatar__st--away{background:var(--zg-amber)}.zg-avatar__st--busy{background:var(--zg-red)}
 .zg-avatar--sky{background:var(--zg-sky);color:var(--zg-bg)}.zg-avatar--success{background:var(--zg-green);color:var(--zg-bg)}.zg-avatar--warning{background:var(--zg-amber);color:var(--zg-bg)}.zg-avatar--danger{background:var(--zg-red);color:var(--zg-bg)}.zg-avatar--neutral{background:var(--zg-s3);color:var(--zg-text-1)}
-.zg-card.zg-card--outline{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:inset 0 0 0 1px var(--zg-stroke)}
+.zg-card.zg-card--outline{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:inset 0 0 0 1px var(--zg-stroke)}
 .zg-card.zg-card--flush{padding:0}
 .zg-card--click{cursor:pointer;transition:transform .2s var(--zg-ease)}.zg-card--click:hover{transform:translateY(-2px)}.zg-card--click:focus-visible{outline:2px solid var(--zg-brand);outline-offset:2px}
 .zg-card__foot{display:flex;align-items:center;gap:8px;padding-top:14px;box-shadow:0 -1px 0 var(--zg-stroke)}

@@ -148,5 +148,5 @@ export const UiPressable = C.Pressable;
 export const UiIcon = C.Icon;
 export const UiPortal = C.Portal;
 export const UiBottomSheet = C.BottomSheet;
-export { fmt, setIconBase, rules, LOCALES, setUiLocale, getUiLocale, setUiMessages, isRtlLocale } from '../core/index.js';
+export { fmt, setIconBase, registerIcons, rules, LOCALES, setUiLocale, getUiLocale, setUiMessages, isRtlLocale } from '../core/index.js';
 export { useUiTheme } from '../theme.js';

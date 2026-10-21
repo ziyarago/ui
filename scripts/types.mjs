@@ -142,7 +142,7 @@ export function defineUiComponents(defs: Record<string, import('./core').Compone
 declare const _default: { install: typeof install };
 export default _default;
 export { useUiTheme } from './theme';
-export { fmt, setIconBase } from './shared';
+export { fmt, setIconBase, registerIcons } from './shared';
 `;
 
 const react = banner + `import type { ComponentType, MouseEvent, ReactNode } from 'react';
@@ -153,7 +153,7 @@ export type { Size, Tone, Rule, NavItem, Column } from './shared';
 
 export const rules: typeof import('./shared').rules;
 export { useUiTheme } from './theme';
-export { fmt, setIconBase } from './shared';
+export { fmt, setIconBase, registerIcons } from './shared';
 /** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
 export function defineUiComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, ComponentType<any>>;
 `;

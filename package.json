@@ -98,6 +98,7 @@
   ],
   "scripts": {
     "types": "node scripts/types.mjs",
+    "icons": "node scripts/icons.mjs",
     "build": "node scripts/i18n-index.mjs && node scripts/build.mjs && node scripts/types.mjs && node scripts/manifest.mjs",
     "check": "node scripts/check.mjs && node scripts/check-meta.mjs && node scripts/i18n-index.mjs",
     "test": "npm run test:unit && npm run test:ssr && npm run test:browser",
@@ -147,6 +148,7 @@
     "axe-core": "^4.14.0",
     "conventional-changelog-conventionalcommits": "^9.3.1",
     "esbuild": "^0.28.2",
+    "lucide-static": "^0.460.0",
     "puppeteer-core": "^23.11.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

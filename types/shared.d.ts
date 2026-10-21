@@ -15,4 +15,6 @@ export interface SelectProps { label?: string; options: { value: string | number
 export type Rule = (value: any) => true | string;
 export const rules: { required(): Rule; email(): Rule; url(): Rule; digits(n: number): Rule; alpha(): Rule; alphaDash(): Rule; minLength(n: number): Rule; maxLength(n: number): Rule; range(a: number, b: number): Rule; regex(re: RegExp, msg?: string): Rule; confirmed(get: () => unknown): Rule; password(): Rule };
 export function setIconBase(base: string): void;
+/** Add or replace icons by name with inline SVG strings. They win over the built-in set and the CDN. */
+export function registerIcons(icons: Record<string, string>): void;
 export const fmt: { sar(n: number): string; num(n: number): string; dur(seconds: number): string };

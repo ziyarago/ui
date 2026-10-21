@@ -6,7 +6,9 @@ import { t } from '../i18n/index.js';
 import { rove, tabIdx, listKeys, openKeys, focusIn, toTrigger, trigger } from './keys.js';
 export const cx = (...a) => a.filter(Boolean).join(' ');
 // Copies the listed props that are set; used to forward native attributes and listeners to the real <input>/<textarea>.
-export const pick = (p, keys) => { const o = {}; for (const k of keys) if (p[k] !== undefined) o[k] = p[k]; return o; };
+const DOM_NAMES = { autocomplete: 'autoComplete', maxlength: 'maxLength', minlength: 'minLength', inputmode: 'inputMode', autocapitalize: 'autoCapitalize', spellcheck: 'spellCheck', autofocus: 'autoFocus' };
+// DOM property spelling (autoComplete, maxLength ...) so React does not warn; Vue accepts it too.
+export const pick = (p, keys) => { const o = {}; for (const k of keys) if (p[k] !== undefined) o[DOM_NAMES[k] || k] = p[k]; return o; };
 export const INPUT_ATTRS = ['name', 'autocomplete', 'required', 'min', 'max', 'step', 'maxlength', 'minlength', 'inputmode', 'pattern', 'spellcheck', 'autofocus', 'autocapitalize', 'onBlur', 'onFocus', 'onKeydown', 'onKeyDown', 'onKeyup', 'onKeyUp', 'onPaste'];
 export const DZ = { xs: .82, sm: .91, md: 1, lg: 1.12, xl: 1.25 };
 // Shared outside-click / Escape close for popups. Put `ref: ddRef(close)` on the popup element; its parent is the component root
@@ -34,14 +36,19 @@ export const ddRef = (close, o = {}) => el => {
 export const dzp = (p, b) => Math.round(b * (DZ[p.size] || 1));
 export const dzf = n => `calc(${n}px*var(--dz,1))`;
 export const dzb = p => ({ xs: 'xs', sm: 'xs', md: 'sm', lg: 'md', xl: 'lg' }[p.size] || 'sm');
-// Icons: Lucide SVGs fetched once, inlined as data-URI masks (works offline after first load; override the base to self-host).
+// Icons: Lucide SVGs inlined as data-URI masks. The ~100 icons the components use come from a lazily imported built-in set (no network, CSP-safe);
+// any other name is fetched once from ZG_ICON_BASE (unpkg by default; override with setIconBase to self-host) or taken from registerIcons().
 export let ZG_ICON_BASE = 'https://unpkg.com/lucide-static@0.460.0/icons/';
 export const setIconBase = b => { ZG_ICON_BASE = b.endsWith('/') ? b : b + '/'; };
-const iconCache = {}, iconPending = {};
+const iconCache = {}, iconPending = {}, iconExtra = {};
+let iconBuiltin;
+const getBuiltin = () => iconBuiltin || (iconBuiltin = import('../icons/builtin.js').then(m => m.default).catch(() => ({})));
+/** Add or replace icons by name with inline SVG strings: registerIcons({ 'my-logo': '<svg ...>...</svg>' }). They win over the built-in set and the CDN. */
+export const registerIcons = map => { Object.assign(iconExtra, map); for (const k of Object.keys(map)) { delete iconCache[k]; delete iconPending[k]; } };
 const iconUri = svg => 'url("data:image/svg+xml,' + encodeURIComponent(svg.replace(/stroke="currentColor"/g, 'stroke="black"').replace(/currentColor/g, 'black')) + '")';
 const loadIcon = name => {
   if (iconCache[name] || iconPending[name] || typeof document === 'undefined') return;
-  iconPending[name] = fetch(ZG_ICON_BASE + name + '.svg').then(r => r.text()).then(svg => {
+  iconPending[name] = (iconExtra[name] ? Promise.resolve(iconExtra[name]) : getBuiltin().then(b => b[name])).then(svg => svg || fetch(ZG_ICON_BASE + name + '.svg').then(r => r.text())).then(svg => {
     iconCache[name] = iconUri(svg);
     document.querySelectorAll('[data-zg-icon="' + name + '"]').forEach(el => el.style.setProperty('--zg-icon', iconCache[name]));
   }).catch(() => {});
