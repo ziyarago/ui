@@ -1,3 +1,9 @@
+## [0.20.9](https://github.com/ziyarago/ui/compare/v0.20.8...v0.20.9) (2026-10-29)
+
+### Bug Fixes
+
+* server HTML carries classes instead of inline style attributes (strict CSP); SSR style attribute budget in the bundle audit ([04ee9ab](https://github.com/ziyarago/ui/commit/04ee9ab5a0c6a1f0e25860cbb0e14cc7345e508c))
+
 ## [0.20.8](https://github.com/ziyarago/ui/compare/v0.20.7...v0.20.8) (2026-10-29)
 
 ### Bug Fixes
