@@ -1,0 +1,22 @@
+name: npm deprecate
+# Marks a range of published versions as deprecated using the repository's NPM_TOKEN.
+#   gh workflow run "npm deprecate" -f spec='@ziyarago/ui@<=0.20.7' -f message='...'
+on:
+  workflow_dispatch:
+    inputs:
+      spec: { description: 'package@range, e.g. @ziyarago/ui@<=0.20.7', required: true }
+      message: { description: 'deprecation message (empty string un-deprecates)', required: true }
+
+permissions:
+  contents: read
+
+jobs:
+  deprecate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, registry-url: 'https://registry.npmjs.org' }
+      - name: Deprecate
+        run: npm deprecate "${{ inputs.spec }}" "${{ inputs.message }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
