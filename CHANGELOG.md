@@ -1,3 +1,9 @@
+## [0.20.10](https://github.com/ziyarago/ui/compare/v0.20.9...v0.20.10) (2026-10-29)
+
+### Bug Fixes
+
+* unbroken text wraps, badge/delta/scrim contrast, 24px hit areas, focus rings, Screensaver glow, badges and media sizing (Pro audit triage) ([1023b21](https://github.com/ziyarago/ui/commit/1023b21c2d602f44dbae7ff1d10e8c6954d0cf9a))
+
 ## [0.20.9](https://github.com/ziyarago/ui/compare/v0.20.8...v0.20.9) (2026-10-29)
 
 ### Bug Fixes
