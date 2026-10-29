@@ -17,5 +17,5 @@ export const rules = {
 };
 
 export const more4 = {
-  Footer: { render: ({ h, props: p, children }) => h('footer', { class: 'zg-foot' }, h('span', { style: { color: 'var(--zg-text-3)', fontSize: '13px' } }, p.copyright || '© 2026 ZiyaraGo'), h('nav', { style: { display: 'flex', gap: '16px', flexWrap: 'wrap' } }, ...(p.links || []).map((l, i) => h('a', { key: i + ':' + l.label, href: l.href || '#', style: { color: 'var(--zg-brand-text)', fontSize: '13px', fontWeight: 600 } }, l.label))), ...children) },
+  Footer: { render: ({ h, props: p, children }) => h('footer', { class: 'zg-foot' }, h('span', { class: 'zg-u-fcopy' }, p.copyright || '© 2026 ZiyaraGo'), h('nav', { class: 'zg-u-fnav' }, ...(p.links || []).map((l, i) => h('a', { key: i + ':' + l.label, href: l.href || '#', class: 'zg-u-flink' }, l.label))), ...children) },
 };

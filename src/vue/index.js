@@ -5,7 +5,7 @@ import { BOOL_PROPS } from '../core/bools.js';
 
 const C = {};
 let uidN = 0;
-const vh = (t, p, ...k) => { const kids = k.flat(); if (p && typeof t === 'string') for (const key of Object.keys(p)) if (/^on[A-Z]/.test(key) && !key.startsWith('onVnode')) { const nk = 'on' + key[2] + key.slice(3).toLowerCase(); if (nk !== key) { p[nk] = p[key]; delete p[key]; } } return typeof t === 'string' || !kids.length ? h(t, p, kids.length ? kids : undefined) : h(t, p, { default: () => kids }); };
+const vh = (t, p, ...k) => { const kids = k.flat(); if (p && 'style' in p && p.style === undefined) delete p.style; if (p && typeof t === 'string') for (const key of Object.keys(p)) if (/^on[A-Z]/.test(key) && !key.startsWith('onVnode')) { const nk = 'on' + key[2] + key.slice(3).toLowerCase(); if (nk !== key) { p[nk] = p[key]; delete p[key]; } } return typeof t === 'string' || !kids.length ? h(t, p, kids.length ? kids : undefined) : h(t, p, { default: () => kids }); };
 const wrap = (name, def) => defineComponent({
   name: 'Ui' + name, inheritAttrs: false, emits: ['update:modelValue', 'change'],
   setup(_, { attrs, slots, emit }) {
@@ -17,7 +17,7 @@ const wrap = (name, def) => defineComponent({
       void localeTick.value;
       const props = {}, root = {};
       // null means "not set" for every prop except the model (types accept `T | null` for optional props)
-      for (const k in attrs) { if (/^(aria|data)-|^(class|style|id)$/.test(k)) root[k] = attrs[k]; const pk = k.includes('-') && !/^(aria|data)-/.test(k) ? k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()) : k; if (attrs[k] === null && pk !== 'modelValue') continue; props[pk] = attrs[k] === '' && BOOL_PROPS.has(pk) ? true : attrs[k]; }
+      for (const k in attrs) { if (/^(aria|data)-|^(class|style|id)$/.test(k) && !(k === 'style' && attrs[k] == null)) root[k] = attrs[k]; const pk = k.includes('-') && !/^(aria|data)-/.test(k) ? k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()) : k; if (attrs[k] === null && pk !== 'modelValue') continue; props[pk] = attrs[k] === '' && BOOL_PROPS.has(pk) ? true : attrs[k]; }
       // an explicit :on-change handler (kebab-case attribute) is still called after the v-model and @change emitters
       const userChange = typeof props.onChange === 'function' ? props.onChange : null;
       props.onChange = v => { emit('update:modelValue', v); emit('change', v); if (userChange) userChange(v); };

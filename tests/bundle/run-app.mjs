@@ -225,10 +225,12 @@ try {
     const a = /<html[^>]*>/.exec(html)?.[0] || '';
     log('html tag', a);
     if (!/data-theme=/.test(a) || !/dir=/.test(a)) addIssue('ssr', { cat: 'ssr', sev: 'fail', msg: `server HTML tag lacks data-theme/dir: ${a}` });
-    const styleAttrs = (html.match(/\sstyle="/g) || []).length;
-    addIssue('ssr', { cat: 'csp-ssr-inline', sev: 'info', msg: `${styleAttrs} inline style="" attributes in the server HTML (the audit CSP allows style-src-attr 'unsafe-inline' for SSR output; without it they are ignored)` });
+    // the harness' own .doc-preview wrappers and empty style="" attributes are not the kit's output and are not counted
+    const styleAttrs = [...html.matchAll(/<[a-z0-9]+\b[^>]*?\sstyle="([^"]+)"/g)].filter(m => !/class="doc-preview/.test(m[0])).length;
+    const budget = baseline['ssr-style-attrs']?.[baseKey];
+    addIssue('ssr', { cat: 'csp-ssr-inline', sev: budget != null && styleAttrs > budget ? 'fail' : 'info', msg: `${styleAttrs} inline style="" attributes in the server HTML${budget != null ? ` (budget ${budget})` : ''}; the audit CSP allows style-src-attr 'unsafe-inline' for SSR output, a stricter policy ignores them` });
     const kitStyles = {};
-    for (const m of html.matchAll(/<[a-z0-9]+[^>]*\sclass="(zg-[a-z0-9_-]+)[^"]*"[^>]*\sstyle="([^"]*)"/g)) { const k = m[1] + ' ' + m[2].replace(/[0-9.]+/g, 'N').slice(0, 60); kitStyles[k] = (kitStyles[k] || 0) + 1; }
+    for (const m of html.matchAll(/<([a-z0-9]+)\b([^>]*?)\sstyle="([^"]+)"/g)) { if (/class="doc-preview/.test(m[0])) continue; const k = m[1] + ' ' + (/class="([^" ]*)/.exec(m[2])?.[1] || '-') + ' ' + m[3].replace(/[0-9.]+/g, 'N').slice(0, 60); kitStyles[k] = (kitStyles[k] || 0) + 1; }
     writeFileSync(join(outDir, `ssr-styles-${baseKey}.json`), JSON.stringify(Object.entries(kitStyles).sort((a, b) => b[1] - a[1]).slice(0, 60), null, 1));
     for (const s of srv.log.inline) addIssue('ssr', { cat: 'csp-inline-script', sev: /zg-ui|ziyarago/i.test(s.head) ? 'warn' : 'info', msg: `inline <script> on ${s.path} needs a CSP hash/nonce: ${s.head}` });
   } else {
