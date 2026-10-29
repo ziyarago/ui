@@ -25,6 +25,7 @@ const wrap = (name, def) => {
     const uidRef = useRef(null); if (!uidRef.current) uidRef.current = 'zg' + (++uidN).toString(36);
     const mounted = useRef(false), wantPortal = useRef(false), [, bump] = useState(0);
     useIsoLayoutEffect(() => { mounted.current = true; if (wantPortal.current) bump(n => n + 1); }, []);
+    for (const k in props) if (props[k] === null && k !== 'modelValue') delete props[k];
     const slots = {}; for (const k of [...(def.slots || []), 'actions', 'footer']) if (props[k] !== undefined) slots[k] = props[k];
     if (props.onChange === undefined && props.onValueChange) props.onChange = props.onValueChange;
     const out = def.render({ C, h: hh, props, children: React.Children.toArray(children), slots, state, set, uid: uidRef.current, portal: (kids, to) => { if (!mounted.current) { wantPortal.current = true; return null; } return createPortal(kids, (typeof to === 'string' ? document.querySelector(to) : to) || document.body); } });

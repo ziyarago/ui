@@ -42,3 +42,38 @@ jobs:
         run: npm test
       - name: Type fixtures (vue-tsc and tsc against the generated types)
         run: npm run test:types
+
+  consumer-types:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run build
+      - name: Pack the package like a consumer installs it
+        run: |
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP"
+          ls "$RUNNER_TEMP"/*.tgz
+      - name: Generate the consumer project (one Vue SFC and one TSX per component)
+        run: node scripts/consumer-types.mjs generate --out "$RUNNER_TEMP/consumer" --dep "@ziyarago/ui=$(ls "$RUNNER_TEMP"/ziyarago-ui-*.tgz)"
+      - name: Install Vue 3.5, vue-tsc, React, TypeScript and the packed package
+        working-directory: ${{ runner.temp }}/consumer
+        run: npm install --no-audit --no-fund
+      - name: vue-tsc with strictTemplates
+        working-directory: ${{ runner.temp }}/consumer
+        run: npx vue-tsc --noEmit -p tsconfig.vue.json --pretty false > vue-tsc.log 2>&1 || true
+      - name: tsc strict (React)
+        working-directory: ${{ runner.temp }}/consumer
+        run: npx tsc -p tsconfig.react.json --pretty false > tsc.log 2>&1 || true
+      - name: Classify errors (tests/consumer/allow.txt lists the expected ones)
+        run: node scripts/consumer-types.mjs check "$RUNNER_TEMP/consumer/vue-tsc.log" "$RUNNER_TEMP/consumer/tsc.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: consumer-types
+          path: |
+            ${{ runner.temp }}/consumer/*.log
+            ${{ runner.temp }}/consumer/src
+          retention-days: 7
