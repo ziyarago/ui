@@ -51,7 +51,7 @@ export default {
     description: 'Underlined tab strip for switching between views of the same page.',
     props: {
       modelValue: { type: 'string', model: true, description: 'Value of the selected tab. Vue v-model, React modelValue + onChange.' },
-      items: { type: '{ value: string; label: string }[]', default: '[]', description: 'Tabs.' },
+      items: { type: '{ value: string; label: string; disabled?: boolean; count?: string | number; badge?: string | number }[]', default: '[]', description: 'Tabs. count (or badge) shows a small number after the label, for example "Media 3"; 0 is shown, null or empty is not.' },
       size: size('tab height and text'),
     },
     events: { change: 'Called with the value of the clicked tab.' },
@@ -61,7 +61,7 @@ export default {
   PillTabs: {
     description: 'Pill-style tab buttons with optional icons, horizontal or vertical; use for settings and profile sections.',
     props: {
-      items: { type: '{ value: string; label: string; icon?: string }[]', default: '[]', description: 'Tabs.' },
+      items: { type: '{ value: string; label: string; icon?: string; disabled?: boolean; count?: string | number; badge?: string | number }[]', default: '[]', description: 'Tabs. count (or badge) shows a small number after the label; 0 is shown, null or empty is not.' },
       value: { type: 'string', description: 'Value of the selected tab. Changed via the change event.' },
       vertical: { type: 'boolean', default: false, description: 'Stacks the tabs in a column.' },
       size: size('button height, gap and text'),

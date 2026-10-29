@@ -5,6 +5,9 @@
 .zg-modal-scrim[data-size="sm"]{--m-w:420px;--m-hp:16px 18px 14px;--m-bp:18px;--m-fp:12px 18px 16px;--m-t:17px;--m-f:14px;--m-g:14px}
 .zg-modal-scrim[data-size="md"]{--m-w:520px;--m-hp:20px 20px 16px;--m-bp:20px;--m-fp:14px 20px 18px;--m-t:18px;--m-f:14px;--m-g:16px}
 .zg-modal-scrim[data-size="lg"]{--m-w:640px;--m-hp:24px 26px 18px;--m-bp:26px;--m-fp:16px 26px 22px;--m-t:20px;--m-f:15px;--m-g:18px}
+.zg-modal-scrim{--m-w:520px;--m-hp:20px 20px 16px;--m-bp:20px;--m-fp:14px 20px 18px;--m-t:18px;--m-f:14px;--m-g:16px}
+.zg-modal-scrim[data-size="2xl"],.zg-modal-scrim[data-size="3xl"],.zg-modal-scrim[data-size="4xl"],.zg-modal-scrim[data-size="5xl"]{--m-hp:28px 32px 20px;--m-bp:32px;--m-fp:18px 32px 26px;--m-t:22px;--m-f:16px;--m-g:20px}
+.zg-modal-scrim[data-size="2xl"]{--m-w:768px}.zg-modal-scrim[data-size="3xl"]{--m-w:896px}.zg-modal-scrim[data-size="4xl"]{--m-w:1024px}.zg-modal-scrim[data-size="5xl"]{--m-w:1280px}
 .zg-modal-scrim[data-size="xl"]{--m-w:720px;--m-hp:28px 32px 20px;--m-bp:32px;--m-fp:18px 32px 26px;--m-t:22px;--m-f:16px;--m-g:20px}
 .zg-modal-scrim[data-size]:not(.zg-drawer-scrim):not(.zg-sheet-scrim) .zg-modal:not(.zg-stepdlg){max-width:var(--m-w)}
 .zg-modal-scrim[data-size] .zg-modal__head{padding:var(--m-hp)}

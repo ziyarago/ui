@@ -22,7 +22,7 @@ export default {
       closeOnBackdrop: { type: 'boolean', default: true, description: 'false ignores clicks on the scrim.' },
       closeOnEsc: { type: 'boolean', default: true, description: 'false ignores the Escape key (focus trap stays active).' },
       width: { type: 'string', description: 'CSS max-width of the dialog, for example "960px". Overrides the width of size.' },
-      size: size('width (320 to 720 px max), padding and text'),
+      size: { type: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl'", values: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl'], default: 'md', description: 'Max width, padding and text: xs 320, sm 420, md 520, lg 640, xl 720, 2xl 768, 3xl 896, 4xl 1024, 5xl 1280 px (always at most the screen width). An unknown value falls back to md and warns in development. width overrides the max width.' },
     },
     slots: { default: 'Dialog body.', footer: 'Footer area, usually action buttons. Rendered only when provided.', title: 'Replaces the title prop with custom header content.', subtitle: 'Replaces the subtitle prop.' },
     events: { close: 'Called on the close button, a click on the scrim or the Escape key. Set open to false in the handler.' },

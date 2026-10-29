@@ -29,7 +29,9 @@
     "url": "https://github.com/ziyarago/ui/issues"
   },
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "./src/i18n/index.js",
+    "./src/i18n/components/*.js"
   ],
   "main": "./src/core/index.js",
   "module": "./src/core/index.js",

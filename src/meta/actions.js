@@ -125,7 +125,7 @@ export default {
   Badge: {
     description: 'Status badge with a colored tone and optional dot.',
     props: {
-      tone: { type: "'brand' | 'success' | 'warning' | 'danger' | 'info' | 'inverse'", values: ['brand', 'success', 'warning', 'danger', 'info', 'inverse'], description: 'Color. inverse is a solid high-contrast badge (dark on light themes, light on dark). Omit for the neutral style.' },
+      tone: { type: "'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'inverse'", values: ['neutral', 'brand', 'success', 'warning', 'danger', 'info', 'inverse'], description: 'Color. neutral is the default grey, the same as passing no tone, so status maps can use it directly. inverse is a solid high-contrast badge (dark on light themes, light on dark). Omit for the neutral style.' },
       dot: { type: 'boolean', default: false, description: 'Shows a status dot before the content.' },
       shape: { type: "'pill' | 'square'", values: ['pill', 'square'], default: 'pill', description: 'square uses small rounded corners instead of a full pill.' },
       size: sizeProp('md', 'Badge height: xs 18px, sm 20px, md 24px, lg 28px, xl 32px.'),

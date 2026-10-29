@@ -30,7 +30,7 @@ const EVENT_ARGS = {
   'FileUpload.change': 'files: File[]', 'FileUpload.reject': "file: File, reason: 'type' | 'size' | 'count'",
   'ImageUpload.change': 'dataUrl: string, file: File',
   'LoginForm.submit': 'values: { email: string; password: string; remember: boolean }',
-  'DataTable.select': 'ids: (string | number)[]', 'DataTable.sort': "key: string, dir: 'asc' | 'desc'",
+  'DataTable.rowClick': 'row: any, index: number', 'DataTable.select': 'ids: (string | number)[]', 'DataTable.sort': "key: string, dir: 'asc' | 'desc'",
   'TreeView.select': 'id: string | number',
   'ChartCard.menu': 'label: string',
   'LineChart.pointClick': 'point: { seriesKey: string; series: string; index: number; x: string | number | Date; label: string; y: number | null }', 'AreaChart.pointClick': 'point: { seriesKey: string; series: string; index: number; x: string | number | Date; label: string; y: number | null }', 'BarChart.pointClick': 'point: { seriesKey: string; series: string; index: number; x: string | number | Date; label: string; y: number | null }',
