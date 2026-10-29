@@ -49,5 +49,5 @@ export async function load() {
 }
 
 /** Stable text fingerprint of a mounted variant (ids and uid counters normalised) used to compare two runs of the same page. */
-export const fingerprint = el => el.innerHTML.replace(/--zg-icon:\s*url\([^;]*\);?/g, '').replace(/\sstyle="\s*"/g, '').replace(/\bzg[0-9a-z]{1,6}(-[a-z0-9]+)?\b/g, 'ID').replace(/\s+/g, ' ');
+export const fingerprint = el => el.innerHTML.replace(/--zg-icon:\s*url\((?:&quot;|")[\s\S]*?(?:&quot;|")\)\s*;?/g, '').replace(/\sstyle="\s*"/g, '').replace(/\bzg[0-9a-z]{1,6}(-[a-z0-9]+)?\b/g, 'ID').replace(/\s+/g, ' ');
 export const finish = () => { state.done = true; };
