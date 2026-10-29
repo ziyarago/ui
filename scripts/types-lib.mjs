@@ -114,7 +114,7 @@ function component(n, fw) {
     lines.push(jsdoc(['v-model update. Emitted together with `change` (typed payload: ' + t.replace(/\*\//g, '') + ').']) + `  'onUpdate:${mv.name}'?(value: any): void;`);
   }
   if (fw === 'vue' && !used.has('id')) lines.push(jsdoc(['Set on the root element.']) + '  id?: string;');
-  if (fw === 'vue') lines.push(jsdoc(['Any aria-* and data-* attribute (aria-label, data-testid, ...) lands on the root element. The camelized form is listed because the template checker camelizes data-* names.']) + "  [attr: `aria-${string}` | `data-${string}` | `data${Capitalize<string>}`]: string | number | boolean | undefined;");
+  if (fw === 'vue') lines.push(jsdoc(['Any aria-* and data-* attribute (aria-label, data-testid, ...) lands on the root element. The camelized form is listed because the template checker camelizes data-* names.']) + "  [attr: `aria-${string}` | `data-${string}` | `data${Capitalize<string>}`]: string | number | boolean | null | undefined;");
   if (fw === 'vue' && mv) lines.push(jsdoc(['Set by `v-model.number`, `v-model.trim` and `v-model.lazy`; Vue applies number and trim to the emitted value.']) + `  modelModifiers?: Record<string, true>;`);
   if (fw === 'react') {
     for (const [s, d] of Object.entries(m.slots || {})) {
