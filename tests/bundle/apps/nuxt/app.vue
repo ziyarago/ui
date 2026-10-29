@@ -1,3 +1,7 @@
+<script setup lang="ts">
+useHead({ bodyAttrs: { class: 'zg-root' } });
+</script>
+
 <template>
-  <div class="zg-root"><NuxtPage /></div>
+  <NuxtPage />
 </template>

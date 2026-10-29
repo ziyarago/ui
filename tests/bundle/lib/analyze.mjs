@@ -50,11 +50,11 @@ export function analyzePage(r, ctx) {
   for (const [sel, v] of Object.entries(d.backdrop)) if (v.none) add('backdrop', 'fail', `${sel}: backdrop-filter computes to none on all ${v.n} sampled elements (fx=${d.html.fx})`);
   if (Object.keys(d.backdrop).length && d.html.fx !== 'full') add('backdrop', 'warn', `data-fx is "${d.html.fx}", glass checks are not meaningful`);
 
-  if (d.pageOverflow > 0) add('overflow', 'warn', `page scrolls horizontally by ${d.pageOverflow}px`);
-  if ((d.sectionDrops || []).length) add('overflow', 'warn', `sections causing the sideways scroll (hiding one shrinks it by): ${d.sectionDrops.map(x => x.component + ' -' + x.drop + 'px').join(', ')}`);
-  for (const c of d.pageCulprits || []) add('overflow', 'warn', `page-level: ${c.component} <${c.el}> position ${c.pos} spans ${c.left}..${c.right} "${c.text}"`);
+  if (d.pageOverflow > 0) add('overflow', 'fail', `page scrolls horizontally by ${d.pageOverflow}px`);
+  if ((d.sectionDrops || []).length) add('overflow', 'fail', `sections causing the sideways scroll (hiding one shrinks it by): ${d.sectionDrops.map(x => x.component + ' -' + x.drop + 'px').join(', ')}`);
+  for (const c of d.pageCulprits || []) add('overflow', 'fail', `page-level: ${c.component} <${c.el}> position ${c.pos} spans ${c.left}..${c.right} "${c.text}"`);
   const seen = new Set();
-  for (const c of d.culprits) { const k = c.component; if (seen.has(k)) continue; seen.add(k); add('overflow', 'warn', `${c.component}#${c.variant}: <${c.el}> spans ${c.left}..${c.right} (${c.width}px) outside the ${d.html.dir} viewport`); }
+  for (const c of d.culprits) { const k = c.component; if (seen.has(k)) continue; seen.add(k); add('overflow', 'fail', `${c.component}#${c.variant}: <${c.el}> spans ${c.left}..${c.right} (${c.width}px) outside the ${d.html.dir} viewport`); }
   for (const x of d.stress || []) if (!/: url\(/.test(x)) add('css-url', 'fail', `background image with a space/parenthesis/quote in the URL is dropped: ${x}`);
   for (const u of d.remoteCss) add('external-request', 'fail', 'stylesheet/@import from another origin: ' + u);
   return out;
