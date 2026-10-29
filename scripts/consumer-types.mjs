@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Consumer type-check project (CI job `consumer-types`, see .github/workflows/ci.yml).
-//   node scripts/consumer-types.mjs generate --out <dir> [--pkg @ziyarago/ui] [--names free | <names.json>] [--dep <name>=<tarball>...]
+//   node scripts/consumer-types.mjs generate --out <dir> [--pkg @ziyarago/ui] [--names free | <names.json>] [--global false] [--dep <name>=<tarball>...]
 //   node scripts/consumer-types.mjs check <vue-tsc.log> [<tsc.log>] [--allow tests/consumer/allow.txt]
 // generate writes a Vue 3.5 + vue-tsc (strictTemplates) project and a React + tsc (strict) project, one generated file per component (scripts/consumer-gen.mjs).
 // The workflow then installs the packed package(s) into <dir>, runs `vue-tsc --noEmit -p tsconfig.vue.json` and `tsc -p tsconfig.react.json`, and calls `check` on the logs.
@@ -30,8 +30,11 @@ if (mode === 'generate') {
     writeFileSync(join(out, `src/vue/Gen${n}.vue`), genVue(n, meta[n], pkg));
     writeFileSync(join(out, `src/react/Gen${n}.tsx`), genReact(n, meta[n], pkg));
   }
-  writeFileSync(join(out, 'src/vue/GenGlobal.vue'), genGlobal(names, pkg));
-  writeFileSync(join(out, 'src/vue/env.d.ts'), `/// <reference types="${pkg}/vue/global" />\nexport {};\n`);
+  // global registration types exist for the free package only (Pro components resolve through the resolver / Nuxt module)
+  if (opt('global', 'true') !== 'false') {
+    writeFileSync(join(out, 'src/vue/GenGlobal.vue'), genGlobal(names, pkg));
+    writeFileSync(join(out, 'src/vue/env.d.ts'), `/// <reference types="${pkg}/vue/global" />\nexport {};\n`);
+  }
   const deps = { vue: '^3.5.0', react: '^18.3.0', 'react-dom': '^18.3.0', '@types/react': '^18.3.0', typescript: '~5.8.0', 'vue-tsc': '^3.0.0' };
   for (const d of list('dep')) { const i = d.indexOf('='); deps[d.slice(0, i)] = 'file:' + resolve(d.slice(i + 1)); }
   writeFileSync(join(out, 'package.json'), JSON.stringify({ name: 'consumer-types', private: true, type: 'module', dependencies: deps }, null, 2));
