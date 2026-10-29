@@ -18,6 +18,7 @@ function suffixIds(o, i) {
   const r = {};
   for (const [k, v] of Object.entries(o)) {
     if (/^(id|value|key|to|href|name)$/.test(k) && typeof v === 'string' && !/^(\$spy:)/.test(v)) r[k] = v + '-' + i;
+    else if (k === 'id' && typeof v === 'number') r[k] = v + 1000 * i;
     else r[k] = suffixIds(v, i);
   }
   return r;

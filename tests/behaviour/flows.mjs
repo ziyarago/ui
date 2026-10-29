@@ -49,8 +49,8 @@ async function flow(fw, group, name, fn, opts) {
     await fn(ctx.page, ctx);
     const errs = await ctx.page.evaluate(n => window.__zg.errors.slice(n), errs0);
     const bad = ctx.bad.filter(b => !/Failed to load resource/.test(b.text));
-    assert(!errs.length, 'render error: ' + errs[0].message.split('\n')[0]);
-    assert(!bad.length, `${bad[0].kind}: ${bad[0].text}`);
+    if (errs.length) throw new Error('render error: ' + String(errs[0].message).split('\n')[0]);
+    if (bad.length) throw new Error(`${bad[0].kind}: ${bad[0].text}`);
     results.push({ fw, id, ok: true });
   } catch (e) {
     const msg = String(e && e.message || e).split('\n')[0].slice(0, 300);
@@ -175,7 +175,7 @@ const POP = {
   MultiSelect: { props: { modelValue: ['a'], options: OPTS }, trig: '.zg-select__trigger, [aria-haspopup]' },
   Combobox: { props: { modelValue: 'a', options: OPTS }, trig: 'input' },
   Dropdown: { props: { label: 'Actions', items: [{ label: 'Edit', value: 'edit' }, { label: 'Delete', value: 'del' }] }, trig: '[aria-haspopup]' },
-  DatePicker: { props: { label: 'Date', modelValue: '2027-03-10', locale: 'en-GB' }, trig: 'button, input' },
+  DatePicker: { props: { label: 'Date', modelValue: '2027-03-10', locale: 'en-GB' }, trig: '[aria-haspopup], .zg-select__trigger, input, button' },
 };
 const CONTAINERS = {
   Modal: p => ({ outer: 'Modal', variant: { overlay: true, props: { title: 'Host' }, children: [{ name: p.name, props: p.props }] }, open: true }),
@@ -189,7 +189,7 @@ for (const fw of fws) for (const [pname, pop] of Object.entries(POP)) for (const
     const id = await mount(page, m.outer, m.variant, m.open);
     await sleep(150);
     const root = `[data-flow="${id}"]`;
-    const trigSel = cname === 'Modal' || cname === 'Drawer' ? `[role=dialog] ${pop.trig.split(',').join(', [role=dialog] ')}` : `${root} ${pop.trig.split(',').join(`, ${root} `)}`;
+    const trigSel = cname === 'Modal' || cname === 'Drawer' ? `[role=dialog] .zg-modal__body ${pop.trig.split(',').join(', [role=dialog] .zg-modal__body ')}` : `${root} ${pop.trig.split(',').join(`, ${root} `)}`;
     const trig = await page.$(trigSel);
     assert(trig, 'trigger not found: ' + trigSel);
     await trig.click(); await sleep(250);

@@ -6,6 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       report_only: { description: 'do not fail on new findings', type: boolean, default: false }
+      scenario: { description: 'one scenario only (base, palette, rtl, narrow, size, overlay, long, intl, big, empty, nulls); empty = all', default: '' }
+      flows: { description: 'run the flows job', type: boolean, default: true }
   pull_request:
     branches: [main]
   push:
@@ -19,13 +21,25 @@ permissions:
   contents: read
 
 jobs:
-  audit:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    outputs:
+      scenarios: ${{ steps.p.outputs.scenarios }}
+    steps:
+      - id: p
+        run: |
+          if [ -n "${{ inputs.scenario }}" ]; then echo 'scenarios=["${{ inputs.scenario }}"]' >> "$GITHUB_OUTPUT"
+          else echo 'scenarios=["base","palette","rtl","narrow","size","overlay","long","intl","big","empty","nulls"]' >> "$GITHUB_OUTPUT"; fi
+
+  audit:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
     strategy:
       fail-fast: false
       matrix:
-        scenario: [base, palette, rtl, narrow, size, overlay, long, intl, big, empty, nulls]
+        scenario: ${{ fromJSON(needs.plan.outputs.scenarios) }}
+        chunk: [0, 1, 2, 3]
     env:
       CHROME_PATH: /usr/bin/google-chrome
       BROWSER_CONCURRENCY: 3
@@ -36,22 +50,23 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Audit
-        run: node tests/behaviour/audit.mjs --scenarios=${{ matrix.scenario }} --out=audit-out ${{ inputs.report_only && '--report-only' || '' }}
+        run: node tests/behaviour/audit.mjs --scenarios=${{ matrix.scenario }} --chunk=${{ matrix.chunk }}/4 --out=audit-out ${{ inputs.report_only && '--report-only' || '' }}
       - name: Summary
         if: always()
         run: |
-          echo "### ${{ matrix.scenario }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "### ${{ matrix.scenario }} ${{ matrix.chunk }}/4" >> "$GITHUB_STEP_SUMMARY"
           cat audit-out/report.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: audit-${{ matrix.scenario }}
+          name: audit-${{ matrix.scenario }}-${{ matrix.chunk }}
           path: audit-out
           retention-days: 7
 
   flows:
+    if: inputs.flows != false
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 25
     env:
       CHROME_PATH: /usr/bin/google-chrome
     steps:

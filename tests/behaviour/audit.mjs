@@ -39,7 +39,11 @@ const AXE_OFF = ['region', 'landmark-one-main', 'landmark-unique', 'page-has-hea
 const examples = await generate({ ssr: false });
 for (const m of MODES) writeFileSync(join(GEN, `stress-${m}.json`), JSON.stringify(stressExamples(examples, m)));
 for (const s of ['xs', 'sm', 'md', 'lg', 'xl']) writeFileSync(join(GEN, `stress-size-${s}.json`), JSON.stringify(stressExamples(examples, 'size-' + s)));
-const overlayNames = examples.filter(e => e.variants.some(v => v.overlay)).map(e => e.name).filter(n => !only || only.split(',').includes(n));
+const chunk = (arg('chunk') || '0/1').split('/').map(Number);
+const inChunk = (list) => list.filter((_, i) => i % chunk[1] === chunk[0]);
+const allNames = examples.map(e => e.name).sort().filter(n => !only || only.split(',').includes(n));
+const chunkNames = inChunk(allNames);
+const overlayNames = inChunk(examples.filter(e => e.variants.some(v => v.overlay)).map(e => e.name).sort().filter(n => !only || only.split(',').includes(n)));
 
 mkdirSync(join(OUT, 'shots'), { recursive: true });
 const servers = await startServers(fws);
@@ -51,6 +55,17 @@ const slug = s => String(s).replace(/[^A-Za-z0-9_-]+/g, '_').slice(0, 60);
 const scenName = c => [c.data === 'examples' ? 'normal' : c.data.replace('stress-', ''), c.theme, c.palette, c.dir, c.w + 'px', c.overlay ? 'overlay' : ''].filter(Boolean).join('-');
 
 async function runPage(fw, sid, c, extra = {}) {
+  const t0 = Date.now();
+  let timer;
+  const deadline = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('page deadline 300s')), 300000); });
+  try { await Promise.race([runPageInner(fw, sid, c, extra), deadline]); }
+  catch (e) { rows.push({ fw, scenario: `${sid}/${scenName(c)}`, c: '(page)', v: -1, o: 'harness', d: String(e.message).slice(0, 200) }); }
+  clearTimeout(timer);
+  console.log(`[${((Date.now() - t0) / 1000).toFixed(0)}s] ${fw} ${sid}/${scenName(c)}${extra.only ? ' ' + extra.only : ''}: ${rows.length} findings so far`);
+  writeFileSync(join(OUT, 'findings.json'), JSON.stringify(rows));
+}
+
+async function runPageInner(fw, sid, c, extra = {}) {
   const page = await browser.newPage();
   await page.setViewport({ width: c.w, height: 900 });
   const bad = watch(page);
@@ -70,13 +85,13 @@ async function runPage(fw, sid, c, extra = {}) {
   const q = new URLSearchParams({ theme: c.theme, palette: c.palette, dir: c.dir, motion: 'off', data: c.data });
   if (c.fixh) q.set('fixh', '1');
   if (c.overlay) q.set('overlays', '1');
-  const only_ = extra.only || only;
+  const only_ = extra.only || (chunk[1] > 1 ? chunkNames.join(',') : only);
   if (only_) q.set('only', only_);
   const scen = `${sid}/${scenName(c)}`;
   const push = (r) => rows.push({ fw, scenario: scen, ...r });
   try {
     await page.goto(`${servers[fw].url}/?${q}`, { waitUntil: 'load', timeout: 120000 });
-    await page.waitForFunction('window.__zg && window.__zg.done', { timeout: 300000 });
+    await page.waitForFunction('window.__zg && window.__zg.done', { timeout: 150000 });
     await sleep(500);
     const t0 = await page.evaluate(() => performance.now());
     const z = await page.evaluate(() => ({ errors: window.__zg.errors, mounted: window.__zg.mounted, expected: window.__zg.expected }));
@@ -153,7 +168,7 @@ async function runPage(fw, sid, c, extra = {}) {
   } catch (e) {
     push({ c: '(page)', v: -1, o: 'harness', d: 'page failed: ' + String(e.message).slice(0, 200) });
   }
-  await page.close();
+  await page.close().catch(() => {});
 }
 
 const jobs = [];
