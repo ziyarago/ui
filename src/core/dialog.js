@@ -16,7 +16,7 @@ const onKey = e => {
   const r = stack[stack.length - 1]; if (!r) return;
   const o = r.opts;
   if (o.onKey && o.onKey(e) === true) return;
-  if (e.key === 'Escape' && !e.defaultPrevented && o.onClose) { e.preventDefault(); o.onClose(e); return; }
+  if (e.key === 'Escape' && !e.defaultPrevented && o.onClose) { e.preventDefault(); o.onClose(); return; }
   if (e.key !== 'Tab' || o.focus === false) return;
   const list = focusables(r.el), a = document.activeElement;
   if (!list.length) { e.preventDefault(); r.el.focus(); return; }
