@@ -70,8 +70,8 @@ export default {
   ToggleGroup: {
     description: 'Group of toggle buttons with single or multiple selection, optionally icon-only.',
     props: {
-      options: { type: '{ value: string; label: string; icon?: string }[]', default: '[]', required: true, description: 'Buttons to render. label is also used as the tooltip.' },
-      modelValue: { type: 'string | string[]', model: true, description: 'Selected value, or array of values when multiple.' },
+      options: { type: '{ value: string | number; label: string; icon?: string }[]', default: '[]', required: true, description: 'Buttons to render. label is also used as the tooltip.' },
+      modelValue: { type: 'string | number | (string | number)[]', model: true, description: 'Selected value, or array of values when multiple.' },
       multiple: { type: 'boolean', default: false, description: 'Allows several pressed buttons; modelValue becomes an array.' },
       iconOnly: { type: 'boolean', default: false, description: 'Hides labels and shows only icons.' },
       allowEmpty: { type: 'boolean', default: false, description: 'Single mode only: clicking the pressed button deselects it and emits null.' },
@@ -83,8 +83,8 @@ export default {
   SegmentedControl: {
     description: 'Segmented switch for choosing exactly one of a few options.',
     props: {
-      items: { type: '{ value: string; label: string; icon?: string; disabled?: boolean }[]', default: '[]', required: true, description: 'Segments to render. icon is an icon name; disabled: true dims one segment.' },
-      modelValue: { type: 'string', model: true, description: 'Value of the selected segment.' },
+      items: { type: '{ value: string | number; label: string; icon?: string; disabled?: boolean }[]', default: '[]', required: true, description: 'Segments to render. icon is an icon name; disabled: true dims one segment.' },
+      modelValue: { type: 'string | number', model: true, description: 'Value of the selected segment.' },
       size: sizeProp('md', 'Control size. sm and md also have a dedicated compact style.'),
       block: { type: 'boolean', default: false, description: 'Stretches the control to the container width with equal-width segments.' },
       iconOnly: { type: 'boolean', default: false, description: 'Hides labels of segments that have an icon; the label stays as tooltip and aria-label.' },
@@ -95,8 +95,8 @@ export default {
   FilterChips: {
     description: 'Row of selectable filter chips with single or multiple selection.',
     props: {
-      items: { type: '{ value: string; label: string }[]', default: '[]', required: true, description: 'Chips to render.' },
-      modelValue: { type: 'string | string[]', model: true, description: 'Selected value, or array of values when multi.' },
+      items: { type: '{ value: string | number; label: string }[]', default: '[]', required: true, description: 'Chips to render.' },
+      modelValue: { type: 'string | number | (string | number)[]', model: true, description: 'Selected value, or array of values when multi.' },
       multi: { type: 'boolean', default: false, description: 'Allows several selected chips; modelValue becomes an array.' },
       size: sizeProp('md', 'Chip size.'),
     },

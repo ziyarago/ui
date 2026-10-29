@@ -61,7 +61,7 @@ export default {
   ScrollArea: {
     description: 'Vertically scrollable container with a max height and styled scrollbar.',
     props: {
-      maxHeight: { type: 'string', default: '240px', description: 'CSS max-height; content scrolls beyond it. Must be a string with a unit.' },
+      maxHeight: { type: 'string | number', default: '240px', description: 'CSS max-height; content scrolls beyond it. A number is pixels.' },
     },
     slots: { default: 'Scrollable content.' },
   },
@@ -78,8 +78,8 @@ export default {
     props: {
       nav: { type: "'top' | 'side'", values: ['top', 'side'], default: 'top', description: 'Navigation placement: TopNav or SideNav.' },
       brand: { type: 'VNode | string', description: 'Brand/logo content shown in the navigation.' },
-      items: { type: '{ value: string; label: string; icon?: string }[]', description: 'Navigation items, passed to TopNav or SideNav.' },
-      value: { type: 'string', description: 'Value of the active navigation item. Changed via the change event.' },
+      items: { type: '{ value: string | number; label: string; icon?: string }[]', description: 'Navigation items, passed to TopNav or SideNav.' },
+      value: { type: 'string | number', description: 'Value of the active navigation item. Changed via the change event.' },
       actions: { type: 'VNode', description: 'Right side of the top navigation (nav="top" only).' },
       collapsed: { type: 'boolean', description: 'Controlled collapsed state of the side navigation. Uncontrolled (internal state, initially false) when omitted.' },
       collapsible: { type: 'boolean', default: true, description: 'Shows the collapse toggle in the side navigation. Set false to hide it.' },

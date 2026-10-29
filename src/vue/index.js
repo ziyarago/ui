@@ -16,7 +16,8 @@ const wrap = (name, def) => defineComponent({
     return () => {
       void localeTick.value;
       const props = {}, root = {};
-      for (const k in attrs) { if (/^(aria|data)-|^(class|style|id)$/.test(k)) root[k] = attrs[k]; const pk = k.includes('-') && !/^(aria|data)-/.test(k) ? k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()) : k; props[pk] = attrs[k] === '' && BOOL_PROPS.has(pk) ? true : attrs[k]; }
+      // null means "not set" for every prop except the model (types accept `T | null` for optional props)
+      for (const k in attrs) { if (/^(aria|data)-|^(class|style|id)$/.test(k)) root[k] = attrs[k]; const pk = k.includes('-') && !/^(aria|data)-/.test(k) ? k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()) : k; if (attrs[k] === null && pk !== 'modelValue') continue; props[pk] = attrs[k] === '' && BOOL_PROPS.has(pk) ? true : attrs[k]; }
       // an explicit :on-change handler (kebab-case attribute) is still called after the v-model and @change emitters
       const userChange = typeof props.onChange === 'function' ? props.onChange : null;
       props.onChange = v => { emit('update:modelValue', v); emit('change', v); if (userChange) userChange(v); };

@@ -1,0 +1,1 @@
+# Consumer type check: errors that are expected. Format:  GenFile.vue: text that appears in the error  # reason
