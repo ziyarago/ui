@@ -110,7 +110,9 @@ function component(n, fw) {
   if (fw === 'vue' && mv) {
     const ch = evs.find(([e]) => e === 'change');
     const t = ch && ch[1] ? ch[1].replace(/^\w+: /, '') : fixType(mv.type, fw);
-    lines.push(jsdoc(['v-model update. Emitted together with `change`.']) + `  'onUpdate:${mv.name}'?: (value: ${t}) => void;`);
+    // v-model.number converts the emitted string to a number in Vue, which the type checker cannot see: keep the update handler open so a number ref can be bound
+    const upd = n === 'TextField' ? 'any' : t;
+    lines.push(jsdoc(['v-model update. Emitted together with `change`.']) + `  'onUpdate:${mv.name}'?: (value: ${upd}) => void;`);
   }
   if (fw === 'vue' && mv) lines.push(jsdoc(['Set by `v-model.number`, `v-model.trim` and `v-model.lazy`; Vue applies number and trim to the emitted value.']) + `  modelModifiers?: Record<string, true>;`);
   if (fw === 'react') {
