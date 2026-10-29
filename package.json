@@ -183,6 +183,9 @@
       "meta": [
         "types/meta.d.ts"
       ],
+      "i18n": [
+        "types/i18n.d.ts"
+      ],
       "internal": [
         "types/internal.d.ts"
       ]
