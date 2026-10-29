@@ -2,8 +2,6 @@ name: A11y
 # Builds the docs site (optionally with the Pro demos), serves it and runs the axe audit with every popup opened. Run by hand:
 #   gh workflow run A11y --ref <branch> -f ref=<branch> -f pro=true -f pro_ref=<branch>
 on:
-  push:
-    branches: [popups]
   workflow_dispatch:
     inputs:
       pro: { description: 'build with Pro demos', type: boolean, default: true }
