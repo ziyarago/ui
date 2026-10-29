@@ -2,22 +2,24 @@
 // Vue:   <UiPageDashboard title="Dashboard"><template #kpis>…</template></UiPageDashboard>
 // React: <UiPageDashboard title="Dashboard" kpis={<…/>} />
 
+import { cx } from './components.js';
+import { mn, fb } from './csp.js';
 const region = (h, id, kids, stick) => (kids == null || (Array.isArray(kids) && !kids.length)) ? null : h('div', { key: id, class: stick ? 'zg-pg__r zg-pg__stick' : 'zg-pg__r', 'data-slot': id }, kids);
 
 const draw = (h, node, ctx) => {
   if (typeof node === 'string') return node === 'header' ? ctx.header() : region(h, node, ctx.slots[node], ctx.stick === node);
   const [kind, ...a] = node, opt = kind === 'two' ? a[2] : kind === 'wrap' ? a[3] : null, st = typeof opt === 'string' && opt.startsWith('sticky:') ? opt.slice(7) : null, go = n => draw(h, n, st ? { ...ctx, stick: st } : ctx), cls = st ? 'zg-pg__two zg-pg__two--sticky' : 'zg-pg__two';
   if (kind === 'col') return h('div', { class: 'zg-pg' }, ...a.map(go));
-  if (kind === 'auto') { const min = a.shift(); return h('div', { class: 'zg-pg__auto', style: { '--min': min + 'px' } }, ...a.map(go)); }
+  if (kind === 'auto') { const min = a.shift(); return h('div', { class: cx('zg-pg__auto', mn(min)[0]), style: mn(min)[1] }, ...a.map(go)); }
   if (kind === 'two') return h('div', { class: cls }, h('div', { class: 'zg-pg__main' }, ...a[0].map(go)), h('div', { class: 'zg-pg__side' }, ...a[1].map(go)));
-  if (kind === 'wrap') return h('div', { class: cls }, h('div', { class: 'zg-pg__aside', style: { flexBasis: (a[2] || 300) + 'px' } }, ...a[0].map(go)), h('div', { class: 'zg-pg__main' }, ...a[1].map(go)));
+  if (kind === 'wrap') return h('div', { class: cls }, h('div', { class: cx('zg-pg__aside', fb(a[2] || 300)[0]), style: fb(a[2] || 300)[1] }, ...a[0].map(go)), h('div', { class: 'zg-pg__main' }, ...a[1].map(go)));
   return null;
 };
 
 export const page = (name, slots, tree) => [name, {
   slots,
   render: ({ C, h, props: p, slots: s }) => {
-    const header = () => s.header ? region(h, 'header', s.header) : (p.title ? h('div', { class: 'zg-pg__r', 'data-slot': 'header' }, h('div', { class: 'zg-page-head' }, h('div', { style: { flex: 1, minWidth: 0 } }, p.crumbs ? h(C.Breadcrumbs, { items: p.crumbs }) : null, h('h1', null, p.title), p.subtitle ? h('p', null, p.subtitle) : null), s.actions || null)) : (s.actions ? h('div', { class: 'zg-pg__r', 'data-slot': 'header' }, h('div', { class: 'zg-page-head', style: { justifyContent: 'flex-end' } }, s.actions)) : null));
+    const header = () => s.header ? region(h, 'header', s.header) : (p.title ? h('div', { class: 'zg-pg__r', 'data-slot': 'header' }, h('div', { class: 'zg-page-head' }, h('div', { class: 'zg-u-fill' }, p.crumbs ? h(C.Breadcrumbs, { items: p.crumbs }) : null, h('h1', null, p.title), p.subtitle ? h('p', null, p.subtitle) : null), s.actions || null)) : (s.actions ? h('div', { class: 'zg-pg__r', 'data-slot': 'header' }, h('div', { class: 'zg-page-head', style: { justifyContent: 'flex-end' } }, s.actions)) : null));
     return h('div', { class: 'zg-pgroot' }, draw(h, tree, { slots: s, header }));
   }
 }];

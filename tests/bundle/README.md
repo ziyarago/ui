@@ -12,7 +12,7 @@ Nothing runs on a developer machine: use the `Audit bundle` workflow (public rep
 | `run-app.mjs <vue\|react\|nuxt>` | install from tarballs, Node import of every entry, `tsc` against the types, production build, sizes, browser scenarios |
 | `lib/analyze.mjs` | what counts as a defect (CSP violation, request outside the origin, console error, missing icon or string, backdrop-filter dropped, overflow, kebab-case props) |
 | `allow.json` | reviewed exceptions, each with a reason |
-| `baseline.json` | gzip sizes per app; growth above 10% fails |
+| `baseline.json` | gzip sizes per app (growth above 10% fails) and `ssr-style-attrs`: budget of kit-emitted `style=""` attributes in the Nuxt server HTML (harness wrappers and empty attributes are not counted) |
 
 Apps: Vue 3.5 + Vite 8 + Tailwind 4 (layered import) + vue-i18n 10 + unplugin-vue-components with the kit resolver; React 19 + Vite 8;
 Nuxt 3 and 4 with `@ziyarago/ui/nuxt` (SSR + hydration, production hydration mismatch details on). Each full page mounts all

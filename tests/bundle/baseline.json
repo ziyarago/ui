@@ -34,5 +34,9 @@
   "nuxt3+pro": {
     "jsTotal": 194565,
     "cssTotal": 32128
+  },
+  "ssr-style-attrs": {
+    "nuxt3": 24,
+    "nuxt4": 24
   }
 }
