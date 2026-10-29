@@ -40,3 +40,5 @@ jobs:
       - run: npm run build
       - name: Unit, SSR and real-browser tests (Vue + React)
         run: npm test
+      - name: Type fixtures (vue-tsc and tsc against the generated types)
+        run: npm run test:types

@@ -26,7 +26,7 @@ const EVENT_ARGS = {
   'ActionRail.change': 'value: string', 'ActionCard.collapse': 'collapsed: boolean',
   'NotificationBell.read': 'id: string | number', "NotificationBell.select": "item: PropItem<'items'>",
   'SearchInput.search': 'query: string', 'CodeInput.complete': 'code: string',
-  'Calendar.change': 'date: Date', 'RangeCalendar.change': 'range: [Date | null, Date | null]', 'DatePicker.change': 'date: Date', 'CalendarView.change': 'date: Date',
+  'Calendar.change': 'date: Date', 'RangeCalendar.change': 'range: [Date | null, Date | null]', 'DatePicker.change': 'date: Date | null', 'CalendarView.change': 'date: Date',
   'FileUpload.change': 'files: File[]', 'FileUpload.reject': "file: File, reason: 'type' | 'size' | 'count'",
   'ImageUpload.change': 'dataUrl: string, file: File',
   'LoginForm.submit': 'values: { email: string; password: string; remember: boolean }',
@@ -76,10 +76,14 @@ function model(m) {
   return e ? { name: e[0], type: e[1].type } : null;
 }
 
+// native input events forwarded to the real <input>/<textarea>: the listener receives the DOM event
+const NATIVE_EVENT = { blur: 'FocusEvent', focus: 'FocusEvent', keydown: 'KeyboardEvent', keyup: 'KeyboardEvent', paste: 'ClipboardEvent', input: 'Event' };
 function eventArgs(n, m, e, fw) {
   const k = `${n}.${e}`;
   let a;
   if (k in EVENT_ARGS && EVENT_ARGS[k] !== '') a = EVENT_ARGS[k];
+  else if ((n === 'TextField' || n === 'Textarea') && e in NATIVE_EVENT) a = 'event: ' + (fw === 'react' ? NATIVE_EVENT[e] + '<HTMLElement>' : NATIVE_EVENT[e]);
+  else if (e === 'change' && (n === 'TextField' || n === 'Textarea')) a = 'value: string';
   else if (e === 'click') a = fw === 'react' ? 'event: MouseEvent<HTMLElement>' : 'event: MouseEvent';
   else if (e === 'change' && model(m)) a = 'value: ' + fixType(model(m).type, fw);
   else a = '';
@@ -106,8 +110,11 @@ function component(n, fw) {
   if (fw === 'vue' && mv) {
     const ch = evs.find(([e]) => e === 'change');
     const t = ch && ch[1] ? ch[1].replace(/^\w+: /, '') : fixType(mv.type, fw);
-    lines.push(jsdoc(['v-model update. Emitted together with `change`.']) + `  'onUpdate:${mv.name}'?: (value: ${t}) => void;`);
+    // v-model.number converts the emitted string to a number in Vue, which the type checker cannot see: keep the update handler open so a number ref can be bound
+    const upd = n === 'TextField' ? 'any' : t;
+    lines.push(jsdoc(['v-model update. Emitted together with `change`.']) + `  'onUpdate:${mv.name}'?: (value: ${upd}) => void;`);
   }
+  if (fw === 'vue' && mv) lines.push(jsdoc(['Set by `v-model.number`, `v-model.trim` and `v-model.lazy`; Vue applies number and trim to the emitted value.']) + `  modelModifiers?: Record<string, true>;`);
   if (fw === 'react') {
     for (const [s, d] of Object.entries(m.slots || {})) {
       if (s === 'default' || used.has(s)) continue;
