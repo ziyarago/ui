@@ -1,3 +1,9 @@
+## [0.20.4](https://github.com/ziyarago/ui/compare/v0.20.3...v0.20.4) (2026-10-29)
+
+### Bug Fixes
+
+* strict-CSP friendly fonts and built-in icons, 360px layout fixes, typesVersions for i18n, tarball and production bundle audit in CI ([f3b5133](https://github.com/ziyarago/ui/commit/f3b513309fdceafaa5cd04c579c542310706e658))
+
 ## [0.20.3](https://github.com/ziyarago/ui/compare/v0.20.2...v0.20.3) (2026-10-29)
 
 ### Bug Fixes
