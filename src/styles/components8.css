@@ -18,7 +18,7 @@
 .zg-modal{background:var(--zg-pop);-webkit-backdrop-filter:none;backdrop-filter:none;animation:zg-modal-in .22s var(--zg-ease) both}
 .zg-drawer-scrim--end .zg-drawer{animation-name:zg-drawer-in-end}
 .zg-drawer-scrim--start .zg-drawer{animation-name:zg-drawer-in-start}
-.zg-sheet{background:var(--zg-pop)}
+.zg-sheet{background:var(--zg-pop);color:var(--zg-text-1)}
 @keyframes zg-fade-in{from{opacity:0}}
 @keyframes zg-modal-in{from{opacity:0;transform:translateY(12px) scale(.97)}}
 @keyframes zg-drawer-in-end{from{transform:translateX(32px);opacity:0}}
@@ -134,3 +134,4 @@
 /* Tab counts */
 .zg-tab__count{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-inline-start:8px;padding:0 6px;border-radius:999px;font:700 11px var(--zg-font);background:var(--zg-s3);color:var(--zg-text-2)}
 .zg-tabs button[aria-selected="true"] .zg-tab__count{background:var(--zg-brand);color:var(--zg-on-brand)}.zg-pt button[aria-selected="true"] .zg-tab__count{background:color-mix(in oklch,var(--zg-on-brand) 22%,transparent);color:inherit}
+[dir="rtl"] .zg-cal__h .zg-icon{transform:scaleX(-1)}

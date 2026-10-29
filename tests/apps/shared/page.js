@@ -2,6 +2,8 @@
 // URL params: only=A,B  overlays=1 (only overlay components, opened)  hydrate=1 (hydrate server HTML)  theme=light|dark  dir=rtl|ltr
 export const params = Object.fromEntries(new URLSearchParams(location.search));
 
+if (params.fixh) document.documentElement.dataset.fixh = '';
+
 export const state = (window.__zg = { errors: [], mounted: 0, expected: 0, done: false, current: '' });
 
 // Tag console problems with the variant being mounted so the report can name the component.

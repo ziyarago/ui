@@ -20,14 +20,14 @@
 [data-theme="light"]{--zg-pop:oklch(0.985 0.003 70);
   --zg-on-brand:oklch(0.2 0.02 60);
   --zg-brand-text:oklch(0.45 0.07 65);
-  --zg-sky-text:oklch(0.48 0.08 230);
+  --zg-sky-text:oklch(0.44 0.08 230);
   --zg-bg:oklch(0.919 0.007 67.6);
   --zg-s1:oklch(1 0 0 / .62);--zg-s2:oklch(1 0 0 / .74);--zg-s3:oklch(1 0 0 / .88);
   --zg-glass:oklch(0.975 0.004 70 / .94);
   --zg-stroke:oklch(0.3 0.02 60 / .15);
   --zg-text-1:oklch(0.2 0.01 60);--zg-text-2:oklch(0.36 0.012 60);--zg-text-3:oklch(0.47 0.012 60);
   --zg-inv-bg:oklch(0.22 0.01 60);--zg-inv-fg:oklch(0.97 0.004 70);
-  --zg-green:oklch(0.5 0.14 150);--zg-amber:oklch(0.55 0.13 70);--zg-red:oklch(0.52 0.19 25);--zg-red-text:oklch(0.44 0.17 25);
+  --zg-green:oklch(0.42 0.12 150);--zg-amber:oklch(0.55 0.13 70);--zg-red:oklch(0.52 0.19 25);--zg-red-text:oklch(0.44 0.17 25);
   --zg-rim:inset 0 1px 0 oklch(1 0 0 / .95),inset 0 0 0 1px oklch(1 0 0 / .45),0 0 0 1px oklch(0.3 0.02 60 / .13);
   --zg-shadow-1:0 8px 24px oklch(0.4 0.03 60 / .17);--zg-shadow-2:0 24px 64px oklch(0.4 0.03 60 / .22);
 }

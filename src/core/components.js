@@ -97,14 +97,20 @@ const tnMeasure = (el, ctx) => {
     const n = items.length, shownN = kids.length - (more ? 1 : 0);
     for (let i = 0; i < shownN; i++) r.w[items[i].value] = kids[i].offsetWidth;
     if (more) r.w.__more = kids[kids.length - 1].offsetWidth;
-    if (items.some(i => r.w[i.value] == null)) { if (state.fit != null) set({ fit: null }); return; }
+    if (items.some(i => r.w[i.value] == null)) { if (state.fit != null) { r.n = (r.n || 0) + 1; if (!r.t) r.t = setTimeout(() => { r.n = 0; r.t = 0; }, 120); if (r.n <= 4) set({ fit: null }); } return; }
     const hs = getComputedStyle(header), es = getComputedStyle(el), bar = header.querySelector('.zg-topnav__brand'), act = header.querySelector('.zg-topnav__actions');
     const gap = parseFloat(hs.columnGap) || 0, ig = parseFloat(es.columnGap) || 0;
     const avail = header.clientWidth - parseFloat(hs.paddingLeft) - parseFloat(hs.paddingRight) - (bar ? bar.offsetWidth : 0) - (act ? act.offsetWidth : 0) - 2 * gap - parseFloat(es.paddingLeft) - parseFloat(es.paddingRight);
     const total = items.reduce((a, i) => a + r.w[i.value], 0) + ig * (n - 1);
     let want = n;
     if (total > avail) { let acc = r.w.__more || 56, k = 0; for (const i of items) { const need = r.w[i.value] + ig; if (acc + need <= avail) { acc += need; k++; } else break; } want = k; }
-    if (want !== (state.fit == null ? n : state.fit)) set({ fit: want >= n ? null : want });
+    if (want !== (state.fit == null ? n : state.fit)) {
+      // item widths differ between the all-visible and the collapsed layout (flex-shrink); cap the re-measure loop instead of flip-flopping forever
+      r.n = (r.n || 0) + 1;
+      if (!r.t) r.t = setTimeout(() => { r.n = 0; r.t = 0; }, 120);
+      if (r.n > 4) return;
+      set({ fit: want >= n ? null : want });
+    }
   };
   r.run();
 };
