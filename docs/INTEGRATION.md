@@ -115,6 +115,7 @@ Fonts: Manrope, JetBrains Mono (latin and cyrillic) and Thmanyah (Arabic) ship i
 ## 5. SSR
 
 - Components render on the server (verified with Nuxt and Next). Overlays use a portal and render nothing on the server.
+- Popups (Select, Combobox, MultiSelect, DatePicker, Dropdown, Menu, ContextMenu, Popover, Popconfirm and the Pro GroupedSelect, TreeSelect, NotificationBell) are rendered in `document.body` with `position: fixed` from the trigger rect (class `zg-float`, `data-zg-for` = anchor id, trigger gets `aria-controls`), so `overflow: hidden`, transforms and scrolling modal bodies never clip them. They flip above when there is no room, follow the trigger on scroll or resize, and sit above modals (`--zg-z-float`). In tests query the list by `[role=listbox]` / `aria-controls`, not inside the component root.
 - Theme: the init script applies the saved theme before first paint. Nuxt does it for you. For any other SSR setup, inline `themeInitScript` (exported from `@ziyarago/ui/theme`) in `<head>`.
 - `useUiTheme()` reads `localStorage` on the client. Do not render its values into markup during the first render (hydration mismatch); read them in `onMounted` / `useEffect` or in event handlers.
 
