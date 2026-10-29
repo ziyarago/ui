@@ -6,6 +6,8 @@ export default defineNuxtConfig({
   srcDir: '.',
   devtools: { enabled: false },
   telemetry: false,
+  // a strict style-src forbids the <style> blocks Nuxt inlines into the HTML
+  features: { inlineStyles: false },
   modules: ['@ziyarago/ui/nuxt'],
   ziyarago: { css: false, plugins: pro ? ['@ziyarago/ui-pro'] : [] },
   css: ['~/assets/app.css'],

@@ -8,10 +8,11 @@ import { createHash } from 'node:crypto';
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.ico': 'image/x-icon', '.txt': 'text/plain', '.map': 'application/json', '.webp': 'image/webp' };
 
-export const buildCsp = (hashes = []) => [
+export const buildCsp = (hashes = [], styleAttr = false) => [
   "default-src 'self'",
   `script-src 'self'${hashes.map(h => ` 'sha256-${h}'`).join('')}`,
   "style-src 'self'",
+  ...(styleAttr ? ["style-src-attr 'unsafe-inline'"] : []),
   "font-src 'self'",
   "connect-src 'self'",
   "img-src 'self' data:",
@@ -32,7 +33,7 @@ export function inlineScripts(html) {
 }
 
 /** opts: { root } for static files (SPA fallback is NOT applied: a missing file is a 404) or { proxy: 'http://127.0.0.1:3000' } */
-export async function startServer({ root, proxy } = {}) {
+export async function startServer({ root, proxy, styleAttr = false } = {}) {
   const log = { requests: [], inline: [], notFound: [] };
   const server = http.createServer((req, res) => {
     const url = new URL(req.url, 'http://x');
@@ -49,12 +50,12 @@ export async function startServer({ root, proxy } = {}) {
             const html = Buffer.concat(chunks).toString('utf8');
             const scripts = inlineScripts(html);
             for (const s of scripts) log.inline.push({ path: url.pathname, hash: s.hash, head: s.body.slice(0, 90).replace(/\s+/g, ' ') });
-            const headers = { ...up.headers, 'content-security-policy': buildCsp(scripts.map(s => s.hash)) };
+            const headers = { ...up.headers, 'content-security-policy': buildCsp(scripts.map(s => s.hash), styleAttr) };
             delete headers['content-length']; delete headers['content-encoding']; delete headers.etag;
             res.writeHead(up.statusCode, headers); res.end(html); done(up.statusCode);
           });
         } else {
-          res.writeHead(up.statusCode, { ...up.headers, 'content-security-policy': buildCsp() });
+          res.writeHead(up.statusCode, { ...up.headers, 'content-security-policy': buildCsp([], styleAttr) });
           up.pipe(res); up.on('end', () => done(up.statusCode));
         }
       });

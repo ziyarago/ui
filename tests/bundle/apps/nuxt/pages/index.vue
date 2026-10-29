@@ -3,12 +3,14 @@ import { ref, onMounted, nextTick } from 'vue';
 import data from '../data/examples.json';
 import { Preview, setProNames } from '../auditkit/preview-vue.js';
 import { useUiTheme } from '@ziyarago/ui/theme';
+import { t } from '@ziyarago/ui/internal';
 
 setProNames(data.proNames);
 const sections = data.examples as any[];
 const ready = ref(false);
 onMounted(async () => {
   const w = window as any;
+  w.__zgT = t;
   w.__zgTheme = useUiTheme();
   w.__zgTheme.setEffects('full');
   await nextTick();

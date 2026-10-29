@@ -180,7 +180,7 @@ if (appName === 'nuxt') {
   nuxtProc = spawn('node', ['.output/server/index.mjs'], { cwd: app, env: { ...process.env, NITRO_PORT: String(port), PORT: String(port), NITRO_HOST: '127.0.0.1', HOST: '127.0.0.1' }, stdio: ['ignore', 'pipe', 'pipe'] });
   let nuxtLog = ''; nuxtProc.stdout.on('data', d => nuxtLog += d); nuxtProc.stderr.on('data', d => nuxtLog += d);
   for (let i = 0; i < 60; i++) { try { const r = await fetch(`http://127.0.0.1:${port}/`); if (r.ok) break; } catch {} await new Promise(r => setTimeout(r, 500)); }
-  srv = await startServer({ proxy: `http://127.0.0.1:${port}` });
+  srv = await startServer({ proxy: `http://127.0.0.1:${port}`, styleAttr: true });
   srv.nuxtLog = () => nuxtLog;
 } else srv = await startServer({ root: dist });
 log('serving', srv.url);
@@ -208,11 +208,15 @@ try {
     await scen('auto-import-en', { strings: false, page: { path: '/auto', viewport: W } });
     // raw server HTML
     const html = await (await fetch(srv.url + '/')).text();
+    writeFileSync(join(outDir, `ssr-index-${baseKey}.html`), html);
     const a = /<html[^>]*>/.exec(html)?.[0] || '';
     log('html tag', a);
     if (!/data-theme=/.test(a) || !/dir=/.test(a)) addIssue('ssr', { cat: 'ssr', sev: 'fail', msg: `server HTML tag lacks data-theme/dir: ${a}` });
     const styleAttrs = (html.match(/\sstyle="/g) || []).length;
-    addIssue('ssr', { cat: 'csp-ssr-inline', sev: 'info', msg: `${styleAttrs} inline style="" attributes in the server HTML (blocked by style-src 'self' until JS patches them)` });
+    addIssue('ssr', { cat: 'csp-ssr-inline', sev: 'info', msg: `${styleAttrs} inline style="" attributes in the server HTML (the audit CSP allows style-src-attr 'unsafe-inline' for SSR output; without it they are ignored)` });
+    const kitStyles = {};
+    for (const m of html.matchAll(/<[a-z0-9]+[^>]*\sclass="(zg-[a-z0-9_-]+)[^"]*"[^>]*\sstyle="([^"]*)"/g)) { const k = m[1] + ' ' + m[2].replace(/[0-9.]+/g, 'N').slice(0, 60); kitStyles[k] = (kitStyles[k] || 0) + 1; }
+    writeFileSync(join(outDir, `ssr-styles-${baseKey}.json`), JSON.stringify(Object.entries(kitStyles).sort((a, b) => b[1] - a[1]).slice(0, 60), null, 1));
     for (const s of srv.log.inline) addIssue('ssr', { cat: 'csp-inline-script', sev: /zg-ui|ziyarago/i.test(s.head) ? 'warn' : 'info', msg: `inline <script> on ${s.path} needs a CSP hash/nonce: ${s.head}` });
   } else {
     const ex = appName === 'vue' ? ['kebab'] : [];
