@@ -6,17 +6,23 @@ import puppeteer from 'puppeteer-core';
 import { mkdirSync } from 'node:fs';
 
 const [base, out, pathsArg, widthsArg = '1440', themesArg = 'dark,light', dir = 'ltr'] = process.argv.slice(2);
-const paths = pathsArg.split(','), widths = widthsArg.split(',').map(Number), themes = themesArg.split(',');
+// A path may carry a click: /docs/components/Dropdown|css selector|nth (0-based) opens that element before the shot; ';' separates paths when the selector has commas.
+const paths = pathsArg.split(pathsArg.includes(';') ? ';' : ','), widths = widthsArg.split(',').map(Number), themes = themesArg.split(',');
 mkdirSync(out, { recursive: true });
 const browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || '/usr/bin/google-chrome', headless: true, args: ['--no-sandbox'] });
-for (const path of paths) for (const theme of themes) for (const w of widths) {
+for (const spec of paths) for (const theme of themes) for (const w of widths) {
+  const [path, clickSel, nth = '0'] = spec.split('|');
   const page = await browser.newPage();
   await page.setViewport({ width: w, height: 1000 });
   page.on('pageerror', e => console.log('pageerror', path, e.message));
   await page.evaluateOnNewDocument((t, d) => { localStorage.setItem('zg-ui', JSON.stringify({ theme: t, motion: 'off', dir: d, locale: d === 'rtl' ? 'ar' : 'en' })); }, theme, dir);
   await page.goto(base + path, { waitUntil: 'networkidle2' });
   await new Promise(r => setTimeout(r, 1500));
-  const name = path.replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '') || 'home';
+  if (clickSel) {
+    const el = (await page.$$(clickSel))[+nth];
+    if (el) { await el.evaluate(e => e.scrollIntoView({ block: 'center' })); await el.click(); await new Promise(r => setTimeout(r, 700)); } else console.log('no match', spec);
+  }
+  const name = (clickSel ? 'open-' + nth + '-' : '') + path.replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '') || 'home';
   await page.screenshot({ path: `${out}/${name}-${theme}-${w}${dir === 'rtl' ? '-rtl' : ''}.png`, fullPage: false });
   await page.close();
 }
