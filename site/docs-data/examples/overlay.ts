@@ -9,6 +9,7 @@ const examples: Example[] = [
     variants: [
       { label: 'Basic', overlay: true, props: { title: 'Trip details' }, text: 'Umrah package, 10 nights: 5 in Makkah, 5 in Madinah. Flights and transfers included.' },
       { label: 'With footer', overlay: true, props: { title: 'Share itinerary' }, text: 'Send the full day-by-day plan to your group.', slots: { footer: 'Footer actions go here' } },
+      { label: 'With a DatePicker', overlay: true, props: { title: 'Schedule pickup' }, children: [{ name: 'div', props: { style: { overflow: 'auto', maxHeight: '160px', display: 'flex', flexDirection: 'column', gap: '12px' } }, children: [{ name: 'Select', props: { label: 'Hotel', modelValue: 'a', options: [{ value: 'a', label: 'Makkah Clock Tower' }, { value: 'b', label: 'Madinah Oberoi' }] } }, { name: 'DatePicker', props: { label: 'Pickup date', modelValue: '2026-03-10' } }] }] },
       { label: 'Sizes', overlay: true, props: { size: 'lg', title: 'Trip details' }, text: 'Pick xs (320px) up to xl (720px) wide; the demo shows lg.' },
     ],
   },

@@ -33,12 +33,12 @@ const ddSync = () => {
   else if (!ddReg.length && ddOn) { document.removeEventListener('pointerdown', ddDown, true); document.removeEventListener('keydown', ddKey, true); ddOn = false; }
 };
 export const ddRef = (close, o = {}) => {
-  const fl = o.uid ? floatRef({ uid: o.uid, close, align: o.align, match: o.match, at: o.at, onFirst: o.focus ? focusIn : undefined }) : null;
+  const fl = o.uid ? floatRef({ uid: o.uid, close, align: o.align, match: o.match, at: o.at, onFirst: o.focus ? (typeof o.focus === 'function' ? o.focus : focusIn) : undefined }) : null;
   return el => {
     if (typeof document === 'undefined') return;
     if (fl) fl(el);
     if (el && !el.isConnected) { let n = 0; const step = () => { if (el.isConnected) ddRef(close, o)(el); else if (++n < 30) requestAnimationFrame(step); }; queueMicrotask(step); return; }
-    if (el) { const r = ddReg.find(x => x.el === el); if (r) { r.close = close; r.self = !!o.self; r.uid = o.uid; } else { ddReg.push({ el, close, self: !!o.self, uid: o.uid }); if (!o.self && !o.uid && el.scrollIntoView) el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); if (o.focus && !o.uid) focusIn(el); } ddSync(); }
+    if (el) { const r = ddReg.find(x => x.el === el); if (r) { r.close = close; r.self = !!o.self; r.uid = o.uid; } else { ddReg.push({ el, close, self: !!o.self, uid: o.uid }); if (!o.self && !o.uid && el.scrollIntoView) el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); if (o.focus && !o.uid) (typeof o.focus === 'function' ? o.focus : focusIn)(el); } ddSync(); }
     else Promise.resolve().then(ddPrune);
   };
 };
