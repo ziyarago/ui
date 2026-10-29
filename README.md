@@ -32,7 +32,7 @@ src/styles/      tokens.css (OKLCH) · components*.css (zg-* classes) · fonts.c
 dist/            style.css (single file, fonts rewritten) · tokens.css   ← what you import
 types/           .d.ts for core, vue, react, theme
 tokens/          tokens.json for Flutter and native clients
-assets/          fonts/thmanyah (the only assets in the npm package)
+assets/          fonts/manrope, fonts/jetbrains-mono (OFL; the only assets in the npm package)
 ```
 
 ## Packages
@@ -49,7 +49,7 @@ npm i @ziyarago/ui            # Vue 3.5+ or React 18+ is a peer dependency, inst
 ```js
 import '@ziyarago/ui/style.css'
 import { useUiTheme } from '@ziyarago/ui/theme'
-useUiTheme().setLocale('ar')   // dir=rtl, Thmanyah Sans
+useUiTheme().setLocale('ar')   // dir=rtl, Arabic stack (Thmanyah Sans if you self-host it)
 ```
 
 Vue: `import { UiButton, UiAppShell } from '@ziyarago/ui/vue'` or `app.use(ui)` with `import ui from '@ziyarago/ui/vue'`.
@@ -59,7 +59,7 @@ Types ship with the package. Only 9 core components have typed props so far; the
 
 ### Requirements and notes
 - Node 18+ for tooling; any bundler that handles ES modules and CSS imports (Vite, webpack 5, Nuxt, Next). The package is plain ESM, not pre-bundled.
-- Fonts: Manrope (Latin, Cyrillic), Thmanyah Sans (Arabic, `dir="rtl"`), JetBrains Mono (code). All three ship in `assets/fonts` and load from your own origin, no Google request. Full table, weight mapping and self-hosting: docs site `/docs/fonts`. Colors: `/docs/colors`. Icons (Lucide) and map tiles load from the network — see `THIRD_PARTY_NOTICES.md` for self-hosting.
+- Fonts: Manrope (Latin, Cyrillic) and JetBrains Mono (code) ship in `assets/fonts` and load from your own origin, no Google request. Thmanyah Sans (Arabic, `dir="rtl"`) is the preferred Arabic font but is NOT distributed (its licence forbids it): download it from https://font.thmanyah.com, self-host it and import `@ziyarago/ui/thmanyah.css`; without it Arabic uses a system font. Details: docs site `/docs/fonts`. Colors: `/docs/colors`. Icons (Lucide) and map tiles load from the network — see `THIRD_PARTY_NOTICES.md` for self-hosting.
 - SSR: components render on the server; icons, `UiMap`, `UiRichEditor`, `UiTour` and `useUiTheme()` touch `document` only on the client.
 - Palettes via `data-palette="gold|tamam"`, theme via `data-theme="dark|light"`, direction via `dir="rtl"` on `<html>`.
 - Releases: see `docs/PUBLISHING.md`, history in `CHANGELOG.md`.
