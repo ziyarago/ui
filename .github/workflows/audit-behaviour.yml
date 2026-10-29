@@ -44,7 +44,10 @@ jobs:
           cat audit-out/report.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
       - uses: actions/upload-artifact@v4
         if: always()
-        with: { name: audit-${{ matrix.scenario }}, path: audit-out, retention-days: 7 }
+        with:
+          name: audit-${{ matrix.scenario }}
+          path: audit-out
+          retention-days: 7
 
   flows:
     runs-on: ubuntu-latest
