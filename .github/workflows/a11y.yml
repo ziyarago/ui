@@ -2,6 +2,8 @@ name: A11y
 # Builds the docs site (optionally with the Pro demos), serves it and runs the axe audit with every popup opened. Run by hand:
 #   gh workflow run A11y --ref <branch> -f ref=<branch> -f pro=true -f pro_ref=<branch>
 on:
+  push:
+    branches: [popups]
   workflow_dispatch:
     inputs:
       pro: { description: 'build with Pro demos', type: boolean, default: true }
@@ -19,13 +21,13 @@ jobs:
       CHROME_PATH: /usr/bin/google-chrome
     steps:
       - uses: actions/checkout@v4
-        with: { ref: '${{ inputs.ref }}', path: ZiyaraGo_UI }
+        with: { ref: '${{ inputs.ref || github.ref_name }}', path: ZiyaraGo_UI }
       - name: Check out the Pro package
-        if: inputs.pro
+        if: inputs.pro != false
         uses: actions/checkout@v4
         with:
           repository: ziyarago/ui-pro
-          ref: ${{ inputs.pro_ref }}
+          ref: ${{ inputs.pro_ref || github.ref_name }}
           ssh-key: ${{ secrets.PRO_DEPLOY_KEY }}
           path: ZiyaraGo_UI_pro
       - uses: actions/setup-node@v4
@@ -34,13 +36,13 @@ jobs:
         working-directory: ZiyaraGo_UI
         run: npm ci && npm run build
       - name: Build the Pro package
-        if: inputs.pro
+        if: inputs.pro != false
         working-directory: ZiyaraGo_UI_pro
         run: npm ci && npm run build
       - name: Build the docs site
         working-directory: ZiyaraGo_UI/site
         env:
-          ZIYARAGO_PRO: ${{ inputs.pro && '1' || '' }}
+          ZIYARAGO_PRO: ${{ inputs.pro != false && '1' || '' }}
         run: npm ci && npm run generate
       - name: Serve and audit
         working-directory: ZiyaraGo_UI
