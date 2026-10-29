@@ -1,3 +1,9 @@
+## [0.20.5](https://github.com/ziyarago/ui/compare/v0.20.4...v0.20.5) (2026-10-29)
+
+### Bug Fixes
+
+* Combobox, Footer, Tooltip, TopNav, calendar RTL chevrons and contrast defects found by the behaviour audit; stress harness in CI ([32b3eaa](https://github.com/ziyarago/ui/commit/32b3eaa00e0c611b24c44960a678cf45a8ecb61a))
+
 ## [0.20.4](https://github.com/ziyarago/ui/compare/v0.20.3...v0.20.4) (2026-10-29)
 
 ### Bug Fixes
