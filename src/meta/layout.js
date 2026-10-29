@@ -61,7 +61,7 @@ export default {
   ScrollArea: {
     description: 'Vertically scrollable container with a max height and styled scrollbar.',
     props: {
-      maxHeight: { type: 'string', default: '240px', description: 'CSS max-height; content scrolls beyond it. Must be a string with a unit.' },
+      maxHeight: { type: 'string | number', default: '240px', description: 'CSS max-height; content scrolls beyond it. A number is pixels.' },
     },
     slots: { default: 'Scrollable content.' },
   },
