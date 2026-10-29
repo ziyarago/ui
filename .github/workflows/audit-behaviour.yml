@@ -1,0 +1,82 @@
+name: audit-behaviour
+# Emulates real use of every free component in headless Chrome (Vue + React): themes, palettes, rtl, 360/1440 widths, stress data,
+# with automatic oracles (overflow, clipping, squeeze, contrast, focus ring, target size, ids, tab order, axe, console, layout shift)
+# and scripted flows. Findings not listed in tests/behaviour/baseline.json fail the job.
+on:
+  workflow_dispatch:
+    inputs:
+      report_only: { description: 'do not fail on new findings', type: boolean, default: false }
+      scenario: { description: 'one scenario only (base, palette, rtl, narrow, size, overlay, long, intl, big, empty, nulls); empty = all', default: '' }
+      flows: { description: 'run the flows job', type: boolean, default: true }
+  pull_request:
+    branches: [main]
+  push:
+    branches: [audit-behaviour]
+
+concurrency:
+  group: audit-behaviour-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      scenarios: ${{ steps.p.outputs.scenarios }}
+    steps:
+      - id: p
+        run: |
+          if [ -n "${{ inputs.scenario }}" ]; then echo 'scenarios=["${{ inputs.scenario }}"]' >> "$GITHUB_OUTPUT"
+          else echo 'scenarios=["base","palette","rtl","narrow","size","overlay","long","intl","big","empty","nulls"]' >> "$GITHUB_OUTPUT"; fi
+
+  audit:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: ${{ fromJSON(needs.plan.outputs.scenarios) }}
+        chunk: [0, 1, 2, 3]
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+      BROWSER_CONCURRENCY: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run build
+      - name: Audit
+        run: node tests/behaviour/audit.mjs --scenarios=${{ matrix.scenario }} --chunk=${{ matrix.chunk }}/4 --out=audit-out ${{ inputs.report_only && '--report-only' || '' }}
+      - name: Summary
+        if: always()
+        run: |
+          echo "### ${{ matrix.scenario }} ${{ matrix.chunk }}/4" >> "$GITHUB_STEP_SUMMARY"
+          cat audit-out/report.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audit-${{ matrix.scenario }}-${{ matrix.chunk }}
+          path: audit-out
+          retention-days: 7
+
+  flows:
+    if: github.event_name != 'workflow_dispatch' || inputs.flows
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run build
+      - name: Flows
+        run: node tests/behaviour/flows.mjs --out=flows-out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: flows, path: flows-out, retention-days: 7 }

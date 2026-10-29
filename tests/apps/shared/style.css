@@ -1,6 +1,7 @@
 @import '../../../src/styles/index.css';
 body { margin: 0; padding: 16px; }
 section { margin: 0 0 24px; padding: 8px 0; border-top: 1px solid var(--zg-border, #8884); }
-h2 { font: 600 14px/1.2 monospace; margin: 0 0 8px; opacity: .6; }
+h2 { font: 600 14px/1.2 monospace; margin: 0 0 8px; }
 [data-variant] { margin: 8px 0; }
 .doc-preview { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+[data-fixh] [data-component='SideNav'] .doc-preview, [data-fixh] [data-component='TreeView'] .doc-preview { height: 420px; align-items: stretch; }
