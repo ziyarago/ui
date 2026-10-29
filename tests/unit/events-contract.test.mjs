@@ -46,5 +46,6 @@ test('every documented event is read by the core (free components)', () => {
     }
   }
   // change / click on a model component are emitted by the adapters (v-model plumbing), not read by the definition
-  assert.deepEqual(dead.filter(d => !/\.(change|click)$/.test(d)), []);
+  // blur, focus, keydown, keyup, paste of TextField / Textarea are native input listeners forwarded through INPUT_ATTRS
+  assert.deepEqual(dead.filter(d => !/\.(change|click)$/.test(d) && !/^Text(field|area)\.(blur|focus|keydown|keyup|paste)$/i.test(d)), []);
 });
