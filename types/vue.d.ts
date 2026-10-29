@@ -201,8 +201,8 @@ export const UiAvatar: UiVueComponent<UiAvatarProps, UiAvatarSlots>;
  * Note: Badge uses info for blue; Chip and Button use the tone name sky instead.
  */
 export interface UiBadgeProps {
-  /** Color. inverse is a solid high-contrast badge (dark on light themes, light on dark). Omit for the neutral style. */
-  tone?: 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'inverse';
+  /** Color. neutral is the default grey, the same as passing no tone, so status maps can use it directly. inverse is a solid high-contrast badge (dark on light themes, light on dark). Omit for the neutral style. */
+  tone?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'inverse';
   /**
    * Shows a status dot before the content.
    * @default false
@@ -946,7 +946,7 @@ export interface UiDataTableProps {
    * Called with (row, index) when a body row is clicked. Rows get a pointer cursor.
    * @event rowClick
    */
-  onRowClick?: () => void;
+  onRowClick?: (row: any, index: number) => void;
   /**
    * Called with the new array of selected row ids. Handling it enables the checkbox column and select-all.
    * @event select
@@ -1801,10 +1801,10 @@ export interface UiModalProps {
   /** CSS max-width of the dialog, for example "960px". Overrides the width of size. */
   width?: string;
   /**
-   * Scale of width (320 to 720 px max), padding and text.
+   * Max width, padding and text: xs 320, sm 420, md 520, lg 640, xl 720, 2xl 768, 3xl 896, 4xl 1024, 5xl 1280 px (always at most the screen width). An unknown value falls back to md and warns in development. width overrides the max width.
    * @default 'md'
    */
-  size?: Size;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
   /**
    * Called on the close button, a click on the scrim or the Escape key. Set open to false in the handler.
    * @event close
@@ -2388,10 +2388,10 @@ export const UiPhoneInput: UiVueComponent<UiPhoneInputProps, UiPhoneInputSlots>;
  */
 export interface UiPillTabsProps {
   /**
-   * Tabs.
+   * Tabs. count (or badge) shows a small number after the label; 0 is shown, null or empty is not.
    * @default []
    */
-  items?: { value: string; label: string; icon?: string }[];
+  items?: { value: string; label: string; icon?: string; disabled?: boolean; count?: string | number; badge?: string | number }[];
   /** Value of the selected tab. Changed via the change event. */
   value?: string;
   /**
@@ -3237,10 +3237,10 @@ export interface UiTabsProps {
   /** Value of the selected tab. Vue v-model, React modelValue + onChange. */
   modelValue?: string;
   /**
-   * Tabs.
+   * Tabs. count (or badge) shows a small number after the label, for example "Media 3"; 0 is shown, null or empty is not.
    * @default []
    */
-  items?: { value: string; label: string }[];
+  items?: { value: string; label: string; disabled?: boolean; count?: string | number; badge?: string | number }[];
   /**
    * Scale of tab height and text.
    * @default 'md'

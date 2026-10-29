@@ -131,3 +131,6 @@
 .zg-sidenav__sub>.zg-navitem{position:relative}.zg-sidenav__chev{margin-inline-start:auto;display:inline-flex;transition:transform .2s var(--zg-ease)}.zg-sidenav__sub>.zg-navitem[aria-expanded="true"] .zg-sidenav__chev{transform:rotate(180deg)}
 .zg-sidenav__kids{display:flex;flex-direction:column;gap:2px;padding-inline-start:16px}.zg-sidenav__kids .zg-navitem{height:40px}
 .zg-sidenav--collapsed .zg-sidenav__kids{padding-inline-start:0}.zg-sidenav--collapsed .zg-sidenav__chev{display:none}
+/* Tab counts */
+.zg-tab__count{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-inline-start:8px;padding:0 6px;border-radius:999px;font:700 11px var(--zg-font);background:var(--zg-s3);color:var(--zg-text-2)}
+.zg-tabs button[aria-selected="true"] .zg-tab__count{background:var(--zg-brand);color:var(--zg-on-brand)}.zg-pt button[aria-selected="true"] .zg-tab__count{background:color-mix(in oklch,var(--zg-on-brand) 22%,transparent);color:inherit}
