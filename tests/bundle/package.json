@@ -1,0 +1,9 @@
+{
+  "name": "zg-bundle-audit",
+  "private": true,
+  "type": "module",
+  "description": "Production bundle and environment audit of the packed tarballs. See ../../.github/workflows/audit-bundle.yml",
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}
