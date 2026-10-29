@@ -7,5 +7,11 @@ import { PRO_NAMES } from '../../src/meta/tiers.js';
 const out = process.argv[2];
 const pro = process.argv.includes('--pro');
 const examples = (await loadExamples({ pro })).map(({ file, ...e }) => e);
+// stress: image URLs with a space, parentheses and a quote must survive url() in inline styles (the file is created by run-app.mjs)
+const STRESS = "/img/a b(1)'s.png";
+for (const [name, props] of [['EmptyState', { title: 'Stress url', image: STRESS }], ['LazyImage', { src: STRESS, alt: 'stress', aspectRatio: '4/3' }]]) {
+  const e = examples.find(x => x.name === name);
+  if (e) e.variants.push({ label: 'stress url()', props });
+}
 writeFileSync(out, JSON.stringify({ edition: pro ? 'pro' : 'free', proNames: [...PRO_NAMES], examples }));
 console.log(`examples: ${examples.length} components, ${examples.reduce((a, e) => a + e.variants.length, 0)} variants (${pro ? 'free + pro' : 'free'}) -> ${out}`);

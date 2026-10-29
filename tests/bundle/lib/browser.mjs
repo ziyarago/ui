@@ -104,6 +104,25 @@ function inPage(input) {
     }
   }
   out.culprits = culprits;
+  // anything on the page (not only inside variants) that makes the document scroll sideways
+  const wide = [];
+  if (out.pageOverflow > 0) {
+    for (const el of document.body.querySelectorAll('*')) {
+      if (wide.length >= 8) break;
+      const r = el.getBoundingClientRect();
+      if (!r.width && !r.height) continue;
+      const over = rtl ? r.left < -1 : r.right > vw + 1;
+      if (!over) continue;
+      const s = getComputedStyle(el);
+      if (s.position === 'fixed') continue;
+      let clipped = false;
+      for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) { const o = getComputedStyle(a); if (o.overflowX !== 'visible') { clipped = true; break; } }
+      if (clipped) continue;
+      const sec = el.closest('[data-component]');
+      wide.push({ component: sec ? sec.getAttribute('data-component') : '(page)', el: el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className ? '.' + el.className.split(/\s+/).slice(0, 2).join('.') : ''), pos: s.position, left: Math.round(r.left), right: Math.round(r.right), text: (el.textContent || '').trim().slice(0, 30) });
+    }
+  }
+  out.pageCulprits = wide;
 
   // remote @import / url() in loaded CSS
   const remote = [];
@@ -114,6 +133,7 @@ function inPage(input) {
     scan(rules);
   }
   out.remoteCss = remote;
+  out.stress = [...document.querySelectorAll('[data-label="stress url()"]')].map(b => { const el = b.querySelector('.zg-es__img,.zg-lazy'); return (b.closest('[data-component]') || b).getAttribute('data-component') + ': ' + (el ? getComputedStyle(el).backgroundImage.slice(0, 80) : 'no element'); });
   out.errorsInDom = document.querySelectorAll('[data-error]').length;
   out.sheets = document.styleSheets.length;
   return out;

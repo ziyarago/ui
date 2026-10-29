@@ -51,8 +51,10 @@ export function analyzePage(r, ctx) {
   if (Object.keys(d.backdrop).length && d.html.fx !== 'full') add('backdrop', 'warn', `data-fx is "${d.html.fx}", glass checks are not meaningful`);
 
   if (d.pageOverflow > 0) add('overflow', 'warn', `page scrolls horizontally by ${d.pageOverflow}px`);
+  for (const c of d.pageCulprits || []) add('overflow', 'warn', `page-level: ${c.component} <${c.el}> position ${c.pos} spans ${c.left}..${c.right} "${c.text}"`);
   const seen = new Set();
   for (const c of d.culprits) { const k = c.component; if (seen.has(k)) continue; seen.add(k); add('overflow', 'warn', `${c.component}#${c.variant}: <${c.el}> spans ${c.left}..${c.right} (${c.width}px) outside the ${d.html.dir} viewport`); }
+  for (const x of d.stress || []) if (!/: url\(/.test(x)) add('css-url', 'fail', `background image with a space/parenthesis/quote in the URL is dropped: ${x}`);
   for (const u of d.remoteCss) add('external-request', 'fail', 'stylesheet/@import from another origin: ' + u);
   return out;
 }

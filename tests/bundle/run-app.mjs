@@ -64,6 +64,7 @@ else cpSync(examples, join(pub, 'examples.json'));
   const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
   const urls = new Set();
   JSON.stringify(JSON.parse(readFileSync(examples, 'utf8')).examples, (k, v) => { if (typeof v === 'string' && /^\/[\w./-]+\.(png|jpe?g|webp|gif)$/.test(v)) urls.add(v); return v; });
+  urls.add("/img/a b(1)'s.png");
   for (const u of urls) { mkdirSync(dirname(join(pub, u)), { recursive: true }); writeFileSync(join(pub, u), PNG); }
   log('placeholder images', [...urls].join(' '));
 }

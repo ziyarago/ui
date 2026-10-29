@@ -1,0 +1,6 @@
+{
+  "vue": { "jsTotal": 86933, "cssTotal": 30498, "entry:index.html": 108655, "entry:minimal.html": 107184 },
+  "react": { "jsTotal": 111504, "cssTotal": 30452, "entry:index.html": 133510, "entry:minimal.html": 131798 },
+  "nuxt3": { "jsTotal": 140076, "cssTotal": 32106 },
+  "nuxt4": { "jsTotal": 135616, "cssTotal": 32158 }
+}
