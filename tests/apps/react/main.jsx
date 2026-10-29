@@ -9,6 +9,8 @@ import { params, report, load, finish, state } from '../shared/page.js';
 const theme = useUiTheme();
 if (params.theme) theme.setTheme(params.theme);
 if (params.dir) theme.setDir(params.dir);
+if (params.palette) theme.setPalette(params.palette);
+if (params.motion) theme.setMotion(params.motion);
 
 class Boundary extends Component {
   constructor(p) { super(p); this.state = { err: null }; }
@@ -29,3 +31,19 @@ for (const it of items) {
 }
 await new Promise(r => setTimeout(r, 1000));
 finish();
+
+// Mount API for scripted flows (tests/behaviour/flows.mjs): mount a docs-format variant, swap it, unmount it.
+let flowId = 0;
+const flows = new Map();
+window.__zgMount = (name, variant, open) => {
+  const id = ++flowId, el = document.createElement('div');
+  el.setAttribute('data-flow', String(id));
+  document.getElementById('root').append(el);
+  const root = createRoot(el);
+  const view = v => <Boundary it={{ name, idx: id }}><Preview name={name} variant={v} open={!!open} /></Boundary>;
+  flushSync(() => root.render(view(variant)));
+  flows.set(id, { root, el, view });
+  return id;
+};
+window.__zgSet = (id, variant) => { const f = flows.get(id); flushSync(() => f.root.render(f.view(variant))); };
+window.__zgUnmount = id => { const f = flows.get(id); flushSync(() => f.root.unmount()); f.el.remove(); flows.delete(id); };

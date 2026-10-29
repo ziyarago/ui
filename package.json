@@ -109,6 +109,7 @@
     "test:browser": "node tests/browser/run.mjs && node tests/browser/interactions.mjs",
     "prepack": "npm run build && npm run check",
     "pack:dry": "npm pack --dry-run",
+    "test:behaviour": "node tests/behaviour/audit.mjs && node tests/behaviour/flows.mjs",
     "test:types": "node scripts/typecheck-fixtures.mjs",
     "a11y": "node scripts/a11y.mjs"
   },
