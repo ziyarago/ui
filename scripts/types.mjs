@@ -112,6 +112,7 @@ function component(n, fw) {
     const t = ch && ch[1] ? ch[1].replace(/^\w+: /, '') : fixType(mv.type, fw);
     lines.push(jsdoc(['v-model update. Emitted together with `change`.']) + `  'onUpdate:${mv.name}'?: (value: ${t}) => void;`);
   }
+  if (fw === 'vue' && mv) lines.push(jsdoc(['Set by `v-model.number`, `v-model.trim` and `v-model.lazy`; Vue applies number and trim to the emitted value.']) + `  modelModifiers?: Record<string, true>;`);
   if (fw === 'react') {
     for (const [s, d] of Object.entries(m.slots || {})) {
       if (s === 'default' || used.has(s)) continue;
