@@ -32,7 +32,7 @@ window.__zgMount = (name, variant, open) => {
   document.getElementById('root').append(el);
   const v = shallowRef(variant);
   const app = createApp({ render: () => h(Preview, { name, variant: v.value, open: !!open }) });
-  app.config.errorHandler = err => report(name, id, err);
+  app.config.errorHandler = err => { try { report(name, id, err); } catch (e) { console.error('errorHandler failed for ' + name + ': ' + String(err && err.stack).slice(0, 600) + ' // ' + e.message); } };
   app.mount(el);
   flows.set(id, { app, v, el });
   return id;
