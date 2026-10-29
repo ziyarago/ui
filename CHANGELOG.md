@@ -1,3 +1,9 @@
+## [0.20.7](https://github.com/ziyarago/ui/compare/v0.20.6...v0.20.7) (2026-10-29)
+
+### Bug Fixes
+
+* documented no-argument callbacks are called without the DOM event (Modal, Drawer, Alert, Snackbar, Chip, Tag, ConfirmDialog and more); handler contract tests ([504c5b2](https://github.com/ziyarago/ui/commit/504c5b271a3271a0a875751e7674a38a936bb3c6))
+
 ## [0.20.6](https://github.com/ziyarago/ui/compare/v0.20.5...v0.20.6) (2026-10-29)
 
 ### Bug Fixes
