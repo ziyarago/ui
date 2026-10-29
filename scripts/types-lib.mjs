@@ -10,13 +10,13 @@ const alias = { [SIZES]: 'Size', [TONES]: 'Tone' };
 // Rules: click => native MouseEvent; change on a model component => the model value; anything else not listed => no arguments.
 // `PropItem<'x'>` expands to the element type of that component's prop.
 const EVENT_ARGS = {
-  'AppShell.change': 'value: string', 'AppShell.collapse': 'collapsed: boolean',
+  'AppShell.change': 'value: string | number', 'AppShell.collapse': 'collapsed: boolean',
   'Sortable.change': 'items: any[]',
   'CopyButton.copy': 'value: string', 'CopyButton.error': 'error: unknown',
-  'ToggleGroup.change': 'value: string | string[] | null',
+  'ToggleGroup.change': 'value: string | number | (string | number)[] | null',
   'ActionRail.change': 'value: string', 'ActionCard.collapse': 'collapsed: boolean',
   'NotificationBell.read': 'id: string | number', "NotificationBell.select": "item: PropItem<'items'>",
-  'SearchInput.search': 'query: string', 'CodeInput.complete': 'code: string',
+  'SearchInput.search': 'query: string', 'SearchInput.change': 'value: string', 'CodeInput.change': 'value: string', 'PasswordInput.change': 'value: string', 'CodeInput.complete': 'code: string',
   'Calendar.change': 'date: Date', 'RangeCalendar.change': 'range: [Date | null, Date | null]', 'DatePicker.change': 'date: Date | null', 'CalendarView.change': 'date: Date',
   'FileUpload.change': 'files: File[]', 'FileUpload.reject': "file: File, reason: 'type' | 'size' | 'count'",
   'ImageUpload.change': 'dataUrl: string, file: File',
@@ -33,7 +33,7 @@ const EVENT_ARGS = {
   'Dropdown.select': 'value: string', 'Menu.select': 'value: string', 'ContextMenu.select': 'value: string',
   'CommandBar.action': 'id: string', 'CommandPalette.run': 'id: string',
   'Tour.step': 'index: number',
-  'TopNav.change': 'value: string', 'SideNav.change': 'value: string', 'SubNav.change': 'value: string', 'PillTabs.change': 'value: string',
+  'TopNav.change': 'value: string | number', 'SideNav.change': 'value: string | number', 'SubNav.change': 'value: string | number', 'PillTabs.change': 'value: string | number',
   'Pagination.change': 'page: number', 'Gallery.change': 'index: number', 'Carousel.change': 'index: number',
   'Map.select': "marker: PropItem<'markers'>",
   'ChatAi.send': 'text: string',
@@ -61,7 +61,8 @@ const fixType = (t, fw) => {
 };
 
 // Optional props accept null (API data, `x ?? null`) and an explicit undefined (exactOptionalPropertyTypes). The adapters drop null props, so null means "not set". Required props stay strict.
-const nullable = t => (/\bnull\b/.test(t) ? t : /=>/.test(t) ? `(${t}) | null` : `${t} | null`) + ' | undefined';
+const topLevel = t => { let p; do { p = t; t = t.replace(/\([^()]*\)|\{[^{}]*\}|\[[^\[\]]*\]|<[^<>]*>|'[^']*'|"[^"]*"/g, '_'); } while (t !== p); return t; };
+const nullable = t => (/\bnull\b/.test(topLevel(t)) ? t : /=>/.test(t) ? `(${t}) | null` : `${t} | null`) + ' | undefined';
 // Event handlers are declared as methods (bivariant parameters): a handler `(v: string) => void` is accepted for a payload `string | number | null`.
 const asMethod = (name, t) => { const m = /^\((.*)\)\s*=>\s*(.*)$/s.exec(t.trim()); return m ? `${key(name)}?(${m[1]}): ${m[2]};` : null; };
 
@@ -118,6 +119,7 @@ function component(n, fw) {
       if (s === 'default' || used.has(s)) continue;
       lines.push(jsdoc([d, '@slot ' + s + ' (React: pass as a prop)']) + `  ${key(s)}?: ReactNode;`);
     }
+    for (const [k, t] of [['className', 'string'], ['style', 'CSSProperties'], ['id', 'string']]) if (!used.has(k)) lines.push(jsdoc(k === 'style' ? ['Merged into the root element style.'] : [k === 'id' ? 'Set on the root element.' : 'Added to the root element classes.']) + `  ${k}?: ${t};`);
     lines.push(`  children?: ReactNode;`);
   }
   out.push(jsdoc([m.description, ...(m.notes || []).map(x => 'Note: ' + x)], '') + `export interface Ui${n}Props {\n${lines.join('\n')}\n}`);

@@ -10,6 +10,8 @@
 const isId = k => /^[A-Za-z_$][\w$]*$/.test(k);
 const kebab = k => k.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 const cap = s => s[0].toUpperCase() + s.slice(1);
+// Text inputs a consumer binds with v-model.number / v-model.trim (Vue converts the emitted string)
+const TEXT_MODEL = new Set(['TextField', 'Textarea', 'SearchInput', 'CodeInput', 'PasswordInput']);
 const NATIVE = { click: 'MouseEvent', blur: 'FocusEvent', focus: 'FocusEvent', keydown: 'KeyboardEvent', keyup: 'KeyboardEvent', paste: 'ClipboardEvent', input: 'Event' };
 
 export function modelOf(m) {
@@ -61,7 +63,7 @@ export function genVue(name, m, pkg = '@ziyarago/ui') {
     w(`const m3 = ref<${M} | undefined>(undefined);`);
     w(`const m4 = ref<${M} | null | undefined>(null);`);
     w(`void m1; void m2; void m3; void m4;`);
-    if (/\bstring\b/.test(mv.type)) {
+    if (TEXT_MODEL.has(name)) {
       w(`const s1 = ref('');`);
       w(`const s2 = ref<string | null>(null);`);
       w(`const n1 = ref(0);`);
@@ -73,7 +75,9 @@ export function genVue(name, m, pkg = '@ziyarago/ui') {
   w('</script>');
   w('<template>');
   const bind = req.length ? ' v-bind="req"' : '';
-  w(`  <${C} v-bind="all" />`);
+  const allProps = props.map(([k]) => `:${k}="all.${k}"`).join(' ');
+  w(`  <${C} ${allProps} />`);
+  w(`  <${C}${bind} id="x" class="c" style="color: red" aria-label="a" data-testid="t" />`);
   w(`  <${C}${bind} />`);
   if (opt.length) {
     w(`  <${C}${bind} ${opt.map(k => `:${k}="nul"`).join(' ')} />`);
@@ -101,7 +105,7 @@ export function genVue(name, m, pkg = '@ziyarago/ui') {
   if (mv) {
     const v = mv.name === 'modelValue' ? 'v-model' : `v-model:${mv.name}`;
     for (const r of ['m1', 'm2', 'm3', 'm4']) w(`  <${C}${bind} ${v}="${r}" />`);
-    if (/\bstring\b/.test(mv.type)) {
+    if (TEXT_MODEL.has(name)) {
       w(`  <${C}${bind} ${v}.trim="s1" />`);
       w(`  <${C}${bind} ${v}.trim="s2" />`);
       w(`  <${C}${bind} ${v}.number="n1" />`);
@@ -139,15 +143,14 @@ export function genReact(name, m, pkg = '@ziyarago/ui') {
   w(`export function Gen${name}() {`);
   if (mv) {
     const M = `NonNullable<${P}['${mv.name}']>`;
-    w(`  const [v1, setV1] = useState({} as ${M});`);
     w(`  const [v2, setV2] = useState<${M} | null>(null);`);
-    w(`  const [v3, setV3] = useState<${M} | undefined>(undefined);`);
-    if (/\bstring\b/.test(mv.type)) w(`  const [s1, setS1] = useState('');`);
+    if (TEXT_MODEL.has(name)) w(`  const [s1, setS1] = useState('');`);
   }
   w('  return (');
   w('    <>');
   w(`      <${C} {...all} />`);
   w(`      <${C} {...req} />`);
+  w(`      <${C} {...req} id="x" className="c" style={{ color: 'red' }} aria-label="a" data-testid="t" />`);
   w(`      <${C} {...nulls} />`);
   w(`      <${C} {...undefs} />`);
   if (hasChildren) w(`      <${C} {...req}>text <b>node</b></${C}>`);
@@ -159,13 +162,11 @@ export function genReact(name, m, pkg = '@ziyarago/ui') {
     if (nat.length) w(`      <${C} {...req} ${nat.map(e => `on${cap(e)}={(e: ${RT[NATIVE[e]]}) => e.type}`).join(' ')} />`);
   }
   if (mv) {
-    w(`      <${C} {...req} ${mv.name}={v1} onChange={setV1} />`);
     w(`      <${C} {...req} ${mv.name}={v2} onChange={setV2} />`);
-    w(`      <${C} {...req} ${mv.name}={v3} onChange={setV3} />`);
     w(`      <${C} {...req} ${mv.name}={v2} onChange={(v) => setV2(v)} />`);
     w(`      <${C} {...req} ${mv.name}={null} />`);
     w(`      <${C} {...req} ${mv.name}={undefined} />`);
-    if (/\bstring\b/.test(mv.type)) w(`      <${C} {...req} ${mv.name}={s1} onChange={(v) => setS1(String(v))} />`);
+    if (TEXT_MODEL.has(name)) w(`      <${C} {...req} ${mv.name}={s1} onChange={setS1} />`);
   }
   w('    </>');
   w('  );');

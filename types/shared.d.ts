@@ -6,7 +6,7 @@ export interface ChipProps { tone?: Tone; variant?: 'tonal' | 'outlined' | 'soli
 export interface BadgeProps { tone?: 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'inverse'; dot?: boolean; shape?: 'pill' | 'square'; size?: Size }
 export interface IconTileProps { icon: string; tone?: Tone; size?: number; shape?: 'square' | 'circle' }
 export interface CardProps { size?: Size; title?: string; subtitle?: string; variant?: 'default' | 'inverse' | 'gradient' | 'outline'; tone?: Tone | 'rose' | 'violet'; intensity?: 'vivid'; padding?: 'none'; interactive?: boolean; header?: unknown; footer?: unknown; actions?: unknown; onClick?: (e: MouseEvent) => void }
-export interface NavItem { value?: string; label?: string; icon?: string; count?: number | string; badge?: number | string; group?: string }
+export interface NavItem { value?: string | number; label?: string; icon?: string; count?: number | string; badge?: number | string; group?: string }
 export interface AppShellProps { nav?: 'top' | 'side'; items: NavItem[]; modelValue?: string; collapsible?: boolean; collapsed?: boolean; frame?: boolean; brand?: unknown; actions?: unknown; footer?: unknown; onCollapse?: (v: boolean) => void }
 export interface Column<R = any> { key: string; label: string; sortable?: boolean; num?: boolean; align?: 'left' | 'center' | 'right'; width?: string; render?: (value: any, row: R) => unknown }
 export interface DataTableProps<R = any> { columns: Column<R>[]; rows: (R & { id: string | number })[]; selected?: (string | number)[]; sortKey?: string; sortDir?: 'asc' | 'desc'; onSelect?: (ids: (string | number)[]) => void; onSort?: (key: string, dir: 'asc' | 'desc') => void; onRowClick?: (row: R, index: number) => void; empty?: unknown }

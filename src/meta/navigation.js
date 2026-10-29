@@ -2,14 +2,14 @@
 const SIZE = "'xs' | 'sm' | 'md' | 'lg' | 'xl'";
 const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 const size = (what) => ({ type: SIZE, values: SIZES, default: 'md', description: `Scale of ${what}.` });
-const current = { type: 'string', description: 'Value of the active item (aria-current="page").' };
+const current = { type: 'string | number', description: 'Value of the active item (aria-current="page").' };
 
 export default {
   TopNav: {
     description: 'Horizontal app header with a brand area, navigation items and an actions area.',
     props: {
       brand: { type: 'string | VNode', description: 'Logo or product name on the left.' },
-      items: { type: '{ value: string; label: string; icon?: string; count?: string | number; children?: ({ value: string; label: string; icon?: string; count?: string | number; disabled?: boolean } | { heading: string } | { separator: true })[] }[]', default: '[]', description: 'Navigation entries. count renders a small counter after the label. An entry with children becomes a drop-down: click or ArrowDown opens a menu of its children (each with an optional icon and count, headings and separators allowed); selecting one calls change with the child value. The entry is marked current when one of its children is.' },
+      items: { type: '{ value: string | number; label: string; icon?: string; count?: string | number; children?: ({ value: string | number; label: string; icon?: string; count?: string | number; disabled?: boolean } | { heading: string } | { separator: true })[] }[]', default: '[]', description: 'Navigation entries. count renders a small counter after the label. An entry with children becomes a drop-down: click or ArrowDown opens a menu of its children (each with an optional icon and count, headings and separators allowed); selecting one calls change with the child value. The entry is marked current when one of its children is.' },
       value: current,
       overflow: { type: "'menu' | 'none'", values: ['menu', 'none'], default: 'menu', description: "'menu': entries that do not fit move into a trailing \"More\" drop-down (measured after render and on resize; server rendering shows all entries). 'none': no collapsing, the row scrolls sideways and sub-menus are clipped, so avoid children with it." },
       moreLabel: { type: 'string', default: 'More', description: 'Accessible name of the overflow drop-down button.' },
@@ -24,7 +24,7 @@ export default {
     description: 'Vertical sidebar with a brand, grouped navigation items, a footer and an optional collapse toggle.',
     props: {
       brand: { type: 'string | VNode', description: 'Logo or product name at the top.' },
-      items: { type: '({ value: string; label: string; icon?: string; count?: string | number; children?: ({ value: string; label: string; icon?: string; count?: string | number } | { separator: true })[] } | { group: string })[]', default: '[]', description: 'Entries. An object with group renders a section heading (hidden when collapsed); others are links with an optional icon and count. An entry with children is an expandable group: its button toggles the list of children (open by default while one of them is current); selecting a child calls change with the child value.' },
+      items: { type: '({ value: string | number; label: string; icon?: string; count?: string | number; children?: ({ value: string | number; label: string; icon?: string; count?: string | number } | { separator: true })[] } | { group: string })[]', default: '[]', description: 'Entries. An object with group renders a section heading (hidden when collapsed); others are links with an optional icon and count. An entry with children is an expandable group: its button toggles the list of children (open by default while one of them is current); selecting a child calls change with the child value.' },
       value: current,
       collapsed: { type: 'boolean', default: false, description: 'Icon-only mode; labels move to the title tooltip.' },
       collapsible: { type: 'boolean', default: false, description: 'Always draw the collapse button, even without a toggle handler (the button is also drawn when a toggle handler is set).' },
@@ -40,7 +40,7 @@ export default {
     description: 'Compact vertical list of sections with an optional title; use for settings and secondary page navigation.',
     props: {
       title: { type: 'string', description: 'Small heading above the list; also the aria-label.' },
-      items: { type: '{ value: string; label: string; icon?: string; badge?: string | number }[]', default: '[]', description: 'Entries. badge renders a counter on the right.' },
+      items: { type: '{ value: string | number; label: string; icon?: string; badge?: string | number }[]', default: '[]', description: 'Entries. badge renders a counter on the right.' },
       value: current,
       size: size('item height and text'),
     },
@@ -50,8 +50,8 @@ export default {
   Tabs: {
     description: 'Underlined tab strip for switching between views of the same page.',
     props: {
-      modelValue: { type: 'string', model: true, description: 'Value of the selected tab. Vue v-model, React modelValue + onChange.' },
-      items: { type: '{ value: string; label: string; disabled?: boolean; count?: string | number; badge?: string | number }[]', default: '[]', description: 'Tabs. count (or badge) shows a small number after the label, for example "Media 3"; 0 is shown, null or empty is not.' },
+      modelValue: { type: 'string | number', model: true, description: 'Value of the selected tab. Vue v-model, React modelValue + onChange.' },
+      items: { type: '{ value: string | number; label: string; disabled?: boolean; count?: string | number; badge?: string | number }[]', default: '[]', description: 'Tabs. count (or badge) shows a small number after the label, for example "Media 3"; 0 is shown, null or empty is not.' },
       size: size('tab height and text'),
     },
     events: { change: 'Called with the value of the clicked tab.' },
@@ -61,7 +61,7 @@ export default {
   PillTabs: {
     description: 'Pill-style tab buttons with optional icons, horizontal or vertical; use for settings and profile sections.',
     props: {
-      items: { type: '{ value: string; label: string; icon?: string; disabled?: boolean; count?: string | number; badge?: string | number }[]', default: '[]', description: 'Tabs. count (or badge) shows a small number after the label; 0 is shown, null or empty is not.' },
+      items: { type: '{ value: string | number; label: string; icon?: string; disabled?: boolean; count?: string | number; badge?: string | number }[]', default: '[]', description: 'Tabs. count (or badge) shows a small number after the label; 0 is shown, null or empty is not.' },
       value: { type: 'string', description: 'Value of the selected tab. Changed via the change event.' },
       vertical: { type: 'boolean', default: false, description: 'Stacks the tabs in a column.' },
       size: size('button height, gap and text'),
