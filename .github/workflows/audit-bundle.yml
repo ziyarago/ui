@@ -1,0 +1,78 @@
+name: Audit bundle
+# Production bundle and environment emulation. Installs the PACKED tarball (npm pack of this repo) into consumer apps
+# (Vue 3.5 + Vite 8 + Tailwind 4 + vue-i18n + unplugin-vue-components, React 19 + Vite, Nuxt 3 and 4 with the module),
+# builds them for production and mounts every component in headless Chrome under a strict CSP. See tests/bundle/README.md.
+# The same harness audits the Pro tarball from the ui-pro repository (workflow audit-bundle there checks this repo out).
+on:
+  workflow_dispatch:
+  push:
+    branches: [audit-bundle]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: audit-bundle-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Pack (prepack builds and checks)
+        run: |
+          npm ci
+          mkdir -p tarballs
+          npm pack --pack-destination tarballs
+          node tests/bundle/gen-examples.mjs tarballs/examples-free.json
+      - name: Tarball contents (exports, files, sideEffects, free-only, peers)
+        working-directory: tests/bundle
+        run: |
+          npm i --no-audit --no-fund
+          mkdir -p ../../out
+          node check-tarball.mjs ../../tarballs/ziyarago-ui-[0-9]*.tgz --json ../../out/tarball.json
+      - name: npm pack --dry-run file list
+        if: always()
+        run: npm pack --dry-run --ignore-scripts 2>&1 | tail -n 150
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: tarballs, path: tarballs, retention-days: 7 }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: report-tarball, path: out, retention-days: 7 }
+
+  apps:
+    needs: pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { app: vue, nuxt: '' }
+          - { app: react, nuxt: '' }
+          - { app: nuxt, nuxt: '3' }
+          - { app: nuxt, nuxt: '4' }
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/download-artifact@v4
+        with: { name: tarballs, path: tarballs }
+      - run: cd tests/bundle && npm i --no-audit --no-fund
+      - name: Build and audit the consumer app
+        env:
+          APP: ${{ matrix.app }}
+          NUXT: ${{ matrix.nuxt }}
+        run: node tests/bundle/run-app.mjs "$APP" --tarballs "$PWD/tarballs" --examples "$PWD/tarballs/examples-free.json" --out "$PWD/out" --nuxt "${NUXT:-3}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: 'report-${{ matrix.app }}${{ matrix.nuxt }}', path: out, retention-days: 7 }

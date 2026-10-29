@@ -175,3 +175,13 @@ import { setIconBase, registerIcons } from '@ziyarago/ui/vue';
 setIconBase('/icons/');                       // copy node_modules/lucide-static/icons to public/icons
 registerIcons({ 'my-logo': '<svg viewBox="0 0 24 24" ...>...</svg>' });   // or inline SVG strings, no request at all
 ```
+
+## 10. Strict CSP checklist
+Verified in CI (`tests/bundle`, workflow `Audit bundle`): packed tarballs installed into Vue + Vite 8, React 19 + Vite 8 and Nuxt 3/4 apps, every example mounted in the production build behind `default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'self'; img-src 'self' data:` with no violation and no request to another origin.
+
+- Fonts: the small subsets (`*-cyrillic-ext.woff2`, below Vite's 4 KB `assetsInlineLimit`) are referenced with `?no-inline`, so Vite keeps them as files instead of `data:` URIs that `font-src 'self'` blocks.
+- Icons: names outside the built-in set are fetched from unpkg, see section 9 (`registerIcons`, `setIconBase`). The built-in set covers the icons used by the components and by the docs examples.
+- Client rendering (Vite, plain Vue or React) sets styles through the DOM, which `style-src 'self'` allows.
+- SSR (Nuxt, Next): the server HTML contains `style="..."` attributes (icon sizes, progress widths, CSS variables). A policy without `style-src-attr 'unsafe-inline'` (or hashes) ignores them until a component re-renders. Nuxt additionally inlines CSS into `<style>` blocks: set `features: { inlineStyles: false }`.
+- SSR inline scripts need a hash or nonce: the no-flash theme script (`themeInitScript` from `@ziyarago/ui/theme`, sha256 of the string) and the framework's own payload script.
+- Pro `Map` loads CARTO tiles by default (`img-src https://*.basemaps.cartocdn.com`). Pass `tiles="/tiles/{style}/{z}/{x}/{y}.png"` to serve them from your origin.

@@ -6,6 +6,7 @@
 | --- | --- |
 | `npm run test:unit` | `fmt`, `rules`, date parsing (`pd`), the theme controller (stubbed `document`/`localStorage`), size helpers, registry shape. `node:test`, no mocks of the code under test. |
 | `npm run test:ssr` | Every component and every docs variant renders with Vue `renderToString` and React `renderToString`: no throw, no framework warning, no `undefined` / `[object Object]` / `NaN` / `null` text, non-empty output. Overlays are rendered closed and open. |
+| `Audit bundle` workflow (`tests/bundle`) | the packed tarball in Vue + Vite 8, React 19 and Nuxt 3/4 consumer apps, production build, strict CSP, every example in headless Chrome. Runs remotely only. See `tests/bundle/README.md`. |
 | `npm run test:browser` | `run.mjs` then `interactions.mjs`, in headless Chrome, against a Vue app and a React app. |
 
 ## How it works

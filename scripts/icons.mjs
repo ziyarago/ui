@@ -10,9 +10,10 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const iconDir = join(root, 'node_modules/lucide-static/icons');
 const have = new Set(readdirSync(iconDir).filter(f => f.endsWith('.svg')).map(f => f.slice(0, -4)));
-const dirs = [join(root, 'src/core'), join(root, 'src/compat'), join(root, '../ZiyaraGo_UI_pro/src')].filter(existsSync);
+// docs examples and metadata are scanned too: users copy them, and a strict CSP forbids the CDN fallback for names outside the set
+const dirs = [join(root, 'src/core'), join(root, 'src/compat'), join(root, 'src/meta'), join(root, 'site/docs-data'), join(root, '../ZiyaraGo_UI_pro/src')].filter(existsSync);
 const used = new Set();
-const walk = d => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p); else if (/\.js$/.test(f)) for (const m of readFileSync(p, 'utf8').matchAll(/['"`]([a-z][a-z0-9]*(?:-[a-z0-9]+)*)['"`]/g)) if (have.has(m[1])) used.add(m[1]); } };
+const walk = d => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p); else if (/\.(js|ts)$/.test(f)) for (const m of readFileSync(p, 'utf8').matchAll(/['"`]([a-z][a-z0-9]*(?:-[a-z0-9]+)*)['"`]/g)) if (have.has(m[1])) used.add(m[1]); } };
 dirs.forEach(walk);
 const names = [...used].sort();
 const svg = n => readFileSync(join(iconDir, n + '.svg'), 'utf8').replace(/<!--[\s\S]*?-->\s*/g, '').replace(/\s+/g, ' ').replace(/> </g, '><').trim();
