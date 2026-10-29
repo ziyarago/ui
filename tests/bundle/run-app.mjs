@@ -163,6 +163,13 @@ for (const i of compareBaseline(baseKey, sizes, baseline)) addIssue('size', i);
   if (/@import\s+url\(\s*["']?https?:/.test(css) || /url\(\s*["']?https?:\/\/(fonts|unpkg)/.test(css)) addIssue('css', { cat: 'external-request', sev: 'fail', msg: 'compiled CSS references a remote url()/@import' });
 }
 
+if (appName === 'nuxt') {
+  const js = readdirSync(dist, { recursive: true }).filter(f => String(f).endsWith('.js')).map(f => readFileSync(join(dist, String(f)), 'utf8')).join('\n');
+  const detailed = /Hydration (children|text|node|class|style|attribute)[^"'`]*mismatch/i.test(js);
+  log('hydration mismatch details compiled in:', detailed);
+  if (!detailed) addIssue('hydration', { cat: 'hydration', sev: 'warn', msg: 'production bundle has no hydration mismatch warnings compiled in: the hydration check is blind (__VUE_PROD_HYDRATION_MISMATCH_DETAILS__)' });
+}
+
 // ---- context for the browser checks
 const pkgDir = join(app, 'node_modules/@ziyarago/ui');
 const builtin = new Set(await builtinIcons(pkgDir));
