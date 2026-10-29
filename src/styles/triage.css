@@ -28,3 +28,11 @@
 .zg-range2{height:100%}
 .zg-hc{min-height:24px}
 .zg-crumbs a,.zg-foot a,.zg-footer a{display:inline-flex;align-items:center;min-height:24px}
+.zg-gal__m,.zg-hotel__img,.zg-opt__img{width:100%}
+.zg-ash__title,.zg-kpi__value{line-height:1.2}
+.zg-num,.zg-mono{overflow-wrap:normal}
+.zg-badge{max-width:100%;height:auto;min-height:24px;padding-block:3px;line-height:1.25;white-space:normal;overflow-wrap:break-word;text-align:start}
+.zg-crumbs{flex-wrap:wrap}.zg-crumbs a{overflow-wrap:break-word;max-width:100%}
+.zg-tag button{min-width:24px;min-height:24px}
+.zg-range2{min-height:24px}.zg-range2w{min-height:28px}.zg-range{min-height:24px}
+.zg-car__d{flex-wrap:wrap}.zg-car__d button{flex:none}
