@@ -84,8 +84,8 @@ export default {
     props: {
       variant: { type: "'text' | 'circle' | 'rect'", values: ['text', 'circle', 'rect'], default: 'text', description: 'Shape of the placeholder.' },
       lines: { type: 'number', default: 1, description: 'Number of stacked lines. The last of several lines is 60% wide.' },
-      width: { type: 'string', default: '100%', description: 'CSS width of each line or rect.' },
-      height: { type: 'string', description: 'CSS height. Text lines take the height from size.' },
+      width: { type: 'string | number', default: '100%', description: 'CSS width of each line or rect. A number is pixels.' },
+      height: { type: 'string | number', description: 'CSS height. A number is pixels. Text lines take the height from size.' },
       size: { type: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | number", values: SIZES, default: 'md', description: 'Text line height and gap; for variant "circle" the diameter (24, 32, 40, 56, 72 px) or a number of pixels.' },
     },
     notes: ['Purely visual and not announced to assistive tech; pair it with aria-busy on the container.'],
