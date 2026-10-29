@@ -43,3 +43,5 @@
 .zg-select__trigger,.zg-dd>.zg-btn,.zg-fab{max-width:100%}
 .zg-car__c b,.zg-car__c span{overflow-wrap:anywhere}
 .zg-car__c{min-width:0}
+.zg-root button:not(.zg-btn):not(.zg-ibtn):not(.zg-fab):not(.zg-opt):focus-visible{outline:2px solid var(--zg-brand);outline-offset:2px}
+.zg-tree__n{min-height:24px}
