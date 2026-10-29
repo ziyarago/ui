@@ -1,3 +1,9 @@
+## [0.19.4](https://github.com/ziyarago/ui/compare/v0.19.3...v0.19.4) (2026-10-29)
+
+### Bug Fixes
+
+* keep built-in component strings in production bundles (sideEffects), DataTable onRowClick type, neutral Badge tone, tab counts, Modal sizes up to 5xl ([25ec195](https://github.com/ziyarago/ui/commit/25ec1953e6d5370d55a7c2ce68d3c20fdc1327b2))
+
 ## [0.19.3](https://github.com/ziyarago/ui/compare/v0.19.2...v0.19.3) (2026-10-21)
 
 ### Bug Fixes
