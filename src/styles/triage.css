@@ -45,3 +45,4 @@
 .zg-car__c{min-width:0}
 .zg-root button:not(.zg-btn):not(.zg-ibtn):not(.zg-fab):not(.zg-opt):focus-visible{outline:2px solid var(--zg-brand);outline-offset:2px}
 .zg-tree__n{min-height:24px}
+.zg-tree>div,.zg-tree__n{flex-shrink:0}
