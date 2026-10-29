@@ -10,4 +10,4 @@
 /* Thmanyah Sans is NOT bundled. Its licence (https://font.thmanyah.com/licenses) forbids redistributing or hosting the files, so --zg-font-ar names it first and a family you declare yourself is picked up automatically.
    Download the files from https://font.thmanyah.com and self-host them, either with @ziyarago/ui/thmanyah.css or with your own rule, for example:
 @font-face{font-family:'Thmanyah Sans';font-weight:400 600;font-display:swap;src:url('/fonts/thmanyah/thmanyahsans-Regular.otf') format('opentype')}
-   Without it the Arabic stack falls back to Segoe UI, Tahoma, Noto Sans Arabic, then the system font. */
+   Without it Latin text falls back to Manrope and Arabic to Segoe UI, Tahoma, Noto Sans Arabic, then the system font. */
