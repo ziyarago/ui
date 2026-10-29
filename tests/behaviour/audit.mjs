@@ -62,7 +62,7 @@ async function judge(page, samples, push) {
     const x = Math.max(0, Math.min(...items.map(i => i.r.x)) - 4), y = Math.max(0, Math.min(...items.map(i => i.r.y)) - 4);
     const w = Math.min(1600, Math.max(...items.map(i => i.r.x + i.r.w)) - x + 4), h = Math.min(1600, Math.max(...items.map(i => i.r.y + i.r.h)) - y + 4);
     try {
-      const b64 = await page.screenshot({ clip: { x, y, width: Math.max(2, w), height: Math.max(2, h) }, captureBeyondViewport: true, encoding: 'base64' });
+      await page.evaluate(v => window.scrollTo(0, v), Math.round(y)); const b64 = await page.screenshot({ clip: { x, y: 0, width: Math.max(2, Math.min(w, 1400)), height: Math.max(2, Math.min(h, 800)) }, captureBeyondViewport: false, encoding: 'base64' });
       const res = await page.evaluate(judgeSamples, b64, { x, y, w: Math.max(2, w) }, items);
       for (const r of res) if (r.bad) { const it = items.find(i => i.id === r.id); push({ c: it.c, v: it.v, label: it.label, o: it.kind === 'icon' ? 'contrast-graphic' : 'contrast-text', d: `${r.ratio} < ${it.need} on gradient/image (sampled)`, el: it.el, rect: it.r }); }
     } catch (e) { push({ c: items[0].c, v: items[0].v, o: 'harness', d: 'sampling failed: ' + e.message.slice(0, 100) }); }
@@ -171,7 +171,10 @@ async function runPageInner(fw, sid, c, extra = {}) {
       const file = `shots/${fw}-${slug(sid)}-${slug(scenName(c))}-${slug(k)}.png`;
       try {
         await page.evaluate(rects => { rects.forEach((r, i) => { const d = document.createElement('div'); d.className = 'zg-audit-mark'; d.style.cssText = `position:absolute;z-index:2147483647;pointer-events:none;outline:2px solid red;left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px`; document.body.append(d); }); }, rs.map(r => r.rect));
-        await page.screenshot({ path: join(OUT, file), clip: { x, y, width: Math.max(20, Math.min(x2 - x, 1600)), height: Math.max(20, Math.min(y2 - y, 900)) }, captureBeyondViewport: true });
+        const sy = Math.max(0, Math.round(y - 20));
+        await page.evaluate(v => window.scrollTo(0, v), sy);
+        await sleep(30);
+        await page.screenshot({ path: join(OUT, file), clip: { x, y: y - sy, width: Math.max(20, Math.min(x2 - x, 1400)), height: Math.max(20, Math.min(y2 - y, 700)) }, captureBeyondViewport: false });
         await page.evaluate(() => document.querySelectorAll('.zg-audit-mark').forEach(e => e.remove()));
         for (const r of rs) r.shot = file;
       } catch {}
