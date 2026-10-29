@@ -1,3 +1,9 @@
+## [0.20.2](https://github.com/ziyarago/ui/compare/v0.20.1...v0.20.2) (2026-10-29)
+
+### Bug Fixes
+
+* React types import FocusEvent and friends, .d.ts relative imports carry .js extensions ([d0d96e4](https://github.com/ziyarago/ui/commit/d0d96e45659765d8375680e2095893ba87482bdb))
+
 ## [0.20.1](https://github.com/ziyarago/ui/compare/v0.20.0...v0.20.1) (2026-10-29)
 
 ### Bug Fixes
