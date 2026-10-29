@@ -79,7 +79,7 @@ function eventArgs(n, m, e, fw) {
   const k = `${n}.${e}`;
   let a;
   if (k in EVENT_ARGS && EVENT_ARGS[k] !== '') a = EVENT_ARGS[k];
-  else if ((n === 'TextField' || n === 'Textarea') && e in NATIVE_EVENT) a = 'event: ' + (fw === 'react' ? NATIVE_EVENT[e] + '<HTMLElement>' : NATIVE_EVENT[e]);
+  else if ((n === 'TextField' || n === 'Textarea') && e in NATIVE_EVENT) a = 'event: ' + (fw === 'react' ? (e === 'input' ? 'SyntheticEvent' : NATIVE_EVENT[e]) + '<HTMLElement>' : NATIVE_EVENT[e]);
   else if (e === 'change' && (n === 'TextField' || n === 'Textarea')) a = 'value: string';
   else if (e === 'click') a = fw === 'react' ? 'event: MouseEvent<HTMLElement>' : 'event: MouseEvent';
   else if (e === 'change' && model(m)) a = 'value: ' + fixType(model(m).type, fw);
@@ -113,6 +113,7 @@ function component(n, fw) {
     // the update handler stays open, the direction that matters is checked through the modelValue prop. Typed payload: the `change` event.
     lines.push(jsdoc(['v-model update. Emitted together with `change` (typed payload: ' + t.replace(/\*\//g, '') + ').']) + `  'onUpdate:${mv.name}'?(value: any): void;`);
   }
+  if (fw === 'vue') lines.push(jsdoc(['Any aria-* attribute (aria-label, aria-describedby, ...) lands on the root element.']) + "  [aria: `aria-${string}`]: string | number | boolean | undefined;");
   if (fw === 'vue' && mv) lines.push(jsdoc(['Set by `v-model.number`, `v-model.trim` and `v-model.lazy`; Vue applies number and trim to the emitted value.']) + `  modelModifiers?: Record<string, true>;`);
   if (fw === 'react') {
     for (const [s, d] of Object.entries(m.slots || {})) {

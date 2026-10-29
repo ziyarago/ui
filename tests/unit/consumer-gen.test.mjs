@@ -20,7 +20,7 @@ const sample = {
 };
 
 test('genVue covers required props, null/undefined, shorthand, kebab, events, slots, v-model and refs', () => {
-  const s = genVue('Foo', sample, '@x/ui');
+  const s = genVue('TextField', sample, '@x/ui');
   assert.match(s, /from '@x\/ui\/vue'/);
   assert.match(s, /const req = \{ items: all\.items \}/);
   assert.match(s, /:label="nul" :disabled="nul" :iconRight="nul"/);
