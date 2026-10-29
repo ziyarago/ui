@@ -76,6 +76,7 @@ export default {
       height: { type: 'number', default: 360, description: 'Height in px.' },
       theme: { type: "'light' | 'dark'", values: ['light', 'dark'], description: 'Tile theme. If omitted, dark is used when the page is inside a dark data-theme.' },
       style: { type: 'string', description: 'CARTO tile style path, for example "light_all" or "dark_all". Overrides theme.' },
+      tiles: { type: 'string', description: 'Tile URL template with {s}, {style}, {z}, {x}, {y}, for example "/tiles/{z}/{x}/{y}.png". Use it to serve tiles from your own origin: the default CARTO host needs img-src https://*.basemaps.cartocdn.com under a strict CSP.' },
       label: { type: 'string', default: 'Map', description: 'aria-label of the map region.' },
       labels: { type: '{ zoomIn?: string; zoomOut?: string }', default: "{ zoomIn: 'Zoom in', zoomOut: 'Zoom out' }", description: 'Accessible names of the zoom buttons.' },
     },
