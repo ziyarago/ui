@@ -31,7 +31,7 @@ function checkPackage(label, dir, files, pkg) {
   for (const [key, v] of Object.entries(pkg.exports || {})) {
     for (const t of targets(v)) {
       const rel = t.replace(/^\.\//, '');
-      if (rel.includes('*')) { const re = globToRe(rel); if (![...set].some(p => re.test(p))) add('fail', 'exports', `${where} exports["${key}"] -> ${t}: no file matches`); continue; }
+      if (rel.includes('*')) { const re = new RegExp('^' + rel.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$'); if (![...set].some(p => re.test(p))) add('fail', 'exports', `${where} exports["${key}"] -> ${t}: no file matches`); continue; }
       if (!set.has(rel)) add('fail', 'exports', `${where} exports["${key}"] -> ${t} is not in the tarball`);
     }
   }
