@@ -123,6 +123,19 @@ function inPage(input) {
     }
   }
   out.pageCulprits = wide;
+  // which component sections cause the sideways scroll: hide them one by one and see how much the overflow shrinks
+  const drops = [];
+  if (out.pageOverflow > 0) {
+    const base = out.pageOverflow;
+    for (const sec of document.querySelectorAll('section[data-component]')) {
+      const prev = sec.style.display; sec.style.display = 'none';
+      const o = de.scrollWidth - de.clientWidth;
+      sec.style.display = prev;
+      if (o < base) drops.push({ component: sec.getAttribute('data-component'), drop: base - o });
+    }
+    drops.sort((a, b) => b.drop - a.drop);
+  }
+  out.sectionDrops = drops.slice(0, 8);
 
   // remote @import / url() in loaded CSS
   const remote = [];
