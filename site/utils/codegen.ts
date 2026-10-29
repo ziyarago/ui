@@ -1,4 +1,5 @@
 import type { Child, Item, Variant } from '~/docs-data/types'
+import { substitute } from '~/utils/inside'
 
 const lit = (v: any): string => {
   if (v === null) return 'null'
@@ -35,9 +36,9 @@ function reactNode(n: Node): string {
   const attrs: string[] = []
   for (const [k, val] of Object.entries(n.props ?? {})) {
     if (k === 'modelValue') attrs.push('modelValue={value} onChange={setValue}')
-    else if (typeof val === 'string' && !val.includes('"')) attrs.push(`${k}="${val}"`)
+    else if (typeof val === 'string' && !val.includes('"')) attrs.push(`${k === 'class' ? 'className' : k}="${val}"`)
     else if (val === true) attrs.push(k)
-    else attrs.push(`${k}={${lit(val)}}`)
+    else attrs.push(`${k === 'class' ? 'className' : k}={${lit(val)}}`)
   }
   if (n.overlay) attrs.push('open={open}', 'onClose={() => setOpen(false)}')
   for (const [s, t] of Object.entries(n.slots ?? {})) attrs.push(typeof t === 'string' ? `${s}={<>${t}</>}` : `${s}={\n  <>\n${t.map(reactNode).map(x => pad(x, 4)).join('\n')}\n  </>\n}`)
@@ -48,7 +49,7 @@ function reactNode(n: Node): string {
   return `${head}${attrs.length && !inline ? '\n' : ''}>\n${inner.map(i => pad(i)).join('\n')}\n</${tag}>`
 }
 
-const nodes = (name: string, v: Variant): Node[] => (v.items?.length ? v.items : [v as Item]).map(i => ({ name, props: i.props, text: i.text, slots: i.slots, children: i.children, overlay: v.overlay }))
+const nodes = (name: string, v: Variant): Node[] => (v.items?.length ? v.items : [v as Item]).map(i => { const n: Node = { name, props: i.props, text: i.text, slots: i.slots, children: i.children, overlay: v.overlay }; return v.inside ? { ...substitute(v.inside, n), overlay: false } : n })
 
 export const vueCode = (name: string, v: Variant) => nodes(name, v).map(vueNode).join('\n\n')
 export const reactCode = (name: string, v: Variant) => nodes(name, v).map(reactNode).join('\n\n')

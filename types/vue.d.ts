@@ -660,6 +660,7 @@ export const UiCodeInput: UiVueComponent<UiCodeInputProps, UiCodeInputSlots>;
  * Note: Selecting from the list is the only way to set a value: free text is never emitted.
  * Note: The list closes on outside click and on Escape.
  * Note: Keyboard (WAI-ARIA combobox): the input has role=combobox with aria-expanded, aria-controls and aria-activedescendant; focus stays in the input, Arrow Down and Up open the list and move the active option (wraps, skips disabled), Enter chooses it, Escape closes.
+ * Note: The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.
  */
 export interface UiComboboxProps {
   /** Value of the selected option. */
@@ -968,6 +969,7 @@ export const UiDataTable: UiVueComponent<UiDataTableProps, UiDataTableSlots>;
  * Field with a calendar popup for choosing a date. Use in forms where a single date is needed.
  * Note: The event payload is a Date, not a string: convert to ISO yourself if the model is a string.
  * Note: The popup closes on outside click and on Escape (focus returns to the trigger). Arrow Down or Up on the trigger opens it and focus moves into the calendar, which uses the Calendar keys.
+ * Note: The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.
  */
 export interface UiDatePickerProps {
   /** Selected date (ISO string recommended, e.g. 2026-10-21). */
@@ -1122,12 +1124,28 @@ export const UiDrawer: UiVueComponent<UiDrawerProps, UiDrawerSlots>;
 /**
  * Button that opens a menu of actions; use for "more" menus and action lists.
  * Note: Each item may also have its own onClick and disabled. Open state is internal; the menu closes on outside click and on Escape.
+ * Note: The menu is rendered in document.body with position: fixed, so overflow, transform or a scrolling modal body never clip it. It flips above the trigger when there is no room below, stays inside the viewport and follows the trigger on scroll and resize.
  */
 export interface UiDropdownProps {
-  /** Text of the trigger button. */
+  /** Text of the trigger button. With iconOnly it becomes the aria-label (and tooltip) of the square button. */
   label?: string;
-  /** Icon name before the label. */
+  /** Icon name before the label; the only content of the button with iconOnly (default "ellipsis"). */
   icon?: string;
+  /**
+   * Renders the trigger like IconButton: a square icon button without label and chevron. Use label for the accessible name.
+   * @default false
+   */
+  iconOnly?: boolean;
+  /**
+   * With iconOnly: a transparent button without background, for table rows and toolbars.
+   * @default false
+   */
+  ghost?: boolean;
+  /**
+   * Which edge of the trigger the menu lines up with (mirrored in RTL). iconOnly defaults to end.
+   * @default 'start'
+   */
+  align?: 'start' | 'end';
   /**
    * Menu entries. Item fields: label, value (passed to select), icon (icon name), shortcut (kbd hint on the right), tone "danger" (red), disabled true (dimmed, not clickable), onClick (called with the item when clicked, before the select event), separator true (renders a divider; other fields ignored).
    * @default []
@@ -1149,7 +1167,10 @@ export interface UiDropdownProps {
    */
   onSelect?: (value: string) => void;
 }
-export interface UiDropdownSlots {}
+export interface UiDropdownSlots {
+  /** Custom trigger element (Vue #trigger / React trigger prop) instead of the built-in button. The kit adds aria-haspopup, aria-expanded and aria-controls to its first focusable element, toggles on click and opens on ArrowDown / ArrowUp; a non-interactive element becomes role="button" with tabindex 0. */
+  trigger?: () => any;
+}
 export const UiDropdown: UiVueComponent<UiDropdownProps, UiDropdownSlots>;
 
 /** Centered icon (or image), title and description with optional actions; use when a list, search or section has no content. */
@@ -1826,6 +1847,7 @@ export const UiModal: UiVueComponent<UiModalProps, UiModalSlots>;
 /**
  * Dropdown with checkboxes for choosing several values. Use for filters and multi-valued fields.
  * Note: The trigger shows "N selected"; the list stays open while picking and closes on outside click or Escape.
+ * Note: The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.
  */
 export interface UiMultiSelectProps {
   /**
@@ -2454,6 +2476,7 @@ export const UiPopconfirm: UiVueComponent<UiPopconfirmProps, UiPopconfirmSlots>;
 /**
  * Button that toggles a floating panel with arbitrary content; use for small forms and extra info next to a control.
  * Note: Open state is internal and toggled by the trigger. The panel closes on outside click and on Escape (focus returns to the trigger).
+ * Note: The panel is rendered in document.body with position: fixed (not clipped by overflow, flips near the viewport edge).
  */
 export interface UiPopoverProps {
   /** Text of the trigger button. */
@@ -2745,6 +2768,7 @@ export const UiSegmentedControl: UiVueComponent<UiSegmentedControlProps, UiSegme
 /**
  * Single-choice dropdown. Use when the user picks one value from a known list.
  * Note: The popup closes on outside click and on Escape (focus returns to the trigger).
+ * Note: The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.
  */
 export interface UiSelectProps {
   /** Value of the selected option. */

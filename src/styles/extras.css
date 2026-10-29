@@ -30,7 +30,12 @@
 .zg-tip--left:hover::after,.zg-tip--left:focus-visible::after,.zg-tip--right:hover::after,.zg-tip--right:focus-visible::after{transform:translateY(-50%) translateX(0)}
 .zg-rg{display:flex;flex-direction:column;gap:10px}.zg-rg--row{flex-direction:row;flex-wrap:wrap;gap:10px 22px}
 /* compat layer (@ziyarago/ui/compat): compound components that have no counterpart in the new kit */
-.zg-dd-trig{display:inline-block}.zg-dd__panel{position:fixed;z-index:var(--zg-z-pop,60);animation:zg-pop-in .16s var(--zg-ease) both}
+.zg-dd-trig{display:inline-block}
+.zg-float:is(.zg-select__list,.zg-menu,.zg-pop){position:fixed;inset:auto;left:0;top:0;margin:0;z-index:var(--zg-z-float,230);box-sizing:border-box;max-width:calc(100vw - 16px)}
+.zg-float:not([data-placed]){visibility:hidden}
+.zg-float[data-side="top"]{animation-name:zg-pop-in-up}
+@keyframes zg-pop-in-up{from{opacity:0;transform:translateY(6px) scale(.97)}}
+@media (prefers-reduced-motion:reduce){.zg-float{animation:none}}.zg-dd__panel{position:fixed;z-index:var(--zg-z-pop,60);animation:zg-pop-in .16s var(--zg-ease) both}
 .zg-menu__lbl{padding:10px 12px 4px;font:700 11px var(--zg-font);letter-spacing:.1em;text-transform:uppercase;color:var(--zg-text-3)}
 .zg-avgroup{display:flex}.zg-avgroup>*+*{margin-inline-start:-8px}.zg-avgroup--tight>*+*{margin-inline-start:-12px}.zg-avgroup--loose>*+*{margin-inline-start:-4px}
 .zg-avgroup>.zg-avatar{box-shadow:var(--zg-rim),0 0 0 2px var(--zg-bg)}.zg-avgroup--rev{flex-direction:row-reverse;justify-content:flex-end}

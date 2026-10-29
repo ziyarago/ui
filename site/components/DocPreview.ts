@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import * as Free from '@ziyarago/ui/vue'
 import * as ProUI from '#ziyarago-pro'
 import type { Variant, Item, Child } from '~/docs-data/types'
+import { substitute } from '~/utils/inside'
 
 const UI = { ...Free, ...ProUI }
 
@@ -61,6 +62,7 @@ export default defineComponent({
         const kids = [...(it.text ? [it.text] : []), ...(it.children ?? []).map((x, k) => build(x, k))]
         if (kids.length) slots.default = () => kids
         for (const [k, t] of Object.entries(it.slots ?? {})) slots[k] = () => (typeof t === 'string' ? t : t.map((x, k2) => build(x, k2)))
+        if (v.inside) return build(substitute(v.inside, { name: props.name, props: p, text: it.text, slots: it.slots, children: it.children }), i)
         return h(comp, { key: i, ...p }, slots)
       })
       const body = v.overlay ? [h(UI.UiButton as any, { variant: 'primary', onClick: () => (open.value = true) }, () => 'Open'), ...els] : els

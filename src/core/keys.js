@@ -1,3 +1,4 @@
+import { anchorOf, triggerIn } from './float.js';
 // Keyboard helpers shared by the core components. Handlers run in the browser only (SSR renders no events).
 const isRtl = el => typeof getComputedStyle === 'function' && getComputedStyle(el).direction === 'rtl';
 const live = (root, sel) => [...root.querySelectorAll(sel)].filter(n => !n.disabled && n.getAttribute('aria-disabled') !== 'true');
@@ -24,7 +25,7 @@ export const rove = (sel, o = {}) => e => {
 };
 
 /** The element that opened a popup list: the first button or input of the component root that is not inside the list. */
-export const trigger = list => { const root = list && list.parentElement; return root && [...root.querySelectorAll('button,input')].find(x => !list.contains(x)); };
+export const trigger = list => { if (!list) return; const u = list.getAttribute && list.getAttribute('data-zg-for'); return triggerIn(u ? anchorOf(u) : list.parentElement, list); };
 /** Call from an item's onClick so focus lands on the trigger instead of being lost when the list unmounts. */
 export const toTrigger = e => { const l = e.currentTarget && e.currentTarget.closest && e.currentTarget.closest('[data-zg-dd]'), t = l && trigger(l); if (t) t.focus({ preventScroll: true }); };
 

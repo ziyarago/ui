@@ -29,6 +29,8 @@ export interface Variant {
   items?: Item[]
   /** wrap the preview in a box of this width, e.g. '360px' */
   width?: string
+  /** render the component inside this element tree; a child named '$' marks where the component goes (e.g. a Dropdown in a table cell) */
+  inside?: Child
 }
 
 export interface Example {
