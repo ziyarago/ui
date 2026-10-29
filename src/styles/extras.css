@@ -32,6 +32,7 @@
 /* compat layer (@ziyarago/ui/compat): compound components that have no counterpart in the new kit */
 .zg-dd-trig{display:inline-block}
 .zg-float:is(.zg-select__list,.zg-menu,.zg-pop){position:fixed;inset:auto;left:0;top:0;margin:0;z-index:var(--zg-z-float,230);box-sizing:border-box;max-width:calc(100vw - 16px)}
+.zg-float{color:var(--zg-text-1);font-family:var(--zg-font)}
 .zg-float:not([data-placed]){visibility:hidden}
 .zg-float[data-side="top"]{animation-name:zg-pop-in-up}
 @keyframes zg-pop-in-up{from{opacity:0;transform:translateY(6px) scale(.97)}}
