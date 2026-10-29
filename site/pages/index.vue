@@ -41,7 +41,7 @@ export default () => (
 const features = [
   { icon: 'kaaba', title: `${total} free components`, text: `Actions, forms, data, feedback, overlays and navigation. Pro adds ${proTotal} more: Umrah, hotel and CRM blocks, charts, editors.` },
   { icon: 'logo', title: `${templatesCount} free page templates`, text: `Dashboard, settings, user list, pricing and auth, plus ${proTemplates} more in Pro. Fill named slots only.` },
-  { icon: 'map', title: 'RTL and Arabic', text: 'Direction flips with one attribute. Thmanyah ships in the package.' },
+  { icon: 'map', title: 'RTL and Arabic', text: 'Direction flips with one attribute. Arabic stack with Thmanyah support, self-hosted by you.' },
   { icon: 'tour360', title: 'Tokens for any client', text: 'OKLCH CSS variables and tokens.json for Flutter and native apps.' },
 ]
 </script>
