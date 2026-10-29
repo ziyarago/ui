@@ -1,3 +1,9 @@
+## [0.20.6](https://github.com/ziyarago/ui/compare/v0.20.5...v0.20.6) (2026-10-29)
+
+### Bug Fixes
+
+* Avatar tolerates a non-string name, contrast of Tour, ImageViewer counter and Actionsheet danger item ([76c93ae](https://github.com/ziyarago/ui/commit/76c93ae3aa54717183e521a47f44b0d84f663478))
+
 ## [0.20.5](https://github.com/ziyarago/ui/compare/v0.20.4...v0.20.5) (2026-10-29)
 
 ### Bug Fixes
