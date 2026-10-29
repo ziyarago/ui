@@ -1,3 +1,9 @@
+## [0.20.3](https://github.com/ziyarago/ui/compare/v0.20.2...v0.20.3) (2026-10-29)
+
+### Bug Fixes
+
+* types accept null, undefined and numbers wherever the runtime does; runtime tolerance for odd values; consumer-types CI job ([e1d5411](https://github.com/ziyarago/ui/commit/e1d5411d9887a5c5121f884363562d63b605833c))
+
 ## [0.20.2](https://github.com/ziyarago/ui/compare/v0.20.1...v0.20.2) (2026-10-29)
 
 ### Bug Fixes
