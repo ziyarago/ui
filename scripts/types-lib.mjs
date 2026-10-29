@@ -113,7 +113,7 @@ function component(n, fw) {
     // the update handler stays open, the direction that matters is checked through the modelValue prop. Typed payload: the `change` event.
     lines.push(jsdoc(['v-model update. Emitted together with `change` (typed payload: ' + t.replace(/\*\//g, '') + ').']) + `  'onUpdate:${mv.name}'?(value: any): void;`);
   }
-  if (fw === 'vue') lines.push(jsdoc(['Any aria-* and data-* attribute (aria-label, data-testid, ...) lands on the root element.']) + "  [attr: `aria-${string}` | `data-${string}`]: string | number | boolean | undefined;");
+  if (fw === 'vue') lines.push(jsdoc(['Any aria-* and data-* attribute (aria-label, data-testid, ...) lands on the root element. The camelized form is listed because the template checker camelizes data-* names.']) + "  [attr: `aria-${string}` | `data-${string}` | `data${Capitalize<string>}`]: string | number | boolean | undefined;");
   if (fw === 'vue' && mv) lines.push(jsdoc(['Set by `v-model.number`, `v-model.trim` and `v-model.lazy`; Vue applies number and trim to the emitted value.']) + `  modelModifiers?: Record<string, true>;`);
   if (fw === 'react') {
     for (const [s, d] of Object.entries(m.slots || {})) {
