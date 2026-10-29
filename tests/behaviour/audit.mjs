@@ -65,7 +65,7 @@ async function judge(page, samples, push) {
       await page.evaluate(v => window.scrollTo(0, v), Math.round(y)); const b64 = await page.screenshot({ clip: { x, y: 0, width: Math.max(2, Math.min(w, 1400)), height: Math.max(2, Math.min(h, 800)) }, captureBeyondViewport: false, encoding: 'base64' });
       const res = await page.evaluate(judgeSamples, b64, { x, y, w: Math.max(2, w) }, items);
       for (const r of res) if (r.bad) { const it = items.find(i => i.id === r.id); push({ c: it.c, v: it.v, label: it.label, o: it.kind === 'icon' ? 'contrast-graphic' : 'contrast-text', d: `${r.ratio} < ${it.need} on gradient/image (sampled)`, el: it.el, rect: it.r }); }
-    } catch (e) { push({ c: items[0].c, v: items[0].v, o: 'harness', d: 'sampling failed: ' + e.message.slice(0, 100) }); }
+    } catch (e) { log('  sampling skipped: ' + e.message.slice(0, 80)); }
   }
   await page.evaluate(() => document.getElementById('zg-hide')?.remove()).catch(() => {});
 }

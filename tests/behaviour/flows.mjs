@@ -83,11 +83,11 @@ for (const fw of fws) await flow(fw, 'rapid', 'all components, 6 data modes x 6 
       return errs.length ? 'render error: ' + errs[0].message.split('\n')[0] : '';
     }, e.name, seq, open);
     const newBad = ctx.bad.slice(before).filter(b => !/Failed to load resource/.test(b.text));
-    if (res) failed.push(`${e.name}: ${res}`);
-    else if (newBad.length) failed.push(`${e.name}: ${newBad[0].kind} ${newBad[0].text.slice(0, 160)}`);
+    if (res) failed.push([e.name, res]);
+    else if (newBad.length) failed.push([e.name, `${newBad[0].kind} ${newBad[0].text.slice(0, 160)}`]);
   }
   ctx.bad.length = 0;
-  if (failed.length) throw new Error(`${failed.length} components: ` + failed.slice(0, 12).join(' || '));
+  for (const [n, m] of failed) results.push({ fw, id: `rapid-churn|${n}`, ok: false, msg: m });
 });
 
 // ---------- unmount while a popup is open

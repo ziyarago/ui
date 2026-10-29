@@ -134,3 +134,4 @@
 /* Tab counts */
 .zg-tab__count{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-inline-start:8px;padding:0 6px;border-radius:999px;font:700 11px var(--zg-font);background:var(--zg-s3);color:var(--zg-text-2)}
 .zg-tabs button[aria-selected="true"] .zg-tab__count{background:var(--zg-brand);color:var(--zg-on-brand)}.zg-pt button[aria-selected="true"] .zg-tab__count{background:color-mix(in oklch,var(--zg-on-brand) 22%,transparent);color:inherit}
+[dir="rtl"] .zg-cal__h .zg-icon{transform:scaleX(-1)}
