@@ -1,11 +1,11 @@
 <script setup lang="ts">
-useSeo({ title: 'Fonts and Arabic typography — @ziyarago/ui', description: 'Manrope for Latin, Thmanyah for Arabic and RTL, JetBrains Mono for code: tokens, weight mapping and self-hosting.' })
+useSeo({ title: 'Fonts and Arabic typography — @ziyarago/ui', description: 'Manrope for Latin, Thmanyah (self-hosted by you) or a system font for Arabic and RTL, JetBrains Mono for code: tokens, weight mapping and setup.' })
 
 const stacks = [
-  { token: '--zg-font', role: 'UI text (LTR)', stack: "'Manrope', 'Thmanyah Sans', system-ui, sans-serif", source: 'Manrope, self-hosted (assets/fonts)', license: 'SIL OFL 1.1', weights: '200 to 700', note: 'Latin and Cyrillic. Loaded from Google Fonts in dist/style.css.' },
-  { token: '--zg-font-ar', role: 'UI text (RTL, Arabic)', stack: "'Thmanyah Sans', system-ui, sans-serif", source: 'Thmanyah, shipped in the package', license: 'Free incl. commercial', weights: '300, 400, 500, 700, 900 (mapped, see below)', note: 'Replaces --zg-font automatically when dir="rtl".' },
-  { token: '--zg-font-ar-display', role: 'Arabic display headlines', stack: "'Thmanyah Serif Display', 'Thmanyah Sans', serif", source: 'Thmanyah, shipped', license: 'Free incl. commercial', weights: '300, 400, 500, 700', note: 'Optional. For editorial headings and articles.' },
-  { token: '--zg-font-ar-text', role: 'Arabic reading text', stack: "'Thmanyah Serif Text', 'Thmanyah Sans', serif", source: 'Thmanyah, shipped', license: 'Free incl. commercial', weights: '300, 400, 500, 700', note: 'Optional. For long articles.' },
+  { token: '--zg-font', role: 'UI text (LTR)', stack: "'Manrope', 'Thmanyah Sans', 'Segoe UI', Tahoma, 'Noto Sans Arabic', system-ui, sans-serif", source: 'Manrope, self-hosted (assets/fonts)', license: 'SIL OFL 1.1', weights: '200 to 700', note: 'Latin and Cyrillic. Shipped in the package, no Google request.' },
+  { token: '--zg-font-ar', role: 'UI text (RTL, Arabic)', stack: "'Thmanyah Sans', 'Segoe UI', Tahoma, 'Noto Sans Arabic', system-ui, sans-serif", source: 'Thmanyah, NOT shipped: you self-host it', license: 'Thmanyah licence (no redistribution)', weights: '300, 400, 500, 700, 900 (mapped, see below)', note: 'Replaces --zg-font automatically when dir="rtl". Falls back to a system Arabic font if the files are absent.' },
+  { token: '--zg-font-ar-display', role: 'Arabic display headlines', stack: "'Thmanyah Serif Display', 'Thmanyah Sans', 'Noto Naskh Arabic', 'Traditional Arabic', serif", source: 'Thmanyah, you self-host', license: 'Thmanyah licence', weights: '300, 400, 500, 700', note: 'Optional. For editorial headings and articles.' },
+  { token: '--zg-font-ar-text', role: 'Arabic reading text', stack: "'Thmanyah Serif Text', 'Thmanyah Sans', 'Noto Naskh Arabic', 'Traditional Arabic', serif", source: 'Thmanyah, you self-host', license: 'Thmanyah licence', weights: '300, 400, 500, 700', note: 'Optional. For long articles.' },
   { token: '--zg-font-mono', role: 'Code, numbers in tables', stack: "'JetBrains Mono', ui-monospace, monospace", source: 'JetBrains Mono, self-hosted (assets/fonts)', license: 'SIL OFL 1.1', weights: '400, 500, 600', note: 'Used by Code, Kbd, codes and IDs.' },
 ]
 const mapping = [
@@ -18,24 +18,28 @@ const mapping = [
 const weights = [300, 400, 500, 600, 700]
 const arWeights = [300, 400, 500, 600, 700, 900]
 const css = `:root {
-  --zg-font: 'Manrope', 'Thmanyah Sans', system-ui, sans-serif;
+  --zg-font: 'Manrope', 'Thmanyah Sans', 'Segoe UI', Tahoma, 'Noto Sans Arabic', system-ui, sans-serif;
   --zg-font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
-[dir="rtl"] { --zg-font: var(--zg-font-ar); }
+[dir="rtl"] { --zg-font: var(--zg-font-ar); }`
+const setup = `/* 1. Download Thmanyah from https://font.thmanyah.com and copy the .otf files to public/fonts/thmanyah/ */
+/* 2. Ready-made @font-face rules (no font data inside, URLs start with /fonts/thmanyah/): */
+@import '@ziyarago/ui/thmanyah.css';
 
-/* self-host: copy assets/fonts/thmanyah and point the URLs at your copy */
+/* or write your own, any URL; the family name is what the stack looks for */
 @font-face {
   font-family: 'Thmanyah Sans';
   font-weight: 400 600;               /* Regular covers 400 to 600 */
-  src: url('/fonts/thmanyahsans-Regular.otf') format('opentype');
+  src: url('/fonts/thmanyah/thmanyahsans-Regular.otf') format('opentype');
   font-display: swap;
 }`
+const sample = 'رحلة العمرة إلى مكة المكرمة والمدينة المنورة'
 </script>
 
 <template>
   <article class="g">
     <h1>Fonts</h1>
-    <p class="lead">Two scripts, three families. Manrope sets Latin and Cyrillic text, Thmanyah sets Arabic and every page with <code>dir="rtl"</code>, JetBrains Mono sets code. The tokens switch automatically with the direction.</p>
+    <p class="lead">Manrope sets Latin and Cyrillic text, JetBrains Mono sets code, and every page with <code>dir="rtl"</code> switches to the Arabic stack. Thmanyah is the preferred Arabic font but this package does not ship it (see below); until you add it Arabic renders with a system font.</p>
 
     <h2>Families and tokens</h2>
     <div class="tbl">
@@ -51,16 +55,16 @@ const css = `:root {
       <UiCard title="Manrope" subtitle="Latin, Cyrillic. LTR UI">
         <div v-for="w in weights" :key="w" class="spec" :style="{ fontFamily: 'Manrope', fontWeight: w }" dir="ltr"><span class="w">{{ w }}</span>Umrah trip to Makkah and Madinah</div>
       </UiCard>
-      <UiCard title="Thmanyah Sans" subtitle="Arabic. RTL UI">
-        <div v-for="w in arWeights" :key="w" class="spec" :style="{ fontFamily: 'Thmanyah Sans', fontWeight: w }" dir="rtl"><span class="w" dir="ltr">{{ w }}</span>رحلة العمرة إلى مكة المكرمة والمدينة</div>
+      <UiCard title="Arabic fallback stack" subtitle="Rendered with the system font, Thmanyah is not shipped">
+        <div v-for="w in arWeights" :key="w" class="spec" :style="{ fontFamily: 'var(--zg-font-ar)', fontWeight: w }" dir="rtl"><span class="w" dir="ltr">{{ w }}</span>{{ sample }}</div>
       </UiCard>
       <UiCard title="JetBrains Mono" subtitle="Code and identifiers">
         <div v-for="w in [400, 500, 600]" :key="w" class="spec" :style="{ fontFamily: 'JetBrains Mono', fontWeight: w }" dir="ltr"><span class="w">{{ w }}</span>BK-2041 · SAR 18 400</div>
       </UiCard>
     </UiGrid>
 
-    <h2>Why Arabic looks lighter than before</h2>
-    <p class="muted">Thmanyah is visually heavier than Manrope at the same weight and has no 600 face, so a 600 label used to fall back to Bold. The library now maps UI weights to the files with weight ranges in <code>fonts.css</code>, so a button label in Arabic is Regular and only real bold text (700 and up) is Medium or heavier.</p>
+    <h2>Thmanyah weight mapping</h2>
+    <p class="muted">Applies once you self-host Thmanyah. It is visually heavier than Manrope at the same weight and has no 600 face, so a 600 label would fall back to Bold. <code>@ziyarago/ui/thmanyah.css</code> maps UI weights to the files with weight ranges, so a button label in Arabic is Regular and only real bold text (700 and up) is Medium or heavier.</p>
     <div class="tbl">
       <div v-for="m in mapping" :key="m.ui" class="row row--s">
         <code>font-weight: {{ m.ui }}</code><b>Thmanyah Sans {{ m.file }}</b><span class="muted">{{ m.use }}</span>
@@ -69,11 +73,14 @@ const css = `:root {
 
     <h2>Setup and self-hosting</h2>
     <UiCode :code="css" title="css" />
+    <h2>Using Thmanyah</h2>
+    <UiCode :code="setup" title="css" />
     <ul>
-      <li>Manrope and JetBrains Mono load from Google Fonts through <code>@import</code> in <code>dist/style.css</code>. For offline or strict-CSP deployments download them, self-host and remove that line.</li>
-      <li>Thmanyah files ship in <code>@ziyarago/ui/assets/fonts/thmanyah</code>. Bundlers (Vite, Nuxt, Next) resolve the URLs from <code>style.css</code> automatically.</li>
-      <li>Every face uses <code>font-display: swap</code>. The browser keeps the fallback stack until a file arrives.</li>
-      <li>Licenses are listed in <code>THIRD_PARTY_NOTICES.md</code>. Thmanyah is free for commercial use; check the foundry page before redistributing changed files.</li>
+      <li>Manrope and JetBrains Mono (SIL OFL) ship in the package and load from your own origin through <code>style.css</code>. No Google request, works under a strict CSP.</li>
+      <li>Thmanyah is not distributed. Its <a href="https://font.thmanyah.com/licenses" target="_blank" rel="noopener">licence</a> forbids redistributing, hosting or offering the files for download, and forbids modifying them. Download them from <a href="https://font.thmanyah.com" target="_blank" rel="noopener">font.thmanyah.com</a> and host them yourself.</li>
+      <li><code>thmanyah.css</code> has no font data. Its URLs point to <code>/fonts/thmanyah/</code>. <code>url()</code> cannot take a CSS variable, so for another folder copy the file and edit the prefix.</li>
+      <li>Honest note on the fallback: without the files Arabic uses Segoe UI, Tahoma, Noto Sans Arabic or the system font. It is readable and correct, but visually different from Thmanyah (usually lighter and tighter) and differs between Windows, macOS and Android.</li>
+      <li>Every face uses <code>font-display: swap</code>. Licences are listed in <code>THIRD_PARTY_NOTICES.md</code>.</li>
     </ul>
   </article>
 </template>

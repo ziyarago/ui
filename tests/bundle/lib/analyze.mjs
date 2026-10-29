@@ -40,7 +40,8 @@ export function analyzePage(r, ctx) {
   const loaded = new Set(d.fonts.filter(f => f.status === 'loaded').map(f => f.family));
   const rtl = d.html.dir === 'rtl';
   if (!rtl && !loaded.has('Manrope')) add('fonts', 'fail', `Manrope not loaded (loaded: ${[...loaded].join(', ') || 'none'}; declared: ${[...new Set(d.fonts.map(f => f.family + ':' + f.status))].join(', ')})`);
-  if ((ctx.locale === 'ar' || rtl) && ![...loaded].some(f => /^Thmanyah/.test(f))) add('fonts', 'fail', `Thmanyah (Arabic) not loaded for locale ${ctx.locale} dir ${d.html.dir} (loaded: ${[...loaded].join(', ') || 'none'})`);
+  // Thmanyah is not shipped (licence); Arabic falls back to a system Arabic font unless the consumer self-hosts it. Only the stack is checked.
+  if ((ctx.locale === 'ar' || rtl) && d.fontFamily.body && !/Thmanyah|Tahoma|Noto Sans Arabic|Segoe UI/i.test(d.fontFamily.body)) add('fonts', 'fail', `no Arabic-capable family in body font-family for locale ${ctx.locale} dir ${d.html.dir}: "${d.fontFamily.body}"`);
   for (const f of d.fonts) if (f.status === 'error') add('fonts', 'fail', `font face ${f.family} ${f.weight} failed to load`);
   if (d.fontFamily.body && !/Manrope/i.test(d.fontFamily.body) && !/Thmanyah/i.test(d.fontFamily.body)) add('fonts', 'warn', `body font-family is "${d.fontFamily.body}"`);
 

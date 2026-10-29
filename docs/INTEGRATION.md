@@ -105,7 +105,9 @@ Compared computed styles of every element of every documented example (182 compo
 
 After the fix the remaining differences between the two setups are `appearance: button`, `img { max-width: 100% }`, `svg { display: block }` and running animation frames; none is visible.
 
-Fonts: Manrope, JetBrains Mono (latin and cyrillic) and Thmanyah (Arabic) ship inside the package (`assets/fonts`) and `style.css` loads them from there. No request goes to Google, so a strict CSP (`style-src 'self'`, `font-src 'self'`) works. Your bundler must resolve the `url(../assets/fonts/...)` references; Vite and Nuxt do it by default.
+Fonts: Manrope and JetBrains Mono (SIL OFL, latin and cyrillic) ship inside the package (`assets/fonts`) and `style.css` loads them from there. No request goes to Google, so a strict CSP (`style-src 'self'`, `font-src 'self'`) works. Your bundler must resolve the `url(../assets/fonts/...)` references; Vite and Nuxt do it by default.
+
+Thmanyah (Arabic) is NOT shipped: its licence (https://font.thmanyah.com/licenses) forbids redistributing or hosting the files. `--zg-font-ar` names `'Thmanyah Sans'` first, then `'Segoe UI', Tahoma, 'Noto Sans Arabic', system-ui`, so Arabic renders with a system font until you add the font. To use Thmanyah: download the files from https://font.thmanyah.com, put them in your public folder at `/fonts/thmanyah/` and add `import '@ziyarago/ui/thmanyah.css'` (it contains only `@font-face` rules, no font data). For another path copy that file and edit the URLs, or declare your own `@font-face` for `'Thmanyah Sans'`.
 
 ## 4. vue-i18n, pinia, vue-router
 
