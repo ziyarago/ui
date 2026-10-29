@@ -54,6 +54,23 @@ const rows = [];
 const slug = s => String(s).replace(/[^A-Za-z0-9_-]+/g, '_').slice(0, 60);
 const scenName = c => [c.data === 'examples' ? 'normal' : c.data.replace('stress-', ''), c.theme, c.palette, c.dir, c.w + 'px', c.overlay ? 'overlay' : ''].filter(Boolean).join('-');
 
+async function judge(page, samples, push) {
+  const byVar = new Map();
+  for (const s of samples) { const k = s.c + '#' + s.v; if (!byVar.has(k)) byVar.set(k, []); byVar.get(k).push(s); }
+  await page.addStyleTag({ content: '*{color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important}svg *{stroke:transparent!important;fill:transparent!important}', id: 'zg-hide' }).catch(() => {});
+  for (const [, items] of byVar) {
+    const x = Math.max(0, Math.min(...items.map(i => i.r.x)) - 4), y = Math.max(0, Math.min(...items.map(i => i.r.y)) - 4);
+    const w = Math.min(1600, Math.max(...items.map(i => i.r.x + i.r.w)) - x + 4), h = Math.min(1600, Math.max(...items.map(i => i.r.y + i.r.h)) - y + 4);
+    try {
+      const b64 = await page.screenshot({ clip: { x, y, width: Math.max(2, w), height: Math.max(2, h) }, captureBeyondViewport: true, encoding: 'base64' });
+      const res = await page.evaluate(judgeSamples, b64, { x, y, w: Math.max(2, w) }, items);
+      for (const r of res) if (r.bad) { const it = items.find(i => i.id === r.id); push({ c: it.c, v: it.v, label: it.label, o: it.kind === 'icon' ? 'contrast-graphic' : 'contrast-text', d: `${r.ratio} < ${it.need} on gradient/image (sampled)`, el: it.el, rect: it.r }); }
+    } catch (e) { push({ c: items[0].c, v: items[0].v, o: 'harness', d: 'sampling failed: ' + e.message.slice(0, 100) }); }
+  }
+  await page.evaluate(() => document.getElementById('zg-hide')?.remove()).catch(() => {});
+}
+const log = m => console.log(m);
+
 async function runPage(fw, sid, c, extra = {}) {
   const t0 = Date.now();
   let timer;
@@ -105,27 +122,16 @@ async function runPageInner(fw, sid, c, extra = {}) {
     }
     await page.keyboard.press('Shift');
     const mode = c.overlay ? 'portal' : 'variants';
-    const { findings, samples } = await page.evaluate(audit, { mode, component: extra.only, minTarget: 24, focus: true });
-    for (const f of findings) push({ c: f.c, v: f.v, label: f.label, o: f.o, d: f.d, el: f.el, rect: f.r });
-
-    // gradient/image backgrounds: judge contrast on real pixels with the text hidden
-    if (samples.length) {
-      const byVar = new Map();
-      for (const s of samples) { const k = s.c + '#' + s.v; if (!byVar.has(k)) byVar.set(k, []); byVar.get(k).push(s); }
-      await page.addStyleTag({ content: '*{color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important}svg *{stroke:transparent!important;fill:transparent!important}', id: 'zg-hide' }).catch(() => {});
-      let n = 0;
-      for (const [k, items] of byVar) {
-        if (n++ >= 40) break;
-        const x = Math.max(0, Math.min(...items.map(i => i.r.x)) - 4), y = Math.max(0, Math.min(...items.map(i => i.r.y)) - 4);
-        const w = Math.min(1600, Math.max(...items.map(i => i.r.x + i.r.w)) - x + 4), h = Math.min(1600, Math.max(...items.map(i => i.r.y + i.r.h)) - y + 4);
-        try {
-          const b64 = await page.screenshot({ clip: { x, y, width: Math.max(2, w), height: Math.max(2, h) }, captureBeyondViewport: true, encoding: 'base64' });
-          const res = await page.evaluate(judgeSamples, b64, { x, y, w: Math.max(2, w) }, items);
-          for (const r of res) if (r.bad) { const it = items.find(i => i.id === r.id); push({ c: it.c, v: it.v, label: it.label, o: it.kind === 'icon' ? 'contrast-graphic' : 'contrast-text', d: `${r.ratio} < ${it.need} on gradient/image (sampled)`, el: it.el, rect: it.r }); }
-        } catch (e) { push({ c: items[0].c, v: items[0].v, o: 'harness', d: 'sampling failed: ' + e.message.slice(0, 100) }); }
-      }
-      await page.evaluate(() => document.getElementById('zg-hide')?.remove());
+    const focus = ['base', 'palette', 'rtl', 'overlay'].includes(sid);
+    const total = mode === 'portal' ? 1 : await page.evaluate(() => document.querySelectorAll('[data-variant]').length);
+    const STEP = 20;
+    const tAudit = Date.now();
+    for (let from = 0; from < total; from += STEP) {
+      const { findings, samples } = await page.evaluate(audit, { mode, component: extra.only, minTarget: 24, focus, from, to: from + STEP });
+      for (const f of findings) push({ c: f.c, v: f.v, label: f.label, o: f.o, d: f.d, el: f.el, rect: f.r });
+      if (samples.length) await judge(page, samples, push);
     }
+    log(`  audit ${total} variants in ${((Date.now() - tAudit) / 1000).toFixed(0)}s`);
 
     // axe
     try {

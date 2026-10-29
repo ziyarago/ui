@@ -71,6 +71,7 @@ export function audit(cfg) {
       const a = alphaOf(s.backgroundColor);
       if (a > 0.001) { layers.push({ color: s.backgroundColor, alpha: 1 }); if (a >= 0.999) break; }
     }
+    if (!unresolved && !layers.length) for (const e of [document.body, document.documentElement]) if (cs(e).backgroundImage !== 'none') unresolved = true;
     layers.reverse();
     return { layers, unresolved };
   };
@@ -253,7 +254,7 @@ export function audit(cfg) {
   const nameOf = el => { const sec = el.closest('[data-component]'); return sec ? sec.getAttribute('data-component') : '?'; };
 
   if (cfg.mode === 'variants') {
-    for (const box of document.querySelectorAll('[data-variant]')) {
+    for (const box of [...document.querySelectorAll('[data-variant]')].slice(cfg.from || 0, cfg.to === undefined ? undefined : cfg.to)) {
       const root = box.querySelector('.doc-preview') || box;
       const info = { c: nameOf(box), v: +box.dataset.variant, label: box.dataset.label };
       if (box.hasAttribute('data-error')) continue;

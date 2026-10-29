@@ -64,7 +64,7 @@ jobs:
           retention-days: 7
 
   flows:
-    if: inputs.flows != false
+    if: github.event_name != 'workflow_dispatch' || inputs.flows
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
