@@ -1,6 +1,6 @@
 {
   "name": "@ziyarago/ui-mcp",
-  "version": "0.20.4",
+  "version": "0.20.5",
   "description": "MCP server and project setup for @ziyarago/ui: lets AI coding tools find components, props and page templates and build interfaces with them.",
   "keywords": [
     "mcp",
@@ -40,7 +40,7 @@
     "zod": "^3.23.0"
   },
   "peerDependencies": {
-    "@ziyarago/ui": ">=0.20.4"
+    "@ziyarago/ui": ">=0.20.5"
   },
   "peerDependenciesMeta": {
     "@ziyarago/ui": {
