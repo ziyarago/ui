@@ -9,9 +9,13 @@ const build = (c, key) => {
   const comp = /^[a-z]/.test(c.name) ? c.name : UI['Ui' + c.name];
   if (!comp) throw new Error('Unknown component in example tree: ' + c.name);
   const kids = [...(c.text ? [c.text] : []), ...(c.children ?? []).map((x, i) => build(x, i))];
-  return h(comp, { key, ...(c.props ?? {}) }, ...kids);
+  const props = { key, ...(c.props ?? {}) };
+  if (typeof comp === 'string' && 'class' in props) { props.className = props.class; delete props.class; }
+  for (const [k, t] of Object.entries(c.slots ?? {})) props[k] = slotNode(t);
+  return h(comp, props, ...kids);
 };
 const slotNode = (t) => (typeof t === 'string' ? t : h(Fragment, null, ...t.map((x, i) => build(x, i))));
+const substitute = (tree, node) => ({ ...tree, children: tree.children?.map(c => (c.name === '$' ? node : substitute(c, node))) });
 
 export function Preview({ name, variant: v, open: initOpen = false }) {
   const [models, setModels] = useState({});
@@ -42,6 +46,7 @@ export function Preview({ name, variant: v, open: initOpen = false }) {
     if (v.overlay) { p.open = open; p.onClose = () => setOpen(false); if (name === 'ConfirmDialog') p.onCancel = p.onClose; }
     for (const [k, t] of Object.entries(it.slots ?? {})) p[k] = slotNode(t);
     const kids = [...(it.text ? [it.text] : []), ...(it.children ?? []).map((x, k) => build(x, k))];
+    if (v.inside) return build(substitute(v.inside, { name, props: p, text: it.text, slots: it.slots, children: it.children }), i);
     return h(comp, { key: i, ...p }, ...kids);
   });
   const body = v.overlay ? [h(UI.UiButton, { key: 'open', variant: 'primary', onClick: () => setOpen(true) }, 'Open'), ...els] : els;

@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { components, registerComponents, subscribeUiLocale, getUiVersion } from '../core/index.js';
 
 const C = {};
+let uidN = 0;
 const useIsoLayoutEffect = typeof document === 'undefined' ? useEffect : useLayoutEffect;
 const EV = { keydown: 'KeyDown', keyup: 'KeyUp', dragenter: 'DragEnter', dragover: 'DragOver', dragleave: 'DragLeave', pointerdown: 'PointerDown', pointerup: 'PointerUp', pointermove: 'PointerMove', mousedown: 'MouseDown', mouseup: 'MouseUp', mouseenter: 'MouseEnter', mouseleave: 'MouseLeave', mousemove: 'MouseMove', mouseover: 'MouseOver', mouseout: 'MouseOut', dragstart: 'DragStart', dragend: 'DragEnd', dblclick: 'DoubleClick', contextmenu: 'ContextMenu', pointerenter: 'PointerEnter', pointerleave: 'PointerLeave', pointercancel: 'PointerCancel', touchstart: 'TouchStart', touchend: 'TouchEnd', touchmove: 'TouchMove', focusin: 'Focus', focusout: 'Blur' };
 const hh = (t, p, ...k) => {
@@ -21,11 +22,12 @@ const wrap = (name, def) => {
     const set = o => setState(s => ({ ...s, ...o }));
     // Portals must not render on the server pass or during hydration (React throws a hydration mismatch): the first render returns null
     // and, only if portal() was asked for, a layout effect re-renders once mounted.
+    const uidRef = useRef(null); if (!uidRef.current) uidRef.current = 'zg' + (++uidN).toString(36);
     const mounted = useRef(false), wantPortal = useRef(false), [, bump] = useState(0);
     useIsoLayoutEffect(() => { mounted.current = true; if (wantPortal.current) bump(n => n + 1); }, []);
     const slots = {}; for (const k of [...(def.slots || []), 'actions', 'footer']) if (props[k] !== undefined) slots[k] = props[k];
     if (props.onChange === undefined && props.onValueChange) props.onChange = props.onValueChange;
-    const out = def.render({ C, h: hh, props, children: React.Children.toArray(children), slots, state, set, portal: (kids, to) => { if (!mounted.current) { wantPortal.current = true; return null; } return createPortal(kids, (typeof to === 'string' ? document.querySelector(to) : to) || document.body); } });
+    const out = def.render({ C, h: hh, props, children: React.Children.toArray(children), slots, state, set, uid: uidRef.current, portal: (kids, to) => { if (!mounted.current) { wantPortal.current = true; return null; } return createPortal(kids, (typeof to === 'string' ? document.querySelector(to) : to) || document.body); } });
     if (!isValidElement(out) || typeof out.type !== 'string') return out;
     const root = {}; for (const k in props) if (/^(aria|data)-|^id$/.test(k)) root[k] = props[k];
     if (props.size) root['data-size'] = props.size;

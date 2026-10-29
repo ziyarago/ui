@@ -4,6 +4,8 @@
 import { trap } from './dialog.js';
 import { t } from '../i18n/index.js';
 import { rove, tabIdx, listKeys, openKeys, focusIn, toTrigger, trigger } from './keys.js';
+import { floatRef, anchorOf, triggerIn, inPopOf, anchorAttr, ctlAttr } from './float.js';
+export { anchorAttr, ctlAttr } from './float.js';
 export const cx = (...a) => a.filter(Boolean).join(' ');
 // Quoted CSS url() for a background-image: URLs with spaces, parentheses, commas or quotes (photo (1).jpg, names with spaces) break the unquoted form and the image silently disappears.
 export const cssUrl = u => 'url("' + String(u).replace(/["\\]/g, '\\$&').replace(/\n/g, '\\a ').replace(/\r/g, '\\d ') + '")';
@@ -17,23 +19,39 @@ export const DZ = { xs: .82, sm: .91, md: 1, lg: 1.12, xl: 1.25 };
 // (trigger + popup). Listeners attach only in the browser, only while a popup is mounted, and detach when the last one unmounts.
 const ddReg = [];
 const ddPrune = () => { for (let i = ddReg.length - 1; i >= 0; i--) if (!ddReg[i].el.isConnected) ddReg.splice(i, 1); ddSync(); };
-const ddDown = e => { ddPrune(); for (const r of ddReg.slice()) { const root = r.self ? r.el : (r.el.parentElement || r.el); if (!root.contains(e.target)) r.close(); } };
+const ddRoot = r => r.self ? r.el : r.uid ? (anchorOf(r.uid) || r.el) : (r.el.parentElement || r.el);
+const ddDown = e => { ddPrune(); for (const r of ddReg.slice()) { const root = ddRoot(r); if (!root.contains(e.target) && !r.el.contains(e.target) && !inPopOf(e.target, r.el)) r.close(); } };
 const ddKey = e => {
   if (e.key !== 'Escape') return; ddPrune(); const r = ddReg[ddReg.length - 1]; if (!r) return;
-  const root = r.self ? r.el : (r.el.parentElement || r.el);
-  const t = [...root.querySelectorAll('button,input')].find(x => !r.el.contains(x));
-  const ae = document.activeElement; r.close(); if (t && !t.disabled && !(ae && root.contains(ae) && !r.el.contains(ae))) t.focus();
+  const root = ddRoot(r), t = triggerIn(root, r.el);
+  const ae = document.activeElement; e.preventDefault(); r.close(); if (t && !t.disabled && !(ae && root.contains(ae) && !r.el.contains(ae))) t.focus();
 };
 let ddOn = false;
 const ddSync = () => {
   if (typeof document === 'undefined') return;
-  if (ddReg.length && !ddOn) { document.addEventListener('pointerdown', ddDown, true); document.addEventListener('keydown', ddKey); ddOn = true; }
-  else if (!ddReg.length && ddOn) { document.removeEventListener('pointerdown', ddDown, true); document.removeEventListener('keydown', ddKey); ddOn = false; }
+  if (ddReg.length && !ddOn) { document.addEventListener('pointerdown', ddDown, true); document.addEventListener('keydown', ddKey, true); ddOn = true; }
+  else if (!ddReg.length && ddOn) { document.removeEventListener('pointerdown', ddDown, true); document.removeEventListener('keydown', ddKey, true); ddOn = false; }
 };
-export const ddRef = (close, o = {}) => el => {
-  if (typeof document === 'undefined') return;
-  if (el) { const r = ddReg.find(x => x.el === el); if (r) { r.close = close; r.self = !!o.self; } else { ddReg.push({ el, close, self: !!o.self }); if (!o.self && el.scrollIntoView) el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); if (o.focus) focusIn(el); } ddSync(); }
-  else Promise.resolve().then(ddPrune);
+export const ddRef = (close, o = {}) => {
+  const fl = o.uid ? floatRef({ uid: o.uid, close, align: o.align, match: o.match, at: o.at, onFirst: o.focus ? focusIn : undefined }) : null;
+  return el => {
+    if (typeof document === 'undefined') return;
+    if (fl) fl(el);
+    if (el && !el.isConnected) { let n = 0; const step = () => { if (el.isConnected) ddRef(close, o)(el); else if (++n < 30) requestAnimationFrame(step); }; queueMicrotask(step); return; }
+    if (el) { const r = ddReg.find(x => x.el === el); if (r) { r.close = close; r.self = !!o.self; r.uid = o.uid; } else { ddReg.push({ el, close, self: !!o.self, uid: o.uid }); if (!o.self && !o.uid && el.scrollIntoView) el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); if (o.focus && !o.uid) focusIn(el); } ddSync(); }
+    else Promise.resolve().then(ddPrune);
+  };
+};
+/**
+ * A popup list / menu / dialog under an anchor. c is the render context ({ h, portal, uid }); a holds the element props plus
+ * { close, focus, align: 'start' | 'end', match: min-width of the anchor, at: { x, y } }. The anchor element must carry anchorAttr(c, open).
+ * With the adapter's portal() the popup is rendered in <body> (client only) and placed with position:fixed; without it it stays inline.
+ */
+export const pop = (c, a, ...kids) => {
+  const { close, focus, align, match, at, self, ref: xr, ...rest } = a, inl = !c.portal || !c.uid;
+  const dd = ddRef(close, inl ? { focus, self } : { focus, self, uid: c.uid, align, match, at }), ref = xr ? el => { dd(el); xr(el); } : dd;
+  if (inl) return c.h('div', { ...rest, 'data-zg-dd': '', ref }, ...kids);
+  return c.portal(c.h('div', { ...rest, id: rest.id || c.uid + '-p', class: cx(rest.class, 'zg-float'), 'data-zg-dd': '', 'data-zg-for': c.uid, ref }, ...kids));
 };
 export const dzp = (p, b) => Math.round(b * (DZ[p.size] || 1));
 export const dzf = n => `calc(${n}px*var(--dz,1))`;
@@ -113,10 +131,10 @@ export const components = {
   TextField: { slots: ['prefix', 'suffix'], render: ({ h, props: p, slots }) => h('label', { class: 'zg-field' }, p.label ? h('span', { class: 'zg-label' }, p.label, p.required ? h('span', { class: 'zg-req', 'aria-hidden': 'true' }, ' *') : null) : null,
     h('span', { class: cx('zg-input', p.error && 'zg-input--error', p.variant && 'zg-input--' + p.variant, p.density === 'compact' && 'zg-input--compact', p.disabled && 'zg-input--disabled') }, slots.prefix || (p.icon ? icon(h, p.icon, 18) : null), h('input', { ...pick(p, INPUT_ATTRS), type: p.type || 'text', value: p.modelValue ?? '', placeholder: p.placeholder, disabled: p.disabled, readOnly: p.readonly, onInput: e => { p.onChange && p.onChange(e.target.value); p.onInput && p.onInput(e); } }), slots.suffix || p.suffix || null),
     p.error ? h('span', { class: 'zg-hint zg-hint--error', role: 'alert' }, p.error) : p.hint ? h('span', { class: 'zg-hint' }, p.hint) : null) },
-  Select: { state: { open: false }, render: ({ h, props: p, state, set }) => { const cur = (p.options || []).find(o => o.value === p.modelValue), open = state.open && !p.disabled;
+  Select: { state: { open: false }, render: ({ h, props: p, state, set, uid, portal }) => { const P = { h, portal, uid }; const cur = (p.options || []).find(o => o.value === p.modelValue), open = state.open && !p.disabled;
     return h('div', { class: 'zg-field' }, p.label ? h('span', { class: 'zg-label' }, p.label, p.required ? h('span', { class: 'zg-req', 'aria-hidden': 'true' }, ' *') : null) : null,
-      h('div', { class: 'zg-select' }, h('button', { type: 'button', class: cx('zg-btn', 'zg-select__trigger', p.error && 'zg-select__trigger--error'), 'aria-haspopup': 'listbox', 'aria-expanded': String(open), disabled: p.disabled, style: { height: 'var(--zg-h-lg)' }, onClick: () => set({ open: !state.open }), onKeydown: openKeys(open, () => set({ open: true })) }, h('span', null, cur ? cur.label : p.placeholder || '—'), icon(h, open ? 'chevron-up' : 'chevron-down', 16)),
-        open ? h('div', { class: 'zg-select__list', role: 'listbox', 'aria-label': p.label || p.placeholder, 'data-zg-dd': '', ref: ddRef(() => set({ open: false }), { focus: true }), onKeydown: listKeys('[role=option]', { onTab: e => { const t = trigger(e.currentTarget); t && t.focus(); set({ open: false }); } }) }, ...(p.options || []).map((o, i, all) => h('button', { key: o.value, type: 'button', role: 'option', tabIndex: tabIdx(all, x => x.value === p.modelValue)(i), class: 'zg-select__opt', disabled: o.disabled, 'aria-disabled': o.disabled ? 'true' : undefined, 'aria-selected': String(o.value === p.modelValue), onClick: e => { toTrigger(e); set({ open: false }); p.onChange && p.onChange(o.value); } }, o.label, o.value === p.modelValue ? icon(h, 'check', 16) : null))) : null),
+      h('div', { class: 'zg-select', ...anchorAttr(P, open) }, h('button', { type: 'button', class: cx('zg-btn', 'zg-select__trigger', p.error && 'zg-select__trigger--error'), 'aria-haspopup': 'listbox', 'aria-expanded': String(open), ...ctlAttr(P, open), disabled: p.disabled, style: { height: 'var(--zg-h-lg)' }, onClick: () => set({ open: !state.open }), onKeydown: openKeys(open, () => set({ open: true })) }, h('span', null, cur ? cur.label : p.placeholder || '—'), icon(h, open ? 'chevron-up' : 'chevron-down', 16)),
+        open ? pop(P, { class: 'zg-select__list', role: 'listbox', 'aria-label': p.label || p.placeholder, close: () => set({ open: false }), focus: true, match: true, onKeydown: listKeys('[role=option]', { onTab: e => { const t = trigger(e.currentTarget); t && t.focus(); set({ open: false }); } }) }, ...(p.options || []).map((o, i, all) => h('button', { key: o.value, type: 'button', role: 'option', tabIndex: tabIdx(all, x => x.value === p.modelValue)(i), class: 'zg-select__opt', disabled: o.disabled, 'aria-disabled': o.disabled ? 'true' : undefined, 'aria-selected': String(o.value === p.modelValue), onClick: e => { toTrigger(e); set({ open: false }); p.onChange && p.onChange(o.value); } }, o.label, o.value === p.modelValue ? icon(h, 'check', 16) : null))) : null),
       p.name ? h('input', { type: 'hidden', name: p.name, value: p.modelValue ?? '' }) : null, p.error ? h('span', { class: 'zg-hint zg-hint--error', role: 'alert' }, p.error) : p.hint ? h('span', { class: 'zg-hint' }, p.hint) : null); } },
   CodeInput: { render: ({ h, props: p }) => { const n = p.length || 6, v = p.modelValue || '';
     return h('div', { class: 'zg-code', style: { '--n': n } }, ...Array.from({ length: n }, (_, i) => h('span', { key: i, class: cx('zg-code__cell', i === v.length && 'zg-code__cell--on') }, v[i] || '')),
@@ -149,7 +167,7 @@ export const components = {
     return h('div', { class: 'zg-table-wrap', tabIndex: 0 }, h('table', { class: 'zg-table' }, h('thead', null, h('tr', null, p.onSelect ? h('th', { style: { width: '44px' } }, h('button', { type: 'button', role: 'checkbox', class: 'zg-check', 'aria-checked': String(!!all), 'aria-label': (p.labels && p.labels.selectAll) || t('DataTable', 'selectAll'), onClick: () => p.onSelect(all ? [] : rows.map(r => r.id)) }, h('span', { class: 'zg-check__box' }, all ? icon(h, 'check', 14) : null))) : null, ...cols.map(th))),
       h('tbody', null, ...(rows.length ? rows.map((r, ri) => h('tr', { key: r.id, 'aria-selected': sel.includes(r.id) ? 'true' : undefined, class: p.onRowClick ? 'zg-tr--click' : undefined, onClick: p.onRowClick ? () => p.onRowClick(r, ri) : undefined }, p.onSelect ? h('td', null, h('button', { type: 'button', role: 'checkbox', class: 'zg-check', 'aria-checked': String(sel.includes(r.id)), 'aria-label': (p.labels && p.labels.selectRow) || t('DataTable', 'selectRow'), onClick: () => p.onSelect(sel.includes(r.id) ? sel.filter(i => i !== r.id) : [...sel, r.id]) }, h('span', { class: 'zg-check__box' }, sel.includes(r.id) ? icon(h, 'check', 14) : null))) : null, ...cols.map(c => h('td', { key: c.key, class: c.num ? 'num' : undefined, style: cs(c) }, c.render ? c.render(r[c.key], r, h) : (r[c.key] ?? '—'))))) : [h('tr', { key: 'e' }, h('td', { colSpan: cols.length + 1 }, h('div', { class: 'zg-empty' }, slots.empty || p.empty || '—')))])))); } },
   Timeline: { render: ({ h, props: p }) => h('div', { class: 'zg-timeline' }, ...(p.items || []).map((it, i, a) => h('div', { key: i, class: 'zg-tl' }, h('div', { class: 'zg-tl__rail' }, h('span', { class: 'zg-tl__dot' }), i < a.length - 1 ? h('span', { class: 'zg-tl__line' }) : null), h('div', { class: 'zg-tl__body' }, h('b', null, it.title), it.text ? h('span', null, it.text) : null, h('span', { class: 'zg-tl__time' }, it.time))))) },
-  TopNav: { state: { open: null, fit: null }, render: ({ h, props: p, slots, state, set }) => {
+  TopNav: { state: { open: null, fit: null }, render: ({ h, props: p, slots, state, set, uid, portal }) => { const P = { h, portal, uid };
     const items = p.items || [], collapse = p.overflow !== 'none';
     const fit = collapse && state.fit != null && state.fit < items.length ? state.fit : items.length;
     const shown = items.slice(0, fit), rest = items.slice(fit);
@@ -160,10 +178,10 @@ export const components = {
       if (!kids || !kids.length) return nav(h, it, p.value, p.onChange);
       const open = state.open === it.value, active = it.value !== '__more' ? kids.some(c => c.value === p.value) : rest.some(r => r.value === p.value || (r.children || []).some(c => c.value === p.value));
       const flat = kids.map(c => ({ value: c.value, disabled: c.separator || c.heading || c.disabled }));
-      return h('div', { key: it.value, class: 'zg-dd zg-topnav__dd' },
-        h('button', { type: 'button', class: 'zg-navitem', 'aria-haspopup': 'menu', 'aria-expanded': String(open), 'aria-current': active ? 'page' : undefined, onClick: () => set({ open: open ? null : it.value }), onKeydown: openKeys(open, () => set({ open: it.value })) },
+      return h('div', { key: it.value, class: 'zg-dd zg-topnav__dd', ...anchorAttr(P, open) },
+        h('button', { type: 'button', class: 'zg-navitem', 'aria-haspopup': 'menu', 'aria-expanded': String(open), ...ctlAttr(P, open), 'aria-current': active ? 'page' : undefined, onClick: () => set({ open: open ? null : it.value }), onKeydown: openKeys(open, () => set({ open: it.value })) },
           it.icon ? icon(h, it.icon, 18) : null, it.value === '__more' ? h('span', { class: 'zg-sr' }, it.label) : h('span', null, it.label), it.count ? h('span', { class: 'zg-navitem__count' }, it.count) : null, it.value === '__more' ? null : icon(h, 'chevron-down', 14)),
-        open ? h('div', { class: 'zg-menu', role: 'menu', 'data-zg-dd': '', ref: ddRef(close, { focus: true }), onKeydown: listKeys('[role=menuitem]', { wrap: true, onTab: e => { const tr = trigger(e.currentTarget); tr && tr.focus(); close(); } }) },
+        open ? pop(P, { class: 'zg-menu', role: 'menu', close, focus: true, onKeydown: listKeys('[role=menuitem]', { wrap: true, onTab: e => { const tr = trigger(e.currentTarget); tr && tr.focus(); close(); } }) },
           ...kids.map((c, i) => c.separator ? h('div', { key: 's' + i, class: 'zg-menu__sep', role: 'separator' }) : c.heading ? h('div', { key: 'h' + i, class: 'zg-menu__h', role: 'presentation' }, c.heading)
             : h('button', { key: c.value, type: 'button', role: 'menuitem', tabIndex: tabIdx(flat, x => x.value === p.value)(i), disabled: c.disabled, 'aria-disabled': c.disabled ? 'true' : undefined, 'aria-current': c.value === p.value ? 'page' : undefined, class: 'zg-menu__i', onClick: e => { toTrigger(e); close(); p.onChange && p.onChange(c.value); } },
               c.icon ? icon(h, c.icon, 16) : null, h('span', null, c.label), c.count ? h('span', { class: 'zg-navitem__count' }, c.count) : null))) : null);

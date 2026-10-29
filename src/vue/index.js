@@ -4,12 +4,13 @@ import { components, registerComponents, subscribeUiLocale } from '../core/index
 import { BOOL_PROPS } from '../core/bools.js';
 
 const C = {};
+let uidN = 0;
 const vh = (t, p, ...k) => { const kids = k.flat(); if (p && typeof t === 'string') for (const key of Object.keys(p)) if (/^on[A-Z]/.test(key) && !key.startsWith('onVnode')) { const nk = 'on' + key[2] + key.slice(3).toLowerCase(); if (nk !== key) { p[nk] = p[key]; delete p[key]; } } return typeof t === 'string' || !kids.length ? h(t, p, kids.length ? kids : undefined) : h(t, p, { default: () => kids }); };
 const wrap = (name, def) => defineComponent({
   name: 'Ui' + name, inheritAttrs: false, emits: ['update:modelValue', 'change'],
   setup(_, { attrs, slots, emit }) {
     const state = reactive({ ...(def.state || {}) });
-    const set = o => Object.assign(state, o);
+    const set = o => Object.assign(state, o), uid = 'zg' + (++uidN).toString(36);
     // Teleports are client-only: during SSR and hydration portal() renders nothing (a teleport to <body> cannot hydrate), then appears once mounted.
     const mounted = ref(false), localeTick = ref(0); let offLocale; onMounted(() => { mounted.value = true; offLocale = subscribeUiLocale(() => { localeTick.value++; }); }); onBeforeUnmount(() => offLocale && offLocale());
     return () => {
@@ -22,7 +23,7 @@ const wrap = (name, def) => defineComponent({
       if (props.modelValue === undefined) delete props.modelValue;
       const named = {}; for (const k of Object.keys(slots)) if (k !== 'default') named[k] = slots[k]();
       const children = slots.default ? slots.default() : [];
-      const out = def.render({ C, h: vh, props, children, slots: named, state, set, portal: (kids, to) => mounted.value ? h(Teleport, { to: to || 'body' }, kids) : null });
+      const out = def.render({ C, h: vh, props, children, slots: named, state, set, uid, portal: (kids, to) => mounted.value ? h(Teleport, { to: to || 'body' }, kids) : null });
       const sz = attrs.size;
       if (sz) root['data-size'] = sz;
       return isVNode(out) && typeof out.type === 'string' && Object.keys(root).length ? cloneVNode(out, root) : out;

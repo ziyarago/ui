@@ -134,7 +134,7 @@ export default {
       size: size('trigger button and panel padding'),
     },
     slots: { default: 'Panel content.' },
-    notes: ['Open state is internal and toggled by the trigger. The panel closes on outside click and on Escape (focus returns to the trigger).'],
+    notes: ['Open state is internal and toggled by the trigger. The panel closes on outside click and on Escape (focus returns to the trigger).', 'The panel is rendered in document.body with position: fixed (not clipped by overflow, flips near the viewport edge).'],
   },
 
   HoverCard: {
@@ -161,14 +161,18 @@ export default {
   Dropdown: {
     description: 'Button that opens a menu of actions; use for "more" menus and action lists.',
     props: {
-      label: { type: 'string', description: 'Text of the trigger button.' },
-      icon: { type: 'string', description: 'Icon name before the label.' },
+      label: { type: 'string', description: 'Text of the trigger button. With iconOnly it becomes the aria-label (and tooltip) of the square button.' },
+      icon: { type: 'string', description: 'Icon name before the label; the only content of the button with iconOnly (default "ellipsis").' },
+      iconOnly: { type: 'boolean', default: false, description: 'Renders the trigger like IconButton: a square icon button without label and chevron. Use label for the accessible name.' },
+      ghost: { type: 'boolean', default: false, description: 'With iconOnly: a transparent button without background, for table rows and toolbars.' },
+      align: { type: "'start' | 'end'", values: ['start', 'end'], default: 'start', description: 'Which edge of the trigger the menu lines up with (mirrored in RTL). iconOnly defaults to end.' },
       items: menuItems,
       disabled: { type: 'boolean', default: false, description: 'Disables the trigger button so the menu cannot open.' },
       size: size('trigger button and menu'),
     },
+    slots: { trigger: 'Custom trigger element (Vue #trigger / React trigger prop) instead of the built-in button. The kit adds aria-haspopup, aria-expanded and aria-controls to its first focusable element, toggles on click and opens on ArrowDown / ArrowUp; a non-interactive element becomes role="button" with tabindex 0.' },
     events: { select: select + ' The menu closes first.' },
-    notes: ['Each item may also have its own onClick and disabled. Open state is internal; the menu closes on outside click and on Escape.'],
+    notes: ['Each item may also have its own onClick and disabled. Open state is internal; the menu closes on outside click and on Escape.', 'The menu is rendered in document.body with position: fixed, so overflow, transform or a scrolling modal body never clip it. It flips above the trigger when there is no room below, stays inside the viewport and follows the trigger on scroll and resize.'],
   },
 
   Menu: {

@@ -1,3 +1,4 @@
+import { inPopOf } from './float.js';
 // Shared dialog behaviour: Escape, focus move/trap/restore. Used as a function ref on the dialog element, so
 // it runs only in a browser (SSR ignores refs) and listeners exist only while a dialog is mounted.
 const reg = new WeakMap(), stack = [], pend = new WeakMap();
@@ -19,7 +20,7 @@ const onKey = e => {
   if (e.key !== 'Tab' || o.focus === false) return;
   const list = focusables(r.el), a = document.activeElement;
   if (!list.length) { e.preventDefault(); r.el.focus(); return; }
-  const first = list[0], last = list[list.length - 1], inside = r.el.contains(a) && a !== r.el;
+  const first = list[0], last = list[list.length - 1], inside = (r.el.contains(a) || inPopOf(a, r.el)) && a !== r.el;
   if (e.shiftKey && (!inside || a === first)) { e.preventDefault(); last.focus(); }
   else if (!e.shiftKey && (!inside || a === last)) { e.preventDefault(); first.focus(); }
 };

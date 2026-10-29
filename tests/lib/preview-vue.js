@@ -16,6 +16,8 @@ const build = (c, key) => {
   return typeof comp === 'string' ? h(comp, { key, ...(c.props ?? {}) }, kids) : h(comp, { key, ...(c.props ?? {}) }, slots);
 };
 
+const substitute = (tree, node) => ({ ...tree, children: tree.children?.map(c => (c.name === '$' ? node : substitute(c, node))) });
+
 export const Preview = defineComponent({
   name: 'Preview',
   props: { name: String, variant: Object, open: Boolean },
@@ -69,6 +71,7 @@ export const Preview = defineComponent({
         const kids = [...(it.text ? [it.text] : []), ...(it.children ?? []).map((x, k) => build(x, k))];
         if (kids.length) slots.default = () => kids;
         for (const [k, t] of Object.entries(it.slots ?? {})) slots[k] = () => (typeof t === 'string' ? t : t.map((x, k2) => build(x, k2)));
+        if (v.inside) return build(substitute(v.inside, { name: props.name, props: p, text: it.text, slots: it.slots, children: it.children }), i);
         return h(comp, { key: i, ...p }, slots);
       });
       const body = v.overlay ? [h(UI.UiButton, { variant: 'primary', onClick: () => (open.value = true) }, () => 'Open'), ...els] : els;

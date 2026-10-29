@@ -1,0 +1,57 @@
+name: Visual
+# Builds the docs site (optionally with the Pro demos) and takes screenshots of the given pages. Run by hand:
+#   gh workflow run Visual -f paths=/docs/charts,/docs/components/Select -f widths=1440,360 -f themes=dark,light -f pro=true [-f ref=branch] [-f dir=rtl]
+# Download the images with: gh run download <run-id> -n shots
+on:
+  workflow_dispatch:
+    inputs:
+      paths: { description: 'comma separated site paths', required: true }
+      widths: { description: 'viewport widths', default: '1440,360' }
+      themes: { description: 'themes', default: 'dark,light' }
+      dir: { description: 'ltr or rtl', default: 'ltr' }
+      pro: { description: 'build with Pro demos', type: boolean, default: true }
+      ref: { description: 'branch or commit of this repo', default: 'main' }
+      pro_ref: { description: 'branch or commit of ui-pro', default: 'main' }
+
+permissions:
+  contents: read
+
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: '${{ inputs.ref }}', path: ZiyaraGo_UI }
+      - name: Check out the Pro package
+        if: inputs.pro
+        uses: actions/checkout@v4
+        with:
+          repository: ziyarago/ui-pro
+          ref: ${{ inputs.pro_ref }}
+          ssh-key: ${{ secrets.PRO_DEPLOY_KEY }}
+          path: ZiyaraGo_UI_pro
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Build the library
+        working-directory: ZiyaraGo_UI
+        run: npm ci && npm run build
+      - name: Build the Pro package
+        if: inputs.pro
+        working-directory: ZiyaraGo_UI_pro
+        run: npm ci && npm run build
+      - name: Build the docs site
+        working-directory: ZiyaraGo_UI/site
+        env:
+          ZIYARAGO_PRO: ${{ inputs.pro && '1' || '' }}
+        run: npm ci && npm run generate
+      - name: Serve and take screenshots
+        working-directory: ZiyaraGo_UI
+        run: |
+          (cd site/.output/public && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          sleep 3
+          node scripts/shots.mjs http://localhost:8080 shots '${{ inputs.paths }}' '${{ inputs.widths }}' '${{ inputs.themes }}' '${{ inputs.dir }}'
+      - uses: actions/upload-artifact@v4
+        with: { name: shots, path: ZiyaraGo_UI/shots, retention-days: 3 }

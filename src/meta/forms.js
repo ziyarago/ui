@@ -167,7 +167,7 @@ export default {
       size: size(),
     },
     events: change('Called with the value of the chosen option.'),
-    notes: ['The popup closes on outside click and on Escape (focus returns to the trigger).'],
+    notes: ['The popup closes on outside click and on Escape (focus returns to the trigger).', 'The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.'],
   },
   MultiSelect: {
     description: 'Dropdown with checkboxes for choosing several values. Use for filters and multi-valued fields.',
@@ -179,7 +179,7 @@ export default {
       size: size(),
     },
     events: change('Called with the new array of values after toggling an option.'),
-    notes: ['The trigger shows "N selected"; the list stays open while picking and closes on outside click or Escape.'],
+    notes: ['The trigger shows "N selected"; the list stays open while picking and closes on outside click or Escape.', 'The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.'],
   },
   GroupedSelect: {
     description: 'Single-choice dropdown with option groups under headings. Use for long lists that have natural categories.',
@@ -207,7 +207,7 @@ export default {
       size: size(),
     },
     events: change('Called with the value of the chosen option.'),
-    notes: ['Selecting from the list is the only way to set a value: free text is never emitted.', 'The list closes on outside click and on Escape.', 'Keyboard (WAI-ARIA combobox): the input has role=combobox with aria-expanded, aria-controls and aria-activedescendant; focus stays in the input, Arrow Down and Up open the list and move the active option (wraps, skips disabled), Enter chooses it, Escape closes.'],
+    notes: ['Selecting from the list is the only way to set a value: free text is never emitted.', 'The list closes on outside click and on Escape.', 'Keyboard (WAI-ARIA combobox): the input has role=combobox with aria-expanded, aria-controls and aria-activedescendant; focus stays in the input, Arrow Down and Up open the list and move the active option (wraps, skips disabled), Enter chooses it, Escape closes.', 'The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.'],
   },
   TreeSelect: {
     description: 'Dropdown with a searchable tree. Use for hierarchical choices such as regions, categories or org units.',
@@ -396,7 +396,7 @@ export default {
       size: size(),
     },
     events: change('Called with a Date object (local midnight) for the chosen day. The popup closes after picking.'),
-    notes: ['The event payload is a Date, not a string: convert to ISO yourself if the model is a string.', 'The popup closes on outside click and on Escape (focus returns to the trigger). Arrow Down or Up on the trigger opens it and focus moves into the calendar, which uses the Calendar keys.'],
+    notes: ['The event payload is a Date, not a string: convert to ISO yourself if the model is a string.', 'The popup closes on outside click and on Escape (focus returns to the trigger). Arrow Down or Up on the trigger opens it and focus moves into the calendar, which uses the Calendar keys.', 'The list renders in document.body with position: fixed (never clipped by overflow or a scrolling modal body), flips above the trigger near the viewport bottom, follows the trigger on scroll and keeps min-width equal to the trigger.'],
   },
   TimePicker: {
     description: 'Hour and minute selects for a time of day. Use for opening hours and appointment times.',
