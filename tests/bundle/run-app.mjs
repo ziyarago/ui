@@ -65,6 +65,11 @@ else cpSync(examples, join(pub, 'examples.json'));
   const urls = new Set();
   JSON.stringify(JSON.parse(readFileSync(examples, 'utf8')).examples, (k, v) => { if (typeof v === 'string' && /^\/[\w./-]+\.(png|jpe?g|webp|gif)$/.test(v)) urls.add(v); return v; });
   urls.add("/img/a b(1)'s.png");
+  // map tiles requested through the tiles prop: any /tiles/<style>/<z>/<x>/<y>.png is served by a placeholder
+  for (const st of ['light_all', 'dark_all']) for (let z = 3; z <= 18; z++) if (z === 14 || z === 13 || z === 15) {
+    const x0 = Math.floor((39.8262 + 180) / 360 * 2 ** z) - 4, y0 = Math.floor((1 - Math.log(Math.tan(21.4225 * Math.PI / 180) + 1 / Math.cos(21.4225 * Math.PI / 180)) / Math.PI) / 2 * 2 ** z) - 4;
+    for (let x = x0; x < x0 + 9; x++) for (let y = y0; y < y0 + 9; y++) urls.add(`/tiles/${st}/${z}/${x}/${y}.png`);
+  }
   for (const u of urls) { mkdirSync(dirname(join(pub, u)), { recursive: true }); writeFileSync(join(pub, u), PNG); }
   log('placeholder images', [...urls].join(' '));
 }
