@@ -46,7 +46,7 @@ export default {
   Textarea: {
     description: 'Multi-line text input. Use for comments, descriptions and other long text.',
     props: {
-      modelValue: { type: 'string | null', model: true, default: '', description: 'Current value.' },
+      modelValue: { type: 'string | number | null', model: true, default: '', description: 'Current value.' },
       label, placeholder: placeholder(), hint, error, disabled,
       rows: { type: 'number', default: 4, description: 'Visible text rows.' },
       maxlength: { type: 'number', description: 'Maximum number of characters.' },
@@ -77,7 +77,7 @@ export default {
   PasswordInput: {
     description: 'Password field with a show/hide toggle. Use for sign-in and password change forms.',
     props: {
-      modelValue: { type: 'string', model: true, default: '', description: 'Current password.' },
+      modelValue: { type: 'string | number | null', model: true, default: '', description: 'Current password.' },
       label, placeholder: placeholder(), hint, error,
       required: { type: 'boolean', default: false, description: 'Adds a red asterisk to the label and the native required attribute.' },
       name: { type: 'string', forwarded: true, description: 'Native name attribute of the input.' },
@@ -91,7 +91,7 @@ export default {
   SearchInput: {
     description: 'Compact search field with a clear button and an Enter-to-search event. Use above lists and tables.',
     props: {
-      modelValue: { type: 'string', model: true, default: '', description: 'Current query.' },
+      modelValue: { type: 'string | number | null', model: true, default: '', description: 'Current query.' },
       placeholder: placeholder('Placeholder text. Defaults to "Search".'),
       size: size('Field height and font size.'),
     },
@@ -115,7 +115,7 @@ export default {
   CodeInput: {
     description: 'One-time code input rendered as separate digit cells. Use for SMS or email verification codes.',
     props: {
-      modelValue: { type: 'string', model: true, default: '', description: 'Digits entered so far.' },
+      modelValue: { type: 'string | number | null', model: true, default: '', description: 'Digits entered so far.' },
       length: { type: 'number', default: 6, description: 'Number of cells and maximum digits.' },
       label: { type: 'string', default: 'Code', description: 'Accessible name of the hidden input (not rendered visibly).' },
       size: size('Cell size.'),

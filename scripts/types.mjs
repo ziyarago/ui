@@ -36,7 +36,7 @@ export { useUiTheme } from './theme';
 export { fmt, setIconBase, registerIcons } from './shared';
 `;
 
-const react = banner + `import type { ComponentType, MouseEvent, ReactNode } from 'react';
+const react = banner + `import type { ComponentType, CSSProperties, MouseEvent, ReactNode } from 'react';
 import type { Size, Tone } from './shared';
 export type { Size, Tone, Rule, NavItem, Column } from './shared';
 

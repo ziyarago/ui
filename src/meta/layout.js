@@ -78,8 +78,8 @@ export default {
     props: {
       nav: { type: "'top' | 'side'", values: ['top', 'side'], default: 'top', description: 'Navigation placement: TopNav or SideNav.' },
       brand: { type: 'VNode | string', description: 'Brand/logo content shown in the navigation.' },
-      items: { type: '{ value: string; label: string; icon?: string }[]', description: 'Navigation items, passed to TopNav or SideNav.' },
-      value: { type: 'string', description: 'Value of the active navigation item. Changed via the change event.' },
+      items: { type: '{ value: string | number; label: string; icon?: string }[]', description: 'Navigation items, passed to TopNav or SideNav.' },
+      value: { type: 'string | number', description: 'Value of the active navigation item. Changed via the change event.' },
       actions: { type: 'VNode', description: 'Right side of the top navigation (nav="top" only).' },
       collapsed: { type: 'boolean', description: 'Controlled collapsed state of the side navigation. Uncontrolled (internal state, initially false) when omitted.' },
       collapsible: { type: 'boolean', default: true, description: 'Shows the collapse toggle in the side navigation. Set false to hide it.' },
