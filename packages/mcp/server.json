@@ -7,12 +7,12 @@
     "source": "github",
     "subfolder": "packages/mcp"
   },
-  "version": "0.20.10",
+  "version": "0.20.11",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@ziyarago/ui-mcp",
-      "version": "0.20.10",
+      "version": "0.20.11",
       "transport": {
         "type": "stdio"
       }

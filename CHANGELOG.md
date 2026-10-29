@@ -1,3 +1,9 @@
+## [0.20.11](https://github.com/ziyarago/ui/compare/v0.20.10...v0.20.11) (2026-10-29)
+
+### Bug Fixes
+
+* watermarked demo icons for the docs site ([6f1bef7](https://github.com/ziyarago/ui/commit/6f1bef76da517c0a0039f3d0ef821bd282f90d10))
+
 ## [0.20.10](https://github.com/ziyarago/ui/compare/v0.20.9...v0.20.10) (2026-10-29)
 
 ### Bug Fixes
