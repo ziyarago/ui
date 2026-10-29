@@ -1,0 +1,19 @@
+/* Optional. Contains NO font data: Thmanyah may not be redistributed (https://font.thmanyah.com/licenses).
+   Download the files from the official site and put them in your own public folder, by default /fonts/thmanyah/.
+   Another location: url() cannot read a CSS variable, so copy this file into your project and edit the URL prefix.
+   File names expected: thmanyahsans-{Light,Regular,Medium,Bold,Black}.otf,
+   thmanyahserifdisplay-{Light,Regular,Medium,Bold}.otf, thmanyahseriftext-{Light,Regular,Medium,Bold}.otf.
+   Thmanyah has no 600 face. Weights map: 200-300 Light, 400-600 Regular, 700 Medium, 800 Bold, 900 Black. */
+@font-face{font-family:'Thmanyah Sans';font-weight:200 300;src:url('/fonts/thmanyah/thmanyahsans-Light.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:400 600;src:url('/fonts/thmanyah/thmanyahsans-Regular.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:700;src:url('/fonts/thmanyah/thmanyahsans-Medium.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:800;src:url('/fonts/thmanyah/thmanyahsans-Bold.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Sans';font-weight:900;src:url('/fonts/thmanyah/thmanyahsans-Black.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:200 300;src:url('/fonts/thmanyah/thmanyahserifdisplay-Light.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:400 600;src:url('/fonts/thmanyah/thmanyahserifdisplay-Regular.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:700;src:url('/fonts/thmanyah/thmanyahserifdisplay-Medium.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Display';font-weight:800;src:url('/fonts/thmanyah/thmanyahserifdisplay-Bold.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:200 300;src:url('/fonts/thmanyah/thmanyahseriftext-Light.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:400 600;src:url('/fonts/thmanyah/thmanyahseriftext-Regular.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:700;src:url('/fonts/thmanyah/thmanyahseriftext-Medium.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Thmanyah Serif Text';font-weight:800;src:url('/fonts/thmanyah/thmanyahseriftext-Bold.otf') format('opentype');font-display:swap}

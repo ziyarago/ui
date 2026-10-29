@@ -32,7 +32,7 @@
   --zg-shadow-1:0 8px 24px oklch(0.4 0.03 60 / .17);--zg-shadow-2:0 24px 64px oklch(0.4 0.03 60 / .22);
 }
 :root{--zg-z-bar:50;--zg-z-pop:60;--zg-z-modal:200;--zg-z-float:calc(var(--zg-z-modal) + 30);
-  --zg-font:'Manrope','Thmanyah Sans',system-ui,sans-serif;--zg-font-ar:'Thmanyah Sans',system-ui,sans-serif;--zg-font-ar-display:'Thmanyah Serif Display','Thmanyah Sans',serif;--zg-font-ar-text:'Thmanyah Serif Text','Thmanyah Sans',serif;--zg-font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --zg-font:'Manrope','Thmanyah Sans','Segoe UI',Tahoma,'Noto Sans Arabic',system-ui,sans-serif;--zg-font-ar:'Thmanyah Sans','Segoe UI',Tahoma,'Noto Sans Arabic',system-ui,sans-serif;--zg-font-ar-display:'Thmanyah Serif Display','Thmanyah Sans','Noto Naskh Arabic','Traditional Arabic',serif;--zg-font-ar-text:'Thmanyah Serif Text','Thmanyah Sans','Noto Naskh Arabic','Traditional Arabic',serif;--zg-font-mono:'JetBrains Mono',ui-monospace,monospace;
   --zg-h-xs:28px;--zg-h-sm:32px;--zg-h-md:40px;--zg-h-lg:48px;--zg-h-xl:56px;
   --zg-r-card:32px;--zg-r-tile:20px;--zg-ease:cubic-bezier(.2,.8,.2,1);
 }

@@ -48,7 +48,7 @@ const rows = [
         <UiCard title="Bookings" subtitle="Table, badges and avatars">
           <UiDataTable :columns="[{ key: 'code', label: 'Code' }, { key: 'guest', label: 'Guest' }, { key: 'hotel', label: 'Hotel' }, { key: 'total', label: 'Total, SAR', num: true }]" :rows="rows" />
         </UiCard>
-        <UiAlert tone="info" title="Direction check">Switch to RTL and watch the layout mirror. Arabic text uses the Thmanyah font with lighter weights.</UiAlert>
+        <UiAlert tone="info" title="Direction check">Switch to RTL and watch the layout mirror. Arabic text uses the Arabic font stack (Thmanyah Sans if you self-host it, otherwise a system Arabic font).</UiAlert>
       </div>
     </div>
   </section>
