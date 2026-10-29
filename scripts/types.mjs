@@ -82,7 +82,7 @@ function eventArgs(n, m, e, fw) {
   const k = `${n}.${e}`;
   let a;
   if (k in EVENT_ARGS && EVENT_ARGS[k] !== '') a = EVENT_ARGS[k];
-  else if ((n === 'TextField' || n === 'Textarea') && e in NATIVE_EVENT) a = 'event: ' + (fw === 'react' ? NATIVE_EVENT[e] + '<HTMLElement>' : NATIVE_EVENT[e]);
+  else if ((n === 'TextField' || n === 'Textarea') && e in NATIVE_EVENT) a = 'event: ' + (fw === 'react' ? (e === 'input' ? 'SyntheticEvent' : NATIVE_EVENT[e]) + '<HTMLElement>' : NATIVE_EVENT[e]);
   else if (e === 'change' && (n === 'TextField' || n === 'Textarea')) a = 'value: string';
   else if (e === 'click') a = fw === 'react' ? 'event: MouseEvent<HTMLElement>' : 'event: MouseEvent';
   else if (e === 'change' && model(m)) a = 'value: ' + fixType(model(m).type, fw);
@@ -155,7 +155,7 @@ export { useUiTheme } from './theme';
 export { fmt, setIconBase, registerIcons } from './shared';
 `;
 
-const react = banner + `import type { ComponentType, MouseEvent, ReactNode } from 'react';
+const react = banner + `import type { ClipboardEvent, ComponentType, FocusEvent, KeyboardEvent, MouseEvent, ReactNode, SyntheticEvent } from 'react';
 import type { Size, Tone } from './shared';
 export type { Size, Tone, Rule, NavItem, Column } from './shared';
 
