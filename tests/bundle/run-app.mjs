@@ -269,6 +269,10 @@ function finish() {
   const fails = list.filter(i => i.sev === 'fail');
   console.log(`\n===== ${baseKey}: ${fails.length} failures, ${list.filter(i => i.sev === 'warn').length} warnings, ${list.filter(i => i.sev === 'info').length} notes =====`);
   for (const i of list) console.log(`${i.sev.toUpperCase().padEnd(5)} [${i.cat}] ${i.msg}  {${i.where.join(', ')}}`);
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    const md = [`### ${baseKey}: ${fails.length} failures, ${list.filter(i => i.sev === 'warn').length} warnings`, ...list.filter(i => i.sev !== 'info').slice(0, 60).map(i => `- **${i.sev}** [${i.cat}] ${i.msg.replace(/\|/g, '/').slice(0, 300)} _(${i.where.slice(0, 3).join(', ')})_`), ''].join('\n');
+    try { writeFileSync(process.env.GITHUB_STEP_SUMMARY, md + '\n', { flag: 'a' }); } catch {}
+  }
   if (!process.argv.includes('--keep')) { try { rmSync(work, { recursive: true, force: true }); } catch {} }
   process.exit(fails.length ? 1 : 0);
 }
