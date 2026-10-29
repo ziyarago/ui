@@ -42,7 +42,7 @@ jobs:
         chunk: [0, 1, 2, 3]
     env:
       CHROME_PATH: /usr/bin/google-chrome
-      BROWSER_CONCURRENCY: 3
+      BROWSER_CONCURRENCY: 2
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

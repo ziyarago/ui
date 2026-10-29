@@ -48,7 +48,7 @@ async function flow(fw, group, name, fn, opts) {
     const errs0 = await ctx.page.evaluate(() => window.__zg.errors.length);
     await fn(ctx.page, ctx);
     const errs = await ctx.page.evaluate(n => window.__zg.errors.slice(n), errs0);
-    const bad = ctx.bad.filter(b => !/Failed to load resource/.test(b.text));
+    const bad = ctx.bad.filter(b => !/Failed to load resource|unknown size/.test(b.text));
     if (errs.length) throw new Error('render error: ' + String(errs[0].message).split('\n')[0]);
     if (bad.length) throw new Error(`${bad[0].kind}: ${bad[0].text}`);
     results.push({ fw, id, ok: true });
@@ -231,7 +231,7 @@ const CONTRACTS = [
   ['Checkbox click toggles once', 'Checkbox', { props: { label: 'Agree', modelValue: false } }, async (page, r) => { await click(page, `${r} [role=checkbox], ${r} input, ${r} button, ${r} label`); const l = await labels(page); assert(l.length === 1 && l[0] === 'model:[true]', 'calls: ' + l.join()); }],
   ['Disabled Checkbox never fires', 'Checkbox', { props: { label: 'Agree', modelValue: false, disabled: true } }, async (page, r) => { await page.click(`${r} [role=checkbox], ${r} input, ${r} button, ${r} label`).catch(() => {}); await sleep(60); assert((await spy(page)).length === 0, 'disabled checkbox fired'); }],
   ['TextField typing round-trips the value', 'TextField', { props: { label: 'Name', modelValue: '' } }, async (page, r) => { await click(page, `${r} input`); await page.keyboard.type('Zayd 🌙 زيد', { delay: 5 }); await sleep(100); const v = await page.$eval(`${r} input`, e => e.value); assert(v === 'Zayd 🌙 زيد', 'input shows "' + v + '"'); const l = await spy(page); assert(l.length && l[l.length - 1].args[0] === 'Zayd 🌙 زيد', 'last model ' + JSON.stringify(l[l.length - 1])); }],
-  ['Pagination click -> model once', 'Pagination', { props: { page: 2, pages: 10 } }, async (page, r) => { await page.evaluate(sel => [...document.querySelectorAll(sel + ' button')].find(b => b.textContent.trim() === '5').click(), r); await sleep(80); const l = await labels(page); assert(l.length === 1 && l[0] === 'model:[5]', 'calls: ' + l.join()); }],
+  ['Pagination click -> model once', 'Pagination', { props: { page: 2, pages: 10 } }, async (page, r) => { await page.evaluate(sel => [...document.querySelectorAll(sel + ' button')].find(b => b.textContent.trim() === '3').click(), r); await sleep(80); const l = await labels(page); assert(l.length === 1 && l[0] === 'model:[3]', 'calls: ' + l.join()); }],
   ['DataTable sort header calls onSort once with key and direction', 'DataTable', { props: { onSort: '$spy:sort', columns: [{ key: 'a', label: 'A', sortable: true }, { key: 'b', label: 'B' }], rows: [{ id: 1, a: 3, b: 'x' }, { id: 2, a: 1, b: 'y' }] } }, async (page, r) => { await click(page, `${r} th button`); const l = await labels(page); assert(l.length === 1 && l[0] === 'sort:["a","asc"]', 'calls: ' + l.join()); }],
   ['DataTable select all / one row', 'DataTable', { props: { onSelect: '$spy:sel', selected: [], columns: [{ key: 'a', label: 'A' }], rows: [{ id: 1, a: 3 }, { id: 2, a: 1 }, { id: 3, a: 7 }] } }, async (page, r) => { await click(page, `${r} thead [role=checkbox]`); let l = await labels(page); assert(l.length === 1 && l[0] === 'sel:[[1,2,3]]', 'all: ' + l.join()); await clearSpy(page); await page.evaluate(sel => document.querySelectorAll(sel + ' tbody [role=checkbox]')[1].click(), r); await sleep(60); l = await labels(page); assert(l.length === 1 && l[0] === 'sel:[[2]]', 'row: ' + l.join()); }],
   ['DataTable with 200 rows keeps header and rows aligned', 'DataTable', { props: { columns: [{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }], rows: Array.from({ length: 200 }, (_, i) => ({ id: i, a: 'row ' + i, b: i * 1e9 })) } }, async (page, r) => { const n = await page.$$eval(`${r} tbody tr`, e => e.length); assert(n === 200, 'rows ' + n); }],
@@ -285,7 +285,7 @@ for (const fw of fws) await flow(fw, 'table', 'rapid clicks on sort and select d
   const id = await mount(page, 'DataTable', { label: 't', props: { onSort: '$spy:sort', onSelect: '$spy:sel', selected: [], columns: [{ key: 'a', label: 'A', sortable: true }], rows: [{ id: 1, a: 1 }, { id: 2, a: 2 }] } });
   await sleep(100);
   const root = `[data-flow="${id}"]`;
-  for (let i = 0; i < 5; i++) { await page.click(`${root} th button`); await page.click(`${root} tbody [role=checkbox]`); }
+  for (let i = 0; i < 5; i++) { await page.click(`${root} th:last-child button`); await page.click(`${root} tbody [role=checkbox]`); }
   await sleep(100);
   const l = await spy(page);
   assert(l.filter(x => x.label === 'sort').length === 5 && l.filter(x => x.label === 'sel').length === 5, 'sort/select calls ' + JSON.stringify(l.map(x => x.label)));

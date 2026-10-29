@@ -7,7 +7,7 @@ const tipId = s => { let x = 5381; for (const c of String(s)) x = (x * 33 ^ c.ch
 let tipN = 0, cbN = 0;
 const tipScroll = el => { if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' }); };
 // Same text twice on one page would repeat the id: the later tooltip gets a unique one (browser only, after mount).
-const tipRef = el => { const s = el && el.lastElementChild; if (!s || !s.id || typeof document === 'undefined') return; const same = document.querySelectorAll('[id="' + s.id + '"]'); if (same.length > 1 && same[0] !== s) { s.id += '-' + (++tipN); el.setAttribute('aria-describedby', s.id); } };
+const tipRef = el => { if (!el || typeof document === 'undefined') return; queueMicrotask(() => { const s = el.lastElementChild; if (!s || !s.id || !el.isConnected || s.getAttribute('role') !== 'tooltip') return; const same = document.querySelectorAll('[id="' + s.id + '"]'); if (same.length > 1 && same[0] !== s) { s.id += '-' + (++tipN); el.setAttribute('aria-describedby', s.id); } }); };
 // WCAG 1.4.13: while the tip is shown (hover or keyboard focus) Escape hides it without moving focus; it comes back on the next hover or focus.
 const tipEsc = el => ev => { if (ev.key === 'Escape') el.setAttribute('data-tip-off', ''); };
 const tipShow = e => { const el = e.currentTarget; if (e.type === 'mouseenter' || e.type === 'focus') el.removeAttribute('data-tip-off'); if (!el._zgTip) { el._zgTip = tipEsc(el); document.addEventListener('keydown', el._zgTip); } };

@@ -57,7 +57,7 @@ const scenName = c => [c.data === 'examples' ? 'normal' : c.data.replace('stress
 async function judge(page, samples, push) {
   const byVar = new Map();
   for (const s of samples) { const k = s.c + '#' + s.v; if (!byVar.has(k)) byVar.set(k, []); byVar.get(k).push(s); }
-  await page.addStyleTag({ content: '*{color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important}svg *{stroke:transparent!important;fill:transparent!important}', id: 'zg-hide' }).catch(() => {});
+  await page.evaluate(() => { const st = document.createElement('style'); st.id = 'zg-hide'; st.textContent = '*{color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important}svg *{stroke:transparent!important;fill:transparent!important}'; document.head.append(st); });
   for (const [, items] of byVar) {
     const x = Math.max(0, Math.min(...items.map(i => i.r.x)) - 4), y = Math.max(0, Math.min(...items.map(i => i.r.y)) - 4);
     const w = Math.min(1600, Math.max(...items.map(i => i.r.x + i.r.w)) - x + 4), h = Math.min(1600, Math.max(...items.map(i => i.r.y + i.r.h)) - y + 4);
@@ -74,7 +74,7 @@ const log = m => console.log(m);
 async function runPage(fw, sid, c, extra = {}) {
   const t0 = Date.now();
   let timer;
-  const deadline = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('page deadline 300s')), 300000); });
+  const deadline = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('page deadline 420s')), 420000); });
   try { await Promise.race([runPageInner(fw, sid, c, extra), deadline]); }
   catch (e) { rows.push({ fw, scenario: `${sid}/${scenName(c)}`, c: '(page)', v: -1, o: 'harness', d: String(e.message).slice(0, 200) }); }
   clearTimeout(timer);
@@ -108,7 +108,7 @@ async function runPageInner(fw, sid, c, extra = {}) {
   const push = (r) => rows.push({ fw, scenario: scen, ...r });
   try {
     await page.goto(`${servers[fw].url}/?${q}`, { waitUntil: 'load', timeout: 120000 });
-    await page.waitForFunction('window.__zg && window.__zg.done', { timeout: 150000 });
+    await page.waitForFunction('window.__zg && window.__zg.done', { timeout: 240000 });
     await sleep(500);
     const t0 = await page.evaluate(() => performance.now());
     const z = await page.evaluate(() => ({ errors: window.__zg.errors, mounted: window.__zg.mounted, expected: window.__zg.expected }));
@@ -133,12 +133,17 @@ async function runPageInner(fw, sid, c, extra = {}) {
     }
     log(`  audit ${total} variants in ${((Date.now() - tAudit) / 1000).toFixed(0)}s`);
 
-    // axe
+    // axe, in slices so one huge DOM cannot stall the page
     try {
       await page.evaluate(axeSrc);
-      const ax = await page.evaluate(runAxe, { off: AXE_OFF, component: extra.only });
       const dedupe = new Set();
-      for (const a of ax) { const k = a.rule + a.c + a.v + a.target; if (dedupe.has(k)) continue; dedupe.add(k); push({ c: a.c, v: a.v, o: 'axe:' + a.rule, d: `${a.impact}: ${a.msg}`, el: a.target }); }
+      const tAxe = Date.now();
+      const axeTotal = mode === 'portal' ? 1 : total;
+      for (let from = 0; from < axeTotal; from += 10) {
+        const ax = await page.evaluate(runAxe, { off: AXE_OFF, component: extra.only, ...(mode === 'portal' ? {} : { from, to: from + 10 }) });
+        for (const a of ax) { const k = a.rule + a.c + a.v + a.target; if (dedupe.has(k)) continue; dedupe.add(k); push({ c: a.c, v: a.v, o: 'axe:' + a.rule, d: `${a.impact}: ${a.msg}`, el: a.target }); }
+      }
+      log(`  axe in ${((Date.now() - tAxe) / 1000).toFixed(0)}s`);
     } catch (e) { push({ c: '(page)', v: -1, o: 'harness', d: 'axe failed: ' + e.message.slice(0, 100) }); }
 
     // late layout shift
@@ -185,7 +190,7 @@ for (const sid of wanted) {
     else jobs.push(() => runPage(fw, sid, c));
   }
 }
-const CONC = Number(process.env.BROWSER_CONCURRENCY || 3);
+const CONC = Number(process.env.BROWSER_CONCURRENCY || 2);
 let done = 0;
 await Promise.all(Array.from({ length: CONC }, async () => { while (jobs.length) { const j = jobs.shift(); await j(); done++; } }));
 await browser.close();

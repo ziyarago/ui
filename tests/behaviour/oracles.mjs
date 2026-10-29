@@ -296,7 +296,9 @@ export async function judgeSamples(b64, clip, items) {
 
 /** axe over the whole document, mapped back to component and variant. */
 export function runAxe(opts) {
-  return axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] }, rules: Object.fromEntries(opts.off.map(id => [id, { enabled: false }])), resultTypes: ['violations'] }).then(res => {
+  const ctx = opts.from === undefined ? document : [...document.querySelectorAll('[data-variant]')].slice(opts.from, opts.to);
+  if (Array.isArray(ctx) && !ctx.length) return Promise.resolve([]);
+  return axe.run(ctx, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] }, rules: Object.fromEntries(opts.off.map(id => [id, { enabled: false }])), resultTypes: ['violations'] }).then(res => {
     const out = [];
     for (const v of res.violations) for (const n of v.nodes) {
       const el = document.querySelector(n.target[n.target.length - 1]);
