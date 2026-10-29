@@ -8,13 +8,14 @@ const error = { type: 'string', forwarded: true, description: 'Error message und
 const placeholder = (d) => ({ type: 'string', description: d || 'Placeholder text.' });
 const disabled = { type: 'boolean', default: false, description: 'Disables the control.' };
 const optShape = '{ value: string | number; label: string; disabled?: boolean }[]';
+const optShapeNull = '{ value: string | number | null; label: string; disabled?: boolean }[]';
 const change = (d) => ({ change: d });
 
 export default {
   TextField: {
     description: 'Single-line text input with label, icon, suffix, hint and error. Use for any short free-text or typed value (email, url, number as text).',
     props: {
-      modelValue: { type: 'string', model: true, default: '', description: 'Current value.' },
+      modelValue: { type: 'string | number | null', model: true, default: '', description: 'Current value. Also accepts a number or null (v-model.number, an empty numeric field); the emitted value is always the typed string.' },
       label, placeholder: placeholder(), hint, error,
       type: { type: 'string', default: 'text', description: 'Native input type: text, email, tel, url, number, date, etc.' },
       icon: { type: 'string', description: 'Leading icon name.' },
@@ -38,14 +39,14 @@ export default {
       autocapitalize: { type: 'string', forwarded: true, description: 'Native autocapitalize hint.' },
       size: size(),
     },
-    events: { ...change('Called with the new string on every keystroke.'), blur: 'Native blur of the input (Vue @blur, React onBlur).', focus: 'Native focus of the input.', keydown: 'Native keydown of the input; modifiers like @keydown.enter work in Vue.', input: 'Native input event (after change), receives the Event.' },
+    events: { ...change('Called with the new string on every keystroke.'), blur: 'Native blur of the input (Vue @blur, React onBlur).', focus: 'Native focus of the input.', keydown: 'Native keydown of the input; modifiers like @keydown.enter work in Vue.', input: 'Native input event (after change), receives the Event.', keyup: 'Native keyup of the input.', paste: 'Native paste of the input.' },
     slots: { prefix: 'Content before the input (icon or text). Replaces the icon prop. React: prefix prop.', suffix: 'Content after the input (button, unit). Same as the suffix prop. React: suffix prop.' },
     notes: ['Wrapped in a label, so clicking the label focuses the input.', 'Native attributes (name, autocomplete, min, max, step, maxlength, inputmode, pattern ...) and the blur, focus, keydown, keyup and paste listeners are forwarded to the inner input. id, class, style, aria-* and data-* land on the root label.'],
   },
   Textarea: {
     description: 'Multi-line text input. Use for comments, descriptions and other long text.',
     props: {
-      modelValue: { type: 'string', model: true, default: '', description: 'Current value.' },
+      modelValue: { type: 'string | null', model: true, default: '', description: 'Current value.' },
       label, placeholder: placeholder(), hint, error, disabled,
       rows: { type: 'number', default: 4, description: 'Visible text rows.' },
       maxlength: { type: 'number', description: 'Maximum number of characters.' },
@@ -157,8 +158,8 @@ export default {
   Select: {
     description: 'Single-choice dropdown. Use when the user picks one value from a known list.',
     props: {
-      modelValue: { type: 'string | number', model: true, description: 'Value of the selected option.' },
-      options: { type: optShape, required: true, default: '[]', description: 'Available options. An option with disabled: true is dimmed and cannot be chosen.' },
+      modelValue: { type: 'string | number | null', model: true, description: 'Value of the selected option.' },
+      options: { type: optShapeNull, required: true, default: '[]', description: 'Available options. An option with disabled: true is dimmed and cannot be chosen.' },
       label, placeholder: placeholder('Shown when nothing is selected. Defaults to "—".'),
       hint, error,
       required: { type: 'boolean', default: false, description: 'Adds a red asterisk to the label. Does not validate.' },
@@ -196,8 +197,8 @@ export default {
   Combobox: {
     description: 'Searchable single-choice dropdown. Use for long option lists where typing to filter is faster than scrolling.',
     props: {
-      modelValue: { type: 'string | number', model: true, description: 'Value of the selected option.' },
-      options: { type: optShape, default: '[]', description: 'Available options. Filtering is a case-insensitive match on label. An option with disabled: true cannot be chosen.' },
+      modelValue: { type: 'string | number | null', model: true, description: 'Value of the selected option.' },
+      options: { type: optShapeNull, default: '[]', description: 'Available options. Filtering is a case-insensitive match on label. An option with disabled: true cannot be chosen.' },
       label, hint, error,
       placeholder: placeholder('Defaults to "Search…".'),
       emptyText: { type: 'string', default: '—', description: 'Shown when no option matches the query.' },
@@ -381,7 +382,7 @@ export default {
   DatePicker: {
     description: 'Field with a calendar popup for choosing a date. Use in forms where a single date is needed.',
     props: {
-      modelValue: { type: 'string | Date | number', model: true, description: 'Selected date (ISO string recommended, e.g. 2026-10-21).' },
+      modelValue: { type: 'string | Date | number | null', model: true, description: 'Selected date (ISO string recommended, e.g. 2026-10-21).' },
       locale: { type: 'string', default: 'en-GB', description: 'BCP 47 locale used for the trigger text and the calendar.' },
       weekStartsOn: { type: 'number', default: 1, description: 'First day of the week: 0 = Sunday, 1 = Monday.' },
       clearable: { type: 'boolean', default: false, description: 'Shows a clear (x) button while a date is set; it calls change with null.' },
