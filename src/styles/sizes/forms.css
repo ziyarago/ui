@@ -105,7 +105,7 @@
 .zg-field[data-size] .zg-rte__c{min-height:calc(var(--zg-sz-h) * 3.5);padding:calc(var(--zg-sz-pad) - 2px) calc(var(--zg-sz-pad) + 2px);font-size:var(--zg-fm-fs)}
 
 /* ---- calendars (Calendar, RangeCalendar, calendar inside DatePicker) ---- */
-.zg-cal[data-size],.zg-field[data-size] .zg-cal{min-width:calc(var(--zg-sz-h) * 7)}
+.zg-cal[data-size],.zg-field[data-size] .zg-cal{min-width:min(calc(var(--zg-sz-h) * 7),100%)}
 .zg-cal[data-size] .zg-cal__d,.zg-field[data-size] .zg-cal .zg-cal__d{height:calc(var(--zg-sz-h) - 4px);font-size:var(--zg-sz-fs)}
 .zg-cal[data-size] .zg-cal__w,.zg-field[data-size] .zg-cal .zg-cal__w{font-size:max(10px,calc(var(--zg-sz-fs) - 3px))}
 .zg-cal[data-size] .zg-cal__h .zg-ibtn,.zg-field[data-size] .zg-cal .zg-cal__h .zg-ibtn{--h:var(--zg-fm-btn)}
