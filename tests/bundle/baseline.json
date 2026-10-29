@@ -1,6 +1,38 @@
 {
-  "vue": { "jsTotal": 86933, "cssTotal": 30498, "entry:index.html": 108655, "entry:minimal.html": 107184 },
-  "react": { "jsTotal": 111504, "cssTotal": 30452, "entry:index.html": 133510, "entry:minimal.html": 131798 },
-  "nuxt3": { "jsTotal": 140076, "cssTotal": 32106 },
-  "nuxt4": { "jsTotal": 135616, "cssTotal": 32158 }
+  "vue": {
+    "jsTotal": 86933,
+    "cssTotal": 30498,
+    "entry:index.html": 108655,
+    "entry:minimal.html": 107184
+  },
+  "react": {
+    "jsTotal": 111504,
+    "cssTotal": 30452,
+    "entry:index.html": 133510,
+    "entry:minimal.html": 131798
+  },
+  "nuxt3": {
+    "jsTotal": 140076,
+    "cssTotal": 32106
+  },
+  "nuxt4": {
+    "jsTotal": 135616,
+    "cssTotal": 32158
+  },
+  "vue+pro": {
+    "jsTotal": 121296,
+    "cssTotal": 30512,
+    "entry:index.html": 143024,
+    "entry:minimal.html": 107466
+  },
+  "react+pro": {
+    "jsTotal": 145821,
+    "cssTotal": 30466,
+    "entry:index.html": 167839,
+    "entry:minimal.html": 132098
+  },
+  "nuxt3+pro": {
+    "jsTotal": 194565,
+    "cssTotal": 32128
+  }
 }
