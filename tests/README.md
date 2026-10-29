@@ -17,7 +17,14 @@
 - **`interactions.mjs`** drives real mouse and keyboard events and asserts DOM and model state in both adapters: Select, MultiSelect, Combobox, DatePicker, Tabs, SegmentedControl, Switch, Checkbox, Modal and Drawer (open, focus trap, Escape, focus restore, backdrop), Pagination, Accordion, Dropdown, TextField, CommandPalette, ContextMenu. Fixtures are in `interaction-cases.mjs`; callbacks written as `"$spy:label"` are recorded on `window.__zgSpy` (`tests/lib/spy.js`).
 - Chrome is not downloaded. It is found via `CHROME_PATH`, then the usual macOS/Linux locations. External requests (icons, fonts, remote images) are stubbed, so runs are offline-safe.
 
+## Consumer type check (CI job `consumer-types`)
+
+`scripts/consumer-types.mjs generate` writes a temporary project the way a product team sets one up (Vue 3.5 + vue-tsc with `strictTemplates`, React + tsc strict, the packed `@ziyarago/ui` tarball installed from `npm pack`): one Vue SFC and one TSX file per component, generated from `src/meta` by `scripts/consumer-gen.mjs`. It exercises required props only, every optional prop as `null` and as `undefined`, boolean shorthand, kebab-case props, `id`/`class`/`style`/`aria-*`/`data-*`, every event as `@event`, `@kebab-event` and `:on-event` (zero args, rest args, native DOM events), every slot, `v-model` with `ref<T>`, `ref<T | null>`, `ref<T | undefined>`, `v-model.trim/.number/.lazy`, template refs, and for React a controlled value with `useState<T | null>`. `check` classifies the compiler output: anything not listed in `tests/consumer/allow.txt` (with a reason) fails the job. The Pro repo runs the same generator against the packed Core + Pro packages. Unit tests of the generator: `tests/unit/consumer-gen.test.mjs`; runtime counterpart of the null rule: `tests/ssr/null-props.test.mjs`.
+
+Run it: the job runs on every push and pull request. Locally (needs network and a few minutes): `npm run build && npm pack --ignore-scripts --pack-destination /tmp/pk && node scripts/consumer-types.mjs generate --out /tmp/consumer --dep @ziyarago/ui=/tmp/pk/ziyarago-ui-<version>.tgz && cd /tmp/consumer && npm i && npx vue-tsc --noEmit -p tsconfig.vue.json && npx tsc -p tsconfig.react.json`.
+
 ## Adding a component
+
 
 1. Add its example to `site/docs-data/examples/*.ts` (the docs need it anyway). `test:ssr` and `run.mjs` cover it automatically.
 2. If it legitimately renders nothing on the server, or contains text that looks like a leak, add a documented entry to `tests/ssr/allowlist.mjs`.
