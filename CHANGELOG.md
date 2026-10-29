@@ -1,3 +1,9 @@
+## [0.20.8](https://github.com/ziyarago/ui/compare/v0.20.7...v0.20.8) (2026-10-29)
+
+### Bug Fixes
+
+* stop shipping the Thmanyah font files (licence); optional thmanyah.css for self-hosting; Arabic fallback stack ([d84ec99](https://github.com/ziyarago/ui/commit/d84ec99a408d1f1403b9493c63d4fccf7a977c98))
+
 ## [0.20.7](https://github.com/ziyarago/ui/compare/v0.20.6...v0.20.7) (2026-10-29)
 
 ### Bug Fixes
