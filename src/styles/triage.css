@@ -2,7 +2,7 @@
 :where([class*="zg-"]){overflow-wrap:anywhere}
 :where(button,.zg-btn,.zg-ibtn,.zg-badge,.zg-tab,.zg-pt,.zg-seg,.zg-tag,.zg-check,.zg-switch){overflow-wrap:normal}
 .zg-opt{overflow-wrap:anywhere}
-.zg-gal,.zg-gal__t,.zg-sort,.zg-vs,.zg-srow,.zg-sys,.zg-kpii,.zg-usercell,.zg-tree,.zg-dd,.zg-chat,.zg-inc,.zg-kcol,.zg-kcard,.zg-lead,.zg-hotel,.zg-field{min-width:0;max-width:100%}
+.zg-gal,.zg-gal__t,.zg-sort,.zg-vs,.zg-srow,.zg-sys,.zg-kpii,.zg-usercell,.zg-tree,.zg-dd,.zg-chat,.zg-inc,.zg-kcard,.zg-lead,.zg-hotel,.zg-field{min-width:0;max-width:100%}
 .zg-gal__m,.zg-gal__t{flex:none}
 .zg-car{width:100%;min-width:0}.zg-car[data-size]{min-height:min-content}
 :where(button,[role=button],a[href],input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--zg-brand);outline-offset:2px}
@@ -46,3 +46,10 @@
 .zg-root button:not(.zg-btn):not(.zg-ibtn):not(.zg-fab):not(.zg-opt):focus-visible{outline:2px solid var(--zg-brand);outline-offset:2px}
 .zg-tree__n{min-height:24px}
 .zg-tree>div,.zg-tree__n{flex-shrink:0}
+
+.zg-kcol{min-width:min(260px,100%);max-width:100%}
+.zg-kcol.zg-dm[data-size]{min-width:min(calc(260px*var(--dz)),100%)}
+.zg-lead__row>.zg-badge,.zg-card__head>.zg-badge{max-width:50%;flex-shrink:0;overflow-wrap:anywhere}
+.zg-crumbs a{overflow-wrap:anywhere;min-width:0}
+.zg-ash__stack .zg-avatar:last-child{margin-inline-end:0}
+.zg-ash--photo .zg-ash__media::before{background:linear-gradient(90deg,color-mix(in oklch,var(--zg-bg) 60%,transparent),var(--zg-s1) 100%),linear-gradient(0deg,color-mix(in oklch,var(--zg-bg) 85%,transparent),transparent 70%)}

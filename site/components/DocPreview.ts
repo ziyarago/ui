@@ -66,7 +66,7 @@ export default defineComponent({
         return h(comp, { key: i, ...p }, slots)
       })
       const body = v.overlay ? [h(UI.UiButton as any, { variant: 'primary', onClick: () => (open.value = true) }, () => 'Open'), ...els] : els
-      return h('div', { class: 'doc-preview', style: v.width ? { width: '100%', maxWidth: v.width, flexDirection: 'column', alignItems: 'stretch' } : undefined }, body)
+      return h('div', { class: 'doc-preview', style: v.width ? { width: '100%', maxWidth: v.width, flexDirection: 'column', flexWrap: 'nowrap', alignItems: 'stretch' } : undefined }, body)
     }
   },
 })
