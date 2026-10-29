@@ -1,3 +1,9 @@
+## [0.20.0](https://github.com/ziyarago/ui/compare/v0.19.4...v0.20.0) (2026-10-29)
+
+### Features
+
+* popups render in body with fixed positioning (flip, clamp, scroll tracking), Dropdown iconOnly and trigger slot ([becef8d](https://github.com/ziyarago/ui/commit/becef8deb689161086b5b65204f76e7f9ca6b5ff))
+
 ## [0.19.4](https://github.com/ziyarago/ui/compare/v0.19.3...v0.19.4) (2026-10-29)
 
 ### Bug Fixes
