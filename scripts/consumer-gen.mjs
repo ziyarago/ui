@@ -77,7 +77,7 @@ export function genVue(name, m, pkg = '@ziyarago/ui') {
   const bind = req.length ? ' v-bind="req"' : '';
   const allProps = props.map(([k]) => `:${k}="all.${k}"`).join(' ');
   w(`  <${C} ${allProps} />`);
-  w(`  <${C}${bind} id="x" class="c" style="color: red" aria-label="a" data-testid="t" />`);
+  w(`  <${C}${bind}${props.some(([k]) => k === 'id') ? '' : ' id="x"'} class="c" aria-label="a" data-testid="t" />`);
   w(`  <${C}${bind} />`);
   if (opt.length) {
     w(`  <${C}${bind} ${opt.map(k => `:${k}="nul"`).join(' ')} />`);
@@ -150,7 +150,8 @@ export function genReact(name, m, pkg = '@ziyarago/ui') {
   w('    <>');
   w(`      <${C} {...all} />`);
   w(`      <${C} {...req} />`);
-  w(`      <${C} {...req} id="x" className="c" style={{ color: 'red' }} aria-label="a" data-testid="t" />`);
+  const own = new Set(props.map(([k]) => k));
+  w(`      <${C} {...req}${own.has('id') ? '' : ' id="x"'}${own.has('className') ? '' : ' className="c"'}${own.has('style') ? '' : " style={{ color: 'red' }}"} aria-label="a" data-testid="t" />`);
   w(`      <${C} {...nulls} />`);
   w(`      <${C} {...undefs} />`);
   if (hasChildren) w(`      <${C} {...req}>text <b>node</b></${C}>`);
