@@ -6,3 +6,4 @@ section { margin: 0 0 24px; padding: 8px 0; border-top: 1px solid var(--zg-borde
 h2 { font: 600 14px/1.2 monospace; margin: 0 0 8px; opacity: .6; }
 [data-variant] { margin: 8px 0; }
 .doc-preview { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+.doc-preview--col { flex-wrap: nowrap; }

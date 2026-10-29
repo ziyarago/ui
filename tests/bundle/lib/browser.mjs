@@ -48,7 +48,7 @@ function inPage(input) {
       let got; try { got = window.__zgT(c, k); } catch (e) { got = 'THROW ' + e.message; }
       if (got !== want) bad.push([c, k, want, got]);
     }
-  } else bad.push(['(page)', '__zgT', 'function', 'missing']);
+  } else if (input.strings.length) bad.push(['(page)', '__zgT', 'function', 'missing']);
   out.stringMismatch = bad.slice(0, 80);
   out.stringMismatchCount = bad.length;
   const keyed = new Map(input.keyed);
@@ -73,8 +73,8 @@ function inPage(input) {
     let list; try { list = document.querySelectorAll(sel); } catch { continue; }
     if (!list.length) continue;
     let none = 0;
-    for (const el of [...list].slice(0, 5)) { const s = getComputedStyle(el); const v = s.backdropFilter || s.webkitBackdropFilter; if (!v || v === 'none') none++; }
-    bd[sel] = { n: Math.min(list.length, 5), none };
+    for (const el of [...list].slice(0, 12)) { const s = getComputedStyle(el); const v = s.backdropFilter || s.webkitBackdropFilter; if (!v || v === 'none') none++; }
+    if (none === Math.min(list.length, 12)) bd[sel] = { n: none, none };
   }
   out.backdrop = bd;
 

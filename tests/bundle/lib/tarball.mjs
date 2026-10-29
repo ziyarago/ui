@@ -43,18 +43,20 @@ export async function i18nKeys(pkgDir) {
   return out;
 }
 
-/** Selectors of simple rules that set backdrop-filter in the (readable) dist CSS of a package. */
+/** Selectors whose LAST declaration in the (readable) dist CSS enables backdrop-filter (later "none" overrides, like popups, are skipped). */
 export function backdropSelectors(css) {
-  const out = new Set();
+  const last = new Map();
   const re = /([^{}]+)\{([^{}]*)\}/g;
   let m;
   while ((m = re.exec(css))) {
-    if (!/(^|;|\s)(-webkit-)?backdrop-filter\s*:\s*(?!none)/.test(m[2])) continue;
+    const decl = /(?:^|;|\s)backdrop-filter\s*:\s*([^;}]+)/.exec(m[2]);
+    if (!decl) continue;
+    const on = !/^\s*none/.test(decl[1]);
     for (let sel of m[1].split(',')) {
       sel = sel.replace(/\/\*[\s\S]*?\*\//g, '').trim();
       if (!sel || /^@/.test(sel) || /[:](hover|focus|active|disabled|checked|before|after|first|last|nth|not|has|where|is)|::|\[data-fx|\[data-open|\[data-state|\[aria-/.test(sel)) continue;
-      out.add(sel);
+      last.set(sel, on);
     }
   }
-  return [...out];
+  return [...last].filter(([, on]) => on).map(([s]) => s);
 }

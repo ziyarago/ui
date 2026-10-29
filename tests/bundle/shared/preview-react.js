@@ -40,6 +40,6 @@ export function Preview({ name, variant: v, open: initOpen = false }) {
     return h(comp, { key: i, ...p }, ...kids);
   });
   const body = v.overlay ? [h(UI.UiButton, { key: 'open', variant: 'primary', onClick: () => setOpen(true) }, 'Open'), ...els] : els;
-  return h('div', { className: 'doc-preview', style: v.width ? { width: '100%', maxWidth: v.width, flexDirection: 'column', alignItems: 'stretch' } : undefined }, ...body);
+  return h('div', { className: v.width ? 'doc-preview doc-preview--col' : 'doc-preview', style: v.width ? { width: '100%', maxWidth: v.width, flexDirection: 'column', alignItems: 'stretch' } : undefined }, ...body);
 }
 export { UI };

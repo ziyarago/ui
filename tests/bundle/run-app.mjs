@@ -33,8 +33,8 @@ if (!uiTgz || (PRO && !proTgz)) { console.error('tarballs not found in', tarball
 const work = mkdtempSync(join(tmpdir(), `zg-${appName}-`));
 const app = join(work, 'app');
 cpSync(join(HERE, 'apps', appName), app, { recursive: true });
-cpSync(join(HERE, 'shared'), join(app, 'shared'), { recursive: true });
-cpSync(join(HERE, '../lib/spy.js'), join(app, 'shared/spy.js'));
+cpSync(join(HERE, 'shared'), join(app, 'auditkit'), { recursive: true });
+cpSync(join(HERE, '../lib/spy.js'), join(app, 'auditkit/spy.js'));
 
 // ---- package.json: tarballs installed like a customer would
 const deps = { '@ziyarago/ui': 'file:' + uiTgz, ...(PRO ? { '@ziyarago/ui-pro': 'file:' + proTgz } : {}) };
@@ -51,12 +51,22 @@ writeFileSync(join(app, 'package.json'), JSON.stringify({ ...base, ...pkgs }, nu
 const uiEntry = appName === 'react'
   ? `import * as FREE from '@ziyarago/ui/react';\n${PRO ? "import * as PROX from '@ziyarago/ui-pro/react';\n" : ''}const pick = ns => Object.fromEntries(Object.entries(ns).filter(([k]) => /^Ui[A-Z]/.test(k)));\nexport const UI = { ...pick(FREE)${PRO ? ', ...pick(PROX)' : ''} };\n`
   : `import * as FREE from '@ziyarago/ui/vue';\n${PRO ? "import * as PROX from '@ziyarago/ui-pro/vue';\n" : ''}const pick = ns => Object.fromEntries(Object.entries(ns).filter(([k]) => /^Ui[A-Z]/.test(k)));\nexport const UI = { ...pick(FREE)${PRO ? ', ...pick(PROX)' : ''} };\n`;
-writeFileSync(join(app, 'shared/ui-entry.js'), uiEntry);
+writeFileSync(join(app, 'auditkit/ui-entry.js'), uiEntry);
 const proCss = PRO ? '@import "@ziyarago/ui-pro/style.css" layer(components);' : '';
-for (const f of [join(app, 'shared/style.css'), join(app, 'assets/app.css')]) if (existsSync(f)) writeFileSync(f, readFileSync(f, 'utf8').replace('/*PRO_CSS*/', proCss));
-if (existsSync(join(app, 'shared/style.css'))) cpSync(join(app, 'shared/style.css'), join(app, 'src/style.css'));
+for (const f of [join(app, 'auditkit/style.css'), join(app, 'assets/app.css')]) if (existsSync(f)) writeFileSync(f, readFileSync(f, 'utf8').replace('/*PRO_CSS*/', proCss));
+if (existsSync(join(app, 'auditkit/style.css'))) cpSync(join(app, 'auditkit/style.css'), join(app, 'src/style.css'));
+const pub = join(app, 'public');
+mkdirSync(pub, { recursive: true });
 if (appName === 'nuxt') { mkdirSync(join(app, 'data'), { recursive: true }); cpSync(examples, join(app, 'data/examples.json')); }
-else { mkdirSync(join(app, 'public'), { recursive: true }); cpSync(examples, join(app, 'public/examples.json')); }
+else cpSync(examples, join(pub, 'examples.json'));
+// the docs examples point at site assets (/3d/kaaba.png ...): serve a placeholder so a 404 means a real defect
+{
+  const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
+  const urls = new Set();
+  JSON.stringify(JSON.parse(readFileSync(examples, 'utf8')).examples, (k, v) => { if (typeof v === 'string' && /^\/[\w./-]+\.(png|jpe?g|webp|gif)$/.test(v)) urls.add(v); return v; });
+  for (const u of urls) { mkdirSync(dirname(join(pub, u)), { recursive: true }); writeFileSync(join(pub, u), PNG); }
+  log('placeholder images', [...urls].join(' '));
+}
 
 const issues = [];
 const results = [];

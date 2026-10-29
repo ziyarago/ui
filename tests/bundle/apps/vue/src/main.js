@@ -1,11 +1,11 @@
 import './style.css';
 import { createApp, h } from 'vue';
 import { createI18n } from 'vue-i18n';
-import { Preview, setProNames } from '../shared/preview-vue.js';
-import { UI } from '../shared/ui-entry.js';
+import { Preview, setProNames } from '../auditkit/preview-vue.js';
+import { UI } from '../auditkit/ui-entry.js';
 import { useUiTheme } from '@ziyarago/ui/vue';
 import { t } from '@ziyarago/ui/internal';
-import { params, report, load, finish, state, fingerprint } from '../shared/page.js';
+import { params, report, load, finish, state, fingerprint } from '../auditkit/page.js';
 
 const theme = useUiTheme();
 theme.setEffects('full');

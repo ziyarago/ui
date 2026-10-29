@@ -68,7 +68,7 @@ export const Preview = defineComponent({
         return h(comp, { key: i, ...kebab(p) }, slots);
       });
       const body = v.overlay ? [h(UI.UiButton, { variant: 'primary', onClick: () => (open.value = true) }, () => 'Open'), ...els] : els;
-      return h('div', { class: 'doc-preview', style: v.width ? { width: '100%', maxWidth: v.width, flexDirection: 'column', alignItems: 'stretch' } : undefined }, body);
+      return h('div', { class: v.width ? 'doc-preview doc-preview--col' : 'doc-preview', style: v.width ? { width: '100%', maxWidth: v.width, flexDirection: 'column', alignItems: 'stretch' } : undefined }, body);
     };
   },
 });

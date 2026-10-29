@@ -2,11 +2,11 @@ import './style.css';
 import React, { Component, createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
-import { Preview, setProNames } from '../shared/preview-react.js';
-import { UI } from '../shared/ui-entry.js';
+import { Preview, setProNames } from '../auditkit/preview-react.js';
+import { UI } from '../auditkit/ui-entry.js';
 import { useUiTheme } from '@ziyarago/ui/react';
 import { t } from '@ziyarago/ui/internal';
-import { params, report, load, finish, state, fingerprint } from '../shared/page.js';
+import { params, report, load, finish, state, fingerprint } from '../auditkit/page.js';
 
 const theme = useUiTheme();
 theme.setEffects('full');

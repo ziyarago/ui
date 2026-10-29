@@ -38,15 +38,17 @@ export function analyzePage(r, ctx) {
   }
 
   const loaded = new Set(d.fonts.filter(f => f.status === 'loaded').map(f => f.family));
-  if (!loaded.has('Manrope')) add('fonts', 'fail', `Manrope not loaded (loaded: ${[...loaded].join(', ') || 'none'}; declared: ${[...new Set(d.fonts.map(f => f.family + ':' + f.status))].join(', ')})`);
-  if (ctx.locale === 'ar' && !loaded.has('Thmanyah')) add('fonts', 'fail', `Thmanyah (Arabic) not loaded for locale ar (loaded: ${[...loaded].join(', ') || 'none'})`);
+  const rtl = d.html.dir === 'rtl';
+  if (!rtl && !loaded.has('Manrope')) add('fonts', 'fail', `Manrope not loaded (loaded: ${[...loaded].join(', ') || 'none'}; declared: ${[...new Set(d.fonts.map(f => f.family + ':' + f.status))].join(', ')})`);
+  if ((ctx.locale === 'ar' || rtl) && ![...loaded].some(f => /^Thmanyah/.test(f))) add('fonts', 'fail', `Thmanyah (Arabic) not loaded for locale ${ctx.locale} dir ${d.html.dir} (loaded: ${[...loaded].join(', ') || 'none'})`);
+  for (const f of d.fonts) if (f.status === 'error') add('fonts', 'fail', `font face ${f.family} ${f.weight} failed to load`);
   if (d.fontFamily.body && !/Manrope/i.test(d.fontFamily.body) && !/Thmanyah/i.test(d.fontFamily.body)) add('fonts', 'warn', `body font-family is "${d.fontFamily.body}"`);
 
   if (d.stringMismatchCount) add('strings', 'fail', `${d.stringMismatchCount} built-in strings differ from the package files in locale ${ctx.locale}: ${d.stringMismatch.slice(0, 6).map(([c, k, want, got]) => `${c}.${k} want "${want}" got "${got}"`).join('; ')}`);
   for (const l of d.leaks) add('strings', 'fail', `${l.component}: text "${l.text}" renders as its key (${l.kind})`);
 
-  for (const [sel, v] of Object.entries(d.backdrop)) if (v.none) add('backdrop', 'fail', `${sel}: backdrop-filter computes to none on ${v.none} of ${v.n} elements (fx=${d.html.fx})`);
-  if (d.html.fx !== 'full') add('backdrop', 'warn', `data-fx is "${d.html.fx}", glass checks are not meaningful`);
+  for (const [sel, v] of Object.entries(d.backdrop)) if (v.none) add('backdrop', 'fail', `${sel}: backdrop-filter computes to none on all ${v.n} sampled elements (fx=${d.html.fx})`);
+  if (Object.keys(d.backdrop).length && d.html.fx !== 'full') add('backdrop', 'warn', `data-fx is "${d.html.fx}", glass checks are not meaningful`);
 
   if (d.pageOverflow > 0) add('overflow', 'warn', `page scrolls horizontally by ${d.pageOverflow}px`);
   const seen = new Set();

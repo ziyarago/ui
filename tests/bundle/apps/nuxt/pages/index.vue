@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue';
 import data from '../data/examples.json';
-import { Preview, setProNames } from '../shared/preview-vue.js';
+import { Preview, setProNames } from '../auditkit/preview-vue.js';
 import { useUiTheme } from '@ziyarago/ui/theme';
 
 setProNames(data.proNames);
