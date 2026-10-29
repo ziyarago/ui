@@ -27,7 +27,7 @@ const css = `:root {
 @font-face {
   font-family: 'Thmanyah Sans';
   font-weight: 400 600;               /* Regular covers 400 to 600 */
-  src: url('/fonts/thmanyahsans-Regular.otf') format('opentype');
+  src: url('/fonts/thmanyahsans-Regular.woff2') format('woff2');
   font-display: swap;
 }`
 </script>
