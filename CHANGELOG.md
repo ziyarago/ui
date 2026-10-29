@@ -1,3 +1,9 @@
+## [0.20.1](https://github.com/ziyarago/ui/compare/v0.20.0...v0.20.1) (2026-10-29)
+
+### Bug Fixes
+
+* types accept null and numbers in v-model values, native input events typed as DOM events, v-model modifiers ([55c4794](https://github.com/ziyarago/ui/commit/55c479449fc07a1e2f50d6677f45530590071d6f))
+
 ## [0.20.0](https://github.com/ziyarago/ui/compare/v0.19.4...v0.20.0) (2026-10-29)
 
 ### Features
