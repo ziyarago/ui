@@ -18,15 +18,15 @@ export const openKeys: (isOpen: boolean, open: () => void) => (e: any) => void;
 export const focusIn: (el: any) => void;
 export const toTrigger: (e: any) => void;
 export const trigger: (list: any) => any;
-export const rules: typeof import('./shared').rules;
+export const rules: typeof import('./shared.js').rules;
 /** Page template helper: page(name, slotIds, layoutTree) returns [name, definition]. */
-export function page(name: string, slots: string[], tree: unknown): [string, import('./core').ComponentDefinition];
+export function page(name: string, slots: string[], tree: unknown): [string, import('./core.js').ComponentDefinition];
 export function t(component: string, key: string, params?: Record<string, string | number>): string;
 export function getUiLocale(): string;
 export function intlLocale(): string;
 export function defineMessages(component: string, messages: Record<string, Record<string, string>>): void;
-export function registerComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, import('./core').ComponentDefinition>;
-export const components: Record<string, import('./core').ComponentDefinition>;
+export function registerComponents(defs: Record<string, import('./core.js').ComponentDefinition>, options?: { override?: boolean }): Record<string, import('./core.js').ComponentDefinition>;
+export const components: Record<string, import('./core.js').ComponentDefinition>;
 export const BOOL_PROPS: Set<string>;
 /** Quoted CSS url() for background-image values. */
 export function cssUrl(url: string): string;

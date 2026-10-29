@@ -2,7 +2,7 @@
 // Opt in to template typing for globally registered components (app.use(ui)): add
 //   import '@ziyarago/ui/vue/global'   (in env.d.ts)   or   /// <reference types="@ziyarago/ui/vue/global" />
 // Not needed with unplugin-vue-components (it writes its own components.d.ts) or Nuxt (generated).
-import type * as Ui from './vue';
+import type * as Ui from './vue.js';
 
 declare module 'vue' {
   export interface GlobalComponents {
