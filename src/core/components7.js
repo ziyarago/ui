@@ -17,6 +17,6 @@ export const more7 = {
   Pressable: { render: ({ h, props: p, children }) => h(p.as || 'button', { type: (p.as || 'button') === 'button' ? 'button' : undefined, class: 'zg-press', disabled: p.disabled, 'aria-label': p.label, onClick: p.onClick }, ...children) },
   Icon: { render: ({ h, props: p }) => icon(h, p.name || 'circle', { xs: 14, sm: 16, md: 20, lg: 24, xl: 32 }[p.size] || p.size || 20) },
   Portal: { render: ({ props: p, children, portal }) => (portal ? portal(children, p.to) : null) },
-  BottomSheet: { render: ({ h, props: p, children, slots }) => !p.open ? null : h('div', { class: 'zg-modal-scrim zg-sheet-scrim', onClick: p.onClose }, h('div', { class: 'zg-sheet', role: 'dialog', 'aria-modal': 'true', 'aria-label': p.title, ref: trap({ onClose: p.onClose }), style: { maxHeight: sp(p.maxHeight || '85vh') }, onClick: e => e.stopPropagation() },
+  BottomSheet: { render: ({ h, props: p, children, slots }) => !p.open ? null : h('div', { class: 'zg-modal-scrim zg-sheet-scrim', onClick: () => p.onClose && p.onClose() }, h('div', { class: 'zg-sheet', role: 'dialog', 'aria-modal': 'true', 'aria-label': p.title, ref: trap({ onClose: p.onClose }), style: { maxHeight: sp(p.maxHeight || '85vh') }, onClick: e => e.stopPropagation() },
     h('span', { class: 'zg-sheet__grab', 'aria-hidden': 'true' }), p.title ? h('h3', { class: 'zg-sheet__t' }, p.title) : null, h('div', { class: 'zg-sheet__b' }, ...children), (slots.footer || p.footer) ? h('div', { class: 'zg-sheet__f' }, slots.footer || p.footer) : null)) },
 };
