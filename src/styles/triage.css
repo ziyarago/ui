@@ -60,3 +60,4 @@
 .zg-ash__copy p{color:var(--zg-text-1);width:fit-content;max-width:100%;padding:6px 12px;border-radius:14px;background:color-mix(in oklch,var(--zg-bg) 66%,transparent)}
 .zg-kcol__head{min-width:0;overflow-wrap:anywhere}
 .zg-kcol .zg-badge,.zg-kcard .zg-badge{overflow-wrap:anywhere}
+.zg-tree{flex-shrink:0}
