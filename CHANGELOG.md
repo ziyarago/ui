@@ -1,3 +1,9 @@
+## [0.21.0](https://github.com/ziyarago/ui/compare/v0.20.13...v0.21.0) (2026-10-30)
+
+### Features
+
+* tree-shakeable components (per-component definitions with deps and i18n, adapters wrap on demand): a UiButton-only Vue app drops from 32 KB to 4.7 KB gzip ([af78b1e](https://github.com/ziyarago/ui/commit/af78b1e93aa8f0591db9a6855c59d97ba1cbdf35))
+
 ## [0.20.13](https://github.com/ziyarago/ui/compare/v0.20.12...v0.20.13) (2026-10-30)
 
 ### Bug Fixes
