@@ -15,7 +15,7 @@ export const violations = (files, read) => {
   const bad = [];
   for (const f of files) {
     const s = read(f);
-    const comps = [...s.matchAll(/\n\s*(?:T\.)?(\w+)\s*(?:=|:) *\{/g)].map(m => [m.index, m[1]]);
+    const comps = [...s.matchAll(/\n\s*(?:export const |T\.)?(\w+)\s*(?:=|:) *\{/g)].map(m => [m.index, m[1].replace(/Def$/, '')]);
     const re = new RegExp('\\b' + DOM_KEY + ': *(?:p|props)\\.(on[A-Z]\\w*)(?: *\\|\\| *(?:p|props)\\.(on[A-Z]\\w*))? *(?=[,})])', 'g');
     for (const m of s.matchAll(re)) {
       const c = comps.filter(([i]) => i < m.index).at(-1)?.[1];

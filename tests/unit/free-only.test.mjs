@@ -32,7 +32,7 @@ describe('free-only package', () => {
     for (const f of readdirSync(join(root, 'src/core')).filter(f => f.endsWith('.js'))) {
       const s = read('src/core/' + f);
       for (const n of pro) {
-        assert.ok(!new RegExp(`^  ${n}: \\{`, 'm').test(s), `${f} defines ${n}`);
+        assert.ok(!new RegExp(`^  ${n}: \\{|^export const ${n}Def\\b`, 'm').test(s), `${f} defines ${n}`);
         assert.ok(!new RegExp(`page\\('${n}'`).test(s), `${f} defines page ${n}`);
       }
     }
@@ -76,7 +76,7 @@ describe('free-only package', () => {
     // every packed core source is free-only
     for (const f of files.filter(f => /^src\/core\/.*\.js$/.test(f))) {
       const s = read(f);
-      for (const n of pro) assert.ok(!new RegExp(`^  ${n}: \\{|page\\('${n}'`, 'm').test(s), `${f} defines ${n}`);
+      for (const n of pro) assert.ok(!new RegExp(`^  ${n}: \\{|^export const ${n}Def\\b|page\\('${n}'`, 'm').test(s), `${f} defines ${n}`);
     }
   });
 });

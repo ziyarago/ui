@@ -1,7 +1,7 @@
 // Nuxt 3/4 module. nuxt.config: modules: ['@ziyarago/ui/nuxt'], ziyarago: { theme: true }
 import { defineNuxtModule, addComponent, addImports, addPlugin, createResolver } from '@nuxt/kit';
 import { createRequire } from 'node:module';
-import { components } from '../core/index.js';
+import { NAMES } from '../core/names.js';
 import { themeInitScript } from '../theme.js';
 
 export default defineNuxtModule({
@@ -11,7 +11,7 @@ export default defineNuxtModule({
     const { resolve } = createResolver(import.meta.url);
     if (opts.css) nuxt.options.css.push('@ziyarago/ui/style.css');
     nuxt.options.build.transpile.push('@ziyarago/ui');
-    for (const name of Object.keys(components)) {
+    for (const name of NAMES) {
       addComponent({ name: opts.prefix + name, export: opts.prefix + name, filePath: '@ziyarago/ui/vue' });
     }
     for (const pkg of opts.plugins) {
