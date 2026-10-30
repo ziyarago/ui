@@ -1,3 +1,9 @@
+## [0.20.13](https://github.com/ziyarago/ui/compare/v0.20.12...v0.20.13) (2026-10-30)
+
+### Bug Fixes
+
+* remaining Pro audit findings in the public CSS and docs preview (media sizing, badges, unbroken text, AuthShowcase avatars, kanban widths, scrim contrast) ([c38f99d](https://github.com/ziyarago/ui/commit/c38f99dea31e3b5cabd2d0b39e186af4a70c9cec))
+
 ## [0.20.12](https://github.com/ziyarago/ui/compare/v0.20.11...v0.20.12) (2026-10-30)
 
 ### Bug Fixes
