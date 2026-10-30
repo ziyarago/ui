@@ -3837,6 +3837,8 @@ export const rules: typeof import('./shared.js').rules;
 export function install(app: import('vue').App): void;
 /** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
 export function defineUiComponents(defs: Record<string, import('./core.js').ComponentDefinition>, options?: { override?: boolean }): Record<string, import('vue').Component>;
+/** Wraps one plugin component definition (its deps supply C.Name) and registers it like defineUiComponents; an unused call annotated as pure is dropped by a bundler, so unused components tree-shake: export const UiName = defineUiComponent('Name', NameDef). */
+export function defineUiComponent(name: string, def: import('./core.js').ComponentDefinition): import('vue').Component;
 declare const _default: { install: typeof install };
 export default _default;
 export { useUiTheme } from './theme.js';

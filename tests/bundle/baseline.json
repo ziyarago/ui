@@ -28,23 +28,32 @@
     "cssTotal": 39715
   },
   "vue+pro": {
-    "jsTotal": 121296,
-    "cssTotal": 38098,
-    "entry:index.html": 143024,
-    "entry:minimal.html": 107466
+    "jsTotal": 126822,
+    "cssTotal": 38218,
+    "entry:index.html": 156258,
+    "entry:minimal.html": 118064,
+    "iso:base": 41276,
+    "iso:pro-one": 55534,
+    "iso:pro-minimal": 63194,
+    "iso:pro-all": 89720
   },
   "react+pro": {
-    "jsTotal": 145821,
-    "cssTotal": 38056,
-    "entry:index.html": 167839,
-    "entry:minimal.html": 132098
+    "jsTotal": 151644,
+    "cssTotal": 38175,
+    "entry:index.html": 181368,
+    "entry:minimal.html": 142682,
+    "iso:base": 67730,
+    "iso:pro-one": 80903,
+    "iso:pro-minimal": 88589,
+    "iso:pro-all": 115040
   },
   "nuxt3+pro": {
-    "jsTotal": 194565,
-    "cssTotal": 39744
+    "jsTotal": 200103,
+    "cssTotal": 39851
   },
   "ssr-style-attrs": {
     "nuxt3": 24,
-    "nuxt4": 24
+    "nuxt4": 24,
+    "nuxt3+pro": 52
   }
 }

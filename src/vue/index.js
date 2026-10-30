@@ -55,6 +55,9 @@ export function defineUiComponents(defs, { override = false } = {}) {
   return out;
 }
 
+/** Wraps ONE definition (its `deps` supply C), registers it like defineUiComponents does (C.Name of other definitions, install() and `components` see it) and returns the component. Add-on packages export one `defineUiComponent('Name', NameDef)` (annotated as pure) per component: the registration only happens for the components an app imports, so a bundler drops the rest. */
+export function defineUiComponent(name, def) { registerComponents({ [name]: def }); return byName[name] = comp(name, def); }
+
 // <core-index:exports>
 export const UiButton = /*#__PURE__*/ comp('Button', ButtonDef);
 export const UiIconButton = /*#__PURE__*/ comp('IconButton', IconButtonDef);

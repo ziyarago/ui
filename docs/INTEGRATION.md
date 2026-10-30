@@ -164,6 +164,8 @@ import '@ziyarago/ui/style.css'
 import '@ziyarago/ui-pro/style.css'   // plugin css, always after style.css
 ```
 
+Tree shaking: give each definition `deps: () => ({ Button: ButtonDef })` (the built-in `<Name>Def` definitions are exported from `@ziyarago/ui/internal`) and, optionally, `i18n: { Name: messages }`, then export one component per definition with `export const UiName = /*#__PURE__*/ defineUiComponent('Name', NameDef)` (it registers like `defineUiComponents`, and only for the components an app imports). A bundler then keeps only those components with their strings; definitions without `deps` fall back to the full registry through `defineUiComponents`.
+
 Plugin CSS must only use the public design tokens (`--zg-*`, see `@ziyarago/ui/tokens.css`) and its own prefixed classes. Auto-import: pass `plugins: ['@ziyarago/ui-pro']` to the Nuxt module options (`ziyarago: { plugins: [...] }`) or to `ZiyaragoUiResolver({ plugins: [...] })`.
 
 ## Migrating from local copies of glass-ui-kit

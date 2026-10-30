@@ -3807,3 +3807,5 @@ export { useUiTheme } from './theme.js';
 export { fmt, setIconBase, registerIcons } from './shared.js';
 /** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
 export function defineUiComponents(defs: Record<string, import('./core.js').ComponentDefinition>, options?: { override?: boolean }): Record<string, ComponentType<any>>;
+/** Wraps one plugin component definition (its deps supply C.Name) and registers it like defineUiComponents; an unused call annotated as pure is dropped by a bundler, so unused components tree-shake: export const UiName = defineUiComponent('Name', NameDef). */
+export function defineUiComponent(name: string, def: import('./core.js').ComponentDefinition): ComponentType<any>;

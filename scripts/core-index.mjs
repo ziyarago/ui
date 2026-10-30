@@ -3,6 +3,7 @@
 //   src/core/names.js  list of free component names (registry clash check, resolver, Nuxt module)
 //   src/core/defs.js   barrel of every definition (tree-shakeable re-exports)
 //   src/core/all.js    the merged `components` object (loads every definition: only the core entry's `components` export uses it)
+//   types/internal.d.ts   the `export const <Name>Def` declarations between the core-index:defs markers
 //   src/vue/index.js, src/react/index.js   the `export const UiName = comp('Name', NameDef)` blocks between the core-index markers
 // Run by npm run build and npm run check (--check fails when a generated file is out of date instead of writing it).
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
@@ -52,6 +53,10 @@ for (const fw of ['vue', 'react']) {
   s = block(s, 'imports', `import { ${names.map(n => n + 'Def').join(', ')} } from '../core/defs.js';\n`);
   s = block(s, 'exports', names.map(n => `export const Ui${n} = /*#__PURE__*/ comp('${n}', ${n}Def);\n`).join(''));
   out[p] = s;
+}
+{
+  const p = 'types/internal.d.ts';
+  out[p] = block(readFileSync(join(root, p), 'utf8'), 'defs', names.map(n => `export const ${n}Def: import('./core.js').ComponentDefinition;\n`).join(''));
 }
 let stale = 0;
 for (const [p, body] of Object.entries(out)) {

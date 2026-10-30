@@ -18,7 +18,7 @@ Apps: Vue 3.5 + Vite 8 + Tailwind 4 (layered import) + vue-i18n 10 + unplugin-vu
 Nuxt 3 and 4 with `@ziyarago/ui/nuxt` (SSR + hydration, production hydration mismatch details on). Each full page mounts all
 examples; `minimal.html` is a tree-shaken consumer entry.
 
-Tree shaking is measured in isolation (Vue and React apps, not Pro): `base.html` (the app without the kit), `button.html` (only `UiButton`), `minimal.html`
+Tree shaking is measured in isolation (Vue and React apps; the Pro run adds `pro-one` = UiLineChart only, `pro-minimal` = 8 Pro components and `pro-all` = `import * as PRO`, with the same kind of budgets: 8 components below 55% and one below 40% of all Pro, no strings or modules of components they do not use): `base.html` (the app without the kit), `button.html` (only `UiButton`), `minimal.html`
 (a handful of components) and `all.html` (`import * as UI`) are each built alone (`ZG_ONLY=<page>.html vite build`), because the multi-page build shares chunks between
 entries and would hand every page the union of what all of them use. Kit bytes = gzip JS of the page minus `base`. Failures: the minimal entry above 45% of all, `UiButton`
 above 15% of all, or strings of unrelated components (`zg-cal__d`, `Previous month`, `RichEditor`, ...) in the `UiButton` bundle. `baseline.json` keeps the `iso:*` figures.

@@ -27,6 +27,8 @@ const pageDef = (slots, tree) => ({
   deps: () => ({ Breadcrumbs: BreadcrumbsDef })
 });
 export const page = (name, slots, tree) => [name, pageDef(slots, tree)];
+/** One page template definition (what add-on packages export per page so a bundler keeps only the pages an app imports). */
+export const pageDefinition = (slots, tree) => pageDef(slots, tree);
 
 export const PageDashboardDef = /*#__PURE__*/ pageDef(['header', 'hero', 'kpis', 'occupancy', 'funnel', 'top', 'activity'], ['col', 'header', ['auto', 340, 'hero', 'kpis'], ['auto', 360, 'occupancy', 'funnel'], ['auto', 360, 'top', 'activity']]);
 export const PageSettingsDef = /*#__PURE__*/ pageDef(['header', 'subnav', 'profile', 'notifications', 'integrations', 'danger'], ['col', 'header', ['wrap', ['subnav'], ['profile', 'notifications', 'integrations', 'danger'], 220]]);
