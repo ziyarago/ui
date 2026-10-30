@@ -26,7 +26,8 @@ mkdirSync(outDir, { recursive: true });
 
 const log = (...a) => console.log(`[${appName}${appName === 'nuxt' ? NUXT : ''}${PRO ? '+pro' : ''}]`, ...a);
 const sh = (cmd, a, opts = {}) => { log('$', cmd, a.join(' ')); return execFileSync(cmd, a, { stdio: 'inherit', ...opts }); };
-const find = re => { const f = readdirSync(tarballs).find(n => re.test(n)); return f ? join(tarballs, f) : null; };
+// a reused workspace (self-hosted runner) can still hold older tarballs: take the newest version
+const find = re => { const f = readdirSync(tarballs).filter(n => re.test(n)).sort((a, b) => a.localeCompare(b, 'en', { numeric: true })).at(-1); return f ? join(tarballs, f) : null; };
 const uiTgz = find(/^ziyarago-ui-\d.*\.tgz$/), proTgz = PRO ? find(/^ziyarago-ui-pro-.*\.tgz$/) : null;
 if (!uiTgz || (PRO && !proTgz)) { console.error('tarballs not found in', tarballs, readdirSync(tarballs)); process.exit(2); }
 
