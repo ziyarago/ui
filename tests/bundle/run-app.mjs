@@ -158,6 +158,11 @@ const isoBuild = (pages) => {
     try { sh('npx', ['vite', 'build', '--outDir', out, '--emptyOutDir'], { cwd: app, env: { ...process.env, NODE_ENV: 'production', ZG_ONLY: `${page}.html` } }); }
     catch (e) { addIssue('treeshake', { cat: 'build', sev: 'fail', msg: `isolated build of ${page}.html failed` }); continue; }
     iso[page] = bundleSizes(join(app, out), [`${page}.html`]).entries[`${page}.html`];
+    // the source modules that ended up in the bundle (from the source maps): what tree shaking kept
+    const mods = new Set();
+    for (const f of readdirSync(join(app, out), { recursive: true }).filter(f => String(f).endsWith('.js.map'))) for (const src of JSON.parse(readFileSync(join(app, out, String(f)), 'utf8')).sources || []) { const m = /node_modules\/((?:@[^/]+\/)?[^/]+)\/(.*)$/.exec(src); if (m && m[1].startsWith('@ziyarago/')) mods.add(m[1] + '/' + m[2]); }
+    iso[page].modules = [...mods].sort();
+    log(`modules of ${page}: ${mods.size} from @ziyarago`, iso[page].modules.join(' '));
   }
   return iso;
 };
