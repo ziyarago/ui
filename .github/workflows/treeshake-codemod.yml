@@ -1,0 +1,23 @@
+name: Treeshake codemod
+# One-off: runs scripts/treeshake-codemod.mjs and scripts/core-index.mjs on a checkout, commits nothing and uploads the changed files.
+on:
+  push:
+    branches: [treeshake-codemod]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci --ignore-scripts
+      - run: node scripts/treeshake-codemod.mjs | tee codemod.log
+      - run: node scripts/core-index.mjs
+      - name: Collect changed files
+        run: |
+          git status --short
+          mkdir -p codemod-out
+          git ls-files -m -o --exclude-standard -z | grep -zv '^codemod' | xargs -0 -I{} cp --parents {} codemod-out/ || true
+          cp codemod.log codemod-out/
+      - uses: actions/upload-artifact@v4
+        with: { name: codemod-out, path: codemod-out }

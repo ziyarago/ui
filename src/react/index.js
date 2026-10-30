@@ -2,10 +2,24 @@
 // React 18+ adapter. Usage: import { UiButton, UiAppShell } from '@ziyarago/ui/react'
 import React, { useState, useRef, useEffect, useLayoutEffect, useSyncExternalStore, createElement, cloneElement, isValidElement } from 'react';
 import { createPortal } from 'react-dom';
-import { components, registerComponents, subscribeUiLocale, getUiVersion } from '../core/index.js';
+import { subscribeUiLocale, getUiVersion } from '../i18n/index.js';
+import { registerComponents, registerI18n } from '../core/registry.js';
+import { components } from '../core/all.js';
+// <core-index:imports>
+// </core-index:imports>
 
-const C = {};
-let uidN = 0;
+// One wrapped component per definition. Nothing here walks the full list of components: a definition resolves C.Name from its own `deps`,
+// so a bundler only keeps the components (and strings) an app actually imports.
+const comps = new Map(), byName = {}, cOf_ = new WeakMap();
+let legacy = null, uidN = 0;
+const comp = (name, def) => { let c = comps.get(def); if (!c) { c = wrap(name, def); comps.set(def, c); } return c; };
+// C for a definition: components registered through defineUiComponents first, then its own deps. A definition without `deps` (a plugin built
+// against the old global registry) falls back to every built-in component, which is only loaded once defineUiComponents is used.
+const cOf = def => {
+  let c = cOf_.get(def);
+  if (!c) { const d = def.deps ? def.deps() : null; c = new Proxy({}, { get: (_, k) => typeof k !== 'string' ? undefined : byName[k] || (d ? (k in d ? comp(k, d[k]) : undefined) : legacy && legacy(k)) }); cOf_.set(def, c); }
+  return c;
+};
 const useIsoLayoutEffect = typeof document === 'undefined' ? useEffect : useLayoutEffect;
 const EV = { keydown: 'KeyDown', keyup: 'KeyUp', dragenter: 'DragEnter', dragover: 'DragOver', dragleave: 'DragLeave', pointerdown: 'PointerDown', pointerup: 'PointerUp', pointermove: 'PointerMove', mousedown: 'MouseDown', mouseup: 'MouseUp', mouseenter: 'MouseEnter', mouseleave: 'MouseLeave', mousemove: 'MouseMove', mouseover: 'MouseOver', mouseout: 'MouseOut', dragstart: 'DragStart', dragend: 'DragEnd', dblclick: 'DoubleClick', contextmenu: 'ContextMenu', pointerenter: 'PointerEnter', pointerleave: 'PointerLeave', pointercancel: 'PointerCancel', touchstart: 'TouchStart', touchend: 'TouchEnd', touchmove: 'TouchMove', focusin: 'Focus', focusout: 'Blur' };
 const hh = (t, p, ...k) => {
@@ -16,6 +30,8 @@ const hh = (t, p, ...k) => {
   return createElement(t, p, ...k.flat());
 };
 const wrap = (name, def) => {
+  registerI18n(def);
+  const C = cOf(def);
   const Comp = ({ children, ...props }) => {
     useSyncExternalStore(subscribeUiLocale, getUiVersion, () => 0);
     const [state, setState] = useState({ ...(def.state || {}) });
@@ -39,117 +55,19 @@ const wrap = (name, def) => {
   Comp.displayName = 'Ui' + name;
   return Comp;
 };
-for (const [name, def] of Object.entries(components)) C[name] = wrap(name, def);
-/** Wraps definitions like the built-in ones, registers them in C (cross references work both ways) and returns { UiName: Component }. */
+/** Wraps definitions like the built-in ones, registers them for C (cross references work both ways) and returns { UiName: Component }. */
 export function defineUiComponents(defs, { override = false } = {}) {
   registerComponents(defs, { override });
+  legacy = legacy || (k => { const d = components[k]; return d && comp(k, d); });
   const out = {};
-  for (const [name, def] of Object.entries(defs)) out['Ui' + name] = C[name] = wrap(name, def);
+  for (const [name, def] of Object.entries(defs)) out['Ui' + name] = byName[name] = comp(name, def);
   return out;
 }
 
 // Explicit named exports (not destructuring): Next.js reads the export names of a 'use client' module statically.
-export const UiButton = C.Button;
-export const UiIconButton = C.IconButton;
-export const UiBadge = C.Badge;
-export const UiAvatar = C.Avatar;
-export const UiSwitch = C.Switch;
-export const UiCheckbox = C.Checkbox;
-export const UiSegmentedControl = C.SegmentedControl;
-export const UiTabs = C.Tabs;
-export const UiFilterChips = C.FilterChips;
-export const UiTextField = C.TextField;
-export const UiSelect = C.Select;
-export const UiCodeInput = C.CodeInput;
-export const UiCard = C.Card;
-export const UiModal = C.Modal;
-export const UiDrawer = C.Drawer;
-export const UiToast = C.Toast;
-export const UiBreadcrumbs = C.Breadcrumbs;
-export const UiPagination = C.Pagination;
-export const UiProgress = C.Progress;
-export const UiRing = C.Ring;
-export const UiKpiTile = C.KpiTile;
-export const UiDataTable = C.DataTable;
-export const UiTimeline = C.Timeline;
-export const UiTopNav = C.TopNav;
-export const UiSideNav = C.SideNav;
-export const UiAppShell = C.AppShell;
-export const UiPageHeader = C.PageHeader;
-export const UiAuthLayout = C.AuthLayout;
-export const UiAlert = C.Alert;
-export const UiBanner = C.Banner;
-export const UiAccordion = C.Accordion;
-export const UiSkeleton = C.Skeleton;
-export const UiSpinner = C.Spinner;
-export const UiDivider = C.Divider;
-export const UiEmptyState = C.EmptyState;
-export const UiErrorPage = C.ErrorPage;
-export const UiDataState = C.DataState;
-export const UiLoadingOverlay = C.LoadingOverlay;
-export const UiConfirmDialog = C.ConfirmDialog;
-export const UiPopconfirm = C.Popconfirm;
-export const UiCode = C.Code;
-export const UiDropdown = C.Dropdown;
-export const UiMenu = C.Menu;
-export const UiTooltip = C.Tooltip;
-export const UiPopover = C.Popover;
-export const UiCopyButton = C.CopyButton;
-export const UiCommandPalette = C.CommandPalette;
-export const UiToggleGroup = C.ToggleGroup;
-export const UiTextarea = C.Textarea;
-export const UiNumberInput = C.NumberInput;
-export const UiPasswordInput = C.PasswordInput;
-export const UiSearchInput = C.SearchInput;
-export const UiRadioGroup = C.RadioGroup;
-export const UiSlider = C.Slider;
-export const UiRating = C.Rating;
-export const UiFileUpload = C.FileUpload;
-export const UiCombobox = C.Combobox;
-export const UiMultiSelect = C.MultiSelect;
-export const UiPhoneInput = C.PhoneInput;
-export const UiCalendar = C.Calendar;
-export const UiDatePicker = C.DatePicker;
-export const UiTimePicker = C.TimePicker;
-export const UiFormField = C.FormField;
-export const UiLoginForm = C.LoginForm;
-export const UiTag = C.Tag;
-export const UiKbd = C.Kbd;
-export const UiStatsCard = C.StatsCard;
-export const UiMiniChart = C.MiniChart;
-export const UiDescriptions = C.Descriptions;
-export const UiLazyImage = C.LazyImage;
-export const UiSubNav = C.SubNav;
-export const UiSplitLayout = C.SplitLayout;
-export const UiSettingsSection = C.SettingsSection;
-export const UiScrollArea = C.ScrollArea;
-export const UiChip = C.Chip;
-export const UiIconTile = C.IconTile;
-export const UiStatusIcon = C.StatusIcon;
-export const UiPillTabs = C.PillTabs;
-export const UiSnackbar = C.Snackbar;
-export const UiAuthSplit = C.AuthSplit;
-export const UiSocialAuth = C.SocialAuth;
-export const UiStatusPage = C.StatusPage;
-export const UiFooter = C.Footer;
-export const UiPageDashboard = C.PageDashboard;
-export const UiPageSettings = C.PageSettings;
-export const UiPageUserList = C.PageUserList;
-export const UiPagePricing = C.PagePricing;
-export const UiPageAuth = C.PageAuth;
-export const UiPageStatus = C.PageStatus;
-export const UiContextMenu = C.ContextMenu;
-export const UiHeading = C.Heading;
-export const UiText = C.Text;
-export const UiBox = C.Box;
-export const UiCenter = C.Center;
-export const UiHStack = C.HStack;
-export const UiVStack = C.VStack;
-export const UiGrid = C.Grid;
-export const UiLink = C.Link;
-export const UiPressable = C.Pressable;
-export const UiIcon = C.Icon;
-export const UiPortal = C.Portal;
-export const UiBottomSheet = C.BottomSheet;
-export { fmt, setIconBase, registerIcons, rules, LOCALES, setUiLocale, getUiLocale, setUiMessages, isRtlLocale } from '../core/index.js';
+// <core-index:exports>
+// </core-index:exports>
+export { fmt, setIconBase, registerIcons } from '../core/components.js';
+export { rules } from '../core/rules.js';
+export { LOCALES, setUiLocale, getUiLocale, setUiMessages, isRtlLocale } from '../i18n/index.js';
 export { useUiTheme } from '../theme.js';
