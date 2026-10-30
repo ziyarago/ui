@@ -1,15 +1,23 @@
 {
   "vue": {
-    "jsTotal": 86933,
-    "cssTotal": 38084,
-    "entry:index.html": 108655,
-    "entry:minimal.html": 107184
+    "jsTotal": 89877,
+    "cssTotal": 38202,
+    "entry:index.html": 119301,
+    "entry:minimal.html": 117707,
+    "iso:base": 41242,
+    "iso:button": 45969,
+    "iso:minimal": 55694,
+    "iso:all": 78194
   },
   "react": {
-    "jsTotal": 111504,
-    "cssTotal": 38042,
-    "entry:index.html": 133510,
-    "entry:minimal.html": 131798
+    "jsTotal": 114463,
+    "cssTotal": 38159,
+    "entry:index.html": 144171,
+    "entry:minimal.html": 142343,
+    "iso:base": 67690,
+    "iso:button": 71291,
+    "iso:minimal": 77476,
+    "iso:all": 103525
   },
   "nuxt3": {
     "jsTotal": 140076,

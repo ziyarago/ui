@@ -45,4 +45,12 @@ test('names.js lists exactly the built-in components', () => {
   assert.equal(NAMES.length, 102);
 });
 
+test('install(app) still registers every component globally (Vue)', async () => {
+  const vue = await import('../../src/vue/index.js');
+  const reg = {};
+  vue.default.install({ component: (n, c) => { reg[n] = c; } });
+  assert.deepEqual(Object.keys(reg).sort(), NAMES.map(n => 'Ui' + n).sort());
+  assert.equal(reg.UiButton, vue.UiButton);
+});
+
 test('sizes (gzip, kit only, vue/react external)', () => { console.log(JSON.stringify(sizes)); });
