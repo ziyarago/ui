@@ -56,7 +56,9 @@
 .zg-chat__m{min-height:0}
 .zg-imgup{min-width:72px;min-height:72px}
 .zg-imgup__e{max-width:100%;min-width:0;box-sizing:border-box;padding:8px;text-align:center}
-.zg-imgup__e .zg-hint{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;overflow-wrap:anywhere;max-width:100%}
+.zg-imgup__e .zg-hint{flex:none;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;overflow-wrap:anywhere;max-width:100%}
 .zg-ash__copy p{color:var(--zg-text-1)}
+.zg-ash__float{box-shadow:0 0 28px color-mix(in oklch,var(--zg-brand) 28%,transparent)}
+.zg-ash--photo .zg-ash__media::before{background:linear-gradient(90deg,color-mix(in oklch,var(--zg-bg) 15%,transparent),var(--zg-s1) 100%),linear-gradient(0deg,color-mix(in oklch,var(--zg-bg) 80%,transparent),transparent 75%)}
 .zg-kcol__head{min-width:0;overflow-wrap:anywhere}
 .zg-kcol .zg-badge,.zg-kcard .zg-badge{overflow-wrap:anywhere}
