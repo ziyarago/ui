@@ -4,6 +4,8 @@
 
 import { cx, BreadcrumbsDef } from './components.js';
 import { mn, fb } from './csp.js';
+import { AuthLayoutDef } from './components.js';
+import { AuthSplitDef, StatusPageDef } from './components3.js';
 const region = (h, id, kids, stick) => (kids == null || (Array.isArray(kids) && !kids.length)) ? null : h('div', { key: id, class: stick ? 'zg-pg__r zg-pg__stick' : 'zg-pg__r', 'data-slot': id }, kids);
 
 const draw = (h, node, ctx) => {
@@ -37,5 +39,9 @@ export const PageAuthDef = { slots: ['background', 'logo', 'aside', 'form', 'foo
   return p.layout === 'split'
     ? h(C.AuthSplit, { title: p.title, subtitle: p.subtitle, logo: s.logo, aside: s.aside }, ...body)
     : h('div', { class: 'zg-pgauth' }, s.background ? h('div', { class: 'zg-pg__r zg-pgauth__bg', 'data-slot': 'background' }, s.background) : null, h('div', { class: 'zg-pgauth__c' }, h(C.AuthLayout, { title: p.title, subtitle: p.subtitle, logo: s.logo }, ...body)));
-} };
-export const PageStatusDef = { slots: ['code', 'message', 'action'], render: ({ C, h, props: p, slots: s }) => h(C.StatusPage, { kind: p.kind, title: p.title, description: p.description, onAction: p.onAction, actionLabel: p.actionLabel, notifyLabel: p.notifyLabel, emailLabel: p.emailLabel, onNotify: p.onNotify, codeNode: s.code || undefined, messageNode: s.message || undefined, actionNode: s.action || undefined }) };
+},
+  deps: () => ({ AuthLayout: AuthLayoutDef, AuthSplit: AuthSplitDef })
+};
+export const PageStatusDef = { slots: ['code', 'message', 'action'], render: ({ C, h, props: p, slots: s }) => h(C.StatusPage, { kind: p.kind, title: p.title, description: p.description, onAction: p.onAction, actionLabel: p.actionLabel, notifyLabel: p.notifyLabel, emailLabel: p.emailLabel, onNotify: p.onNotify, codeNode: s.code || undefined, messageNode: s.message || undefined, actionNode: s.action || undefined }),
+  deps: () => ({ StatusPage: StatusPageDef })
+};

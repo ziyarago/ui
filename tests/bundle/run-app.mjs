@@ -11,7 +11,7 @@ import net from 'node:net';
 import { startServer } from './lib/csp-server.mjs';
 import { launch, runPage } from './lib/browser.mjs';
 import { analyzePage, compareKebab, allowed } from './lib/analyze.mjs';
-import { bundleSizes, compareBaseline, flat } from './lib/sizes.mjs';
+import { bundleSizes, compareBaseline, flat, kitBytes } from './lib/sizes.mjs';
 import { extract, builtinIcons, i18nKeys, backdropSelectors } from './lib/tarball.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -149,6 +149,27 @@ log('built in', Math.round((Date.now() - tb) / 1000), 's');
 // ---- sizes
 const dist = appName === 'nuxt' ? join(app, '.output/public') : join(app, 'dist');
 sizes = bundleSizes(dist, appName === 'nuxt' ? [] : ['index.html', 'minimal.html']);
+// Tree shaking, measured in isolation: the multi-entry build above shares chunks between pages (a shared module keeps the union of what every
+// entry needs), so each of these pages is built alone. base = the app without the kit, button = UiButton only, minimal = 8 components, all = every export.
+if (appName !== 'nuxt' && !PRO) {
+  const iso = {};
+  for (const page of ['base', 'button', 'minimal', 'all']) {
+    const out = `dist-iso-${page}`;
+    try { sh('npx', ['vite', 'build', '--outDir', out, '--emptyOutDir'], { cwd: app, env: { ...process.env, NODE_ENV: 'production', ZG_ONLY: `${page}.html` } }); }
+    catch (e) { addIssue('treeshake', { cat: 'build', sev: 'fail', msg: `isolated build of ${page}.html failed` }); continue; }
+    iso[page] = bundleSizes(join(app, out), [`${page}.html`]).entries[`${page}.html`];
+  }
+  sizes.iso = iso;
+  if (['base', 'button', 'minimal', 'all'].every(k => iso[k])) {
+    const all = kitBytes(iso, 'all'), mini = kitBytes(iso, 'minimal'), one = kitBytes(iso, 'button');
+    log(`tree shaking (gzip JS of the kit alone): UiButton ${one} B, 8 components ${mini} B, all ${all} B (8 components = ${Math.round(100 * mini / all)}% of all); app without the kit ${iso.base.js} B`);
+    if (!(mini < 0.45 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `8 components weigh ${mini} B gzip of kit JS, ${Math.round(100 * mini / all)}% of all components (${all} B): the limit is 45%` });
+    if (!(one < 0.15 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `UiButton alone weighs ${one} B gzip of kit JS, ${Math.round(100 * one / all)}% of all components (${all} B): the limit is 15%` });
+    const js = iso.button.refs.filter(r => /\.m?js$/.test(r)).map(r => readFileSync(join(app, 'dist-iso-button', r), 'utf8')).join('\n');
+    const foreign = ['zg-cal__d', 'Previous month', 'zg-sheet', 'zg-heading', 'zg-press', 'zg-chip2', 'zg-foot', 'RichEditor', 'zg-menu__sep'].filter(x => js.includes(x));
+    if (foreign.length) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `the UiButton-only bundle contains strings of unrelated components: ${foreign.join(', ')}` });
+  }
+}
 log('sizes', JSON.stringify(flat(sizes)));
 const baseline = existsSync(join(HERE, 'baseline.json')) ? JSON.parse(readFileSync(join(HERE, 'baseline.json'), 'utf8')) : {};
 for (const i of compareBaseline(baseKey, sizes, baseline)) addIssue('size', i);

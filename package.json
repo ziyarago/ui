@@ -31,7 +31,7 @@
   "sideEffects": [
     "**/*.css",
     "./src/i18n/index.js",
-    "./src/i18n/components/*.js"
+    "./src/i18n/components/index.js"
   ],
   "main": "./src/core/index.js",
   "module": "./src/core/index.js",
@@ -102,8 +102,8 @@
   "scripts": {
     "types": "node scripts/types.mjs",
     "icons": "node scripts/icons.mjs",
-    "build": "node scripts/i18n-index.mjs && node scripts/build.mjs && node scripts/types.mjs && node scripts/manifest.mjs",
-    "check": "node scripts/check.mjs && node scripts/check-meta.mjs && node scripts/i18n-index.mjs",
+    "build": "node scripts/i18n-index.mjs && node scripts/core-index.mjs && node scripts/build.mjs && node scripts/types.mjs && node scripts/manifest.mjs",
+    "check": "node scripts/check.mjs && node scripts/check-meta.mjs && node scripts/i18n-index.mjs && node scripts/core-index.mjs --check",
     "test": "npm run test:unit && npm run test:ssr && npm run test:browser",
     "test:unit": "node --test tests/unit/*.test.mjs",
     "test:ssr": "node --test tests/ssr/*.test.mjs",

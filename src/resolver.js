@@ -4,9 +4,9 @@
 //   Components({ resolvers: [ZiyaragoUiResolver()] })
 // Zero dependencies: it only maps <UiButton> to { name: 'UiButton', from: '@ziyarago/ui/vue' }.
 import { createRequire } from 'node:module';
-import { components } from './core/index.js';
+import { NAMES as CORE_NAMES } from './core/names.js';
 
-const NAMES = new Set(Object.keys(components));
+const NAMES = new Set(CORE_NAMES);
 
 // Plugin packages (see docs-private/PRO-SPLIT.md, "Plugin contract") export ./names (JSON array of component names without the Ui prefix) and ./vue.
 // A plugin may be a package name or { from, names } for tests and custom setups.

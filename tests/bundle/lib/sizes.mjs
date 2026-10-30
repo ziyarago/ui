@@ -24,9 +24,9 @@ export function bundleSizes(dist, pages) {
     if (!existsSync(html)) continue;
     const src = readFileSync(html, 'utf8');
     const refs = [...src.matchAll(/(?:src|href)="([^"]+\.(?:js|css))"/g)].map(m => m[1].replace(/^\//, ''));
-    let raw = 0, gzip = 0;
-    for (const r of refs) { const f = join(dist, r); if (existsSync(f)) { const s = sz(f); raw += s.raw; gzip += s.gzip; } }
-    entries[page] = { files: refs.length, raw, gzip };
+    let raw = 0, gzip = 0, js = 0;
+    for (const r of refs) { const f = join(dist, r); if (existsSync(f)) { const s = sz(f); raw += s.raw; gzip += s.gzip; if (/\.m?js$/.test(r)) js += s.gzip; } }
+    entries[page] = { files: refs.length, raw, gzip, js, refs };
   }
   return { total, entries, top: top.sort((a, b) => b.raw - a.raw).slice(0, 12) };
 }
@@ -39,4 +39,6 @@ export function compareBaseline(key, sizes, baseline, tol = 0.1) {
   for (const [k, v] of Object.entries(cur)) if (b[k] && v > b[k] * (1 + tol)) out.push({ cat: 'size', sev: 'fail', msg: `${key} ${k}: ${v} B gzip vs baseline ${b[k]} (+${Math.round((v / b[k] - 1) * 100)}%)` });
   return out;
 }
-export const flat = s => ({ jsTotal: s.total.js.gzip, cssTotal: s.total.css.gzip, ...Object.fromEntries(Object.entries(s.entries).map(([k, v]) => ['entry:' + k, v.gzip])) });
+/** Kit-only JS of an isolated build: the entry's gzip JS minus the same app without the kit. iso = { base, button, minimal, all } (each an entries[page] of its own single-entry build). */
+export const kitBytes = (iso, name) => iso[name].js - iso.base.js;
+export const flat = s => ({ jsTotal: s.total.js.gzip, cssTotal: s.total.css.gzip, ...Object.fromEntries(Object.entries(s.entries).map(([k, v]) => ['entry:' + k, v.gzip])), ...Object.fromEntries(Object.entries(s.iso || {}).map(([k, v]) => ['iso:' + k, v.js])) });

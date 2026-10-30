@@ -13,6 +13,6 @@ export default defineConfig({
     Components({ dirs: [], dts: false, resolvers: [ZiyaragoUiResolver(pro ? { plugins: ['@ziyarago/ui-pro'] } : {})] }),
   ],
   build: {
-    rollupOptions: { input: { main: resolve(import.meta.dirname, 'index.html'), minimal: resolve(import.meta.dirname, 'minimal.html') } },
+    rollupOptions: { input: process.env.ZG_ONLY ? { only: resolve(import.meta.dirname, process.env.ZG_ONLY) } : { main: resolve(import.meta.dirname, 'index.html'), minimal: resolve(import.meta.dirname, 'minimal.html') } },
   },
 });

@@ -13,7 +13,7 @@ const src = Object.fromEntries(files.map(f => [f, readFileSync(join(dir, f), 'ut
 export function extract() {
   const out = {};
   for (const [file, text] of Object.entries(src)) {
-    const re = /^  ([A-Z][A-Za-z0-9]*): \{/gm;
+    const re = /^export const ([A-Z][A-Za-z0-9]*)Def = /gm;
     const hits = [...text.matchAll(re)];
     hits.forEach((m, i) => {
       const body = text.slice(m.index, i + 1 < hits.length ? hits[i + 1].index : text.length);
@@ -23,7 +23,7 @@ export function extract() {
       out[m[1]] = { file, props: props.sort(), slots: slots.sort(), children: /\bchildren\b/.test(body), state: /state:\s*\{/.test(body.slice(0, 200)), uses: forwards };
     });
   }
-  for (const m of src['pages.js'].matchAll(/page\('([A-Za-z]+)',\s*\[([^\]]*)\]/g)) {
+  for (const m of src['pages.js'].matchAll(/^export const (\w+)Def = \/\*#__PURE__\*\/ pageDef\(\s*\[([^\]]*)\]/gm)) {
     out[m[1]] = { ...(out[m[1]] || {}), file: 'pages.js', slots: [...m[2].matchAll(/'(\w+)'/g)].map(x => x[1]) };
   }
   return out;

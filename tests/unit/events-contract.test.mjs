@@ -9,7 +9,7 @@ const DIR = new URL('../../src/core/', import.meta.url);
 const used = {};
 for (const f of readdirSync(DIR).filter(n => n.endsWith('.js'))) {
   const s = readFileSync(new URL(f, DIR), 'utf8');
-  const comps = [...s.matchAll(/\n  (\w+): \{/g)].map(m => [m.index, m[1]]);
+  const comps = [...s.matchAll(/\nexport const (\w+)Def = /g)].map(m => [m.index, m[1]]);
   for (const m of s.matchAll(/\b(?:p|props)\.(on[A-Z]\w*)\b/g)) {
     const c = comps.filter(([i]) => i < m.index).at(-1)?.[1];
     if (c) (used[c] ||= new Set()).add(m[1]);
