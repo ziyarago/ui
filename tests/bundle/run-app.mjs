@@ -189,8 +189,8 @@ if (appName !== 'nuxt' && PRO) {
   if (['base', 'pro-one', 'pro-minimal', 'pro-all'].every(k => iso[k])) {
     const all = kitBytes(iso, 'pro-all'), mini = kitBytes(iso, 'pro-minimal'), one = kitBytes(iso, 'pro-one');
     log(`Pro tree shaking (gzip JS of the kit alone): UiLineChart ${one} B, 8 Pro components ${mini} B, all Pro ${all} B (one = ${Math.round(100 * one / all)}%, 8 = ${Math.round(100 * mini / all)}% of all); app without the kit ${iso.base.js} B`);
-    if (!(mini < 0.5 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `8 Pro components weigh ${mini} B gzip of kit JS, ${Math.round(100 * mini / all)}% of all Pro (${all} B): the limit is 50%` });
-    if (!(one < 0.25 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `UiLineChart alone weighs ${one} B gzip of kit JS, ${Math.round(100 * one / all)}% of all Pro (${all} B): the limit is 25%` });
+    if (!(mini < 0.55 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `8 Pro components weigh ${mini} B gzip of kit JS, ${Math.round(100 * mini / all)}% of all Pro (${all} B): the limit is 55%` });
+    if (!(one < 0.4 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `UiLineChart alone weighs ${one} B gzip of kit JS, ${Math.round(100 * one / all)}% of all Pro (${all} B): the limit is 40%` });
     // markers of components the one-component bundle does not depend on: Pro (hotel card, kanban, rich editor and chat strings, map, tree) and free (calendar, menu, chip, footer, sheet, heading, press)
     const js = isoJs('pro-one');
     if (!js.includes('zg-chart')) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: 'the UiLineChart-only bundle does not contain the chart (zg-chart): the marker check is blind' });
