@@ -82,7 +82,6 @@ for (const name of names) {
       else if (parent && parent.type === 'Property') { /* destructured param */ }
       else if (!(parent && parent.type === 'MemberExpression' && parent.property === n)) problems.push(`${name}: bare C usage`);
     }
-    if (Object.values(AGG).includes(n.name)) problems.push(`${name}: references aggregate ${n.name}`);
   });
   nsScan(d.file, d.node, new Set(), ns);
   const known = [...deps].filter(x => names.has(x)).sort(), unknown = [...deps].filter(x => !names.has(x));

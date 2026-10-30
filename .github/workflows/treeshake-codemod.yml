@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm ci --ignore-scripts
-      - run: node scripts/treeshake-codemod.mjs | tee codemod.log
+      - run: node scripts/treeshake-codemod.mjs > codemod.log 2>&1 || { cat codemod.log; exit 1; }
       - run: node scripts/core-index.mjs
       - name: Collect changed files
         run: |
