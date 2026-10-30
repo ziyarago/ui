@@ -1,3 +1,9 @@
+## [0.22.0](https://github.com/ziyarago/ui/compare/v0.21.0...v0.22.0) (2026-10-30)
+
+### Features
+
+* tree-shakeable add-on packages: defineUiComponent and the built-in definitions in @ziyarago/ui/internal, Pro bundle guards ([#19](https://github.com/ziyarago/ui/issues/19)) ([22fe670](https://github.com/ziyarago/ui/commit/22fe670bc9e385667c6abdae303cbee1453ea427))
+
 ## [0.21.0](https://github.com/ziyarago/ui/compare/v0.20.13...v0.21.0) (2026-10-30)
 
 ### Features
