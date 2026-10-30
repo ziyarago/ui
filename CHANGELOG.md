@@ -1,3 +1,9 @@
+## [0.20.12](https://github.com/ziyarago/ui/compare/v0.20.11...v0.20.12) (2026-10-30)
+
+### Bug Fixes
+
+* strict-CSP classes for Pro components (csp-pro.css) and docs ([8ee85ee](https://github.com/ziyarago/ui/commit/8ee85ee3be0850f19f7ecf9251e46d5308c2a024))
+
 ## [0.20.11](https://github.com/ziyarago/ui/compare/v0.20.10...v0.20.11) (2026-10-29)
 
 ### Bug Fixes
