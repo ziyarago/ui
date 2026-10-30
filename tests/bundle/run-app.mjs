@@ -151,23 +151,50 @@ const dist = appName === 'nuxt' ? join(app, '.output/public') : join(app, 'dist'
 sizes = bundleSizes(dist, appName === 'nuxt' ? [] : ['index.html', 'minimal.html']);
 // Tree shaking, measured in isolation: the multi-entry build above shares chunks between pages (a shared module keeps the union of what every
 // entry needs), so each of these pages is built alone. base = the app without the kit, button = UiButton only, minimal = 8 components, all = every export.
-if (appName !== 'nuxt' && !PRO) {
+const isoBuild = (pages) => {
   const iso = {};
-  for (const page of ['base', 'button', 'minimal', 'all']) {
+  for (const page of pages) {
     const out = `dist-iso-${page}`;
     try { sh('npx', ['vite', 'build', '--outDir', out, '--emptyOutDir'], { cwd: app, env: { ...process.env, NODE_ENV: 'production', ZG_ONLY: `${page}.html` } }); }
     catch (e) { addIssue('treeshake', { cat: 'build', sev: 'fail', msg: `isolated build of ${page}.html failed` }); continue; }
     iso[page] = bundleSizes(join(app, out), [`${page}.html`]).entries[`${page}.html`];
   }
+  return iso;
+};
+const isoJs = page => iso_[page].refs.filter(r => /\.m?js$/.test(r)).map(r => readFileSync(join(app, `dist-iso-${page}`, r), 'utf8')).join('\n');
+let iso_ = {};
+if (appName !== 'nuxt' && !PRO) {
+  const iso = iso_ = isoBuild(['base', 'button', 'minimal', 'all']);
   sizes.iso = iso;
   if (['base', 'button', 'minimal', 'all'].every(k => iso[k])) {
     const all = kitBytes(iso, 'all'), mini = kitBytes(iso, 'minimal'), one = kitBytes(iso, 'button');
     log(`tree shaking (gzip JS of the kit alone): UiButton ${one} B, 8 components ${mini} B, all ${all} B (8 components = ${Math.round(100 * mini / all)}% of all); app without the kit ${iso.base.js} B`);
     if (!(mini < 0.45 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `8 components weigh ${mini} B gzip of kit JS, ${Math.round(100 * mini / all)}% of all components (${all} B): the limit is 45%` });
     if (!(one < 0.15 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `UiButton alone weighs ${one} B gzip of kit JS, ${Math.round(100 * one / all)}% of all components (${all} B): the limit is 15%` });
-    const js = iso.button.refs.filter(r => /\.m?js$/.test(r)).map(r => readFileSync(join(app, 'dist-iso-button', r), 'utf8')).join('\n');
+    const js = isoJs('button');
     const foreign = ['zg-cal__d', 'Previous month', 'zg-sheet', 'zg-heading', 'zg-press', 'zg-chip2', 'zg-foot', 'RichEditor', 'zg-menu__sep'].filter(x => js.includes(x));
     if (foreign.length) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `the UiButton-only bundle contains strings of unrelated components: ${foreign.join(', ')}` });
+  }
+}
+// Pro tree shaking, measured the same way: pro-one = UiLineChart only, pro-minimal = 8 Pro components, pro-all = every Pro export (import * as PRO).
+if (appName !== 'nuxt' && PRO) {
+  const iso = iso_ = isoBuild(['base', 'pro-one', 'pro-minimal', 'pro-all']);
+  sizes.iso = iso;
+  if (['base', 'pro-one', 'pro-minimal', 'pro-all'].every(k => iso[k])) {
+    const all = kitBytes(iso, 'pro-all'), mini = kitBytes(iso, 'pro-minimal'), one = kitBytes(iso, 'pro-one');
+    log(`Pro tree shaking (gzip JS of the kit alone): UiLineChart ${one} B, 8 Pro components ${mini} B, all Pro ${all} B (one = ${Math.round(100 * one / all)}%, 8 = ${Math.round(100 * mini / all)}% of all); app without the kit ${iso.base.js} B`);
+    if (!(mini < 0.5 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `8 Pro components weigh ${mini} B gzip of kit JS, ${Math.round(100 * mini / all)}% of all Pro (${all} B): the limit is 50%` });
+    if (!(one < 0.25 * all)) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `UiLineChart alone weighs ${one} B gzip of kit JS, ${Math.round(100 * one / all)}% of all Pro (${all} B): the limit is 25%` });
+    // markers of components the one-component bundle does not depend on: Pro (hotel card, kanban, rich editor and chat strings, map, tree) and free (calendar, menu, chip, footer, sheet, heading, press)
+    const js = isoJs('pro-one');
+    if (!js.includes('zg-chart')) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: 'the UiLineChart-only bundle does not contain the chart (zg-chart): the marker check is blind' });
+    const foreignPro = ['zg-hotel__img', 'zg-kcol__head', 'zg-lead__row', 'zg-rte', 'Code block', 'Ask anything', 'zg-map', 'zg-tree', 'zg-qibla'].filter(x => js.includes(x));
+    if (foreignPro.length) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `the UiLineChart-only bundle contains strings of unrelated Pro components: ${foreignPro.join(', ')}` });
+    const foreignFree = ['zg-cal__d', 'Previous month', 'zg-sheet', 'zg-heading', 'zg-press', 'zg-chip2', 'zg-foot', 'zg-menu__sep', 'zg-select__list'].filter(x => js.includes(x));
+    if (foreignFree.length) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `the UiLineChart-only bundle contains free components it does not depend on: ${foreignFree.join(', ')}` });
+    const js8 = isoJs('pro-minimal');
+    const foreign8 = ['zg-rte', 'Code block', 'Ask anything', 'zg-map', 'zg-qibla', 'zg-cal__d', 'Previous month', 'zg-menu__sep', 'zg-foot'].filter(x => js8.includes(x));
+    if (foreign8.length) addIssue('treeshake', { cat: 'treeshake', sev: 'fail', msg: `the 8-component Pro bundle contains strings of components it does not use: ${foreign8.join(', ')}` });
   }
 }
 log('sizes', JSON.stringify(flat(sizes)));

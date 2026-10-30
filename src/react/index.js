@@ -66,6 +66,9 @@ export function defineUiComponents(defs, { override = false } = {}) {
 }
 
 // Explicit named exports (not destructuring): Next.js reads the export names of a 'use client' module statically.
+/** Wraps ONE definition (its `deps` supply C) and returns the component. Registers nothing, so a bundler keeps only the components an app imports: add-on packages export one `defineUiComponent('Name', NameDef)` (annotated as pure) per component. */
+export function defineUiComponent(name, def) { return comp(name, def); }
+
 // <core-index:exports>
 export const UiButton = /*#__PURE__*/ comp('Button', ButtonDef);
 export const UiIconButton = /*#__PURE__*/ comp('IconButton', IconButtonDef);

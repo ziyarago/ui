@@ -30,6 +30,8 @@ export const rules: typeof import('./shared').rules;
 export function install(app: import('vue').App): void;
 /** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
 export function defineUiComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, import('vue').Component>;
+/** Wraps one plugin component definition (its `deps` supply C.Name) without registering it, so unused components tree-shake: `export const UiName = defineUiComponent('Name', NameDef)` annotated as pure. */
+export function defineUiComponent(name: string, def: import('./core').ComponentDefinition): import('vue').Component;
 declare const _default: { install: typeof install };
 export default _default;
 export { useUiTheme } from './theme';
@@ -47,6 +49,8 @@ export { useUiTheme } from './theme';
 export { fmt, setIconBase, registerIcons } from './shared';
 /** Extension API: wraps plugin component definitions like the built-in ones, registers them (C.Name cross references work) and returns { UiName: Component }. */
 export function defineUiComponents(defs: Record<string, import('./core').ComponentDefinition>, options?: { override?: boolean }): Record<string, ComponentType<any>>;
+/** Wraps one plugin component definition (its `deps` supply C.Name) without registering it, so unused components tree-shake: `export const UiName = defineUiComponent('Name', NameDef)` annotated as pure. */
+export function defineUiComponent(name: string, def: import('./core').ComponentDefinition): ComponentType<any>;
 `;
 
 const global = banner + `// Opt in to template typing for globally registered components (app.use(ui)): add
