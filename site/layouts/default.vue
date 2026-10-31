@@ -8,7 +8,7 @@ const palette_ = ref(false)
 const router = useRouter()
 const commands = GROUPS.flatMap(g => g.names.map(n => ({ id: n, label: n, keywords: g.title, icon: 'box' })))
 const MORE = [
-  { label: 'Integration', value: '/docs/integration' }, { label: 'Theming', value: '/docs/theming' },
+  { label: 'Integration', value: '/docs/integration' }, { label: 'Pro', value: '/docs/pro' }, { label: 'Migration 0.20 to 0.22', value: '/docs/migration' }, { label: 'Theming', value: '/docs/theming' },
   { label: 'Colors', value: '/docs/colors' }, { label: 'Fonts', value: '/docs/fonts' }, { label: 'Backgrounds', value: '/docs/backgrounds' },
   { label: 'AI and MCP', value: '/docs/ai' }, { label: 'Localization', value: '/docs/localization' }, { label: 'Accessibility', value: '/docs/accessibility' }, { label: 'Charts', value: '/docs/charts' },
   { label: 'Changelog', value: '/docs/changelog' }, { label: 'Roadmap', value: '/docs/roadmap' },
@@ -51,6 +51,8 @@ const groups = computed(() => GROUPS.map(g => ({ ...g, names: g.names.filter(n =
         <UiSearchInput v-model="q" placeholder="Search components" />
         <NuxtLink to="/docs" class="s-link">Getting started</NuxtLink>
         <NuxtLink to="/docs/integration" class="s-link">Integration</NuxtLink>
+        <NuxtLink to="/docs/pro" class="s-link">Pro</NuxtLink>
+        <NuxtLink to="/docs/migration" class="s-link">Migration 0.20 to 0.22</NuxtLink>
         <NuxtLink to="/docs/theming" class="s-link">Theming</NuxtLink>
         <NuxtLink to="/docs/colors" class="s-link">Colors</NuxtLink>
         <NuxtLink to="/docs/backgrounds" class="s-link">Backgrounds</NuxtLink>
