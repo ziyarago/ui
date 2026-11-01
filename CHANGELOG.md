@@ -1,3 +1,5 @@
+## [0.22.2](https://github.com/ziyarago/ui/compare/v0.22.1...v0.22.2) (2026-11-01)
+
 ## [0.22.1](https://github.com/ziyarago/ui/compare/v0.22.0...v0.22.1) (2026-10-31)
 
 ### Bug Fixes
