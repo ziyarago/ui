@@ -169,7 +169,7 @@ Tree shaking: give each definition `deps: () => ({ Button: ButtonDef })` (the bu
 Plugin CSS must only use the public design tokens (`--zg-*`, see `@ziyarago/ui/tokens.css`) and its own prefixed classes. Auto-import: pass `plugins: ['@ziyarago/ui-pro']` to the Nuxt module options (`ziyarago: { plugins: [...] }`) or to `ZiyaragoUiResolver({ plugins: [...] })`.
 
 ## Migrating from local copies of glass-ui-kit
-The migration tooling (compat layer with the old component names, resolver and Vite plugin, step by step guide) is part of `@ziyarago/ui-pro`.
+The migration tooling (compat layer with the old component names, resolver and Vite plugin, step by step guide) is part of `@ziyarago/ui-pro`. Setup and registration of Pro are described on the Pro page of the docs site (`/docs/pro`), upgrade notes for 0.20 to 0.22 on `/docs/migration`.
 
 ## 9. Icons and CSP
 The icons the components use themselves (about 100: chevrons, close, search, eye, calendar ...) are built into the package and load without a network request, so they work under `connect-src 'self'`. Icons you pass by name that are not in that set (`<UiButton icon="rocket">`) are fetched once from `https://unpkg.com/lucide-static@0.460.0/icons/`. Under a strict CSP either self-host them or register them:
