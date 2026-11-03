@@ -22,9 +22,8 @@
 .zg-car__d{gap:0}.zg-car__d button{position:relative;width:24px;height:24px;background:none}
 .zg-car__d button::before{content:"";position:absolute;top:50%;left:50%;width:8px;height:8px;border-radius:50%;background:oklch(1 0 0 / .45);transform:translate(-50%,-50%)}
 .zg-car__d button[aria-current="true"]{width:24px}.zg-car__d button[aria-current="true"]::before{width:22px;border-radius:999px;background:#fff}
-.zg-range{box-sizing:content-box;height:8px;padding-block:8px;background-clip:content-box}
-.zg-range::-webkit-slider-thumb,.zg-range2::-webkit-slider-thumb{width:24px;height:24px}
-.zg-range::-moz-range-thumb,.zg-range2::-moz-range-thumb{width:24px;height:24px}
+.zg-range2::-webkit-slider-thumb{width:24px;height:24px}
+.zg-range2::-moz-range-thumb{width:24px;height:24px}
 .zg-range2{height:100%}
 .zg-hc{min-height:24px}
 .zg-crumbs a,.zg-foot a,.zg-footer a{display:inline-flex;align-items:center;min-height:24px}
