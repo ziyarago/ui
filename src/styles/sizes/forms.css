@@ -79,7 +79,7 @@
 .zg-opt[data-size] .zg-radio i,.zg-field[data-size] .zg-opt .zg-radio i{width:calc(var(--zg-fm-box) * .45);height:calc(var(--zg-fm-box) * .45)}
 
 /* ---- sliders ---- */
-.zg-field[data-size] .zg-range{height:calc(var(--zg-sz-h) * .2)}
+.zg-field[data-size] .zg-range{height:max(24px,var(--zg-fm-box))}
 .zg-field[data-size] .zg-range::-webkit-slider-thumb{width:var(--zg-fm-box);height:var(--zg-fm-box)}
 .zg-field[data-size] .zg-range::-moz-range-thumb{width:var(--zg-fm-box);height:var(--zg-fm-box)}
 .zg-field[data-size] .zg-range2w{height:calc(var(--zg-sz-h) * .7)}
