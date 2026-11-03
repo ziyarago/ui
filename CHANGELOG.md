@@ -1,3 +1,9 @@
+## [0.22.3](https://github.com/ziyarago/ui/compare/v0.22.2...v0.22.3) (2026-11-03)
+
+### Bug Fixes
+
+* robots.txt lists the recipes sitemap and keeps /ops/ out of crawlers ([#23](https://github.com/ziyarago/ui/issues/23)) ([ee879ae](https://github.com/ziyarago/ui/commit/ee879ae18c3ceb2b1fdd4fdf409623a098b945d3))
+
 ## [0.22.2](https://github.com/ziyarago/ui/compare/v0.22.1...v0.22.2) (2026-11-01)
 
 ## [0.22.1](https://github.com/ziyarago/ui/compare/v0.22.0...v0.22.1) (2026-10-31)
