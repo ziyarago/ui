@@ -1,3 +1,9 @@
+## [0.22.4](https://github.com/ziyarago/ui/compare/v0.22.3...v0.22.4) (2026-11-03)
+
+### Bug Fixes
+
+* slider fill follows the thumb centre instead of ending before the thumb ([#24](https://github.com/ziyarago/ui/issues/24)) ([7ab8d01](https://github.com/ziyarago/ui/commit/7ab8d013b56a672f56dba39f9986b2727c9bc603))
+
 ## [0.22.3](https://github.com/ziyarago/ui/compare/v0.22.2...v0.22.3) (2026-11-03)
 
 ### Bug Fixes
