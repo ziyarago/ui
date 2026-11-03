@@ -17,7 +17,7 @@ export const alignItems = v => v === undefined || v === null ? [] : AL.has(v) ? 
 export const justify = v => v === undefined || v === null ? [] : JU.has(v) ? ['zg-jc-' + v] : [undefined, { justifyContent: v }];
 export const cols = n => Number.isInteger(n) && n >= 1 && n <= 12 ? ['zg-gc-' + n] : [undefined, { gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))` }];
 /** 0..100 value as a rounded data attribute (rule [data-zg-p] sets --zg-p); a fractional value is also applied to the element after mount. */
-export const pct = v => { const n = Math.max(0, Math.min(100, Number.isFinite(+v) ? +v : 0)), r = Math.round(n); return { 'data-zg-p': r, ref: el => { if (!el) return; if (n === r) el.style.removeProperty('--zg-p'); else el.style.setProperty('--zg-p', n + '%'); } }; };
+export const pct = v => { const n = Math.max(0, Math.min(100, Number.isFinite(+v) ? +v : 0)), r = Math.round(n); return { 'data-zg-p': r, ref: el => { if (!el) return; if (n === r) { el.style.removeProperty('--zg-p'); el.style.removeProperty('--zg-pn'); } else { el.style.setProperty('--zg-p', n + '%'); el.style.setProperty('--zg-pn', String(n)); } } }; };
 export const pd = v => typeof v === 'number' && [0, 4, 8, 12, 16, 20, 24, 32, 40].includes(v) ? ['zg-pd-' + v] : [undefined, { padding: typeof v === 'number' ? v + 'px' : v }];
 export const mn = v => [240, 260, 280, 300, 320, 340, 360, 400, 480].includes(v) ? ['zg-pgmin-' + v] : [undefined, { '--min': v + 'px' }];
 export const fb = v => [180, 200, 220, 240, 260, 280, 300, 320, 360].includes(v) ? ['zg-fb-' + v] : [undefined, { flexBasis: v + 'px' }];
