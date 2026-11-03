@@ -1,3 +1,9 @@
+## [0.22.6](https://github.com/ziyarago/ui/compare/v0.22.5...v0.22.6) (2026-11-03)
+
+### Bug Fixes
+
+* guard the slider track and fill CSS with a unit test (re-release of 0.22.5, which failed to publish) ([#26](https://github.com/ziyarago/ui/issues/26)) ([f183a4e](https://github.com/ziyarago/ui/commit/f183a4ee8e109a9ed246a940b4cfebdd06f3f52f))
+
 ## [0.22.5](https://github.com/ziyarago/ui/compare/v0.22.4...v0.22.5) (2026-11-03)
 
 ### Bug Fixes
