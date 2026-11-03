@@ -27,6 +27,6 @@ const prio = u => (u === '/' ? '1.0' : u === '/docs' || u === '/docs/components'
 const sorted = [...new Set(urls)].sort();
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sorted.map(u => `  <url><loc>${site}${u === '/' ? '/' : u}</loc><lastmod>${date}</lastmod><changefreq>weekly</changefreq><priority>${prio(u)}</priority></url>`).join('\n')}\n</urlset>\n`;
 writeFileSync(join(out, 'sitemap.xml'), xml);
-writeFileSync(join(out, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${site}/sitemap.xml\n`);
+writeFileSync(join(out, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /ops/\n\nSitemap: ${site}/sitemap.xml\nSitemap: ${site}/recipes/recipes-sitemap.xml\n`);
 writeFileSync(join(out, 'version.json'), JSON.stringify({ version: pkg.version, built: new Date().toISOString() }) + '\n');
 console.log(`sitemap.xml: ${sorted.length} URLs, robots.txt, version.json (${pkg.version})`);
