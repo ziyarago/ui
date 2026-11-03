@@ -1,3 +1,9 @@
+## [0.22.5](https://github.com/ziyarago/ui/compare/v0.22.4...v0.22.5) (2026-11-03)
+
+### Bug Fixes
+
+* slider track is drawn on the track pseudo-element, so it is thin again and the fill ends at the thumb centre ([#25](https://github.com/ziyarago/ui/issues/25)) ([fb32124](https://github.com/ziyarago/ui/commit/fb321240ff3cce91ae7df27cf219253cb166eded))
+
 ## [0.22.4](https://github.com/ziyarago/ui/compare/v0.22.3...v0.22.4) (2026-11-03)
 
 ### Bug Fixes
